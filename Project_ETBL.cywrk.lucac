@@ -18,7 +18,7 @@
 <v>Output</v>
 </TreeKeys>
 <TreeStates>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Project_ETBL\Project_design\Header Files">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Project_ETBL\Project_design\Header Files\OLED_Driver.h">
 <ExpandedNodeIds>
 <v>Project_ETBL</v>
 <v>Project_ETBL\Project_design</v>
@@ -39,6 +39,7 @@
 <v>Project_ETBL\Project_design\Source Files</v>
 <v>Project_ETBL\Project_design\Source Files\main.c</v>
 <v>Project_ETBL\Project_design\Source Files\OLED_Driver.c</v>
+<v>Project_ETBL\Project_design\Generated_Source\PSoC5</v>
 </ExpandedNodeIds>
 <VisibleNodeIds>
 <v>Project_ETBL</v>
@@ -60,6 +61,7 @@
 <v>Project_ETBL\Project_design\Source Files</v>
 <v>Project_ETBL\Project_design\Source Files\main.c</v>
 <v>Project_ETBL\Project_design\Source Files\OLED_Driver.c</v>
+<v>Project_ETBL\Project_design\Generated_Source</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
@@ -105,6 +107,9 @@
 <v>Project_ETBL\Project_design\CY8C58LP Family Datasheet</v>
 <v>Project_ETBL\Project_design\System Reference Guides</v>
 <v>Project_ETBL\Project_design\System Reference Guides\cy_boot_v6_10</v>
+<v>Project_ETBL\Project_design\cy_pins_v2_20</v>
+<v>Project_ETBL\Project_design\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
+<v>Project_ETBL\Project_design\I2C_v3_50.pdf</v>
 </ExpandedNodeIds>
 <VisibleNodeIds>
 <v>Project_ETBL</v>
@@ -113,6 +118,9 @@
 <v>Project_ETBL\Project_design\CY8C58LP Family Datasheet</v>
 <v>Project_ETBL\Project_design\System Reference Guides</v>
 <v>Project_ETBL\Project_design\System Reference Guides\cy_boot_v6_10</v>
+<v>Project_ETBL\Project_design\cy_pins_v2_20</v>
+<v>Project_ETBL\Project_design\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
+<v>Project_ETBL\Project_design\I2C_v3_50.pdf</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStatesV2>
@@ -121,7 +129,18 @@
 </userData>
 </CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
 <Unloaded />
-<OpenDocs />
+<OpenDocs>
+<name v=".\Project_design.cydsn\TopDesign\TopDesign.cysch" />
+<name v=".\Project_design.cydsn\OLED_Driver.c" />
+<name v=".\Project_design.cydsn\OLED_Driver.h" />
+</OpenDocs>
+<OpenDocsLayout><![CDATA[<?xml version="1.0"?><!--
+
+  Actipro Docking/MDI for WinForms
+  Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
+  http://www.actiprosoftware.com
+
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1318, 550" SelectedTabbedMdiWindow="b4a555a8-09e1-4939-9429-8a4bf509f75c"><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="e32a5192-30e5-492e-a0ab-b3f4e2bd83c7" /><DocumentWindow Key="C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\TopDesign\TopDesign.cysch" Guid="361edca7-a68d-4576-a41d-1f5038419590" /><DocumentWindow Key="C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\OLED_Driver.c" Guid="b4a555a8-09e1-4939-9429-8a4bf509f75c" /><DocumentWindow Key="C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\OLED_Driver.h" Guid="c4e7e9bb-3c11-46f1-95f0-d67be6ca380d" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
 <config v="" />
 <AutoUpdate v="true" />
 </CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>
