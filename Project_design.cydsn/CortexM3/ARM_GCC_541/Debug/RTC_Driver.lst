@@ -1,0 +1,2971 @@
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"RTC_Driver.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.rtc_init,"ax",%progbits
+  20              		.align	2
+  21              		.global	rtc_init
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	rtc_init, %function
+  25              	rtc_init:
+  26              	.LFB63:
+  27              		.file 1 "RTC_Driver.c"
+   1:RTC_Driver.c  **** /* ========================================================================
+   2:RTC_Driver.c  ****  *
+   3:RTC_Driver.c  ****  * ELECTRONIC TECHNOLOGIES AND BIOSENSORS LABORATORY
+   4:RTC_Driver.c  ****  * Academic year 2021/22, II Semester
+   5:RTC_Driver.c  ****  * Final Project
+   6:RTC_Driver.c  **** 
+   7:RTC_Driver.c  ****  * Authors: Group 2
+   8:RTC_Driver.c  ****  *
+   9:RTC_Driver.c  ****  * ------------------------- RTC Driver (source) --------------------------
+  10:RTC_Driver.c  ****  * 
+  11:RTC_Driver.c  ****  * ------------------------------------------------------------------------
+  12:RTC_Driver.c  ****  * 
+  13:RTC_Driver.c  ****  * ========================================================================
+  14:RTC_Driver.c  **** */
+  15:RTC_Driver.c  **** 
+  16:RTC_Driver.c  **** #include <project.h>
+  17:RTC_Driver.c  **** #include <stdlib.h>
+  18:RTC_Driver.c  **** #include <math.h>
+  19:RTC_Driver.c  **** 
+  20:RTC_Driver.c  **** #include "RTC_Driver.h"
+  21:RTC_Driver.c  **** #include "ErrorCodes.h"
+  22:RTC_Driver.c  **** 
+  23:RTC_Driver.c  **** /*------------------------------------------------------------------------
+  24:RTC_Driver.c  **** *                       STATIC VARIABLES DECLARATION
+  25:RTC_Driver.c  **** -------------------------------------------------------------------------*/
+  26:RTC_Driver.c  **** static uint8_t rtc_i2c_address;
+  27:RTC_Driver.c  **** 
+  28:RTC_Driver.c  **** /*------------------------------------------------------------------------
+  29:RTC_Driver.c  **** *                       FUNCTIONS IMPLEMENTATION
+  30:RTC_Driver.c  **** -------------------------------------------------------------------------*/
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 2
+
+
+  31:RTC_Driver.c  **** /*  RTC INIT
+  32:RTC_Driver.c  **** *   \brief: Function that initializes the pheripheral
+  33:RTC_Driver.c  **** *   \Parameters:
+  34:RTC_Driver.c  **** *       @param rtc_address: I2C RTC slave address
+  35:RTC_Driver.c  **** *   \Return: NONE
+  36:RTC_Driver.c  **** */
+  37:RTC_Driver.c  **** void rtc_init(uint8_t rtc_address) {
+  28              		.loc 1 37 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.LVL0:
+  34 0000 7047     		bx	lr
+  35              		.cfi_endproc
+  36              	.LFE63:
+  37              		.size	rtc_init, .-rtc_init
+  38 0002 00BF     		.section	.text.RTC_ReadRegister,"ax",%progbits
+  39              		.align	2
+  40              		.global	RTC_ReadRegister
+  41              		.thumb
+  42              		.thumb_func
+  43              		.type	RTC_ReadRegister, %function
+  44              	RTC_ReadRegister:
+  45              	.LFB64:
+  38:RTC_Driver.c  ****     
+  39:RTC_Driver.c  ****     rtc_i2c_address = rtc_address;
+  40:RTC_Driver.c  **** }
+  41:RTC_Driver.c  **** 
+  42:RTC_Driver.c  **** /*  RTC READ REGISTER
+  43:RTC_Driver.c  **** *   \brief: Function that reads slave register content
+  44:RTC_Driver.c  **** *   \Parameters:
+  45:RTC_Driver.c  **** *       @param device_address: 8-bit slave device address
+  46:RTC_Driver.c  **** *       @param register_address: 8-bit address of the register where content is stored
+  47:RTC_Driver.c  **** *       @param data: pointer to array where to store read value
+  48:RTC_Driver.c  **** *   \Return: error (if reading is successfull or not)
+  49:RTC_Driver.c  **** */
+  50:RTC_Driver.c  **** ErrorCode RTC_ReadRegister(uint8_t device_address, uint8_t register_address, uint8_t* data) {
+  46              		.loc 1 50 0
+  47              		.cfi_startproc
+  48              		@ args = 0, pretend = 0, frame = 0
+  49              		@ frame_needed = 0, uses_anonymous_args = 0
+  50              	.LVL1:
+  51              		.loc 1 50 0
+  52 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  53              		.cfi_def_cfa_offset 24
+  54              		.cfi_offset 3, -24
+  55              		.cfi_offset 4, -20
+  56              		.cfi_offset 5, -16
+  57              		.cfi_offset 6, -12
+  58              		.cfi_offset 7, -8
+  59              		.cfi_offset 14, -4
+  60 0002 0646     		mov	r6, r0
+  61 0004 0D46     		mov	r5, r1
+  62 0006 1746     		mov	r7, r2
+  51:RTC_Driver.c  ****     
+  52:RTC_Driver.c  ****     // Start Condition: we pass the macro I2C_Master_WRITE_XFER_MODE embedded in the API to write i
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 3
+
+
+  53:RTC_Driver.c  ****     //The function returns an ACK or NACK.
+  54:RTC_Driver.c  ****     uint8_t error = I2COLED_MasterSendStart(device_address, I2COLED_WRITE_XFER_MODE);              
+  63              		.loc 1 54 0
+  64 0008 0021     		movs	r1, #0
+  65              	.LVL2:
+  66 000a FFF7FEFF 		bl	I2COLED_MasterSendStart
+  67              	.LVL3:
+  55:RTC_Driver.c  ****     if (error == I2COLED_MSTR_NO_ERROR)
+  68              		.loc 1 55 0
+  69 000e 0446     		mov	r4, r0
+  70 0010 68B9     		cbnz	r0, .L3
+  56:RTC_Driver.c  ****     {
+  57:RTC_Driver.c  ****         //Write the register address to be read
+  58:RTC_Driver.c  ****         error = I2COLED_MasterWriteByte(register_address);
+  71              		.loc 1 58 0
+  72 0012 2846     		mov	r0, r5
+  73              	.LVL4:
+  74 0014 FFF7FEFF 		bl	I2COLED_MasterWriteByte
+  75              	.LVL5:
+  59:RTC_Driver.c  ****         if (error == I2COLED_MSTR_NO_ERROR)
+  76              		.loc 1 59 0
+  77 0018 0446     		mov	r4, r0
+  78 001a 40B9     		cbnz	r0, .L3
+  60:RTC_Driver.c  ****         {
+  61:RTC_Driver.c  ****             // Send a restart condition: this function is like r 08 x p put in the bridge control p
+  62:RTC_Driver.c  ****             error = I2COLED_MasterSendRestart(device_address, I2COLED_READ_XFER_MODE);
+  79              		.loc 1 62 0
+  80 001c 0121     		movs	r1, #1
+  81 001e 3046     		mov	r0, r6
+  82              	.LVL6:
+  83 0020 FFF7FEFF 		bl	I2COLED_MasterSendRestart
+  84              	.LVL7:
+  63:RTC_Driver.c  ****             if (error == I2COLED_MSTR_NO_ERROR)
+  85              		.loc 1 63 0
+  86 0024 0446     		mov	r4, r0
+  87 0026 10B9     		cbnz	r0, .L3
+  64:RTC_Driver.c  ****             {
+  65:RTC_Driver.c  ****                 *data = I2COLED_MasterReadByte(I2COLED_NAK_DATA); //The NACK is needed otherwise th
+  88              		.loc 1 65 0
+  89 0028 FFF7FEFF 		bl	I2COLED_MasterReadByte
+  90              	.LVL8:
+  91 002c 3870     		strb	r0, [r7]
+  92              	.L3:
+  93              	.LVL9:
+  66:RTC_Driver.c  ****             }
+  67:RTC_Driver.c  ****         }
+  68:RTC_Driver.c  ****     }
+  69:RTC_Driver.c  ****     // Stop Comunication
+  70:RTC_Driver.c  ****     I2COLED_MasterSendStop();
+  94              		.loc 1 70 0
+  95 002e FFF7FEFF 		bl	I2COLED_MasterSendStop
+  96              	.LVL10:
+  71:RTC_Driver.c  ****     //Return
+  72:RTC_Driver.c  ****     return error ? ERROR : NO_ERROR;   
+  73:RTC_Driver.c  **** }
+  97              		.loc 1 73 0
+  98 0032 201C     		adds	r0, r4, #0
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 4
+
+
+  99 0034 18BF     		it	ne
+ 100 0036 0120     		movne	r0, #1
+ 101 0038 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 102              		.cfi_endproc
+ 103              	.LFE64:
+ 104              		.size	RTC_ReadRegister, .-RTC_ReadRegister
+ 105 003a 00BF     		.section	.text.RTC_WriteRegister,"ax",%progbits
+ 106              		.align	2
+ 107              		.global	RTC_WriteRegister
+ 108              		.thumb
+ 109              		.thumb_func
+ 110              		.type	RTC_WriteRegister, %function
+ 111              	RTC_WriteRegister:
+ 112              	.LFB65:
+  74:RTC_Driver.c  **** 
+  75:RTC_Driver.c  **** /*  RTC WRITE REGISTER
+  76:RTC_Driver.c  **** *   \brief: Function that sets slave register content
+  77:RTC_Driver.c  **** *   \Parameters:
+  78:RTC_Driver.c  **** *       @param device_address: 8-bit slave device address
+  79:RTC_Driver.c  **** *       @param register_address: 8-bit address of the register where content has to be written
+  80:RTC_Driver.c  **** *       @param data: pointer to array containing values to be written
+  81:RTC_Driver.c  **** *   \Return: error (if reading is successfull or not)
+  82:RTC_Driver.c  **** */
+  83:RTC_Driver.c  **** ErrorCode RTC_WriteRegister(uint8_t device_address, uint8_t register_address, uint8_t data) {
+ 113              		.loc 1 83 0
+ 114              		.cfi_startproc
+ 115              		@ args = 0, pretend = 0, frame = 0
+ 116              		@ frame_needed = 0, uses_anonymous_args = 0
+ 117              	.LVL11:
+ 118 0000 70B5     		push	{r4, r5, r6, lr}
+ 119              		.cfi_def_cfa_offset 16
+ 120              		.cfi_offset 4, -16
+ 121              		.cfi_offset 5, -12
+ 122              		.cfi_offset 6, -8
+ 123              		.cfi_offset 14, -4
+ 124 0002 0D46     		mov	r5, r1
+ 125 0004 1646     		mov	r6, r2
+  84:RTC_Driver.c  ****                                         
+  85:RTC_Driver.c  ****     uint8_t error = I2COLED_MasterSendStart(device_address, I2COLED_WRITE_XFER_MODE);
+ 126              		.loc 1 85 0
+ 127 0006 0021     		movs	r1, #0
+ 128              	.LVL12:
+ 129 0008 FFF7FEFF 		bl	I2COLED_MasterSendStart
+ 130              	.LVL13:
+  86:RTC_Driver.c  ****     if (error == I2COLED_MSTR_NO_ERROR)
+ 131              		.loc 1 86 0
+ 132 000c 0446     		mov	r4, r0
+ 133 000e 40B9     		cbnz	r0, .L6
+  87:RTC_Driver.c  ****     {
+  88:RTC_Driver.c  ****         // Write Register Address (to be overwritten)
+  89:RTC_Driver.c  ****         error = I2COLED_MasterWriteByte(register_address);
+ 134              		.loc 1 89 0
+ 135 0010 2846     		mov	r0, r5
+ 136              	.LVL14:
+ 137 0012 FFF7FEFF 		bl	I2COLED_MasterWriteByte
+ 138              	.LVL15:
+  90:RTC_Driver.c  ****         if (error == I2COLED_MSTR_NO_ERROR)
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 5
+
+
+ 139              		.loc 1 90 0
+ 140 0016 0446     		mov	r4, r0
+ 141 0018 18B9     		cbnz	r0, .L6
+  91:RTC_Driver.c  ****         {
+  92:RTC_Driver.c  ****             // Write Byte
+  93:RTC_Driver.c  ****             error = I2COLED_MasterWriteByte(data);
+ 142              		.loc 1 93 0
+ 143 001a 3046     		mov	r0, r6
+ 144              	.LVL16:
+ 145 001c FFF7FEFF 		bl	I2COLED_MasterWriteByte
+ 146              	.LVL17:
+ 147 0020 0446     		mov	r4, r0
+ 148              	.LVL18:
+ 149              	.L6:
+  94:RTC_Driver.c  ****         }
+  95:RTC_Driver.c  ****     }
+  96:RTC_Driver.c  ****     // Close Communication
+  97:RTC_Driver.c  ****     I2COLED_MasterSendStop();
+ 150              		.loc 1 97 0
+ 151 0022 FFF7FEFF 		bl	I2COLED_MasterSendStop
+ 152              	.LVL19:
+  98:RTC_Driver.c  ****     // Return
+  99:RTC_Driver.c  ****     return error ? ERROR : NO_ERROR;
+ 100:RTC_Driver.c  **** }
+ 153              		.loc 1 100 0
+ 154 0026 201C     		adds	r0, r4, #0
+ 155 0028 18BF     		it	ne
+ 156 002a 0120     		movne	r0, #1
+ 157 002c 70BD     		pop	{r4, r5, r6, pc}
+ 158              		.cfi_endproc
+ 159              	.LFE65:
+ 160              		.size	RTC_WriteRegister, .-RTC_WriteRegister
+ 161              		.global	__aeabi_i2d
+ 162              		.global	__aeabi_dadd
+ 163              		.global	__aeabi_d2uiz
+ 164              		.global	__aeabi_dmul
+ 165 002e 00BF     		.section	.text.RTC_convert_seconds,"ax",%progbits
+ 166              		.align	2
+ 167              		.global	RTC_convert_seconds
+ 168              		.thumb
+ 169              		.thumb_func
+ 170              		.type	RTC_convert_seconds, %function
+ 171              	RTC_convert_seconds:
+ 172              	.LFB66:
+ 101:RTC_Driver.c  **** 
+ 102:RTC_Driver.c  **** /*------------------------------------------------------------------------
+ 103:RTC_Driver.c  **** *                        RTC AUXILIARY FUNCTIONS
+ 104:RTC_Driver.c  **** -------------------------------------------------------------------------*/
+ 105:RTC_Driver.c  **** /*  RTC CONVERT SECOND
+ 106:RTC_Driver.c  **** *   \brief: converts the seconds buffer in int
+ 107:RTC_Driver.c  **** *   \Parameters:
+ 108:RTC_Driver.c  **** *       @param buffer: 8-bit buffer with information
+ 109:RTC_Driver.c  **** *   \Return: seconds
+ 110:RTC_Driver.c  **** */
+ 111:RTC_Driver.c  **** uint8_t RTC_convert_seconds(uint8_t* buffer) {
+ 173              		.loc 1 111 0
+ 174              		.cfi_startproc
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 6
+
+
+ 175              		@ args = 0, pretend = 0, frame = 0
+ 176              		@ frame_needed = 0, uses_anonymous_args = 0
+ 177              	.LVL20:
+ 178 0000 2DE97043 		push	{r4, r5, r6, r8, r9, lr}
+ 179              		.cfi_def_cfa_offset 24
+ 180              		.cfi_offset 4, -24
+ 181              		.cfi_offset 5, -20
+ 182              		.cfi_offset 6, -16
+ 183              		.cfi_offset 8, -12
+ 184              		.cfi_offset 9, -8
+ 185              		.cfi_offset 14, -4
+ 186 0004 0546     		mov	r5, r0
+ 187              	.LVL21:
+ 188              	.LBB2:
+ 112:RTC_Driver.c  ****     
+ 113:RTC_Driver.c  ****     uint8_t seconds = 0;
+ 114:RTC_Driver.c  ****     
+ 115:RTC_Driver.c  ****     //Bits 0-3 that converts for units
+ 116:RTC_Driver.c  ****     for(int i = 0; i < 4; i++) {
+ 189              		.loc 1 116 0
+ 190 0006 0024     		movs	r4, #0
+ 191              	.LBE2:
+ 113:RTC_Driver.c  ****     
+ 192              		.loc 1 113 0
+ 193 0008 2646     		mov	r6, r4
+ 194              	.LBB3:
+ 195              		.loc 1 116 0
+ 196 000a 1BE0     		b	.L9
+ 197              	.LVL22:
+ 198              	.L11:
+ 117:RTC_Driver.c  ****         if(*(buffer+i) & (0b00000001<<i)) {
+ 199              		.loc 1 117 0
+ 200 000c 2B5D     		ldrb	r3, [r5, r4]	@ zero_extendqisi2
+ 201 000e 2341     		asrs	r3, r3, r4
+ 202 0010 13F0010F 		tst	r3, #1
+ 203 0014 15D0     		beq	.L10
+ 118:RTC_Driver.c  ****             seconds += pow(2,i);
+ 204              		.loc 1 118 0
+ 205 0016 2046     		mov	r0, r4
+ 206 0018 FFF7FEFF 		bl	__aeabi_i2d
+ 207              	.LVL23:
+ 208 001c 0246     		mov	r2, r0
+ 209 001e 0B46     		mov	r3, r1
+ 210 0020 0020     		movs	r0, #0
+ 211 0022 4FF08041 		mov	r1, #1073741824
+ 212 0026 FFF7FEFF 		bl	pow
+ 213              	.LVL24:
+ 214 002a 8046     		mov	r8, r0
+ 215 002c 8946     		mov	r9, r1
+ 216 002e 3046     		mov	r0, r6
+ 217 0030 FFF7FEFF 		bl	__aeabi_i2d
+ 218              	.LVL25:
+ 219 0034 4246     		mov	r2, r8
+ 220 0036 4B46     		mov	r3, r9
+ 221 0038 FFF7FEFF 		bl	__aeabi_dadd
+ 222              	.LVL26:
+ 223 003c FFF7FEFF 		bl	__aeabi_d2uiz
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 7
+
+
+ 224              	.LVL27:
+ 225 0040 C6B2     		uxtb	r6, r0
+ 226              	.LVL28:
+ 227              	.L10:
+ 116:RTC_Driver.c  ****         if(*(buffer+i) & (0b00000001<<i)) {
+ 228              		.loc 1 116 0 discriminator 2
+ 229 0042 0134     		adds	r4, r4, #1
+ 230              	.LVL29:
+ 231              	.L9:
+ 116:RTC_Driver.c  ****         if(*(buffer+i) & (0b00000001<<i)) {
+ 232              		.loc 1 116 0 is_stmt 0 discriminator 1
+ 233 0044 032C     		cmp	r4, #3
+ 234 0046 E1DD     		ble	.L11
+ 235 0048 0424     		movs	r4, #4
+ 236              	.LVL30:
+ 237 004a 1FE0     		b	.L12
+ 238              	.LVL31:
+ 239              	.L14:
+ 240              	.LBE3:
+ 241              	.LBB4:
+ 119:RTC_Driver.c  ****         }
+ 120:RTC_Driver.c  ****     }
+ 121:RTC_Driver.c  ****     
+ 122:RTC_Driver.c  ****     //Bits 4-7 that converts for units
+ 123:RTC_Driver.c  ****     for(int j = 4; j < 8; j++) {
+ 124:RTC_Driver.c  ****         if(*(buffer+j) & (0b00000001<<j)) {
+ 242              		.loc 1 124 0 is_stmt 1
+ 243 004c 2B5D     		ldrb	r3, [r5, r4]	@ zero_extendqisi2
+ 244 004e 2341     		asrs	r3, r3, r4
+ 245 0050 13F0010F 		tst	r3, #1
+ 246 0054 19D0     		beq	.L13
+ 125:RTC_Driver.c  ****             seconds += 10*pow(2,j-4);
+ 247              		.loc 1 125 0
+ 248 0056 201F     		subs	r0, r4, #4
+ 249 0058 FFF7FEFF 		bl	__aeabi_i2d
+ 250              	.LVL32:
+ 251 005c 0246     		mov	r2, r0
+ 252 005e 0B46     		mov	r3, r1
+ 253 0060 0020     		movs	r0, #0
+ 254 0062 4FF08041 		mov	r1, #1073741824
+ 255 0066 FFF7FEFF 		bl	pow
+ 256              	.LVL33:
+ 257 006a 0022     		movs	r2, #0
+ 258 006c 0A4B     		ldr	r3, .L16
+ 259 006e FFF7FEFF 		bl	__aeabi_dmul
+ 260              	.LVL34:
+ 261 0072 8046     		mov	r8, r0
+ 262 0074 8946     		mov	r9, r1
+ 263 0076 3046     		mov	r0, r6
+ 264 0078 FFF7FEFF 		bl	__aeabi_i2d
+ 265              	.LVL35:
+ 266 007c 4246     		mov	r2, r8
+ 267 007e 4B46     		mov	r3, r9
+ 268 0080 FFF7FEFF 		bl	__aeabi_dadd
+ 269              	.LVL36:
+ 270 0084 FFF7FEFF 		bl	__aeabi_d2uiz
+ 271              	.LVL37:
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 8
+
+
+ 272 0088 C6B2     		uxtb	r6, r0
+ 273              	.LVL38:
+ 274              	.L13:
+ 123:RTC_Driver.c  ****         if(*(buffer+j) & (0b00000001<<j)) {
+ 275              		.loc 1 123 0 discriminator 2
+ 276 008a 0134     		adds	r4, r4, #1
+ 277              	.LVL39:
+ 278              	.L12:
+ 123:RTC_Driver.c  ****         if(*(buffer+j) & (0b00000001<<j)) {
+ 279              		.loc 1 123 0 is_stmt 0 discriminator 1
+ 280 008c 072C     		cmp	r4, #7
+ 281 008e DDDD     		ble	.L14
+ 282              	.LBE4:
+ 126:RTC_Driver.c  ****         }
+ 127:RTC_Driver.c  ****     }
+ 128:RTC_Driver.c  ****     
+ 129:RTC_Driver.c  ****     return seconds;
+ 130:RTC_Driver.c  **** }
+ 283              		.loc 1 130 0 is_stmt 1
+ 284 0090 3046     		mov	r0, r6
+ 285 0092 BDE87083 		pop	{r4, r5, r6, r8, r9, pc}
+ 286              	.LVL40:
+ 287              	.L17:
+ 288 0096 00BF     		.align	2
+ 289              	.L16:
+ 290 0098 00002440 		.word	1076101120
+ 291              		.cfi_endproc
+ 292              	.LFE66:
+ 293              		.size	RTC_convert_seconds, .-RTC_convert_seconds
+ 294              		.section	.text.RTC_convert_minutes,"ax",%progbits
+ 295              		.align	2
+ 296              		.global	RTC_convert_minutes
+ 297              		.thumb
+ 298              		.thumb_func
+ 299              		.type	RTC_convert_minutes, %function
+ 300              	RTC_convert_minutes:
+ 301              	.LFB67:
+ 131:RTC_Driver.c  **** 
+ 132:RTC_Driver.c  **** /*  RTC CONVERT MINUTES
+ 133:RTC_Driver.c  **** *   \brief: converts the minute buffer in int
+ 134:RTC_Driver.c  **** *   \Parameters:
+ 135:RTC_Driver.c  **** *       @param buffer: 8-bit buffer with information
+ 136:RTC_Driver.c  **** *   \Return: minutes
+ 137:RTC_Driver.c  **** */
+ 138:RTC_Driver.c  **** uint8_t RTC_convert_minutes(uint8_t* buffer) {
+ 302              		.loc 1 138 0
+ 303              		.cfi_startproc
+ 304              		@ args = 0, pretend = 0, frame = 0
+ 305              		@ frame_needed = 0, uses_anonymous_args = 0
+ 306              	.LVL41:
+ 307 0000 2DE97043 		push	{r4, r5, r6, r8, r9, lr}
+ 308              		.cfi_def_cfa_offset 24
+ 309              		.cfi_offset 4, -24
+ 310              		.cfi_offset 5, -20
+ 311              		.cfi_offset 6, -16
+ 312              		.cfi_offset 8, -12
+ 313              		.cfi_offset 9, -8
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 9
+
+
+ 314              		.cfi_offset 14, -4
+ 315 0004 0546     		mov	r5, r0
+ 316              	.LVL42:
+ 317              	.LBB5:
+ 139:RTC_Driver.c  ****     
+ 140:RTC_Driver.c  ****     uint8_t minutes = 0;
+ 141:RTC_Driver.c  ****     
+ 142:RTC_Driver.c  ****     //Bits 0-3 that converts for units
+ 143:RTC_Driver.c  ****     for(int i = 0; i < 4; i++) {
+ 318              		.loc 1 143 0
+ 319 0006 0024     		movs	r4, #0
+ 320              	.LBE5:
+ 140:RTC_Driver.c  ****     
+ 321              		.loc 1 140 0
+ 322 0008 2646     		mov	r6, r4
+ 323              	.LBB6:
+ 324              		.loc 1 143 0
+ 325 000a 1BE0     		b	.L19
+ 326              	.LVL43:
+ 327              	.L21:
+ 144:RTC_Driver.c  ****         if(*(buffer+i) & (0b00000001<<i)) {
+ 328              		.loc 1 144 0
+ 329 000c 2B5D     		ldrb	r3, [r5, r4]	@ zero_extendqisi2
+ 330 000e 2341     		asrs	r3, r3, r4
+ 331 0010 13F0010F 		tst	r3, #1
+ 332 0014 15D0     		beq	.L20
+ 145:RTC_Driver.c  ****             minutes += pow(2,i);
+ 333              		.loc 1 145 0
+ 334 0016 2046     		mov	r0, r4
+ 335 0018 FFF7FEFF 		bl	__aeabi_i2d
+ 336              	.LVL44:
+ 337 001c 0246     		mov	r2, r0
+ 338 001e 0B46     		mov	r3, r1
+ 339 0020 0020     		movs	r0, #0
+ 340 0022 4FF08041 		mov	r1, #1073741824
+ 341 0026 FFF7FEFF 		bl	pow
+ 342              	.LVL45:
+ 343 002a 8046     		mov	r8, r0
+ 344 002c 8946     		mov	r9, r1
+ 345 002e 3046     		mov	r0, r6
+ 346 0030 FFF7FEFF 		bl	__aeabi_i2d
+ 347              	.LVL46:
+ 348 0034 4246     		mov	r2, r8
+ 349 0036 4B46     		mov	r3, r9
+ 350 0038 FFF7FEFF 		bl	__aeabi_dadd
+ 351              	.LVL47:
+ 352 003c FFF7FEFF 		bl	__aeabi_d2uiz
+ 353              	.LVL48:
+ 354 0040 C6B2     		uxtb	r6, r0
+ 355              	.LVL49:
+ 356              	.L20:
+ 143:RTC_Driver.c  ****         if(*(buffer+i) & (0b00000001<<i)) {
+ 357              		.loc 1 143 0 discriminator 2
+ 358 0042 0134     		adds	r4, r4, #1
+ 359              	.LVL50:
+ 360              	.L19:
+ 143:RTC_Driver.c  ****         if(*(buffer+i) & (0b00000001<<i)) {
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 10
+
+
+ 361              		.loc 1 143 0 is_stmt 0 discriminator 1
+ 362 0044 032C     		cmp	r4, #3
+ 363 0046 E1DD     		ble	.L21
+ 364 0048 0424     		movs	r4, #4
+ 365              	.LVL51:
+ 366 004a 1FE0     		b	.L22
+ 367              	.LVL52:
+ 368              	.L24:
+ 369              	.LBE6:
+ 370              	.LBB7:
+ 146:RTC_Driver.c  ****         }
+ 147:RTC_Driver.c  ****     }
+ 148:RTC_Driver.c  ****     
+ 149:RTC_Driver.c  ****     //Bits 4-7 that converts for units
+ 150:RTC_Driver.c  ****     for(int j = 4; j < 8; j++) {
+ 151:RTC_Driver.c  ****         if(*(buffer+j) & (0b00000001<<j)) {
+ 371              		.loc 1 151 0 is_stmt 1
+ 372 004c 2B5D     		ldrb	r3, [r5, r4]	@ zero_extendqisi2
+ 373 004e 2341     		asrs	r3, r3, r4
+ 374 0050 13F0010F 		tst	r3, #1
+ 375 0054 19D0     		beq	.L23
+ 152:RTC_Driver.c  ****             minutes += 10*pow(2,j-4);
+ 376              		.loc 1 152 0
+ 377 0056 201F     		subs	r0, r4, #4
+ 378 0058 FFF7FEFF 		bl	__aeabi_i2d
+ 379              	.LVL53:
+ 380 005c 0246     		mov	r2, r0
+ 381 005e 0B46     		mov	r3, r1
+ 382 0060 0020     		movs	r0, #0
+ 383 0062 4FF08041 		mov	r1, #1073741824
+ 384 0066 FFF7FEFF 		bl	pow
+ 385              	.LVL54:
+ 386 006a 0022     		movs	r2, #0
+ 387 006c 0A4B     		ldr	r3, .L26
+ 388 006e FFF7FEFF 		bl	__aeabi_dmul
+ 389              	.LVL55:
+ 390 0072 8046     		mov	r8, r0
+ 391 0074 8946     		mov	r9, r1
+ 392 0076 3046     		mov	r0, r6
+ 393 0078 FFF7FEFF 		bl	__aeabi_i2d
+ 394              	.LVL56:
+ 395 007c 4246     		mov	r2, r8
+ 396 007e 4B46     		mov	r3, r9
+ 397 0080 FFF7FEFF 		bl	__aeabi_dadd
+ 398              	.LVL57:
+ 399 0084 FFF7FEFF 		bl	__aeabi_d2uiz
+ 400              	.LVL58:
+ 401 0088 C6B2     		uxtb	r6, r0
+ 402              	.LVL59:
+ 403              	.L23:
+ 150:RTC_Driver.c  ****         if(*(buffer+j) & (0b00000001<<j)) {
+ 404              		.loc 1 150 0 discriminator 2
+ 405 008a 0134     		adds	r4, r4, #1
+ 406              	.LVL60:
+ 407              	.L22:
+ 150:RTC_Driver.c  ****         if(*(buffer+j) & (0b00000001<<j)) {
+ 408              		.loc 1 150 0 is_stmt 0 discriminator 1
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 11
+
+
+ 409 008c 072C     		cmp	r4, #7
+ 410 008e DDDD     		ble	.L24
+ 411              	.LBE7:
+ 153:RTC_Driver.c  ****         }
+ 154:RTC_Driver.c  ****     }
+ 155:RTC_Driver.c  ****     
+ 156:RTC_Driver.c  ****     return minutes;
+ 157:RTC_Driver.c  **** }                                    
+ 412              		.loc 1 157 0 is_stmt 1
+ 413 0090 3046     		mov	r0, r6
+ 414 0092 BDE87083 		pop	{r4, r5, r6, r8, r9, pc}
+ 415              	.LVL61:
+ 416              	.L27:
+ 417 0096 00BF     		.align	2
+ 418              	.L26:
+ 419 0098 00002440 		.word	1076101120
+ 420              		.cfi_endproc
+ 421              	.LFE67:
+ 422              		.size	RTC_convert_minutes, .-RTC_convert_minutes
+ 423              		.section	.text.RTC_convert_hours,"ax",%progbits
+ 424              		.align	2
+ 425              		.global	RTC_convert_hours
+ 426              		.thumb
+ 427              		.thumb_func
+ 428              		.type	RTC_convert_hours, %function
+ 429              	RTC_convert_hours:
+ 430              	.LFB68:
+ 158:RTC_Driver.c  **** 
+ 159:RTC_Driver.c  **** /*  RTC CONVERT HOURS
+ 160:RTC_Driver.c  **** *   \brief: converts the hours buffer in int
+ 161:RTC_Driver.c  **** *   \Parameters:
+ 162:RTC_Driver.c  **** *       @param buffer: 8-bit buffer with information
+ 163:RTC_Driver.c  **** *   \Return: hours
+ 164:RTC_Driver.c  **** */
+ 165:RTC_Driver.c  **** uint8_t RTC_convert_hours(uint8_t* buffer) {
+ 431              		.loc 1 165 0
+ 432              		.cfi_startproc
+ 433              		@ args = 0, pretend = 0, frame = 0
+ 434              		@ frame_needed = 0, uses_anonymous_args = 0
+ 435              	.LVL62:
+ 436 0000 2DE97043 		push	{r4, r5, r6, r8, r9, lr}
+ 437              		.cfi_def_cfa_offset 24
+ 438              		.cfi_offset 4, -24
+ 439              		.cfi_offset 5, -20
+ 440              		.cfi_offset 6, -16
+ 441              		.cfi_offset 8, -12
+ 442              		.cfi_offset 9, -8
+ 443              		.cfi_offset 14, -4
+ 444 0004 0546     		mov	r5, r0
+ 445              	.LVL63:
+ 446              	.LBB8:
+ 166:RTC_Driver.c  ****     
+ 167:RTC_Driver.c  ****     uint8_t hours = 0;
+ 168:RTC_Driver.c  ****     
+ 169:RTC_Driver.c  ****     for(int i = 0; i < 4; i++) {
+ 447              		.loc 1 169 0
+ 448 0006 0024     		movs	r4, #0
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 12
+
+
+ 449              	.LBE8:
+ 167:RTC_Driver.c  ****     
+ 450              		.loc 1 167 0
+ 451 0008 2646     		mov	r6, r4
+ 452              	.LBB9:
+ 453              		.loc 1 169 0
+ 454 000a 1BE0     		b	.L29
+ 455              	.LVL64:
+ 456              	.L31:
+ 170:RTC_Driver.c  ****         if(*(buffer+i) & (0b00000001<<i)) {
+ 457              		.loc 1 170 0
+ 458 000c 2B5D     		ldrb	r3, [r5, r4]	@ zero_extendqisi2
+ 459 000e 2341     		asrs	r3, r3, r4
+ 460 0010 13F0010F 		tst	r3, #1
+ 461 0014 15D0     		beq	.L30
+ 171:RTC_Driver.c  ****             hours += pow(2,i);
+ 462              		.loc 1 171 0
+ 463 0016 2046     		mov	r0, r4
+ 464 0018 FFF7FEFF 		bl	__aeabi_i2d
+ 465              	.LVL65:
+ 466 001c 0246     		mov	r2, r0
+ 467 001e 0B46     		mov	r3, r1
+ 468 0020 0020     		movs	r0, #0
+ 469 0022 4FF08041 		mov	r1, #1073741824
+ 470 0026 FFF7FEFF 		bl	pow
+ 471              	.LVL66:
+ 472 002a 8046     		mov	r8, r0
+ 473 002c 8946     		mov	r9, r1
+ 474 002e 3046     		mov	r0, r6
+ 475 0030 FFF7FEFF 		bl	__aeabi_i2d
+ 476              	.LVL67:
+ 477 0034 4246     		mov	r2, r8
+ 478 0036 4B46     		mov	r3, r9
+ 479 0038 FFF7FEFF 		bl	__aeabi_dadd
+ 480              	.LVL68:
+ 481 003c FFF7FEFF 		bl	__aeabi_d2uiz
+ 482              	.LVL69:
+ 483 0040 C6B2     		uxtb	r6, r0
+ 484              	.LVL70:
+ 485              	.L30:
+ 169:RTC_Driver.c  ****         if(*(buffer+i) & (0b00000001<<i)) {
+ 486              		.loc 1 169 0 discriminator 2
+ 487 0042 0134     		adds	r4, r4, #1
+ 488              	.LVL71:
+ 489              	.L29:
+ 169:RTC_Driver.c  ****         if(*(buffer+i) & (0b00000001<<i)) {
+ 490              		.loc 1 169 0 is_stmt 0 discriminator 1
+ 491 0044 032C     		cmp	r4, #3
+ 492 0046 E1DD     		ble	.L31
+ 493              	.LBE9:
+ 172:RTC_Driver.c  ****         }
+ 173:RTC_Driver.c  ****     }
+ 174:RTC_Driver.c  ****     
+ 175:RTC_Driver.c  ****     hours += 10*(*(buffer+4));
+ 494              		.loc 1 175 0 is_stmt 1
+ 495 0048 2B79     		ldrb	r3, [r5, #4]	@ zero_extendqisi2
+ 496 004a 03EB8303 		add	r3, r3, r3, lsl #2
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 13
+
+
+ 497 004e 5800     		lsls	r0, r3, #1
+ 498 0050 3044     		add	r0, r0, r6
+ 499              	.LVL72:
+ 176:RTC_Driver.c  ****     
+ 177:RTC_Driver.c  ****     return hours;
+ 178:RTC_Driver.c  **** }
+ 500              		.loc 1 178 0
+ 501 0052 C0B2     		uxtb	r0, r0
+ 502 0054 BDE87083 		pop	{r4, r5, r6, r8, r9, pc}
+ 503              		.cfi_endproc
+ 504              	.LFE68:
+ 505              		.size	RTC_convert_hours, .-RTC_convert_hours
+ 506              		.section	.text.RTC_convert_day,"ax",%progbits
+ 507              		.align	2
+ 508              		.global	RTC_convert_day
+ 509              		.thumb
+ 510              		.thumb_func
+ 511              		.type	RTC_convert_day, %function
+ 512              	RTC_convert_day:
+ 513              	.LFB69:
+ 179:RTC_Driver.c  **** 
+ 180:RTC_Driver.c  **** 
+ 181:RTC_Driver.c  **** /*  RTC CONVERT DAY
+ 182:RTC_Driver.c  **** *   \brief: converts the day buffer in int
+ 183:RTC_Driver.c  **** *   \Parameters:
+ 184:RTC_Driver.c  **** *       @param buffer: 8-bit buffer with information
+ 185:RTC_Driver.c  **** *   \Return: day
+ 186:RTC_Driver.c  **** */
+ 187:RTC_Driver.c  **** uint8_t RTC_convert_day(uint8_t* buffer) {
+ 514              		.loc 1 187 0
+ 515              		.cfi_startproc
+ 516              		@ args = 0, pretend = 0, frame = 0
+ 517              		@ frame_needed = 0, uses_anonymous_args = 0
+ 518              	.LVL73:
+ 519 0000 2DE97043 		push	{r4, r5, r6, r8, r9, lr}
+ 520              		.cfi_def_cfa_offset 24
+ 521              		.cfi_offset 4, -24
+ 522              		.cfi_offset 5, -20
+ 523              		.cfi_offset 6, -16
+ 524              		.cfi_offset 8, -12
+ 525              		.cfi_offset 9, -8
+ 526              		.cfi_offset 14, -4
+ 527 0004 0546     		mov	r5, r0
+ 528              	.LVL74:
+ 529              	.LBB10:
+ 188:RTC_Driver.c  ****     
+ 189:RTC_Driver.c  ****     uint8_t day = 0;
+ 190:RTC_Driver.c  ****     
+ 191:RTC_Driver.c  ****     for(int i = 0; i < 3; i++) {
+ 530              		.loc 1 191 0
+ 531 0006 0024     		movs	r4, #0
+ 532              	.LBE10:
+ 189:RTC_Driver.c  ****     
+ 533              		.loc 1 189 0
+ 534 0008 2646     		mov	r6, r4
+ 535              	.LBB11:
+ 536              		.loc 1 191 0
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 14
+
+
+ 537 000a 1BE0     		b	.L34
+ 538              	.LVL75:
+ 539              	.L36:
+ 192:RTC_Driver.c  ****         if(*(buffer+i) & (0b00000001<<i)) {
+ 540              		.loc 1 192 0
+ 541 000c 2B5D     		ldrb	r3, [r5, r4]	@ zero_extendqisi2
+ 542 000e 2341     		asrs	r3, r3, r4
+ 543 0010 13F0010F 		tst	r3, #1
+ 544 0014 15D0     		beq	.L35
+ 193:RTC_Driver.c  ****             day += pow(2,i);
+ 545              		.loc 1 193 0
+ 546 0016 2046     		mov	r0, r4
+ 547 0018 FFF7FEFF 		bl	__aeabi_i2d
+ 548              	.LVL76:
+ 549 001c 0246     		mov	r2, r0
+ 550 001e 0B46     		mov	r3, r1
+ 551 0020 0020     		movs	r0, #0
+ 552 0022 4FF08041 		mov	r1, #1073741824
+ 553 0026 FFF7FEFF 		bl	pow
+ 554              	.LVL77:
+ 555 002a 8046     		mov	r8, r0
+ 556 002c 8946     		mov	r9, r1
+ 557 002e 3046     		mov	r0, r6
+ 558 0030 FFF7FEFF 		bl	__aeabi_i2d
+ 559              	.LVL78:
+ 560 0034 4246     		mov	r2, r8
+ 561 0036 4B46     		mov	r3, r9
+ 562 0038 FFF7FEFF 		bl	__aeabi_dadd
+ 563              	.LVL79:
+ 564 003c FFF7FEFF 		bl	__aeabi_d2uiz
+ 565              	.LVL80:
+ 566 0040 C6B2     		uxtb	r6, r0
+ 567              	.LVL81:
+ 568              	.L35:
+ 191:RTC_Driver.c  ****         if(*(buffer+i) & (0b00000001<<i)) {
+ 569              		.loc 1 191 0 discriminator 2
+ 570 0042 0134     		adds	r4, r4, #1
+ 571              	.LVL82:
+ 572              	.L34:
+ 191:RTC_Driver.c  ****         if(*(buffer+i) & (0b00000001<<i)) {
+ 573              		.loc 1 191 0 is_stmt 0 discriminator 1
+ 574 0044 022C     		cmp	r4, #2
+ 575 0046 E1DD     		ble	.L36
+ 576              	.LBE11:
+ 194:RTC_Driver.c  ****         }
+ 195:RTC_Driver.c  ****     }
+ 196:RTC_Driver.c  ****     
+ 197:RTC_Driver.c  ****     return day;
+ 198:RTC_Driver.c  **** }
+ 577              		.loc 1 198 0 is_stmt 1
+ 578 0048 3046     		mov	r0, r6
+ 579 004a BDE87083 		pop	{r4, r5, r6, r8, r9, pc}
+ 580              		.cfi_endproc
+ 581              	.LFE69:
+ 582              		.size	RTC_convert_day, .-RTC_convert_day
+ 583 004e 00BF     		.section	.text.RTC_convert_month,"ax",%progbits
+ 584              		.align	2
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 15
+
+
+ 585              		.global	RTC_convert_month
+ 586              		.thumb
+ 587              		.thumb_func
+ 588              		.type	RTC_convert_month, %function
+ 589              	RTC_convert_month:
+ 590              	.LFB70:
+ 199:RTC_Driver.c  **** 
+ 200:RTC_Driver.c  **** /*  RTC CONVERT MONTH
+ 201:RTC_Driver.c  **** *   \brief: converts the month buffer in int
+ 202:RTC_Driver.c  **** *   \Parameters:
+ 203:RTC_Driver.c  **** *       @param buffer: 8-bit buffer with information
+ 204:RTC_Driver.c  **** *   \Return: month
+ 205:RTC_Driver.c  **** */
+ 206:RTC_Driver.c  **** uint8_t RTC_convert_month(uint8_t* buffer) {
+ 591              		.loc 1 206 0
+ 592              		.cfi_startproc
+ 593              		@ args = 0, pretend = 0, frame = 0
+ 594              		@ frame_needed = 0, uses_anonymous_args = 0
+ 595              	.LVL83:
+ 596 0000 2DE97043 		push	{r4, r5, r6, r8, r9, lr}
+ 597              		.cfi_def_cfa_offset 24
+ 598              		.cfi_offset 4, -24
+ 599              		.cfi_offset 5, -20
+ 600              		.cfi_offset 6, -16
+ 601              		.cfi_offset 8, -12
+ 602              		.cfi_offset 9, -8
+ 603              		.cfi_offset 14, -4
+ 604 0004 0546     		mov	r5, r0
+ 605              	.LVL84:
+ 606              	.LBB12:
+ 207:RTC_Driver.c  ****     
+ 208:RTC_Driver.c  ****     uint8_t month = 0;
+ 209:RTC_Driver.c  ****     
+ 210:RTC_Driver.c  ****     for(int i = 0; i < 3; i++) {
+ 607              		.loc 1 210 0
+ 608 0006 0024     		movs	r4, #0
+ 609              	.LBE12:
+ 208:RTC_Driver.c  ****     
+ 610              		.loc 1 208 0
+ 611 0008 2646     		mov	r6, r4
+ 612              	.LBB13:
+ 613              		.loc 1 210 0
+ 614 000a 1BE0     		b	.L39
+ 615              	.LVL85:
+ 616              	.L41:
+ 211:RTC_Driver.c  ****         if(*(buffer+i) & (0b00000001<<i)) {
+ 617              		.loc 1 211 0
+ 618 000c 2B5D     		ldrb	r3, [r5, r4]	@ zero_extendqisi2
+ 619 000e 2341     		asrs	r3, r3, r4
+ 620 0010 13F0010F 		tst	r3, #1
+ 621 0014 15D0     		beq	.L40
+ 212:RTC_Driver.c  ****             month += pow(2,i);
+ 622              		.loc 1 212 0
+ 623 0016 2046     		mov	r0, r4
+ 624 0018 FFF7FEFF 		bl	__aeabi_i2d
+ 625              	.LVL86:
+ 626 001c 0246     		mov	r2, r0
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 16
+
+
+ 627 001e 0B46     		mov	r3, r1
+ 628 0020 0020     		movs	r0, #0
+ 629 0022 4FF08041 		mov	r1, #1073741824
+ 630 0026 FFF7FEFF 		bl	pow
+ 631              	.LVL87:
+ 632 002a 8046     		mov	r8, r0
+ 633 002c 8946     		mov	r9, r1
+ 634 002e 3046     		mov	r0, r6
+ 635 0030 FFF7FEFF 		bl	__aeabi_i2d
+ 636              	.LVL88:
+ 637 0034 4246     		mov	r2, r8
+ 638 0036 4B46     		mov	r3, r9
+ 639 0038 FFF7FEFF 		bl	__aeabi_dadd
+ 640              	.LVL89:
+ 641 003c FFF7FEFF 		bl	__aeabi_d2uiz
+ 642              	.LVL90:
+ 643 0040 C6B2     		uxtb	r6, r0
+ 644              	.LVL91:
+ 645              	.L40:
+ 210:RTC_Driver.c  ****         if(*(buffer+i) & (0b00000001<<i)) {
+ 646              		.loc 1 210 0 discriminator 2
+ 647 0042 0134     		adds	r4, r4, #1
+ 648              	.LVL92:
+ 649              	.L39:
+ 210:RTC_Driver.c  ****         if(*(buffer+i) & (0b00000001<<i)) {
+ 650              		.loc 1 210 0 is_stmt 0 discriminator 1
+ 651 0044 022C     		cmp	r4, #2
+ 652 0046 E1DD     		ble	.L41
+ 653              	.LBE13:
+ 213:RTC_Driver.c  ****         }
+ 214:RTC_Driver.c  ****     }
+ 215:RTC_Driver.c  ****     
+ 216:RTC_Driver.c  ****     month += 10*(*(buffer+4));
+ 654              		.loc 1 216 0 is_stmt 1
+ 655 0048 2B79     		ldrb	r3, [r5, #4]	@ zero_extendqisi2
+ 656 004a 03EB8303 		add	r3, r3, r3, lsl #2
+ 657 004e 5800     		lsls	r0, r3, #1
+ 658 0050 3044     		add	r0, r0, r6
+ 659              	.LVL93:
+ 217:RTC_Driver.c  ****     
+ 218:RTC_Driver.c  ****     return month;
+ 219:RTC_Driver.c  **** }
+ 660              		.loc 1 219 0
+ 661 0052 C0B2     		uxtb	r0, r0
+ 662 0054 BDE87083 		pop	{r4, r5, r6, r8, r9, pc}
+ 663              		.cfi_endproc
+ 664              	.LFE70:
+ 665              		.size	RTC_convert_month, .-RTC_convert_month
+ 666              		.section	.text.RTC_convert_year,"ax",%progbits
+ 667              		.align	2
+ 668              		.global	RTC_convert_year
+ 669              		.thumb
+ 670              		.thumb_func
+ 671              		.type	RTC_convert_year, %function
+ 672              	RTC_convert_year:
+ 673              	.LFB71:
+ 220:RTC_Driver.c  **** 
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 17
+
+
+ 221:RTC_Driver.c  **** /*  RTC CONVERT YEAR
+ 222:RTC_Driver.c  **** *   \brief: converts the year buffer in int
+ 223:RTC_Driver.c  **** *   \Parameters:
+ 224:RTC_Driver.c  **** *       @param buffer: 8-bit buffer with information
+ 225:RTC_Driver.c  **** *   \Return: year
+ 226:RTC_Driver.c  **** */
+ 227:RTC_Driver.c  **** uint8_t RTC_convert_year(uint8_t* buffer) {
+ 674              		.loc 1 227 0
+ 675              		.cfi_startproc
+ 676              		@ args = 0, pretend = 0, frame = 0
+ 677              		@ frame_needed = 0, uses_anonymous_args = 0
+ 678              	.LVL94:
+ 679 0000 2DE97043 		push	{r4, r5, r6, r8, r9, lr}
+ 680              		.cfi_def_cfa_offset 24
+ 681              		.cfi_offset 4, -24
+ 682              		.cfi_offset 5, -20
+ 683              		.cfi_offset 6, -16
+ 684              		.cfi_offset 8, -12
+ 685              		.cfi_offset 9, -8
+ 686              		.cfi_offset 14, -4
+ 687 0004 0546     		mov	r5, r0
+ 688              	.LVL95:
+ 689              	.LBB14:
+ 228:RTC_Driver.c  ****     
+ 229:RTC_Driver.c  ****     uint8_t year = 0;
+ 230:RTC_Driver.c  ****     
+ 231:RTC_Driver.c  ****     //Bits 0-3 that converts for units
+ 232:RTC_Driver.c  ****     for(int i = 0; i < 4; i++) {
+ 690              		.loc 1 232 0
+ 691 0006 0024     		movs	r4, #0
+ 692              	.LBE14:
+ 229:RTC_Driver.c  ****     
+ 693              		.loc 1 229 0
+ 694 0008 2646     		mov	r6, r4
+ 695              	.LBB15:
+ 696              		.loc 1 232 0
+ 697 000a 1BE0     		b	.L44
+ 698              	.LVL96:
+ 699              	.L46:
+ 233:RTC_Driver.c  ****         if(*(buffer+i) & (0b00000001<<i)) {
+ 700              		.loc 1 233 0
+ 701 000c 2B5D     		ldrb	r3, [r5, r4]	@ zero_extendqisi2
+ 702 000e 2341     		asrs	r3, r3, r4
+ 703 0010 13F0010F 		tst	r3, #1
+ 704 0014 15D0     		beq	.L45
+ 234:RTC_Driver.c  ****             year += pow(2,i);
+ 705              		.loc 1 234 0
+ 706 0016 2046     		mov	r0, r4
+ 707 0018 FFF7FEFF 		bl	__aeabi_i2d
+ 708              	.LVL97:
+ 709 001c 0246     		mov	r2, r0
+ 710 001e 0B46     		mov	r3, r1
+ 711 0020 0020     		movs	r0, #0
+ 712 0022 4FF08041 		mov	r1, #1073741824
+ 713 0026 FFF7FEFF 		bl	pow
+ 714              	.LVL98:
+ 715 002a 8046     		mov	r8, r0
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 18
+
+
+ 716 002c 8946     		mov	r9, r1
+ 717 002e 3046     		mov	r0, r6
+ 718 0030 FFF7FEFF 		bl	__aeabi_i2d
+ 719              	.LVL99:
+ 720 0034 4246     		mov	r2, r8
+ 721 0036 4B46     		mov	r3, r9
+ 722 0038 FFF7FEFF 		bl	__aeabi_dadd
+ 723              	.LVL100:
+ 724 003c FFF7FEFF 		bl	__aeabi_d2uiz
+ 725              	.LVL101:
+ 726 0040 C6B2     		uxtb	r6, r0
+ 727              	.LVL102:
+ 728              	.L45:
+ 232:RTC_Driver.c  ****         if(*(buffer+i) & (0b00000001<<i)) {
+ 729              		.loc 1 232 0 discriminator 2
+ 730 0042 0134     		adds	r4, r4, #1
+ 731              	.LVL103:
+ 732              	.L44:
+ 232:RTC_Driver.c  ****         if(*(buffer+i) & (0b00000001<<i)) {
+ 733              		.loc 1 232 0 is_stmt 0 discriminator 1
+ 734 0044 032C     		cmp	r4, #3
+ 735 0046 E1DD     		ble	.L46
+ 736 0048 0424     		movs	r4, #4
+ 737              	.LVL104:
+ 738 004a 1FE0     		b	.L47
+ 739              	.LVL105:
+ 740              	.L49:
+ 741              	.LBE15:
+ 742              	.LBB16:
+ 235:RTC_Driver.c  ****         }
+ 236:RTC_Driver.c  ****     }
+ 237:RTC_Driver.c  ****     
+ 238:RTC_Driver.c  ****     //Bits 4-7 that converts for units
+ 239:RTC_Driver.c  ****     for(int j = 4; j < 8; j++) {
+ 240:RTC_Driver.c  ****         if(*(buffer+j) & (0b00000001<<j)) {
+ 743              		.loc 1 240 0 is_stmt 1
+ 744 004c 2B5D     		ldrb	r3, [r5, r4]	@ zero_extendqisi2
+ 745 004e 2341     		asrs	r3, r3, r4
+ 746 0050 13F0010F 		tst	r3, #1
+ 747 0054 19D0     		beq	.L48
+ 241:RTC_Driver.c  ****             year += 10*pow(2,j-4);
+ 748              		.loc 1 241 0
+ 749 0056 201F     		subs	r0, r4, #4
+ 750 0058 FFF7FEFF 		bl	__aeabi_i2d
+ 751              	.LVL106:
+ 752 005c 0246     		mov	r2, r0
+ 753 005e 0B46     		mov	r3, r1
+ 754 0060 0020     		movs	r0, #0
+ 755 0062 4FF08041 		mov	r1, #1073741824
+ 756 0066 FFF7FEFF 		bl	pow
+ 757              	.LVL107:
+ 758 006a 0022     		movs	r2, #0
+ 759 006c 0A4B     		ldr	r3, .L51
+ 760 006e FFF7FEFF 		bl	__aeabi_dmul
+ 761              	.LVL108:
+ 762 0072 8046     		mov	r8, r0
+ 763 0074 8946     		mov	r9, r1
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 19
+
+
+ 764 0076 3046     		mov	r0, r6
+ 765 0078 FFF7FEFF 		bl	__aeabi_i2d
+ 766              	.LVL109:
+ 767 007c 4246     		mov	r2, r8
+ 768 007e 4B46     		mov	r3, r9
+ 769 0080 FFF7FEFF 		bl	__aeabi_dadd
+ 770              	.LVL110:
+ 771 0084 FFF7FEFF 		bl	__aeabi_d2uiz
+ 772              	.LVL111:
+ 773 0088 C6B2     		uxtb	r6, r0
+ 774              	.LVL112:
+ 775              	.L48:
+ 239:RTC_Driver.c  ****         if(*(buffer+j) & (0b00000001<<j)) {
+ 776              		.loc 1 239 0 discriminator 2
+ 777 008a 0134     		adds	r4, r4, #1
+ 778              	.LVL113:
+ 779              	.L47:
+ 239:RTC_Driver.c  ****         if(*(buffer+j) & (0b00000001<<j)) {
+ 780              		.loc 1 239 0 is_stmt 0 discriminator 1
+ 781 008c 072C     		cmp	r4, #7
+ 782 008e DDDD     		ble	.L49
+ 783              	.LBE16:
+ 242:RTC_Driver.c  ****         }
+ 243:RTC_Driver.c  ****     }
+ 244:RTC_Driver.c  ****     
+ 245:RTC_Driver.c  ****     return year;
+ 246:RTC_Driver.c  **** } 
+ 784              		.loc 1 246 0 is_stmt 1
+ 785 0090 3046     		mov	r0, r6
+ 786 0092 BDE87083 		pop	{r4, r5, r6, r8, r9, pc}
+ 787              	.LVL114:
+ 788              	.L52:
+ 789 0096 00BF     		.align	2
+ 790              	.L51:
+ 791 0098 00002440 		.word	1076101120
+ 792              		.cfi_endproc
+ 793              	.LFE71:
+ 794              		.size	RTC_convert_year, .-RTC_convert_year
+ 795              		.comm	Current_time,8,4
+ 796              		.text
+ 797              	.Letext0:
+ 798              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 799              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 800              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 801              		.file 5 "./ErrorCodes.h"
+ 802              		.file 6 "Generated_Source\\PSoC5/core_cm3.h"
+ 803              		.file 7 "RTC_Driver.h"
+ 804              		.file 8 "Generated_Source\\PSoC5/I2COLED.h"
+ 805              		.file 9 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 806              		.section	.debug_info,"",%progbits
+ 807              	.Ldebug_info0:
+ 808 0000 46050000 		.4byte	0x546
+ 809 0004 0400     		.2byte	0x4
+ 810 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 811 000a 04       		.byte	0x4
+ 812 000b 01       		.uleb128 0x1
+ 813 000c 92000000 		.4byte	.LASF48
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 20
+
+
+ 814 0010 0C       		.byte	0xc
+ 815 0011 60000000 		.4byte	.LASF49
+ 816 0015 46010000 		.4byte	.LASF50
+ 817 0019 90000000 		.4byte	.Ldebug_ranges0+0x90
+ 818 001d 00000000 		.4byte	0
+ 819 0021 00000000 		.4byte	.Ldebug_line0
+ 820 0025 02       		.uleb128 0x2
+ 821 0026 01       		.byte	0x1
+ 822 0027 06       		.byte	0x6
+ 823 0028 78000000 		.4byte	.LASF0
+ 824 002c 03       		.uleb128 0x3
+ 825 002d 08000000 		.4byte	.LASF4
+ 826 0031 02       		.byte	0x2
+ 827 0032 1D       		.byte	0x1d
+ 828 0033 37000000 		.4byte	0x37
+ 829 0037 02       		.uleb128 0x2
+ 830 0038 01       		.byte	0x1
+ 831 0039 08       		.byte	0x8
+ 832 003a 84000000 		.4byte	.LASF1
+ 833 003e 02       		.uleb128 0x2
+ 834 003f 02       		.byte	0x2
+ 835 0040 05       		.byte	0x5
+ 836 0041 0A030000 		.4byte	.LASF2
+ 837 0045 02       		.uleb128 0x2
+ 838 0046 02       		.byte	0x2
+ 839 0047 07       		.byte	0x7
+ 840 0048 D9010000 		.4byte	.LASF3
+ 841 004c 03       		.uleb128 0x3
+ 842 004d 26000000 		.4byte	.LASF5
+ 843 0051 02       		.byte	0x2
+ 844 0052 3F       		.byte	0x3f
+ 845 0053 57000000 		.4byte	0x57
+ 846 0057 02       		.uleb128 0x2
+ 847 0058 04       		.byte	0x4
+ 848 0059 05       		.byte	0x5
+ 849 005a 30000000 		.4byte	.LASF6
+ 850 005e 02       		.uleb128 0x2
+ 851 005f 04       		.byte	0x4
+ 852 0060 07       		.byte	0x7
+ 853 0061 34010000 		.4byte	.LASF7
+ 854 0065 02       		.uleb128 0x2
+ 855 0066 08       		.byte	0x8
+ 856 0067 05       		.byte	0x5
+ 857 0068 AD020000 		.4byte	.LASF8
+ 858 006c 02       		.uleb128 0x2
+ 859 006d 08       		.byte	0x8
+ 860 006e 07       		.byte	0x7
+ 861 006f 5F020000 		.4byte	.LASF9
+ 862 0073 04       		.uleb128 0x4
+ 863 0074 04       		.byte	0x4
+ 864 0075 05       		.byte	0x5
+ 865 0076 696E7400 		.ascii	"int\000"
+ 866 007a 02       		.uleb128 0x2
+ 867 007b 04       		.byte	0x4
+ 868 007c 07       		.byte	0x7
+ 869 007d 32020000 		.4byte	.LASF10
+ 870 0081 03       		.uleb128 0x3
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 21
+
+
+ 871 0082 76020000 		.4byte	.LASF11
+ 872 0086 03       		.byte	0x3
+ 873 0087 18       		.byte	0x18
+ 874 0088 2C000000 		.4byte	0x2c
+ 875 008c 03       		.uleb128 0x3
+ 876 008d 96020000 		.4byte	.LASF12
+ 877 0091 03       		.byte	0x3
+ 878 0092 2C       		.byte	0x2c
+ 879 0093 4C000000 		.4byte	0x4c
+ 880 0097 05       		.uleb128 0x5
+ 881 0098 2B030000 		.4byte	.LASF13
+ 882 009c 04       		.byte	0x4
+ 883 009d E901     		.2byte	0x1e9
+ 884 009f 37000000 		.4byte	0x37
+ 885 00a3 02       		.uleb128 0x2
+ 886 00a4 04       		.byte	0x4
+ 887 00a5 04       		.byte	0x4
+ 888 00a6 6D000000 		.4byte	.LASF14
+ 889 00aa 02       		.uleb128 0x2
+ 890 00ab 08       		.byte	0x8
+ 891 00ac 04       		.byte	0x4
+ 892 00ad 19020000 		.4byte	.LASF15
+ 893 00b1 02       		.uleb128 0x2
+ 894 00b2 01       		.byte	0x1
+ 895 00b3 08       		.byte	0x8
+ 896 00b4 D4020000 		.4byte	.LASF16
+ 897 00b8 02       		.uleb128 0x2
+ 898 00b9 08       		.byte	0x8
+ 899 00ba 04       		.byte	0x4
+ 900 00bb 4C030000 		.4byte	.LASF17
+ 901 00bf 02       		.uleb128 0x2
+ 902 00c0 04       		.byte	0x4
+ 903 00c1 07       		.byte	0x7
+ 904 00c2 9E020000 		.4byte	.LASF18
+ 905 00c6 06       		.uleb128 0x6
+ 906 00c7 01       		.byte	0x1
+ 907 00c8 37000000 		.4byte	0x37
+ 908 00cc 05       		.byte	0x5
+ 909 00cd 15       		.byte	0x15
+ 910 00ce DF000000 		.4byte	0xdf
+ 911 00d2 07       		.uleb128 0x7
+ 912 00d3 3D030000 		.4byte	.LASF19
+ 913 00d7 00       		.byte	0
+ 914 00d8 07       		.uleb128 0x7
+ 915 00d9 46030000 		.4byte	.LASF20
+ 916 00dd 01       		.byte	0x1
+ 917 00de 00       		.byte	0
+ 918 00df 03       		.uleb128 0x3
+ 919 00e0 39000000 		.4byte	.LASF21
+ 920 00e4 05       		.byte	0x5
+ 921 00e5 18       		.byte	0x18
+ 922 00e6 C6000000 		.4byte	0xc6
+ 923 00ea 08       		.uleb128 0x8
+ 924 00eb 10020000 		.4byte	.LASF51
+ 925 00ef 01       		.byte	0x1
+ 926 00f0 25       		.byte	0x25
+ 927 00f1 00000000 		.4byte	.LFB63
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 22
+
+
+ 928 00f5 02000000 		.4byte	.LFE63-.LFB63
+ 929 00f9 01       		.uleb128 0x1
+ 930 00fa 9C       		.byte	0x9c
+ 931 00fb 0D010000 		.4byte	0x10d
+ 932 00ff 09       		.uleb128 0x9
+ 933 0100 31030000 		.4byte	.LASF22
+ 934 0104 01       		.byte	0x1
+ 935 0105 25       		.byte	0x25
+ 936 0106 81000000 		.4byte	0x81
+ 937 010a 01       		.uleb128 0x1
+ 938 010b 50       		.byte	0x50
+ 939 010c 00       		.byte	0
+ 940 010d 0A       		.uleb128 0xa
+ 941 010e BB020000 		.4byte	.LASF26
+ 942 0112 01       		.byte	0x1
+ 943 0113 32       		.byte	0x32
+ 944 0114 DF000000 		.4byte	0xdf
+ 945 0118 00000000 		.4byte	.LFB64
+ 946 011c 3A000000 		.4byte	.LFE64-.LFB64
+ 947 0120 01       		.uleb128 0x1
+ 948 0121 9C       		.byte	0x9c
+ 949 0122 C6010000 		.4byte	0x1c6
+ 950 0126 0B       		.uleb128 0xb
+ 951 0127 3F020000 		.4byte	.LASF23
+ 952 012b 01       		.byte	0x1
+ 953 012c 32       		.byte	0x32
+ 954 012d 81000000 		.4byte	0x81
+ 955 0131 00000000 		.4byte	.LLST0
+ 956 0135 0B       		.uleb128 0xb
+ 957 0136 EC010000 		.4byte	.LASF24
+ 958 013a 01       		.byte	0x1
+ 959 013b 32       		.byte	0x32
+ 960 013c 81000000 		.4byte	0x81
+ 961 0140 21000000 		.4byte	.LLST1
+ 962 0144 0B       		.uleb128 0xb
+ 963 0145 73000000 		.4byte	.LASF25
+ 964 0149 01       		.byte	0x1
+ 965 014a 32       		.byte	0x32
+ 966 014b C6010000 		.4byte	0x1c6
+ 967 014f 42000000 		.4byte	.LLST2
+ 968 0153 0C       		.uleb128 0xc
+ 969 0154 A7020000 		.4byte	.LASF28
+ 970 0158 01       		.byte	0x1
+ 971 0159 36       		.byte	0x36
+ 972 015a 81000000 		.4byte	0x81
+ 973 015e 60000000 		.4byte	.LLST3
+ 974 0162 0D       		.uleb128 0xd
+ 975 0163 0E000000 		.4byte	.LVL3
+ 976 0167 07050000 		.4byte	0x507
+ 977 016b 7B010000 		.4byte	0x17b
+ 978 016f 0E       		.uleb128 0xe
+ 979 0170 01       		.uleb128 0x1
+ 980 0171 50       		.byte	0x50
+ 981 0172 02       		.uleb128 0x2
+ 982 0173 76       		.byte	0x76
+ 983 0174 00       		.sleb128 0
+ 984 0175 0E       		.uleb128 0xe
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 23
+
+
+ 985 0176 01       		.uleb128 0x1
+ 986 0177 51       		.byte	0x51
+ 987 0178 01       		.uleb128 0x1
+ 988 0179 30       		.byte	0x30
+ 989 017a 00       		.byte	0
+ 990 017b 0D       		.uleb128 0xd
+ 991 017c 18000000 		.4byte	.LVL5
+ 992 0180 12050000 		.4byte	0x512
+ 993 0184 8F010000 		.4byte	0x18f
+ 994 0188 0E       		.uleb128 0xe
+ 995 0189 01       		.uleb128 0x1
+ 996 018a 50       		.byte	0x50
+ 997 018b 02       		.uleb128 0x2
+ 998 018c 75       		.byte	0x75
+ 999 018d 00       		.sleb128 0
+ 1000 018e 00       		.byte	0
+ 1001 018f 0D       		.uleb128 0xd
+ 1002 0190 24000000 		.4byte	.LVL7
+ 1003 0194 1D050000 		.4byte	0x51d
+ 1004 0198 A8010000 		.4byte	0x1a8
+ 1005 019c 0E       		.uleb128 0xe
+ 1006 019d 01       		.uleb128 0x1
+ 1007 019e 50       		.byte	0x50
+ 1008 019f 02       		.uleb128 0x2
+ 1009 01a0 76       		.byte	0x76
+ 1010 01a1 00       		.sleb128 0
+ 1011 01a2 0E       		.uleb128 0xe
+ 1012 01a3 01       		.uleb128 0x1
+ 1013 01a4 51       		.byte	0x51
+ 1014 01a5 01       		.uleb128 0x1
+ 1015 01a6 31       		.byte	0x31
+ 1016 01a7 00       		.byte	0
+ 1017 01a8 0D       		.uleb128 0xd
+ 1018 01a9 2C000000 		.4byte	.LVL8
+ 1019 01ad 28050000 		.4byte	0x528
+ 1020 01b1 BC010000 		.4byte	0x1bc
+ 1021 01b5 0E       		.uleb128 0xe
+ 1022 01b6 01       		.uleb128 0x1
+ 1023 01b7 50       		.byte	0x50
+ 1024 01b8 02       		.uleb128 0x2
+ 1025 01b9 74       		.byte	0x74
+ 1026 01ba 00       		.sleb128 0
+ 1027 01bb 00       		.byte	0
+ 1028 01bc 0F       		.uleb128 0xf
+ 1029 01bd 32000000 		.4byte	.LVL10
+ 1030 01c1 33050000 		.4byte	0x533
+ 1031 01c5 00       		.byte	0
+ 1032 01c6 10       		.uleb128 0x10
+ 1033 01c7 04       		.byte	0x4
+ 1034 01c8 81000000 		.4byte	0x81
+ 1035 01cc 0A       		.uleb128 0xa
+ 1036 01cd 97030000 		.4byte	.LASF27
+ 1037 01d1 01       		.byte	0x1
+ 1038 01d2 53       		.byte	0x53
+ 1039 01d3 DF000000 		.4byte	0xdf
+ 1040 01d7 00000000 		.4byte	.LFB65
+ 1041 01db 2E000000 		.4byte	.LFE65-.LFB65
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 24
+
+
+ 1042 01df 01       		.uleb128 0x1
+ 1043 01e0 9C       		.byte	0x9c
+ 1044 01e1 66020000 		.4byte	0x266
+ 1045 01e5 0B       		.uleb128 0xb
+ 1046 01e6 3F020000 		.4byte	.LASF23
+ 1047 01ea 01       		.byte	0x1
+ 1048 01eb 53       		.byte	0x53
+ 1049 01ec 81000000 		.4byte	0x81
+ 1050 01f0 94000000 		.4byte	.LLST4
+ 1051 01f4 0B       		.uleb128 0xb
+ 1052 01f5 EC010000 		.4byte	.LASF24
+ 1053 01f9 01       		.byte	0x1
+ 1054 01fa 53       		.byte	0x53
+ 1055 01fb 81000000 		.4byte	0x81
+ 1056 01ff B5000000 		.4byte	.LLST5
+ 1057 0203 0B       		.uleb128 0xb
+ 1058 0204 73000000 		.4byte	.LASF25
+ 1059 0208 01       		.byte	0x1
+ 1060 0209 53       		.byte	0x53
+ 1061 020a 81000000 		.4byte	0x81
+ 1062 020e D6000000 		.4byte	.LLST6
+ 1063 0212 0C       		.uleb128 0xc
+ 1064 0213 A7020000 		.4byte	.LASF28
+ 1065 0217 01       		.byte	0x1
+ 1066 0218 55       		.byte	0x55
+ 1067 0219 81000000 		.4byte	0x81
+ 1068 021d F7000000 		.4byte	.LLST7
+ 1069 0221 0D       		.uleb128 0xd
+ 1070 0222 0C000000 		.4byte	.LVL13
+ 1071 0226 07050000 		.4byte	0x507
+ 1072 022a 34020000 		.4byte	0x234
+ 1073 022e 0E       		.uleb128 0xe
+ 1074 022f 01       		.uleb128 0x1
+ 1075 0230 51       		.byte	0x51
+ 1076 0231 01       		.uleb128 0x1
+ 1077 0232 30       		.byte	0x30
+ 1078 0233 00       		.byte	0
+ 1079 0234 0D       		.uleb128 0xd
+ 1080 0235 16000000 		.4byte	.LVL15
+ 1081 0239 12050000 		.4byte	0x512
+ 1082 023d 48020000 		.4byte	0x248
+ 1083 0241 0E       		.uleb128 0xe
+ 1084 0242 01       		.uleb128 0x1
+ 1085 0243 50       		.byte	0x50
+ 1086 0244 02       		.uleb128 0x2
+ 1087 0245 75       		.byte	0x75
+ 1088 0246 00       		.sleb128 0
+ 1089 0247 00       		.byte	0
+ 1090 0248 0D       		.uleb128 0xd
+ 1091 0249 20000000 		.4byte	.LVL17
+ 1092 024d 12050000 		.4byte	0x512
+ 1093 0251 5C020000 		.4byte	0x25c
+ 1094 0255 0E       		.uleb128 0xe
+ 1095 0256 01       		.uleb128 0x1
+ 1096 0257 50       		.byte	0x50
+ 1097 0258 02       		.uleb128 0x2
+ 1098 0259 76       		.byte	0x76
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 25
+
+
+ 1099 025a 00       		.sleb128 0
+ 1100 025b 00       		.byte	0
+ 1101 025c 0F       		.uleb128 0xf
+ 1102 025d 26000000 		.4byte	.LVL19
+ 1103 0261 33050000 		.4byte	0x533
+ 1104 0265 00       		.byte	0
+ 1105 0266 11       		.uleb128 0x11
+ 1106 0267 12000000 		.4byte	.LASF29
+ 1107 026b 01       		.byte	0x1
+ 1108 026c 6F       		.byte	0x6f
+ 1109 026d 81000000 		.4byte	0x81
+ 1110 0271 00000000 		.4byte	.LFB66
+ 1111 0275 9C000000 		.4byte	.LFE66-.LFB66
+ 1112 0279 01       		.uleb128 0x1
+ 1113 027a 9C       		.byte	0x9c
+ 1114 027b DE020000 		.4byte	0x2de
+ 1115 027f 0B       		.uleb128 0xb
+ 1116 0280 24030000 		.4byte	.LASF30
+ 1117 0284 01       		.byte	0x1
+ 1118 0285 6F       		.byte	0x6f
+ 1119 0286 C6010000 		.4byte	0x1c6
+ 1120 028a 20010000 		.4byte	.LLST8
+ 1121 028e 0C       		.uleb128 0xc
+ 1122 028f CC020000 		.4byte	.LASF31
+ 1123 0293 01       		.byte	0x1
+ 1124 0294 71       		.byte	0x71
+ 1125 0295 81000000 		.4byte	0x81
+ 1126 0299 4C010000 		.4byte	.LLST9
+ 1127 029d 12       		.uleb128 0x12
+ 1128 029e 00000000 		.4byte	.Ldebug_ranges0+0
+ 1129 02a2 BD020000 		.4byte	0x2bd
+ 1130 02a6 13       		.uleb128 0x13
+ 1131 02a7 6900     		.ascii	"i\000"
+ 1132 02a9 01       		.byte	0x1
+ 1133 02aa 74       		.byte	0x74
+ 1134 02ab 73000000 		.4byte	0x73
+ 1135 02af 6B010000 		.4byte	.LLST10
+ 1136 02b3 0F       		.uleb128 0xf
+ 1137 02b4 2A000000 		.4byte	.LVL24
+ 1138 02b8 3E050000 		.4byte	0x53e
+ 1139 02bc 00       		.byte	0
+ 1140 02bd 14       		.uleb128 0x14
+ 1141 02be 4C000000 		.4byte	.LBB4
+ 1142 02c2 44000000 		.4byte	.LBE4-.LBB4
+ 1143 02c6 13       		.uleb128 0x13
+ 1144 02c7 6A00     		.ascii	"j\000"
+ 1145 02c9 01       		.byte	0x1
+ 1146 02ca 7B       		.byte	0x7b
+ 1147 02cb 73000000 		.4byte	0x73
+ 1148 02cf 8A010000 		.4byte	.LLST11
+ 1149 02d3 0F       		.uleb128 0xf
+ 1150 02d4 6A000000 		.4byte	.LVL33
+ 1151 02d8 3E050000 		.4byte	0x53e
+ 1152 02dc 00       		.byte	0
+ 1153 02dd 00       		.byte	0
+ 1154 02de 11       		.uleb128 0x11
+ 1155 02df 20010000 		.4byte	.LASF32
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 26
+
+
+ 1156 02e3 01       		.byte	0x1
+ 1157 02e4 8A       		.byte	0x8a
+ 1158 02e5 81000000 		.4byte	0x81
+ 1159 02e9 00000000 		.4byte	.LFB67
+ 1160 02ed 9C000000 		.4byte	.LFE67-.LFB67
+ 1161 02f1 01       		.uleb128 0x1
+ 1162 02f2 9C       		.byte	0x9c
+ 1163 02f3 56030000 		.4byte	0x356
+ 1164 02f7 0B       		.uleb128 0xb
+ 1165 02f8 24030000 		.4byte	.LASF30
+ 1166 02fc 01       		.byte	0x1
+ 1167 02fd 8A       		.byte	0x8a
+ 1168 02fe C6010000 		.4byte	0x1c6
+ 1169 0302 9D010000 		.4byte	.LLST12
+ 1170 0306 0C       		.uleb128 0xc
+ 1171 0307 00000000 		.4byte	.LASF33
+ 1172 030b 01       		.byte	0x1
+ 1173 030c 8C       		.byte	0x8c
+ 1174 030d 81000000 		.4byte	0x81
+ 1175 0311 C9010000 		.4byte	.LLST13
+ 1176 0315 12       		.uleb128 0x12
+ 1177 0316 18000000 		.4byte	.Ldebug_ranges0+0x18
+ 1178 031a 35030000 		.4byte	0x335
+ 1179 031e 13       		.uleb128 0x13
+ 1180 031f 6900     		.ascii	"i\000"
+ 1181 0321 01       		.byte	0x1
+ 1182 0322 8F       		.byte	0x8f
+ 1183 0323 73000000 		.4byte	0x73
+ 1184 0327 E8010000 		.4byte	.LLST14
+ 1185 032b 0F       		.uleb128 0xf
+ 1186 032c 2A000000 		.4byte	.LVL45
+ 1187 0330 3E050000 		.4byte	0x53e
+ 1188 0334 00       		.byte	0
+ 1189 0335 14       		.uleb128 0x14
+ 1190 0336 4C000000 		.4byte	.LBB7
+ 1191 033a 44000000 		.4byte	.LBE7-.LBB7
+ 1192 033e 13       		.uleb128 0x13
+ 1193 033f 6A00     		.ascii	"j\000"
+ 1194 0341 01       		.byte	0x1
+ 1195 0342 96       		.byte	0x96
+ 1196 0343 73000000 		.4byte	0x73
+ 1197 0347 07020000 		.4byte	.LLST15
+ 1198 034b 0F       		.uleb128 0xf
+ 1199 034c 6A000000 		.4byte	.LVL54
+ 1200 0350 3E050000 		.4byte	0x53e
+ 1201 0354 00       		.byte	0
+ 1202 0355 00       		.byte	0
+ 1203 0356 11       		.uleb128 0x11
+ 1204 0357 DE020000 		.4byte	.LASF34
+ 1205 035b 01       		.byte	0x1
+ 1206 035c A5       		.byte	0xa5
+ 1207 035d 81000000 		.4byte	0x81
+ 1208 0361 00000000 		.4byte	.LFB68
+ 1209 0365 58000000 		.4byte	.LFE68-.LFB68
+ 1210 0369 01       		.uleb128 0x1
+ 1211 036a 9C       		.byte	0x9c
+ 1212 036b AA030000 		.4byte	0x3aa
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 27
+
+
+ 1213 036f 0B       		.uleb128 0xb
+ 1214 0370 24030000 		.4byte	.LASF30
+ 1215 0374 01       		.byte	0x1
+ 1216 0375 A5       		.byte	0xa5
+ 1217 0376 C6010000 		.4byte	0x1c6
+ 1218 037a 1A020000 		.4byte	.LLST16
+ 1219 037e 0C       		.uleb128 0xc
+ 1220 037f 0A020000 		.4byte	.LASF35
+ 1221 0383 01       		.byte	0x1
+ 1222 0384 A7       		.byte	0xa7
+ 1223 0385 81000000 		.4byte	0x81
+ 1224 0389 38020000 		.4byte	.LLST17
+ 1225 038d 15       		.uleb128 0x15
+ 1226 038e 30000000 		.4byte	.Ldebug_ranges0+0x30
+ 1227 0392 13       		.uleb128 0x13
+ 1228 0393 6900     		.ascii	"i\000"
+ 1229 0395 01       		.byte	0x1
+ 1230 0396 A9       		.byte	0xa9
+ 1231 0397 73000000 		.4byte	0x73
+ 1232 039b 62020000 		.4byte	.LLST18
+ 1233 039f 0F       		.uleb128 0xf
+ 1234 03a0 2A000000 		.4byte	.LVL66
+ 1235 03a4 3E050000 		.4byte	0x53e
+ 1236 03a8 00       		.byte	0
+ 1237 03a9 00       		.byte	0
+ 1238 03aa 11       		.uleb128 0x11
+ 1239 03ab 58030000 		.4byte	.LASF36
+ 1240 03af 01       		.byte	0x1
+ 1241 03b0 BB       		.byte	0xbb
+ 1242 03b1 81000000 		.4byte	0x81
+ 1243 03b5 00000000 		.4byte	.LFB69
+ 1244 03b9 4E000000 		.4byte	.LFE69-.LFB69
+ 1245 03bd 01       		.uleb128 0x1
+ 1246 03be 9C       		.byte	0x9c
+ 1247 03bf FE030000 		.4byte	0x3fe
+ 1248 03c3 0B       		.uleb128 0xb
+ 1249 03c4 24030000 		.4byte	.LASF30
+ 1250 03c8 01       		.byte	0x1
+ 1251 03c9 BB       		.byte	0xbb
+ 1252 03ca C6010000 		.4byte	0x1c6
+ 1253 03ce 81020000 		.4byte	.LLST19
+ 1254 03d2 13       		.uleb128 0x13
+ 1255 03d3 64617900 		.ascii	"day\000"
+ 1256 03d7 01       		.byte	0x1
+ 1257 03d8 BD       		.byte	0xbd
+ 1258 03d9 81000000 		.4byte	0x81
+ 1259 03dd 9F020000 		.4byte	.LLST20
+ 1260 03e1 15       		.uleb128 0x15
+ 1261 03e2 48000000 		.4byte	.Ldebug_ranges0+0x48
+ 1262 03e6 13       		.uleb128 0x13
+ 1263 03e7 6900     		.ascii	"i\000"
+ 1264 03e9 01       		.byte	0x1
+ 1265 03ea BF       		.byte	0xbf
+ 1266 03eb 73000000 		.4byte	0x73
+ 1267 03ef BE020000 		.4byte	.LLST21
+ 1268 03f3 0F       		.uleb128 0xf
+ 1269 03f4 2A000000 		.4byte	.LVL77
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 28
+
+
+ 1270 03f8 3E050000 		.4byte	0x53e
+ 1271 03fc 00       		.byte	0
+ 1272 03fd 00       		.byte	0
+ 1273 03fe 11       		.uleb128 0x11
+ 1274 03ff 20020000 		.4byte	.LASF37
+ 1275 0403 01       		.byte	0x1
+ 1276 0404 CE       		.byte	0xce
+ 1277 0405 81000000 		.4byte	0x81
+ 1278 0409 00000000 		.4byte	.LFB70
+ 1279 040d 58000000 		.4byte	.LFE70-.LFB70
+ 1280 0411 01       		.uleb128 0x1
+ 1281 0412 9C       		.byte	0x9c
+ 1282 0413 52040000 		.4byte	0x452
+ 1283 0417 0B       		.uleb128 0xb
+ 1284 0418 24030000 		.4byte	.LASF30
+ 1285 041c 01       		.byte	0x1
+ 1286 041d CE       		.byte	0xce
+ 1287 041e C6010000 		.4byte	0x1c6
+ 1288 0422 DD020000 		.4byte	.LLST22
+ 1289 0426 0C       		.uleb128 0xc
+ 1290 0427 43000000 		.4byte	.LASF38
+ 1291 042b 01       		.byte	0x1
+ 1292 042c D0       		.byte	0xd0
+ 1293 042d 81000000 		.4byte	0x81
+ 1294 0431 FB020000 		.4byte	.LLST23
+ 1295 0435 15       		.uleb128 0x15
+ 1296 0436 60000000 		.4byte	.Ldebug_ranges0+0x60
+ 1297 043a 13       		.uleb128 0x13
+ 1298 043b 6900     		.ascii	"i\000"
+ 1299 043d 01       		.byte	0x1
+ 1300 043e D2       		.byte	0xd2
+ 1301 043f 73000000 		.4byte	0x73
+ 1302 0443 25030000 		.4byte	.LLST24
+ 1303 0447 0F       		.uleb128 0xf
+ 1304 0448 2A000000 		.4byte	.LVL87
+ 1305 044c 3E050000 		.4byte	0x53e
+ 1306 0450 00       		.byte	0
+ 1307 0451 00       		.byte	0
+ 1308 0452 11       		.uleb128 0x11
+ 1309 0453 4E020000 		.4byte	.LASF39
+ 1310 0457 01       		.byte	0x1
+ 1311 0458 E3       		.byte	0xe3
+ 1312 0459 81000000 		.4byte	0x81
+ 1313 045d 00000000 		.4byte	.LFB71
+ 1314 0461 9C000000 		.4byte	.LFE71-.LFB71
+ 1315 0465 01       		.uleb128 0x1
+ 1316 0466 9C       		.byte	0x9c
+ 1317 0467 CA040000 		.4byte	0x4ca
+ 1318 046b 0B       		.uleb128 0xb
+ 1319 046c 24030000 		.4byte	.LASF30
+ 1320 0470 01       		.byte	0x1
+ 1321 0471 E3       		.byte	0xe3
+ 1322 0472 C6010000 		.4byte	0x1c6
+ 1323 0476 44030000 		.4byte	.LLST25
+ 1324 047a 0C       		.uleb128 0xc
+ 1325 047b D9020000 		.4byte	.LASF40
+ 1326 047f 01       		.byte	0x1
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 29
+
+
+ 1327 0480 E5       		.byte	0xe5
+ 1328 0481 81000000 		.4byte	0x81
+ 1329 0485 70030000 		.4byte	.LLST26
+ 1330 0489 12       		.uleb128 0x12
+ 1331 048a 78000000 		.4byte	.Ldebug_ranges0+0x78
+ 1332 048e A9040000 		.4byte	0x4a9
+ 1333 0492 13       		.uleb128 0x13
+ 1334 0493 6900     		.ascii	"i\000"
+ 1335 0495 01       		.byte	0x1
+ 1336 0496 E8       		.byte	0xe8
+ 1337 0497 73000000 		.4byte	0x73
+ 1338 049b 8F030000 		.4byte	.LLST27
+ 1339 049f 0F       		.uleb128 0xf
+ 1340 04a0 2A000000 		.4byte	.LVL98
+ 1341 04a4 3E050000 		.4byte	0x53e
+ 1342 04a8 00       		.byte	0
+ 1343 04a9 14       		.uleb128 0x14
+ 1344 04aa 4C000000 		.4byte	.LBB16
+ 1345 04ae 44000000 		.4byte	.LBE16-.LBB16
+ 1346 04b2 13       		.uleb128 0x13
+ 1347 04b3 6A00     		.ascii	"j\000"
+ 1348 04b5 01       		.byte	0x1
+ 1349 04b6 EF       		.byte	0xef
+ 1350 04b7 73000000 		.4byte	0x73
+ 1351 04bb AE030000 		.4byte	.LLST28
+ 1352 04bf 0F       		.uleb128 0xf
+ 1353 04c0 6A000000 		.4byte	.LVL107
+ 1354 04c4 3E050000 		.4byte	0x53e
+ 1355 04c8 00       		.byte	0
+ 1356 04c9 00       		.byte	0
+ 1357 04ca 16       		.uleb128 0x16
+ 1358 04cb 14030000 		.4byte	.LASF52
+ 1359 04cf 01       		.byte	0x1
+ 1360 04d0 1A       		.byte	0x1a
+ 1361 04d1 81000000 		.4byte	0x81
+ 1362 04d5 17       		.uleb128 0x17
+ 1363 04d6 FD010000 		.4byte	.LASF41
+ 1364 04da 06       		.byte	0x6
+ 1365 04db 1207     		.2byte	0x712
+ 1366 04dd E1040000 		.4byte	0x4e1
+ 1367 04e1 18       		.uleb128 0x18
+ 1368 04e2 8C000000 		.4byte	0x8c
+ 1369 04e6 19       		.uleb128 0x19
+ 1370 04e7 97000000 		.4byte	0x97
+ 1371 04eb F6040000 		.4byte	0x4f6
+ 1372 04ef 1A       		.uleb128 0x1a
+ 1373 04f0 BF000000 		.4byte	0xbf
+ 1374 04f4 07       		.byte	0x7
+ 1375 04f5 00       		.byte	0
+ 1376 04f6 1B       		.uleb128 0x1b
+ 1377 04f7 A9030000 		.4byte	.LASF42
+ 1378 04fb 07       		.byte	0x7
+ 1379 04fc 51       		.byte	0x51
+ 1380 04fd E6040000 		.4byte	0x4e6
+ 1381 0501 05       		.uleb128 0x5
+ 1382 0502 03       		.byte	0x3
+ 1383 0503 00000000 		.4byte	Current_time
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 30
+
+
+ 1384 0507 1C       		.uleb128 0x1c
+ 1385 0508 68030000 		.4byte	.LASF43
+ 1386 050c 68030000 		.4byte	.LASF43
+ 1387 0510 08       		.byte	0x8
+ 1388 0511 B1       		.byte	0xb1
+ 1389 0512 1C       		.uleb128 0x1c
+ 1390 0513 7E020000 		.4byte	.LASF44
+ 1391 0517 7E020000 		.4byte	.LASF44
+ 1392 051b 08       		.byte	0x8
+ 1393 051c B6       		.byte	0xb6
+ 1394 051d 1C       		.uleb128 0x1c
+ 1395 051e F0020000 		.4byte	.LASF45
+ 1396 0522 F0020000 		.4byte	.LASF45
+ 1397 0526 08       		.byte	0x8
+ 1398 0527 B3       		.byte	0xb3
+ 1399 0528 1C       		.uleb128 0x1c
+ 1400 0529 80030000 		.4byte	.LASF46
+ 1401 052d 80030000 		.4byte	.LASF46
+ 1402 0531 08       		.byte	0x8
+ 1403 0532 B7       		.byte	0xb7
+ 1404 0533 1C       		.uleb128 0x1c
+ 1405 0534 49000000 		.4byte	.LASF47
+ 1406 0538 49000000 		.4byte	.LASF47
+ 1407 053c 08       		.byte	0x8
+ 1408 053d B5       		.byte	0xb5
+ 1409 053e 1D       		.uleb128 0x1d
+ 1410 053f 706F7700 		.ascii	"pow\000"
+ 1411 0543 706F7700 		.ascii	"pow\000"
+ 1412 0547 09       		.byte	0x9
+ 1413 0548 86       		.byte	0x86
+ 1414 0549 00       		.byte	0
+ 1415              		.section	.debug_abbrev,"",%progbits
+ 1416              	.Ldebug_abbrev0:
+ 1417 0000 01       		.uleb128 0x1
+ 1418 0001 11       		.uleb128 0x11
+ 1419 0002 01       		.byte	0x1
+ 1420 0003 25       		.uleb128 0x25
+ 1421 0004 0E       		.uleb128 0xe
+ 1422 0005 13       		.uleb128 0x13
+ 1423 0006 0B       		.uleb128 0xb
+ 1424 0007 03       		.uleb128 0x3
+ 1425 0008 0E       		.uleb128 0xe
+ 1426 0009 1B       		.uleb128 0x1b
+ 1427 000a 0E       		.uleb128 0xe
+ 1428 000b 55       		.uleb128 0x55
+ 1429 000c 17       		.uleb128 0x17
+ 1430 000d 11       		.uleb128 0x11
+ 1431 000e 01       		.uleb128 0x1
+ 1432 000f 10       		.uleb128 0x10
+ 1433 0010 17       		.uleb128 0x17
+ 1434 0011 00       		.byte	0
+ 1435 0012 00       		.byte	0
+ 1436 0013 02       		.uleb128 0x2
+ 1437 0014 24       		.uleb128 0x24
+ 1438 0015 00       		.byte	0
+ 1439 0016 0B       		.uleb128 0xb
+ 1440 0017 0B       		.uleb128 0xb
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 31
+
+
+ 1441 0018 3E       		.uleb128 0x3e
+ 1442 0019 0B       		.uleb128 0xb
+ 1443 001a 03       		.uleb128 0x3
+ 1444 001b 0E       		.uleb128 0xe
+ 1445 001c 00       		.byte	0
+ 1446 001d 00       		.byte	0
+ 1447 001e 03       		.uleb128 0x3
+ 1448 001f 16       		.uleb128 0x16
+ 1449 0020 00       		.byte	0
+ 1450 0021 03       		.uleb128 0x3
+ 1451 0022 0E       		.uleb128 0xe
+ 1452 0023 3A       		.uleb128 0x3a
+ 1453 0024 0B       		.uleb128 0xb
+ 1454 0025 3B       		.uleb128 0x3b
+ 1455 0026 0B       		.uleb128 0xb
+ 1456 0027 49       		.uleb128 0x49
+ 1457 0028 13       		.uleb128 0x13
+ 1458 0029 00       		.byte	0
+ 1459 002a 00       		.byte	0
+ 1460 002b 04       		.uleb128 0x4
+ 1461 002c 24       		.uleb128 0x24
+ 1462 002d 00       		.byte	0
+ 1463 002e 0B       		.uleb128 0xb
+ 1464 002f 0B       		.uleb128 0xb
+ 1465 0030 3E       		.uleb128 0x3e
+ 1466 0031 0B       		.uleb128 0xb
+ 1467 0032 03       		.uleb128 0x3
+ 1468 0033 08       		.uleb128 0x8
+ 1469 0034 00       		.byte	0
+ 1470 0035 00       		.byte	0
+ 1471 0036 05       		.uleb128 0x5
+ 1472 0037 16       		.uleb128 0x16
+ 1473 0038 00       		.byte	0
+ 1474 0039 03       		.uleb128 0x3
+ 1475 003a 0E       		.uleb128 0xe
+ 1476 003b 3A       		.uleb128 0x3a
+ 1477 003c 0B       		.uleb128 0xb
+ 1478 003d 3B       		.uleb128 0x3b
+ 1479 003e 05       		.uleb128 0x5
+ 1480 003f 49       		.uleb128 0x49
+ 1481 0040 13       		.uleb128 0x13
+ 1482 0041 00       		.byte	0
+ 1483 0042 00       		.byte	0
+ 1484 0043 06       		.uleb128 0x6
+ 1485 0044 04       		.uleb128 0x4
+ 1486 0045 01       		.byte	0x1
+ 1487 0046 0B       		.uleb128 0xb
+ 1488 0047 0B       		.uleb128 0xb
+ 1489 0048 49       		.uleb128 0x49
+ 1490 0049 13       		.uleb128 0x13
+ 1491 004a 3A       		.uleb128 0x3a
+ 1492 004b 0B       		.uleb128 0xb
+ 1493 004c 3B       		.uleb128 0x3b
+ 1494 004d 0B       		.uleb128 0xb
+ 1495 004e 01       		.uleb128 0x1
+ 1496 004f 13       		.uleb128 0x13
+ 1497 0050 00       		.byte	0
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 32
+
+
+ 1498 0051 00       		.byte	0
+ 1499 0052 07       		.uleb128 0x7
+ 1500 0053 28       		.uleb128 0x28
+ 1501 0054 00       		.byte	0
+ 1502 0055 03       		.uleb128 0x3
+ 1503 0056 0E       		.uleb128 0xe
+ 1504 0057 1C       		.uleb128 0x1c
+ 1505 0058 0B       		.uleb128 0xb
+ 1506 0059 00       		.byte	0
+ 1507 005a 00       		.byte	0
+ 1508 005b 08       		.uleb128 0x8
+ 1509 005c 2E       		.uleb128 0x2e
+ 1510 005d 01       		.byte	0x1
+ 1511 005e 3F       		.uleb128 0x3f
+ 1512 005f 19       		.uleb128 0x19
+ 1513 0060 03       		.uleb128 0x3
+ 1514 0061 0E       		.uleb128 0xe
+ 1515 0062 3A       		.uleb128 0x3a
+ 1516 0063 0B       		.uleb128 0xb
+ 1517 0064 3B       		.uleb128 0x3b
+ 1518 0065 0B       		.uleb128 0xb
+ 1519 0066 27       		.uleb128 0x27
+ 1520 0067 19       		.uleb128 0x19
+ 1521 0068 11       		.uleb128 0x11
+ 1522 0069 01       		.uleb128 0x1
+ 1523 006a 12       		.uleb128 0x12
+ 1524 006b 06       		.uleb128 0x6
+ 1525 006c 40       		.uleb128 0x40
+ 1526 006d 18       		.uleb128 0x18
+ 1527 006e 9742     		.uleb128 0x2117
+ 1528 0070 19       		.uleb128 0x19
+ 1529 0071 01       		.uleb128 0x1
+ 1530 0072 13       		.uleb128 0x13
+ 1531 0073 00       		.byte	0
+ 1532 0074 00       		.byte	0
+ 1533 0075 09       		.uleb128 0x9
+ 1534 0076 05       		.uleb128 0x5
+ 1535 0077 00       		.byte	0
+ 1536 0078 03       		.uleb128 0x3
+ 1537 0079 0E       		.uleb128 0xe
+ 1538 007a 3A       		.uleb128 0x3a
+ 1539 007b 0B       		.uleb128 0xb
+ 1540 007c 3B       		.uleb128 0x3b
+ 1541 007d 0B       		.uleb128 0xb
+ 1542 007e 49       		.uleb128 0x49
+ 1543 007f 13       		.uleb128 0x13
+ 1544 0080 02       		.uleb128 0x2
+ 1545 0081 18       		.uleb128 0x18
+ 1546 0082 00       		.byte	0
+ 1547 0083 00       		.byte	0
+ 1548 0084 0A       		.uleb128 0xa
+ 1549 0085 2E       		.uleb128 0x2e
+ 1550 0086 01       		.byte	0x1
+ 1551 0087 3F       		.uleb128 0x3f
+ 1552 0088 19       		.uleb128 0x19
+ 1553 0089 03       		.uleb128 0x3
+ 1554 008a 0E       		.uleb128 0xe
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 33
+
+
+ 1555 008b 3A       		.uleb128 0x3a
+ 1556 008c 0B       		.uleb128 0xb
+ 1557 008d 3B       		.uleb128 0x3b
+ 1558 008e 0B       		.uleb128 0xb
+ 1559 008f 27       		.uleb128 0x27
+ 1560 0090 19       		.uleb128 0x19
+ 1561 0091 49       		.uleb128 0x49
+ 1562 0092 13       		.uleb128 0x13
+ 1563 0093 11       		.uleb128 0x11
+ 1564 0094 01       		.uleb128 0x1
+ 1565 0095 12       		.uleb128 0x12
+ 1566 0096 06       		.uleb128 0x6
+ 1567 0097 40       		.uleb128 0x40
+ 1568 0098 18       		.uleb128 0x18
+ 1569 0099 9742     		.uleb128 0x2117
+ 1570 009b 19       		.uleb128 0x19
+ 1571 009c 01       		.uleb128 0x1
+ 1572 009d 13       		.uleb128 0x13
+ 1573 009e 00       		.byte	0
+ 1574 009f 00       		.byte	0
+ 1575 00a0 0B       		.uleb128 0xb
+ 1576 00a1 05       		.uleb128 0x5
+ 1577 00a2 00       		.byte	0
+ 1578 00a3 03       		.uleb128 0x3
+ 1579 00a4 0E       		.uleb128 0xe
+ 1580 00a5 3A       		.uleb128 0x3a
+ 1581 00a6 0B       		.uleb128 0xb
+ 1582 00a7 3B       		.uleb128 0x3b
+ 1583 00a8 0B       		.uleb128 0xb
+ 1584 00a9 49       		.uleb128 0x49
+ 1585 00aa 13       		.uleb128 0x13
+ 1586 00ab 02       		.uleb128 0x2
+ 1587 00ac 17       		.uleb128 0x17
+ 1588 00ad 00       		.byte	0
+ 1589 00ae 00       		.byte	0
+ 1590 00af 0C       		.uleb128 0xc
+ 1591 00b0 34       		.uleb128 0x34
+ 1592 00b1 00       		.byte	0
+ 1593 00b2 03       		.uleb128 0x3
+ 1594 00b3 0E       		.uleb128 0xe
+ 1595 00b4 3A       		.uleb128 0x3a
+ 1596 00b5 0B       		.uleb128 0xb
+ 1597 00b6 3B       		.uleb128 0x3b
+ 1598 00b7 0B       		.uleb128 0xb
+ 1599 00b8 49       		.uleb128 0x49
+ 1600 00b9 13       		.uleb128 0x13
+ 1601 00ba 02       		.uleb128 0x2
+ 1602 00bb 17       		.uleb128 0x17
+ 1603 00bc 00       		.byte	0
+ 1604 00bd 00       		.byte	0
+ 1605 00be 0D       		.uleb128 0xd
+ 1606 00bf 898201   		.uleb128 0x4109
+ 1607 00c2 01       		.byte	0x1
+ 1608 00c3 11       		.uleb128 0x11
+ 1609 00c4 01       		.uleb128 0x1
+ 1610 00c5 31       		.uleb128 0x31
+ 1611 00c6 13       		.uleb128 0x13
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 34
+
+
+ 1612 00c7 01       		.uleb128 0x1
+ 1613 00c8 13       		.uleb128 0x13
+ 1614 00c9 00       		.byte	0
+ 1615 00ca 00       		.byte	0
+ 1616 00cb 0E       		.uleb128 0xe
+ 1617 00cc 8A8201   		.uleb128 0x410a
+ 1618 00cf 00       		.byte	0
+ 1619 00d0 02       		.uleb128 0x2
+ 1620 00d1 18       		.uleb128 0x18
+ 1621 00d2 9142     		.uleb128 0x2111
+ 1622 00d4 18       		.uleb128 0x18
+ 1623 00d5 00       		.byte	0
+ 1624 00d6 00       		.byte	0
+ 1625 00d7 0F       		.uleb128 0xf
+ 1626 00d8 898201   		.uleb128 0x4109
+ 1627 00db 00       		.byte	0
+ 1628 00dc 11       		.uleb128 0x11
+ 1629 00dd 01       		.uleb128 0x1
+ 1630 00de 31       		.uleb128 0x31
+ 1631 00df 13       		.uleb128 0x13
+ 1632 00e0 00       		.byte	0
+ 1633 00e1 00       		.byte	0
+ 1634 00e2 10       		.uleb128 0x10
+ 1635 00e3 0F       		.uleb128 0xf
+ 1636 00e4 00       		.byte	0
+ 1637 00e5 0B       		.uleb128 0xb
+ 1638 00e6 0B       		.uleb128 0xb
+ 1639 00e7 49       		.uleb128 0x49
+ 1640 00e8 13       		.uleb128 0x13
+ 1641 00e9 00       		.byte	0
+ 1642 00ea 00       		.byte	0
+ 1643 00eb 11       		.uleb128 0x11
+ 1644 00ec 2E       		.uleb128 0x2e
+ 1645 00ed 01       		.byte	0x1
+ 1646 00ee 3F       		.uleb128 0x3f
+ 1647 00ef 19       		.uleb128 0x19
+ 1648 00f0 03       		.uleb128 0x3
+ 1649 00f1 0E       		.uleb128 0xe
+ 1650 00f2 3A       		.uleb128 0x3a
+ 1651 00f3 0B       		.uleb128 0xb
+ 1652 00f4 3B       		.uleb128 0x3b
+ 1653 00f5 0B       		.uleb128 0xb
+ 1654 00f6 27       		.uleb128 0x27
+ 1655 00f7 19       		.uleb128 0x19
+ 1656 00f8 49       		.uleb128 0x49
+ 1657 00f9 13       		.uleb128 0x13
+ 1658 00fa 11       		.uleb128 0x11
+ 1659 00fb 01       		.uleb128 0x1
+ 1660 00fc 12       		.uleb128 0x12
+ 1661 00fd 06       		.uleb128 0x6
+ 1662 00fe 40       		.uleb128 0x40
+ 1663 00ff 18       		.uleb128 0x18
+ 1664 0100 9642     		.uleb128 0x2116
+ 1665 0102 19       		.uleb128 0x19
+ 1666 0103 01       		.uleb128 0x1
+ 1667 0104 13       		.uleb128 0x13
+ 1668 0105 00       		.byte	0
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 35
+
+
+ 1669 0106 00       		.byte	0
+ 1670 0107 12       		.uleb128 0x12
+ 1671 0108 0B       		.uleb128 0xb
+ 1672 0109 01       		.byte	0x1
+ 1673 010a 55       		.uleb128 0x55
+ 1674 010b 17       		.uleb128 0x17
+ 1675 010c 01       		.uleb128 0x1
+ 1676 010d 13       		.uleb128 0x13
+ 1677 010e 00       		.byte	0
+ 1678 010f 00       		.byte	0
+ 1679 0110 13       		.uleb128 0x13
+ 1680 0111 34       		.uleb128 0x34
+ 1681 0112 00       		.byte	0
+ 1682 0113 03       		.uleb128 0x3
+ 1683 0114 08       		.uleb128 0x8
+ 1684 0115 3A       		.uleb128 0x3a
+ 1685 0116 0B       		.uleb128 0xb
+ 1686 0117 3B       		.uleb128 0x3b
+ 1687 0118 0B       		.uleb128 0xb
+ 1688 0119 49       		.uleb128 0x49
+ 1689 011a 13       		.uleb128 0x13
+ 1690 011b 02       		.uleb128 0x2
+ 1691 011c 17       		.uleb128 0x17
+ 1692 011d 00       		.byte	0
+ 1693 011e 00       		.byte	0
+ 1694 011f 14       		.uleb128 0x14
+ 1695 0120 0B       		.uleb128 0xb
+ 1696 0121 01       		.byte	0x1
+ 1697 0122 11       		.uleb128 0x11
+ 1698 0123 01       		.uleb128 0x1
+ 1699 0124 12       		.uleb128 0x12
+ 1700 0125 06       		.uleb128 0x6
+ 1701 0126 00       		.byte	0
+ 1702 0127 00       		.byte	0
+ 1703 0128 15       		.uleb128 0x15
+ 1704 0129 0B       		.uleb128 0xb
+ 1705 012a 01       		.byte	0x1
+ 1706 012b 55       		.uleb128 0x55
+ 1707 012c 17       		.uleb128 0x17
+ 1708 012d 00       		.byte	0
+ 1709 012e 00       		.byte	0
+ 1710 012f 16       		.uleb128 0x16
+ 1711 0130 34       		.uleb128 0x34
+ 1712 0131 00       		.byte	0
+ 1713 0132 03       		.uleb128 0x3
+ 1714 0133 0E       		.uleb128 0xe
+ 1715 0134 3A       		.uleb128 0x3a
+ 1716 0135 0B       		.uleb128 0xb
+ 1717 0136 3B       		.uleb128 0x3b
+ 1718 0137 0B       		.uleb128 0xb
+ 1719 0138 49       		.uleb128 0x49
+ 1720 0139 13       		.uleb128 0x13
+ 1721 013a 00       		.byte	0
+ 1722 013b 00       		.byte	0
+ 1723 013c 17       		.uleb128 0x17
+ 1724 013d 34       		.uleb128 0x34
+ 1725 013e 00       		.byte	0
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 36
+
+
+ 1726 013f 03       		.uleb128 0x3
+ 1727 0140 0E       		.uleb128 0xe
+ 1728 0141 3A       		.uleb128 0x3a
+ 1729 0142 0B       		.uleb128 0xb
+ 1730 0143 3B       		.uleb128 0x3b
+ 1731 0144 05       		.uleb128 0x5
+ 1732 0145 49       		.uleb128 0x49
+ 1733 0146 13       		.uleb128 0x13
+ 1734 0147 3F       		.uleb128 0x3f
+ 1735 0148 19       		.uleb128 0x19
+ 1736 0149 3C       		.uleb128 0x3c
+ 1737 014a 19       		.uleb128 0x19
+ 1738 014b 00       		.byte	0
+ 1739 014c 00       		.byte	0
+ 1740 014d 18       		.uleb128 0x18
+ 1741 014e 35       		.uleb128 0x35
+ 1742 014f 00       		.byte	0
+ 1743 0150 49       		.uleb128 0x49
+ 1744 0151 13       		.uleb128 0x13
+ 1745 0152 00       		.byte	0
+ 1746 0153 00       		.byte	0
+ 1747 0154 19       		.uleb128 0x19
+ 1748 0155 01       		.uleb128 0x1
+ 1749 0156 01       		.byte	0x1
+ 1750 0157 49       		.uleb128 0x49
+ 1751 0158 13       		.uleb128 0x13
+ 1752 0159 01       		.uleb128 0x1
+ 1753 015a 13       		.uleb128 0x13
+ 1754 015b 00       		.byte	0
+ 1755 015c 00       		.byte	0
+ 1756 015d 1A       		.uleb128 0x1a
+ 1757 015e 21       		.uleb128 0x21
+ 1758 015f 00       		.byte	0
+ 1759 0160 49       		.uleb128 0x49
+ 1760 0161 13       		.uleb128 0x13
+ 1761 0162 2F       		.uleb128 0x2f
+ 1762 0163 0B       		.uleb128 0xb
+ 1763 0164 00       		.byte	0
+ 1764 0165 00       		.byte	0
+ 1765 0166 1B       		.uleb128 0x1b
+ 1766 0167 34       		.uleb128 0x34
+ 1767 0168 00       		.byte	0
+ 1768 0169 03       		.uleb128 0x3
+ 1769 016a 0E       		.uleb128 0xe
+ 1770 016b 3A       		.uleb128 0x3a
+ 1771 016c 0B       		.uleb128 0xb
+ 1772 016d 3B       		.uleb128 0x3b
+ 1773 016e 0B       		.uleb128 0xb
+ 1774 016f 49       		.uleb128 0x49
+ 1775 0170 13       		.uleb128 0x13
+ 1776 0171 3F       		.uleb128 0x3f
+ 1777 0172 19       		.uleb128 0x19
+ 1778 0173 02       		.uleb128 0x2
+ 1779 0174 18       		.uleb128 0x18
+ 1780 0175 00       		.byte	0
+ 1781 0176 00       		.byte	0
+ 1782 0177 1C       		.uleb128 0x1c
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 37
+
+
+ 1783 0178 2E       		.uleb128 0x2e
+ 1784 0179 00       		.byte	0
+ 1785 017a 3F       		.uleb128 0x3f
+ 1786 017b 19       		.uleb128 0x19
+ 1787 017c 3C       		.uleb128 0x3c
+ 1788 017d 19       		.uleb128 0x19
+ 1789 017e 6E       		.uleb128 0x6e
+ 1790 017f 0E       		.uleb128 0xe
+ 1791 0180 03       		.uleb128 0x3
+ 1792 0181 0E       		.uleb128 0xe
+ 1793 0182 3A       		.uleb128 0x3a
+ 1794 0183 0B       		.uleb128 0xb
+ 1795 0184 3B       		.uleb128 0x3b
+ 1796 0185 0B       		.uleb128 0xb
+ 1797 0186 00       		.byte	0
+ 1798 0187 00       		.byte	0
+ 1799 0188 1D       		.uleb128 0x1d
+ 1800 0189 2E       		.uleb128 0x2e
+ 1801 018a 00       		.byte	0
+ 1802 018b 3F       		.uleb128 0x3f
+ 1803 018c 19       		.uleb128 0x19
+ 1804 018d 3C       		.uleb128 0x3c
+ 1805 018e 19       		.uleb128 0x19
+ 1806 018f 6E       		.uleb128 0x6e
+ 1807 0190 08       		.uleb128 0x8
+ 1808 0191 03       		.uleb128 0x3
+ 1809 0192 08       		.uleb128 0x8
+ 1810 0193 3A       		.uleb128 0x3a
+ 1811 0194 0B       		.uleb128 0xb
+ 1812 0195 3B       		.uleb128 0x3b
+ 1813 0196 0B       		.uleb128 0xb
+ 1814 0197 00       		.byte	0
+ 1815 0198 00       		.byte	0
+ 1816 0199 00       		.byte	0
+ 1817              		.section	.debug_loc,"",%progbits
+ 1818              	.Ldebug_loc0:
+ 1819              	.LLST0:
+ 1820 0000 00000000 		.4byte	.LVL1
+ 1821 0004 0D000000 		.4byte	.LVL3-1
+ 1822 0008 0100     		.2byte	0x1
+ 1823 000a 50       		.byte	0x50
+ 1824 000b 0D000000 		.4byte	.LVL3-1
+ 1825 000f 3A000000 		.4byte	.LFE64
+ 1826 0013 0400     		.2byte	0x4
+ 1827 0015 F3       		.byte	0xf3
+ 1828 0016 01       		.uleb128 0x1
+ 1829 0017 50       		.byte	0x50
+ 1830 0018 9F       		.byte	0x9f
+ 1831 0019 00000000 		.4byte	0
+ 1832 001d 00000000 		.4byte	0
+ 1833              	.LLST1:
+ 1834 0021 00000000 		.4byte	.LVL1
+ 1835 0025 0A000000 		.4byte	.LVL2
+ 1836 0029 0100     		.2byte	0x1
+ 1837 002b 51       		.byte	0x51
+ 1838 002c 0A000000 		.4byte	.LVL2
+ 1839 0030 3A000000 		.4byte	.LFE64
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 38
+
+
+ 1840 0034 0400     		.2byte	0x4
+ 1841 0036 F3       		.byte	0xf3
+ 1842 0037 01       		.uleb128 0x1
+ 1843 0038 51       		.byte	0x51
+ 1844 0039 9F       		.byte	0x9f
+ 1845 003a 00000000 		.4byte	0
+ 1846 003e 00000000 		.4byte	0
+ 1847              	.LLST2:
+ 1848 0042 00000000 		.4byte	.LVL1
+ 1849 0046 0D000000 		.4byte	.LVL3-1
+ 1850 004a 0100     		.2byte	0x1
+ 1851 004c 52       		.byte	0x52
+ 1852 004d 0D000000 		.4byte	.LVL3-1
+ 1853 0051 3A000000 		.4byte	.LFE64
+ 1854 0055 0100     		.2byte	0x1
+ 1855 0057 57       		.byte	0x57
+ 1856 0058 00000000 		.4byte	0
+ 1857 005c 00000000 		.4byte	0
+ 1858              	.LLST3:
+ 1859 0060 0E000000 		.4byte	.LVL3
+ 1860 0064 14000000 		.4byte	.LVL4
+ 1861 0068 0100     		.2byte	0x1
+ 1862 006a 50       		.byte	0x50
+ 1863 006b 18000000 		.4byte	.LVL5
+ 1864 006f 20000000 		.4byte	.LVL6
+ 1865 0073 0100     		.2byte	0x1
+ 1866 0075 50       		.byte	0x50
+ 1867 0076 24000000 		.4byte	.LVL7
+ 1868 007a 2B000000 		.4byte	.LVL8-1
+ 1869 007e 0100     		.2byte	0x1
+ 1870 0080 50       		.byte	0x50
+ 1871 0081 2E000000 		.4byte	.LVL9
+ 1872 0085 3A000000 		.4byte	.LFE64
+ 1873 0089 0100     		.2byte	0x1
+ 1874 008b 54       		.byte	0x54
+ 1875 008c 00000000 		.4byte	0
+ 1876 0090 00000000 		.4byte	0
+ 1877              	.LLST4:
+ 1878 0094 00000000 		.4byte	.LVL11
+ 1879 0098 0B000000 		.4byte	.LVL13-1
+ 1880 009c 0100     		.2byte	0x1
+ 1881 009e 50       		.byte	0x50
+ 1882 009f 0B000000 		.4byte	.LVL13-1
+ 1883 00a3 2E000000 		.4byte	.LFE65
+ 1884 00a7 0400     		.2byte	0x4
+ 1885 00a9 F3       		.byte	0xf3
+ 1886 00aa 01       		.uleb128 0x1
+ 1887 00ab 50       		.byte	0x50
+ 1888 00ac 9F       		.byte	0x9f
+ 1889 00ad 00000000 		.4byte	0
+ 1890 00b1 00000000 		.4byte	0
+ 1891              	.LLST5:
+ 1892 00b5 00000000 		.4byte	.LVL11
+ 1893 00b9 08000000 		.4byte	.LVL12
+ 1894 00bd 0100     		.2byte	0x1
+ 1895 00bf 51       		.byte	0x51
+ 1896 00c0 08000000 		.4byte	.LVL12
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 39
+
+
+ 1897 00c4 2E000000 		.4byte	.LFE65
+ 1898 00c8 0400     		.2byte	0x4
+ 1899 00ca F3       		.byte	0xf3
+ 1900 00cb 01       		.uleb128 0x1
+ 1901 00cc 51       		.byte	0x51
+ 1902 00cd 9F       		.byte	0x9f
+ 1903 00ce 00000000 		.4byte	0
+ 1904 00d2 00000000 		.4byte	0
+ 1905              	.LLST6:
+ 1906 00d6 00000000 		.4byte	.LVL11
+ 1907 00da 0B000000 		.4byte	.LVL13-1
+ 1908 00de 0100     		.2byte	0x1
+ 1909 00e0 52       		.byte	0x52
+ 1910 00e1 0B000000 		.4byte	.LVL13-1
+ 1911 00e5 2E000000 		.4byte	.LFE65
+ 1912 00e9 0400     		.2byte	0x4
+ 1913 00eb F3       		.byte	0xf3
+ 1914 00ec 01       		.uleb128 0x1
+ 1915 00ed 52       		.byte	0x52
+ 1916 00ee 9F       		.byte	0x9f
+ 1917 00ef 00000000 		.4byte	0
+ 1918 00f3 00000000 		.4byte	0
+ 1919              	.LLST7:
+ 1920 00f7 0C000000 		.4byte	.LVL13
+ 1921 00fb 12000000 		.4byte	.LVL14
+ 1922 00ff 0100     		.2byte	0x1
+ 1923 0101 50       		.byte	0x50
+ 1924 0102 16000000 		.4byte	.LVL15
+ 1925 0106 1C000000 		.4byte	.LVL16
+ 1926 010a 0100     		.2byte	0x1
+ 1927 010c 50       		.byte	0x50
+ 1928 010d 22000000 		.4byte	.LVL18
+ 1929 0111 2E000000 		.4byte	.LFE65
+ 1930 0115 0100     		.2byte	0x1
+ 1931 0117 54       		.byte	0x54
+ 1932 0118 00000000 		.4byte	0
+ 1933 011c 00000000 		.4byte	0
+ 1934              	.LLST8:
+ 1935 0120 00000000 		.4byte	.LVL20
+ 1936 0124 0C000000 		.4byte	.LVL22
+ 1937 0128 0100     		.2byte	0x1
+ 1938 012a 50       		.byte	0x50
+ 1939 012b 0C000000 		.4byte	.LVL22
+ 1940 012f 96000000 		.4byte	.LVL40
+ 1941 0133 0100     		.2byte	0x1
+ 1942 0135 55       		.byte	0x55
+ 1943 0136 96000000 		.4byte	.LVL40
+ 1944 013a 9C000000 		.4byte	.LFE66
+ 1945 013e 0400     		.2byte	0x4
+ 1946 0140 F3       		.byte	0xf3
+ 1947 0141 01       		.uleb128 0x1
+ 1948 0142 50       		.byte	0x50
+ 1949 0143 9F       		.byte	0x9f
+ 1950 0144 00000000 		.4byte	0
+ 1951 0148 00000000 		.4byte	0
+ 1952              	.LLST9:
+ 1953 014c 06000000 		.4byte	.LVL21
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 40
+
+
+ 1954 0150 0C000000 		.4byte	.LVL22
+ 1955 0154 0200     		.2byte	0x2
+ 1956 0156 30       		.byte	0x30
+ 1957 0157 9F       		.byte	0x9f
+ 1958 0158 0C000000 		.4byte	.LVL22
+ 1959 015c 96000000 		.4byte	.LVL40
+ 1960 0160 0100     		.2byte	0x1
+ 1961 0162 56       		.byte	0x56
+ 1962 0163 00000000 		.4byte	0
+ 1963 0167 00000000 		.4byte	0
+ 1964              	.LLST10:
+ 1965 016b 06000000 		.4byte	.LVL21
+ 1966 016f 0C000000 		.4byte	.LVL22
+ 1967 0173 0200     		.2byte	0x2
+ 1968 0175 30       		.byte	0x30
+ 1969 0176 9F       		.byte	0x9f
+ 1970 0177 0C000000 		.4byte	.LVL22
+ 1971 017b 4A000000 		.4byte	.LVL30
+ 1972 017f 0100     		.2byte	0x1
+ 1973 0181 54       		.byte	0x54
+ 1974 0182 00000000 		.4byte	0
+ 1975 0186 00000000 		.4byte	0
+ 1976              	.LLST11:
+ 1977 018a 4C000000 		.4byte	.LVL31
+ 1978 018e 96000000 		.4byte	.LVL40
+ 1979 0192 0100     		.2byte	0x1
+ 1980 0194 54       		.byte	0x54
+ 1981 0195 00000000 		.4byte	0
+ 1982 0199 00000000 		.4byte	0
+ 1983              	.LLST12:
+ 1984 019d 00000000 		.4byte	.LVL41
+ 1985 01a1 0C000000 		.4byte	.LVL43
+ 1986 01a5 0100     		.2byte	0x1
+ 1987 01a7 50       		.byte	0x50
+ 1988 01a8 0C000000 		.4byte	.LVL43
+ 1989 01ac 96000000 		.4byte	.LVL61
+ 1990 01b0 0100     		.2byte	0x1
+ 1991 01b2 55       		.byte	0x55
+ 1992 01b3 96000000 		.4byte	.LVL61
+ 1993 01b7 9C000000 		.4byte	.LFE67
+ 1994 01bb 0400     		.2byte	0x4
+ 1995 01bd F3       		.byte	0xf3
+ 1996 01be 01       		.uleb128 0x1
+ 1997 01bf 50       		.byte	0x50
+ 1998 01c0 9F       		.byte	0x9f
+ 1999 01c1 00000000 		.4byte	0
+ 2000 01c5 00000000 		.4byte	0
+ 2001              	.LLST13:
+ 2002 01c9 06000000 		.4byte	.LVL42
+ 2003 01cd 0C000000 		.4byte	.LVL43
+ 2004 01d1 0200     		.2byte	0x2
+ 2005 01d3 30       		.byte	0x30
+ 2006 01d4 9F       		.byte	0x9f
+ 2007 01d5 0C000000 		.4byte	.LVL43
+ 2008 01d9 96000000 		.4byte	.LVL61
+ 2009 01dd 0100     		.2byte	0x1
+ 2010 01df 56       		.byte	0x56
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 41
+
+
+ 2011 01e0 00000000 		.4byte	0
+ 2012 01e4 00000000 		.4byte	0
+ 2013              	.LLST14:
+ 2014 01e8 06000000 		.4byte	.LVL42
+ 2015 01ec 0C000000 		.4byte	.LVL43
+ 2016 01f0 0200     		.2byte	0x2
+ 2017 01f2 30       		.byte	0x30
+ 2018 01f3 9F       		.byte	0x9f
+ 2019 01f4 0C000000 		.4byte	.LVL43
+ 2020 01f8 4A000000 		.4byte	.LVL51
+ 2021 01fc 0100     		.2byte	0x1
+ 2022 01fe 54       		.byte	0x54
+ 2023 01ff 00000000 		.4byte	0
+ 2024 0203 00000000 		.4byte	0
+ 2025              	.LLST15:
+ 2026 0207 4C000000 		.4byte	.LVL52
+ 2027 020b 96000000 		.4byte	.LVL61
+ 2028 020f 0100     		.2byte	0x1
+ 2029 0211 54       		.byte	0x54
+ 2030 0212 00000000 		.4byte	0
+ 2031 0216 00000000 		.4byte	0
+ 2032              	.LLST16:
+ 2033 021a 00000000 		.4byte	.LVL62
+ 2034 021e 0C000000 		.4byte	.LVL64
+ 2035 0222 0100     		.2byte	0x1
+ 2036 0224 50       		.byte	0x50
+ 2037 0225 0C000000 		.4byte	.LVL64
+ 2038 0229 58000000 		.4byte	.LFE68
+ 2039 022d 0100     		.2byte	0x1
+ 2040 022f 55       		.byte	0x55
+ 2041 0230 00000000 		.4byte	0
+ 2042 0234 00000000 		.4byte	0
+ 2043              	.LLST17:
+ 2044 0238 06000000 		.4byte	.LVL63
+ 2045 023c 0C000000 		.4byte	.LVL64
+ 2046 0240 0200     		.2byte	0x2
+ 2047 0242 30       		.byte	0x30
+ 2048 0243 9F       		.byte	0x9f
+ 2049 0244 0C000000 		.4byte	.LVL64
+ 2050 0248 52000000 		.4byte	.LVL72
+ 2051 024c 0100     		.2byte	0x1
+ 2052 024e 56       		.byte	0x56
+ 2053 024f 52000000 		.4byte	.LVL72
+ 2054 0253 58000000 		.4byte	.LFE68
+ 2055 0257 0100     		.2byte	0x1
+ 2056 0259 50       		.byte	0x50
+ 2057 025a 00000000 		.4byte	0
+ 2058 025e 00000000 		.4byte	0
+ 2059              	.LLST18:
+ 2060 0262 06000000 		.4byte	.LVL63
+ 2061 0266 0C000000 		.4byte	.LVL64
+ 2062 026a 0200     		.2byte	0x2
+ 2063 026c 30       		.byte	0x30
+ 2064 026d 9F       		.byte	0x9f
+ 2065 026e 0C000000 		.4byte	.LVL64
+ 2066 0272 58000000 		.4byte	.LFE68
+ 2067 0276 0100     		.2byte	0x1
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 42
+
+
+ 2068 0278 54       		.byte	0x54
+ 2069 0279 00000000 		.4byte	0
+ 2070 027d 00000000 		.4byte	0
+ 2071              	.LLST19:
+ 2072 0281 00000000 		.4byte	.LVL73
+ 2073 0285 0C000000 		.4byte	.LVL75
+ 2074 0289 0100     		.2byte	0x1
+ 2075 028b 50       		.byte	0x50
+ 2076 028c 0C000000 		.4byte	.LVL75
+ 2077 0290 4E000000 		.4byte	.LFE69
+ 2078 0294 0100     		.2byte	0x1
+ 2079 0296 55       		.byte	0x55
+ 2080 0297 00000000 		.4byte	0
+ 2081 029b 00000000 		.4byte	0
+ 2082              	.LLST20:
+ 2083 029f 06000000 		.4byte	.LVL74
+ 2084 02a3 0C000000 		.4byte	.LVL75
+ 2085 02a7 0200     		.2byte	0x2
+ 2086 02a9 30       		.byte	0x30
+ 2087 02aa 9F       		.byte	0x9f
+ 2088 02ab 0C000000 		.4byte	.LVL75
+ 2089 02af 4E000000 		.4byte	.LFE69
+ 2090 02b3 0100     		.2byte	0x1
+ 2091 02b5 56       		.byte	0x56
+ 2092 02b6 00000000 		.4byte	0
+ 2093 02ba 00000000 		.4byte	0
+ 2094              	.LLST21:
+ 2095 02be 06000000 		.4byte	.LVL74
+ 2096 02c2 0C000000 		.4byte	.LVL75
+ 2097 02c6 0200     		.2byte	0x2
+ 2098 02c8 30       		.byte	0x30
+ 2099 02c9 9F       		.byte	0x9f
+ 2100 02ca 0C000000 		.4byte	.LVL75
+ 2101 02ce 4E000000 		.4byte	.LFE69
+ 2102 02d2 0100     		.2byte	0x1
+ 2103 02d4 54       		.byte	0x54
+ 2104 02d5 00000000 		.4byte	0
+ 2105 02d9 00000000 		.4byte	0
+ 2106              	.LLST22:
+ 2107 02dd 00000000 		.4byte	.LVL83
+ 2108 02e1 0C000000 		.4byte	.LVL85
+ 2109 02e5 0100     		.2byte	0x1
+ 2110 02e7 50       		.byte	0x50
+ 2111 02e8 0C000000 		.4byte	.LVL85
+ 2112 02ec 58000000 		.4byte	.LFE70
+ 2113 02f0 0100     		.2byte	0x1
+ 2114 02f2 55       		.byte	0x55
+ 2115 02f3 00000000 		.4byte	0
+ 2116 02f7 00000000 		.4byte	0
+ 2117              	.LLST23:
+ 2118 02fb 06000000 		.4byte	.LVL84
+ 2119 02ff 0C000000 		.4byte	.LVL85
+ 2120 0303 0200     		.2byte	0x2
+ 2121 0305 30       		.byte	0x30
+ 2122 0306 9F       		.byte	0x9f
+ 2123 0307 0C000000 		.4byte	.LVL85
+ 2124 030b 52000000 		.4byte	.LVL93
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 43
+
+
+ 2125 030f 0100     		.2byte	0x1
+ 2126 0311 56       		.byte	0x56
+ 2127 0312 52000000 		.4byte	.LVL93
+ 2128 0316 58000000 		.4byte	.LFE70
+ 2129 031a 0100     		.2byte	0x1
+ 2130 031c 50       		.byte	0x50
+ 2131 031d 00000000 		.4byte	0
+ 2132 0321 00000000 		.4byte	0
+ 2133              	.LLST24:
+ 2134 0325 06000000 		.4byte	.LVL84
+ 2135 0329 0C000000 		.4byte	.LVL85
+ 2136 032d 0200     		.2byte	0x2
+ 2137 032f 30       		.byte	0x30
+ 2138 0330 9F       		.byte	0x9f
+ 2139 0331 0C000000 		.4byte	.LVL85
+ 2140 0335 58000000 		.4byte	.LFE70
+ 2141 0339 0100     		.2byte	0x1
+ 2142 033b 54       		.byte	0x54
+ 2143 033c 00000000 		.4byte	0
+ 2144 0340 00000000 		.4byte	0
+ 2145              	.LLST25:
+ 2146 0344 00000000 		.4byte	.LVL94
+ 2147 0348 0C000000 		.4byte	.LVL96
+ 2148 034c 0100     		.2byte	0x1
+ 2149 034e 50       		.byte	0x50
+ 2150 034f 0C000000 		.4byte	.LVL96
+ 2151 0353 96000000 		.4byte	.LVL114
+ 2152 0357 0100     		.2byte	0x1
+ 2153 0359 55       		.byte	0x55
+ 2154 035a 96000000 		.4byte	.LVL114
+ 2155 035e 9C000000 		.4byte	.LFE71
+ 2156 0362 0400     		.2byte	0x4
+ 2157 0364 F3       		.byte	0xf3
+ 2158 0365 01       		.uleb128 0x1
+ 2159 0366 50       		.byte	0x50
+ 2160 0367 9F       		.byte	0x9f
+ 2161 0368 00000000 		.4byte	0
+ 2162 036c 00000000 		.4byte	0
+ 2163              	.LLST26:
+ 2164 0370 06000000 		.4byte	.LVL95
+ 2165 0374 0C000000 		.4byte	.LVL96
+ 2166 0378 0200     		.2byte	0x2
+ 2167 037a 30       		.byte	0x30
+ 2168 037b 9F       		.byte	0x9f
+ 2169 037c 0C000000 		.4byte	.LVL96
+ 2170 0380 96000000 		.4byte	.LVL114
+ 2171 0384 0100     		.2byte	0x1
+ 2172 0386 56       		.byte	0x56
+ 2173 0387 00000000 		.4byte	0
+ 2174 038b 00000000 		.4byte	0
+ 2175              	.LLST27:
+ 2176 038f 06000000 		.4byte	.LVL95
+ 2177 0393 0C000000 		.4byte	.LVL96
+ 2178 0397 0200     		.2byte	0x2
+ 2179 0399 30       		.byte	0x30
+ 2180 039a 9F       		.byte	0x9f
+ 2181 039b 0C000000 		.4byte	.LVL96
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 44
+
+
+ 2182 039f 4A000000 		.4byte	.LVL104
+ 2183 03a3 0100     		.2byte	0x1
+ 2184 03a5 54       		.byte	0x54
+ 2185 03a6 00000000 		.4byte	0
+ 2186 03aa 00000000 		.4byte	0
+ 2187              	.LLST28:
+ 2188 03ae 4C000000 		.4byte	.LVL105
+ 2189 03b2 96000000 		.4byte	.LVL114
+ 2190 03b6 0100     		.2byte	0x1
+ 2191 03b8 54       		.byte	0x54
+ 2192 03b9 00000000 		.4byte	0
+ 2193 03bd 00000000 		.4byte	0
+ 2194              		.section	.debug_aranges,"",%progbits
+ 2195 0000 5C000000 		.4byte	0x5c
+ 2196 0004 0200     		.2byte	0x2
+ 2197 0006 00000000 		.4byte	.Ldebug_info0
+ 2198 000a 04       		.byte	0x4
+ 2199 000b 00       		.byte	0
+ 2200 000c 0000     		.2byte	0
+ 2201 000e 0000     		.2byte	0
+ 2202 0010 00000000 		.4byte	.LFB63
+ 2203 0014 02000000 		.4byte	.LFE63-.LFB63
+ 2204 0018 00000000 		.4byte	.LFB64
+ 2205 001c 3A000000 		.4byte	.LFE64-.LFB64
+ 2206 0020 00000000 		.4byte	.LFB65
+ 2207 0024 2E000000 		.4byte	.LFE65-.LFB65
+ 2208 0028 00000000 		.4byte	.LFB66
+ 2209 002c 9C000000 		.4byte	.LFE66-.LFB66
+ 2210 0030 00000000 		.4byte	.LFB67
+ 2211 0034 9C000000 		.4byte	.LFE67-.LFB67
+ 2212 0038 00000000 		.4byte	.LFB68
+ 2213 003c 58000000 		.4byte	.LFE68-.LFB68
+ 2214 0040 00000000 		.4byte	.LFB69
+ 2215 0044 4E000000 		.4byte	.LFE69-.LFB69
+ 2216 0048 00000000 		.4byte	.LFB70
+ 2217 004c 58000000 		.4byte	.LFE70-.LFB70
+ 2218 0050 00000000 		.4byte	.LFB71
+ 2219 0054 9C000000 		.4byte	.LFE71-.LFB71
+ 2220 0058 00000000 		.4byte	0
+ 2221 005c 00000000 		.4byte	0
+ 2222              		.section	.debug_ranges,"",%progbits
+ 2223              	.Ldebug_ranges0:
+ 2224 0000 06000000 		.4byte	.LBB2
+ 2225 0004 08000000 		.4byte	.LBE2
+ 2226 0008 0A000000 		.4byte	.LBB3
+ 2227 000c 4C000000 		.4byte	.LBE3
+ 2228 0010 00000000 		.4byte	0
+ 2229 0014 00000000 		.4byte	0
+ 2230 0018 06000000 		.4byte	.LBB5
+ 2231 001c 08000000 		.4byte	.LBE5
+ 2232 0020 0A000000 		.4byte	.LBB6
+ 2233 0024 4C000000 		.4byte	.LBE6
+ 2234 0028 00000000 		.4byte	0
+ 2235 002c 00000000 		.4byte	0
+ 2236 0030 06000000 		.4byte	.LBB8
+ 2237 0034 08000000 		.4byte	.LBE8
+ 2238 0038 0A000000 		.4byte	.LBB9
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 45
+
+
+ 2239 003c 48000000 		.4byte	.LBE9
+ 2240 0040 00000000 		.4byte	0
+ 2241 0044 00000000 		.4byte	0
+ 2242 0048 06000000 		.4byte	.LBB10
+ 2243 004c 08000000 		.4byte	.LBE10
+ 2244 0050 0A000000 		.4byte	.LBB11
+ 2245 0054 48000000 		.4byte	.LBE11
+ 2246 0058 00000000 		.4byte	0
+ 2247 005c 00000000 		.4byte	0
+ 2248 0060 06000000 		.4byte	.LBB12
+ 2249 0064 08000000 		.4byte	.LBE12
+ 2250 0068 0A000000 		.4byte	.LBB13
+ 2251 006c 48000000 		.4byte	.LBE13
+ 2252 0070 00000000 		.4byte	0
+ 2253 0074 00000000 		.4byte	0
+ 2254 0078 06000000 		.4byte	.LBB14
+ 2255 007c 08000000 		.4byte	.LBE14
+ 2256 0080 0A000000 		.4byte	.LBB15
+ 2257 0084 4C000000 		.4byte	.LBE15
+ 2258 0088 00000000 		.4byte	0
+ 2259 008c 00000000 		.4byte	0
+ 2260 0090 00000000 		.4byte	.LFB63
+ 2261 0094 02000000 		.4byte	.LFE63
+ 2262 0098 00000000 		.4byte	.LFB64
+ 2263 009c 3A000000 		.4byte	.LFE64
+ 2264 00a0 00000000 		.4byte	.LFB65
+ 2265 00a4 2E000000 		.4byte	.LFE65
+ 2266 00a8 00000000 		.4byte	.LFB66
+ 2267 00ac 9C000000 		.4byte	.LFE66
+ 2268 00b0 00000000 		.4byte	.LFB67
+ 2269 00b4 9C000000 		.4byte	.LFE67
+ 2270 00b8 00000000 		.4byte	.LFB68
+ 2271 00bc 58000000 		.4byte	.LFE68
+ 2272 00c0 00000000 		.4byte	.LFB69
+ 2273 00c4 4E000000 		.4byte	.LFE69
+ 2274 00c8 00000000 		.4byte	.LFB70
+ 2275 00cc 58000000 		.4byte	.LFE70
+ 2276 00d0 00000000 		.4byte	.LFB71
+ 2277 00d4 9C000000 		.4byte	.LFE71
+ 2278 00d8 00000000 		.4byte	0
+ 2279 00dc 00000000 		.4byte	0
+ 2280              		.section	.debug_line,"",%progbits
+ 2281              	.Ldebug_line0:
+ 2282 0000 39030000 		.section	.debug_str,"MS",%progbits,1
+ 2282      0200F301 
+ 2282      00000201 
+ 2282      FB0E0D00 
+ 2282      01010101 
+ 2283              	.LASF33:
+ 2284 0000 6D696E75 		.ascii	"minutes\000"
+ 2284      74657300 
+ 2285              	.LASF4:
+ 2286 0008 5F5F7569 		.ascii	"__uint8_t\000"
+ 2286      6E74385F 
+ 2286      7400
+ 2287              	.LASF29:
+ 2288 0012 5254435F 		.ascii	"RTC_convert_seconds\000"
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 46
+
+
+ 2288      636F6E76 
+ 2288      6572745F 
+ 2288      7365636F 
+ 2288      6E647300 
+ 2289              	.LASF5:
+ 2290 0026 5F5F696E 		.ascii	"__int32_t\000"
+ 2290      7433325F 
+ 2290      7400
+ 2291              	.LASF6:
+ 2292 0030 6C6F6E67 		.ascii	"long int\000"
+ 2292      20696E74 
+ 2292      00
+ 2293              	.LASF21:
+ 2294 0039 4572726F 		.ascii	"ErrorCode\000"
+ 2294      72436F64 
+ 2294      6500
+ 2295              	.LASF38:
+ 2296 0043 6D6F6E74 		.ascii	"month\000"
+ 2296      6800
+ 2297              	.LASF47:
+ 2298 0049 4932434F 		.ascii	"I2COLED_MasterSendStop\000"
+ 2298      4C45445F 
+ 2298      4D617374 
+ 2298      65725365 
+ 2298      6E645374 
+ 2299              	.LASF49:
+ 2300 0060 5254435F 		.ascii	"RTC_Driver.c\000"
+ 2300      44726976 
+ 2300      65722E63 
+ 2300      00
+ 2301              	.LASF14:
+ 2302 006d 666C6F61 		.ascii	"float\000"
+ 2302      7400
+ 2303              	.LASF25:
+ 2304 0073 64617461 		.ascii	"data\000"
+ 2304      00
+ 2305              	.LASF0:
+ 2306 0078 7369676E 		.ascii	"signed char\000"
+ 2306      65642063 
+ 2306      68617200 
+ 2307              	.LASF1:
+ 2308 0084 756E7369 		.ascii	"unsigned char\000"
+ 2308      676E6564 
+ 2308      20636861 
+ 2308      7200
+ 2309              	.LASF48:
+ 2310 0092 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2310      43313120 
+ 2310      352E342E 
+ 2310      31203230 
+ 2310      31363036 
+ 2311 00c5 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 2311      20726576 
+ 2311      6973696F 
+ 2311      6E203233 
+ 2311      37373135 
+ 2312 00f8 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 47
+
+
+ 2312      66756E63 
+ 2312      74696F6E 
+ 2312      2D736563 
+ 2312      74696F6E 
+ 2313              	.LASF32:
+ 2314 0120 5254435F 		.ascii	"RTC_convert_minutes\000"
+ 2314      636F6E76 
+ 2314      6572745F 
+ 2314      6D696E75 
+ 2314      74657300 
+ 2315              	.LASF7:
+ 2316 0134 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2316      20756E73 
+ 2316      69676E65 
+ 2316      6420696E 
+ 2316      7400
+ 2317              	.LASF50:
+ 2318 0146 433A5C55 		.ascii	"C:\\Users\\lucac\\Desktop\\Luca\\PoliMi\\Magistrale"
+ 2318      73657273 
+ 2318      5C6C7563 
+ 2318      61635C44 
+ 2318      65736B74 
+ 2319 0173 5C494920 		.ascii	"\\II anno\\Electronic technologies and biosensors l"
+ 2319      616E6E6F 
+ 2319      5C456C65 
+ 2319      6374726F 
+ 2319      6E696320 
+ 2320 01a4 61626F72 		.ascii	"aboratory\\Projects\\Project_ETBL\\Project_design.c"
+ 2320      61746F72 
+ 2320      795C5072 
+ 2320      6F6A6563 
+ 2320      74735C50 
+ 2321 01d4 7964736E 		.ascii	"ydsn\000"
+ 2321      00
+ 2322              	.LASF3:
+ 2323 01d9 73686F72 		.ascii	"short unsigned int\000"
+ 2323      7420756E 
+ 2323      7369676E 
+ 2323      65642069 
+ 2323      6E7400
+ 2324              	.LASF24:
+ 2325 01ec 72656769 		.ascii	"register_address\000"
+ 2325      73746572 
+ 2325      5F616464 
+ 2325      72657373 
+ 2325      00
+ 2326              	.LASF41:
+ 2327 01fd 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 2327      52784275 
+ 2327      66666572 
+ 2327      00
+ 2328              	.LASF35:
+ 2329 020a 686F7572 		.ascii	"hours\000"
+ 2329      7300
+ 2330              	.LASF51:
+ 2331 0210 7274635F 		.ascii	"rtc_init\000"
+ 2331      696E6974 
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 48
+
+
+ 2331      00
+ 2332              	.LASF15:
+ 2333 0219 646F7562 		.ascii	"double\000"
+ 2333      6C6500
+ 2334              	.LASF37:
+ 2335 0220 5254435F 		.ascii	"RTC_convert_month\000"
+ 2335      636F6E76 
+ 2335      6572745F 
+ 2335      6D6F6E74 
+ 2335      6800
+ 2336              	.LASF10:
+ 2337 0232 756E7369 		.ascii	"unsigned int\000"
+ 2337      676E6564 
+ 2337      20696E74 
+ 2337      00
+ 2338              	.LASF23:
+ 2339 023f 64657669 		.ascii	"device_address\000"
+ 2339      63655F61 
+ 2339      64647265 
+ 2339      737300
+ 2340              	.LASF39:
+ 2341 024e 5254435F 		.ascii	"RTC_convert_year\000"
+ 2341      636F6E76 
+ 2341      6572745F 
+ 2341      79656172 
+ 2341      00
+ 2342              	.LASF9:
+ 2343 025f 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2343      206C6F6E 
+ 2343      6720756E 
+ 2343      7369676E 
+ 2343      65642069 
+ 2344              	.LASF11:
+ 2345 0276 75696E74 		.ascii	"uint8_t\000"
+ 2345      385F7400 
+ 2346              	.LASF44:
+ 2347 027e 4932434F 		.ascii	"I2COLED_MasterWriteByte\000"
+ 2347      4C45445F 
+ 2347      4D617374 
+ 2347      65725772 
+ 2347      69746542 
+ 2348              	.LASF12:
+ 2349 0296 696E7433 		.ascii	"int32_t\000"
+ 2349      325F7400 
+ 2350              	.LASF18:
+ 2351 029e 73697A65 		.ascii	"sizetype\000"
+ 2351      74797065 
+ 2351      00
+ 2352              	.LASF28:
+ 2353 02a7 6572726F 		.ascii	"error\000"
+ 2353      7200
+ 2354              	.LASF8:
+ 2355 02ad 6C6F6E67 		.ascii	"long long int\000"
+ 2355      206C6F6E 
+ 2355      6720696E 
+ 2355      7400
+ 2356              	.LASF26:
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 49
+
+
+ 2357 02bb 5254435F 		.ascii	"RTC_ReadRegister\000"
+ 2357      52656164 
+ 2357      52656769 
+ 2357      73746572 
+ 2357      00
+ 2358              	.LASF31:
+ 2359 02cc 7365636F 		.ascii	"seconds\000"
+ 2359      6E647300 
+ 2360              	.LASF16:
+ 2361 02d4 63686172 		.ascii	"char\000"
+ 2361      00
+ 2362              	.LASF40:
+ 2363 02d9 79656172 		.ascii	"year\000"
+ 2363      00
+ 2364              	.LASF34:
+ 2365 02de 5254435F 		.ascii	"RTC_convert_hours\000"
+ 2365      636F6E76 
+ 2365      6572745F 
+ 2365      686F7572 
+ 2365      7300
+ 2366              	.LASF45:
+ 2367 02f0 4932434F 		.ascii	"I2COLED_MasterSendRestart\000"
+ 2367      4C45445F 
+ 2367      4D617374 
+ 2367      65725365 
+ 2367      6E645265 
+ 2368              	.LASF2:
+ 2369 030a 73686F72 		.ascii	"short int\000"
+ 2369      7420696E 
+ 2369      7400
+ 2370              	.LASF52:
+ 2371 0314 7274635F 		.ascii	"rtc_i2c_address\000"
+ 2371      6932635F 
+ 2371      61646472 
+ 2371      65737300 
+ 2372              	.LASF30:
+ 2373 0324 62756666 		.ascii	"buffer\000"
+ 2373      657200
+ 2374              	.LASF13:
+ 2375 032b 75696E74 		.ascii	"uint8\000"
+ 2375      3800
+ 2376              	.LASF22:
+ 2377 0331 7274635F 		.ascii	"rtc_address\000"
+ 2377      61646472 
+ 2377      65737300 
+ 2378              	.LASF19:
+ 2379 033d 4E4F5F45 		.ascii	"NO_ERROR\000"
+ 2379      52524F52 
+ 2379      00
+ 2380              	.LASF20:
+ 2381 0346 4552524F 		.ascii	"ERROR\000"
+ 2381      5200
+ 2382              	.LASF17:
+ 2383 034c 6C6F6E67 		.ascii	"long double\000"
+ 2383      20646F75 
+ 2383      626C6500 
+ 2384              	.LASF36:
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\cc2xeF7o.s 			page 50
+
+
+ 2385 0358 5254435F 		.ascii	"RTC_convert_day\000"
+ 2385      636F6E76 
+ 2385      6572745F 
+ 2385      64617900 
+ 2386              	.LASF43:
+ 2387 0368 4932434F 		.ascii	"I2COLED_MasterSendStart\000"
+ 2387      4C45445F 
+ 2387      4D617374 
+ 2387      65725365 
+ 2387      6E645374 
+ 2388              	.LASF46:
+ 2389 0380 4932434F 		.ascii	"I2COLED_MasterReadByte\000"
+ 2389      4C45445F 
+ 2389      4D617374 
+ 2389      65725265 
+ 2389      61644279 
+ 2390              	.LASF27:
+ 2391 0397 5254435F 		.ascii	"RTC_WriteRegister\000"
+ 2391      57726974 
+ 2391      65526567 
+ 2391      69737465 
+ 2391      7200
+ 2392              	.LASF42:
+ 2393 03a9 43757272 		.ascii	"Current_time\000"
+ 2393      656E745F 
+ 2393      74696D65 
+ 2393      00
+ 2394              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

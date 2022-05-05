@@ -25,6 +25,8 @@
 #include "Sda.h"
 #include "Scl_aliases.h"
 #include "Scl.h"
+#include "UART_1.h"
+#include "UART_1_IntClock.h"
 #include "core_cm3_psoc5.h"
 #include "CyDmac.h"
 #include "CyFlash.h"
