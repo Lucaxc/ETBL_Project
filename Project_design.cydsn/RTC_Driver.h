@@ -79,12 +79,14 @@
 #define DICEMBER                        0x12
     
 // YEAR DEFINITION
-#define Y_2022                          0x2022
-#define Y_2023                          0x2023
+#define Y_2022                          0x22        //2000 to be added to get 2022 (range 00-99)        
+#define Y_2023                          0x23
     
 uint8 Current_time[8];
 
 // Main functions
+void set_RTC(uint8_t current_seconds, uint8_t current_minutes, uint8_t current_hours, uint8_t current_date, 
+             uint8_t current_month, uint8_t current_year);
 void rtc_init(uint8_t rtc_address);
 ErrorCode RTC_ReadRegister(uint8_t device_address, uint8_t register_address, uint8_t* data);
 ErrorCode RTC_WriteRegister(uint8_t device_address, uint8_t register_address, uint8_t data);

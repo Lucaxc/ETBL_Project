@@ -44,6 +44,7 @@
           <File BuildType="BUILD" Toolchain="">font.h</File>
           <File BuildType="BUILD" Toolchain="">RTC_Driver.h</File>
           <File BuildType="BUILD" Toolchain="">ErrorCodes.h</File>
+          <File BuildType="BUILD" Toolchain="">Globals.h</File>
         </Files>
       </Folder>
       <Folder BuildType="STRICT" Path="C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\Generated_Source\PSoC5">

@@ -28,6 +28,51 @@ static uint8_t rtc_i2c_address;
 /*------------------------------------------------------------------------
 *                       FUNCTIONS IMPLEMENTATION
 -------------------------------------------------------------------------*/
+/*  RTC SET UP
+*   \brief: Function that, given the user-inserted values, sets the RTC.
+*   \Parameters:
+*       @param current_seconds: real time seconds
+*       @param current_minutes: real time minutes
+*       @param current_hours: real time hours
+*       @param current_date: real time date
+*       @param current_month: real time month
+*       @param current_year: real time year
+*   \Return: NONE
+*/
+void set_RTC(uint8_t current_seconds, uint8_t current_minutes, uint8_t current_hours, uint8_t current_date, 
+             uint8_t current_month, uint8_t current_year) {
+    
+    ErrorCode error = RTC_WriteRegister(RTC_ADDRESS, RTC_SECONDS, current_seconds);
+    if(error == ERROR) {
+        UART_1_PutString("Error in setting the RTC seconds");
+    }
+    
+    error = RTC_WriteRegister(RTC_ADDRESS, RTC_MINUTES, current_minutes);
+    if(error == ERROR) {
+        UART_1_PutString("Error in setting the RTC minutes");
+    }
+    
+    error = RTC_WriteRegister(RTC_ADDRESS, RTC_HOURS, current_hours);
+    if(error == ERROR) {
+        UART_1_PutString("Error in setting the RTC hours");
+    }
+    
+    error = RTC_WriteRegister(RTC_ADDRESS, RTC_DATE, current_date);
+    if(error == ERROR) {
+        UART_1_PutString("Error in setting the RTC date");
+    }
+    
+    error = RTC_WriteRegister(RTC_ADDRESS, RTC_MONTH, current_month);
+    if(error == ERROR) {
+        UART_1_PutString("Error in setting the RTC month");
+    }
+    
+    error = RTC_WriteRegister(RTC_ADDRESS, RTC_YEAR, current_year);
+    if(error == ERROR) {
+        UART_1_PutString("Error in setting the RTC year");
+    }               
+ }
+
 /*  RTC INIT
 *   \brief: Function that initializes the pheripheral
 *   \Parameters:

@@ -298,7 +298,7 @@ const uint8_t Fan1 [] = {
 uint8_t current_seconds;
 uint8_t current_minutes;
 uint8_t current_hours;
-uint8_t current_day;
+uint8_t current_date;
 uint8_t current_month;
 uint8_t current_year;
 

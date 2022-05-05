@@ -133,6 +133,41 @@
 <VisibleNodeIds>
 <v>Project_ETBL</v>
 <v>Project_ETBL\Project_design</v>
+<v>Project_ETBL\Project_design\CortexM3</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\CyDmac.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\CySpc.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\cyutils.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\I2COLED.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\I2COLED_BOOT.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\I2COLED_INT.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\I2COLED_MASTER.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\I2COLED_PM.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\I2COLED_SLAVE.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\main.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\OLED_Driver.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\RTC_Driver.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\Scl.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\Sda.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_1.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_1_BOOT.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_1_INT.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_1_IntClock.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_1_PM.lst</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Project_design.elf</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Project_design.hex</v>
+<v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541\Debug\Project_design.map</v>
+<v>Project_ETBL\Project_design\Project_design.gpdsc</v>
 <v>Project_ETBL\Project_design\Project_design.rpt</v>
 <v>Project_ETBL\Project_design\Project_design_timing.html</v>
 </VisibleNodeIds>
