@@ -76,7 +76,7 @@
 #define SEPTEMBER                       0x09
 #define OCTOBER                         0x10
 #define NOVEMBER                        0x11
-#define DICEMBER                        0x12
+#define DECEMBER                        0x12
     
 // YEAR DEFINITION
 #define Y_2022                          0x22        //2000 to be added to get 2022 (range 00-99)        
@@ -88,16 +88,17 @@ uint8 Current_time[8];
 void set_RTC(uint8_t current_seconds, uint8_t current_minutes, uint8_t current_hours, uint8_t current_date, 
              uint8_t current_month, uint8_t current_year);
 void rtc_init(uint8_t rtc_address);
+void rtc_read_time(uint8_t rtc_data_register);  
 ErrorCode RTC_ReadRegister(uint8_t device_address, uint8_t register_address, uint8_t* data);
 ErrorCode RTC_WriteRegister(uint8_t device_address, uint8_t register_address, uint8_t data);
 
 // Auxiliary functions
-uint8_t RTC_convert_seconds(uint8_t* buffer);
-uint8_t RTC_convert_minutes(uint8_t* buffer);
-uint8_t RTC_convert_hours(uint8_t* buffer);
-uint8_t RTC_convert_day(uint8_t* buffer);
-uint8_t RTC_convert_month(uint8_t* buffer);
-uint8_t RTC_convert_year(uint8_t* buffer);
+uint8_t RTC_convert_seconds(uint8_t buffer);
+uint8_t RTC_convert_minutes(uint8_t buffer);
+uint8_t RTC_convert_hours(uint8_t buffer);
+uint8_t RTC_convert_date(uint8_t buffer);
+uint8_t RTC_convert_month(uint8_t buffer);
+uint8_t RTC_convert_year(uint8_t buffer);
     
 #endif
 /* [] END OF FILE */

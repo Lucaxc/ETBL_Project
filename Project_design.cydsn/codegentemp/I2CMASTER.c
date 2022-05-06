@@ -1,5 +1,5 @@
 /*******************************************************************************
-* File Name: I2COLED.c
+* File Name: I2CMASTER.c
 * Version 3.50
 *
 * Description:
@@ -14,20 +14,20 @@
 * the software package with which this file was provided.
 *******************************************************************************/
 
-#include "I2COLED_PVT.h"
+#include "I2CMASTER_PVT.h"
 
 
 /**********************************
 *      System variables
 **********************************/
 
-uint8 I2COLED_initVar = 0u; /* Defines if component was initialized */
+uint8 I2CMASTER_initVar = 0u; /* Defines if component was initialized */
 
-volatile uint8 I2COLED_state;  /* Current state of I2C FSM */
+volatile uint8 I2CMASTER_state;  /* Current state of I2C FSM */
 
 
 /*******************************************************************************
-* Function Name: I2COLED_Init
+* Function Name: I2CMASTER_Init
 ********************************************************************************
 *
 * Summary:
@@ -46,75 +46,75 @@ volatile uint8 I2COLED_state;  /* Current state of I2C FSM */
 *  No.
 *
 *******************************************************************************/
-void I2COLED_Init(void) 
+void I2CMASTER_Init(void) 
 {
-#if (I2COLED_FF_IMPLEMENTED)
+#if (I2CMASTER_FF_IMPLEMENTED)
     /* Configure fixed function block */
-    I2COLED_CFG_REG  = I2COLED_DEFAULT_CFG;
-    I2COLED_XCFG_REG = I2COLED_DEFAULT_XCFG;
-    I2COLED_ADDR_REG = I2COLED_DEFAULT_ADDR;
-    I2COLED_CLKDIV1_REG = LO8(I2COLED_DEFAULT_DIVIDE_FACTOR);
-    I2COLED_CLKDIV2_REG = HI8(I2COLED_DEFAULT_DIVIDE_FACTOR);
+    I2CMASTER_CFG_REG  = I2CMASTER_DEFAULT_CFG;
+    I2CMASTER_XCFG_REG = I2CMASTER_DEFAULT_XCFG;
+    I2CMASTER_ADDR_REG = I2CMASTER_DEFAULT_ADDR;
+    I2CMASTER_CLKDIV1_REG = LO8(I2CMASTER_DEFAULT_DIVIDE_FACTOR);
+    I2CMASTER_CLKDIV2_REG = HI8(I2CMASTER_DEFAULT_DIVIDE_FACTOR);
 
 #else
     uint8 intState;
 
     /* Configure control and interrupt sources */
-    I2COLED_CFG_REG      = I2COLED_DEFAULT_CFG;
-    I2COLED_INT_MASK_REG = I2COLED_DEFAULT_INT_MASK;
+    I2CMASTER_CFG_REG      = I2CMASTER_DEFAULT_CFG;
+    I2CMASTER_INT_MASK_REG = I2CMASTER_DEFAULT_INT_MASK;
 
     /* Enable interrupt generation in status */
     intState = CyEnterCriticalSection();
-    I2COLED_INT_ENABLE_REG |= I2COLED_INTR_ENABLE;
+    I2CMASTER_INT_ENABLE_REG |= I2CMASTER_INTR_ENABLE;
     CyExitCriticalSection(intState);
 
     /* Configure bit counter */
-    #if (I2COLED_MODE_SLAVE_ENABLED)
-        I2COLED_PERIOD_REG = I2COLED_DEFAULT_PERIOD;
-    #endif  /* (I2COLED_MODE_SLAVE_ENABLED) */
+    #if (I2CMASTER_MODE_SLAVE_ENABLED)
+        I2CMASTER_PERIOD_REG = I2CMASTER_DEFAULT_PERIOD;
+    #endif  /* (I2CMASTER_MODE_SLAVE_ENABLED) */
 
     /* Configure clock generator */
-    #if (I2COLED_MODE_MASTER_ENABLED)
-        I2COLED_MCLK_PRD_REG = I2COLED_DEFAULT_MCLK_PRD;
-        I2COLED_MCLK_CMP_REG = I2COLED_DEFAULT_MCLK_CMP;
-    #endif /* (I2COLED_MODE_MASTER_ENABLED) */
-#endif /* (I2COLED_FF_IMPLEMENTED) */
+    #if (I2CMASTER_MODE_MASTER_ENABLED)
+        I2CMASTER_MCLK_PRD_REG = I2CMASTER_DEFAULT_MCLK_PRD;
+        I2CMASTER_MCLK_CMP_REG = I2CMASTER_DEFAULT_MCLK_CMP;
+    #endif /* (I2CMASTER_MODE_MASTER_ENABLED) */
+#endif /* (I2CMASTER_FF_IMPLEMENTED) */
 
-#if (I2COLED_TIMEOUT_ENABLED)
-    I2COLED_TimeoutInit();
-#endif /* (I2COLED_TIMEOUT_ENABLED) */
+#if (I2CMASTER_TIMEOUT_ENABLED)
+    I2CMASTER_TimeoutInit();
+#endif /* (I2CMASTER_TIMEOUT_ENABLED) */
 
     /* Configure internal interrupt */
-    CyIntDisable    (I2COLED_ISR_NUMBER);
-    CyIntSetPriority(I2COLED_ISR_NUMBER, I2COLED_ISR_PRIORITY);
-    #if (I2COLED_INTERN_I2C_INTR_HANDLER)
-        (void) CyIntSetVector(I2COLED_ISR_NUMBER, &I2COLED_ISR);
-    #endif /* (I2COLED_INTERN_I2C_INTR_HANDLER) */
+    CyIntDisable    (I2CMASTER_ISR_NUMBER);
+    CyIntSetPriority(I2CMASTER_ISR_NUMBER, I2CMASTER_ISR_PRIORITY);
+    #if (I2CMASTER_INTERN_I2C_INTR_HANDLER)
+        (void) CyIntSetVector(I2CMASTER_ISR_NUMBER, &I2CMASTER_ISR);
+    #endif /* (I2CMASTER_INTERN_I2C_INTR_HANDLER) */
 
     /* Set FSM to default state */
-    I2COLED_state = I2COLED_SM_IDLE;
+    I2CMASTER_state = I2CMASTER_SM_IDLE;
 
-#if (I2COLED_MODE_SLAVE_ENABLED)
+#if (I2CMASTER_MODE_SLAVE_ENABLED)
     /* Clear status and buffers index */
-    I2COLED_slStatus = 0u;
-    I2COLED_slRdBufIndex = 0u;
-    I2COLED_slWrBufIndex = 0u;
+    I2CMASTER_slStatus = 0u;
+    I2CMASTER_slRdBufIndex = 0u;
+    I2CMASTER_slWrBufIndex = 0u;
 
     /* Configure matched address */
-    I2COLED_SlaveSetAddress(I2COLED_DEFAULT_ADDR);
-#endif /* (I2COLED_MODE_SLAVE_ENABLED) */
+    I2CMASTER_SlaveSetAddress(I2CMASTER_DEFAULT_ADDR);
+#endif /* (I2CMASTER_MODE_SLAVE_ENABLED) */
 
-#if (I2COLED_MODE_MASTER_ENABLED)
+#if (I2CMASTER_MODE_MASTER_ENABLED)
     /* Clear status and buffers index */
-    I2COLED_mstrStatus = 0u;
-    I2COLED_mstrRdBufIndex = 0u;
-    I2COLED_mstrWrBufIndex = 0u;
-#endif /* (I2COLED_MODE_MASTER_ENABLED) */
+    I2CMASTER_mstrStatus = 0u;
+    I2CMASTER_mstrRdBufIndex = 0u;
+    I2CMASTER_mstrWrBufIndex = 0u;
+#endif /* (I2CMASTER_MODE_MASTER_ENABLED) */
 }
 
 
 /*******************************************************************************
-* Function Name: I2COLED_Enable
+* Function Name: I2CMASTER_Enable
 ********************************************************************************
 *
 * Summary:
@@ -130,36 +130,36 @@ void I2COLED_Init(void)
 *  None.
 *
 *******************************************************************************/
-void I2COLED_Enable(void) 
+void I2CMASTER_Enable(void) 
 {
-#if (I2COLED_FF_IMPLEMENTED)
+#if (I2CMASTER_FF_IMPLEMENTED)
     uint8 intState;
 
     /* Enable power to block */
     intState = CyEnterCriticalSection();
-    I2COLED_ACT_PWRMGR_REG  |= I2COLED_ACT_PWR_EN;
-    I2COLED_STBY_PWRMGR_REG |= I2COLED_STBY_PWR_EN;
+    I2CMASTER_ACT_PWRMGR_REG  |= I2CMASTER_ACT_PWR_EN;
+    I2CMASTER_STBY_PWRMGR_REG |= I2CMASTER_STBY_PWR_EN;
     CyExitCriticalSection(intState);
 #else
-    #if (I2COLED_MODE_SLAVE_ENABLED)
+    #if (I2CMASTER_MODE_SLAVE_ENABLED)
         /* Enable bit counter */
         uint8 intState = CyEnterCriticalSection();
-        I2COLED_COUNTER_AUX_CTL_REG |= I2COLED_CNT7_ENABLE;
+        I2CMASTER_COUNTER_AUX_CTL_REG |= I2CMASTER_CNT7_ENABLE;
         CyExitCriticalSection(intState);
-    #endif /* (I2COLED_MODE_SLAVE_ENABLED) */
+    #endif /* (I2CMASTER_MODE_SLAVE_ENABLED) */
 
     /* Enable slave or master bits */
-    I2COLED_CFG_REG |= I2COLED_ENABLE_MS;
-#endif /* (I2COLED_FF_IMPLEMENTED) */
+    I2CMASTER_CFG_REG |= I2CMASTER_ENABLE_MS;
+#endif /* (I2CMASTER_FF_IMPLEMENTED) */
 
-#if (I2COLED_TIMEOUT_ENABLED)
-    I2COLED_TimeoutEnable();
-#endif /* (I2COLED_TIMEOUT_ENABLED) */
+#if (I2CMASTER_TIMEOUT_ENABLED)
+    I2CMASTER_TimeoutEnable();
+#endif /* (I2CMASTER_TIMEOUT_ENABLED) */
 }
 
 
 /*******************************************************************************
-* Function Name: I2COLED_Start
+* Function Name: I2CMASTER_Start
 ********************************************************************************
 *
 * Summary:
@@ -178,7 +178,7 @@ void I2COLED_Enable(void)
 *  without the interrupt enabled, it can lock up the I2C bus.
 *
 * Global variables:
-*  I2COLED_initVar - This variable is used to check the initial
+*  I2CMASTER_initVar - This variable is used to check the initial
 *                             configuration, modified on the first
 *                             function call.
 *
@@ -186,21 +186,21 @@ void I2COLED_Enable(void)
 *  No.
 *
 *******************************************************************************/
-void I2COLED_Start(void) 
+void I2CMASTER_Start(void) 
 {
-    if (0u == I2COLED_initVar)
+    if (0u == I2CMASTER_initVar)
     {
-        I2COLED_Init();
-        I2COLED_initVar = 1u; /* Component initialized */
+        I2CMASTER_Init();
+        I2CMASTER_initVar = 1u; /* Component initialized */
     }
 
-    I2COLED_Enable();
-    I2COLED_EnableInt();
+    I2CMASTER_Enable();
+    I2CMASTER_EnableInt();
 }
 
 
 /*******************************************************************************
-* Function Name: I2COLED_Stop
+* Function Name: I2CMASTER_Stop
 ********************************************************************************
 *
 * Summary:
@@ -214,76 +214,76 @@ void I2COLED_Start(void)
 *  None.
 *
 *******************************************************************************/
-void I2COLED_Stop(void) 
+void I2CMASTER_Stop(void) 
 {
-    I2COLED_DisableInt();
+    I2CMASTER_DisableInt();
 
-#if (I2COLED_TIMEOUT_ENABLED)
-    I2COLED_TimeoutStop();
-#endif  /* End (I2COLED_TIMEOUT_ENABLED) */
+#if (I2CMASTER_TIMEOUT_ENABLED)
+    I2CMASTER_TimeoutStop();
+#endif  /* End (I2CMASTER_TIMEOUT_ENABLED) */
 
-#if (I2COLED_FF_IMPLEMENTED)
+#if (I2CMASTER_FF_IMPLEMENTED)
     {
         uint8 intState;
         uint16 blockResetCycles;
 
         /* Store registers effected by block disable */
-        I2COLED_backup.addr    = I2COLED_ADDR_REG;
-        I2COLED_backup.clkDiv1 = I2COLED_CLKDIV1_REG;
-        I2COLED_backup.clkDiv2 = I2COLED_CLKDIV2_REG;
+        I2CMASTER_backup.addr    = I2CMASTER_ADDR_REG;
+        I2CMASTER_backup.clkDiv1 = I2CMASTER_CLKDIV1_REG;
+        I2CMASTER_backup.clkDiv2 = I2CMASTER_CLKDIV2_REG;
 
         /* Calculate number of cycles to reset block */
-        blockResetCycles = ((uint16) ((uint16) I2COLED_CLKDIV2_REG << 8u) | I2COLED_CLKDIV1_REG) + 1u;
+        blockResetCycles = ((uint16) ((uint16) I2CMASTER_CLKDIV2_REG << 8u) | I2CMASTER_CLKDIV1_REG) + 1u;
 
         /* Disable block */
-        I2COLED_CFG_REG &= (uint8) ~I2COLED_CFG_EN_SLAVE;
+        I2CMASTER_CFG_REG &= (uint8) ~I2CMASTER_CFG_EN_SLAVE;
         /* Wait for block reset before disable power */
         CyDelayCycles((uint32) blockResetCycles);
 
         /* Disable power to block */
         intState = CyEnterCriticalSection();
-        I2COLED_ACT_PWRMGR_REG  &= (uint8) ~I2COLED_ACT_PWR_EN;
-        I2COLED_STBY_PWRMGR_REG &= (uint8) ~I2COLED_STBY_PWR_EN;
+        I2CMASTER_ACT_PWRMGR_REG  &= (uint8) ~I2CMASTER_ACT_PWR_EN;
+        I2CMASTER_STBY_PWRMGR_REG &= (uint8) ~I2CMASTER_STBY_PWR_EN;
         CyExitCriticalSection(intState);
 
         /* Enable block */
-        I2COLED_CFG_REG |= (uint8) I2COLED_ENABLE_MS;
+        I2CMASTER_CFG_REG |= (uint8) I2CMASTER_ENABLE_MS;
 
         /* Restore registers effected by block disable. Ticket ID#198004 */
-        I2COLED_ADDR_REG    = I2COLED_backup.addr;
-        I2COLED_ADDR_REG    = I2COLED_backup.addr;
-        I2COLED_CLKDIV1_REG = I2COLED_backup.clkDiv1;
-        I2COLED_CLKDIV2_REG = I2COLED_backup.clkDiv2;
+        I2CMASTER_ADDR_REG    = I2CMASTER_backup.addr;
+        I2CMASTER_ADDR_REG    = I2CMASTER_backup.addr;
+        I2CMASTER_CLKDIV1_REG = I2CMASTER_backup.clkDiv1;
+        I2CMASTER_CLKDIV2_REG = I2CMASTER_backup.clkDiv2;
     }
 #else
 
     /* Disable slave or master bits */
-    I2COLED_CFG_REG &= (uint8) ~I2COLED_ENABLE_MS;
+    I2CMASTER_CFG_REG &= (uint8) ~I2CMASTER_ENABLE_MS;
 
-#if (I2COLED_MODE_SLAVE_ENABLED)
+#if (I2CMASTER_MODE_SLAVE_ENABLED)
     {
         /* Disable bit counter */
         uint8 intState = CyEnterCriticalSection();
-        I2COLED_COUNTER_AUX_CTL_REG &= (uint8) ~I2COLED_CNT7_ENABLE;
+        I2CMASTER_COUNTER_AUX_CTL_REG &= (uint8) ~I2CMASTER_CNT7_ENABLE;
         CyExitCriticalSection(intState);
     }
-#endif /* (I2COLED_MODE_SLAVE_ENABLED) */
+#endif /* (I2CMASTER_MODE_SLAVE_ENABLED) */
 
     /* Clear interrupt source register */
-    (void) I2COLED_CSR_REG;
-#endif /* (I2COLED_FF_IMPLEMENTED) */
+    (void) I2CMASTER_CSR_REG;
+#endif /* (I2CMASTER_FF_IMPLEMENTED) */
 
     /* Disable interrupt on stop (enabled by write transaction) */
-    I2COLED_DISABLE_INT_ON_STOP;
-    I2COLED_ClearPendingInt();
+    I2CMASTER_DISABLE_INT_ON_STOP;
+    I2CMASTER_ClearPendingInt();
 
     /* Reset FSM to default state */
-    I2COLED_state = I2COLED_SM_IDLE;
+    I2CMASTER_state = I2CMASTER_SM_IDLE;
 
     /* Clear busy statuses */
-#if (I2COLED_MODE_SLAVE_ENABLED)
-    I2COLED_slStatus &= (uint8) ~(I2COLED_SSTAT_RD_BUSY | I2COLED_SSTAT_WR_BUSY);
-#endif /* (I2COLED_MODE_SLAVE_ENABLED) */
+#if (I2CMASTER_MODE_SLAVE_ENABLED)
+    I2CMASTER_slStatus &= (uint8) ~(I2CMASTER_SSTAT_RD_BUSY | I2CMASTER_SSTAT_WR_BUSY);
+#endif /* (I2CMASTER_MODE_SLAVE_ENABLED) */
 }
 
 

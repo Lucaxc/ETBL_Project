@@ -1,5 +1,5 @@
 # Project_design
-# 2022-05-05 09:12:30Z
+# 2022-05-06 08:08:32Z
 
 # IO_0@[IOP=(1)][IoId=(0)] is reserved: SWDDebugEnabled
 dont_use_io iocell 1 0
@@ -20,8 +20,8 @@ set_location "\UART_1:BUART:rx_counter_load\" 1 1 0 1
 set_location "\UART_1:BUART:rx_postpoll\" 1 0 1 1
 set_location "\UART_1:BUART:rx_status_4\" 0 1 0 1
 set_location "\UART_1:BUART:rx_status_5\" 0 1 0 3
-set_location "\I2COLED:I2C_IRQ\" interrupt -1 -1 15
-set_location "\I2COLED:I2C_FF\" i2ccell -1 -1 0
+set_location "\I2CMASTER:I2C_IRQ\" interrupt -1 -1 15
+set_location "\I2CMASTER:I2C_FF\" i2ccell -1 -1 0
 set_location "\UART_1:BUART:sTX:TxShifter:u0\" 1 0 2
 set_location "\UART_1:BUART:sTX:sCLOCK:TxBitClkGen\" 0 0 2
 set_location "\UART_1:BUART:sTX:TxSts\" 1 0 4

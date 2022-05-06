@@ -161,12 +161,12 @@ void display_init(uint8_t oled_address) {
 static uint32 display_write_buffer(uint8_t* buffer, uint16_t size) {
     
     uint32 status = TRANSFER_ERROR;
-    I2COLED_MasterSendStart(oled_i2c_address, I2COLED_WRITE_XFER_MODE);
+    I2CMASTER_MasterSendStart(oled_i2c_address, I2CMASTER_WRITE_XFER_MODE);
     
     for(int i=0; i<size; i++){  
-        status=I2COLED_MasterWriteByte(buffer[i]);
+        status=I2CMASTER_MasterWriteByte(buffer[i]);
     }
-    I2COLED_MasterSendStop();
+    I2CMASTER_MasterSendStop();
     return status;
 }
 

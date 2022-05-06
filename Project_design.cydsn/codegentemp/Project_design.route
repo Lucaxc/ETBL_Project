@@ -848,7 +848,7 @@ net Net_20
 	switch ":ioport12:inputs2_mux.pin7__pin_input==>:ioport12:pin7.pin_input"
 	term   ":ioport12:pin7.pin_input"
 end Net_20
-net \I2COLED:Net_1109_0\
+net \I2CMASTER:Net_1109_0\
 	term   ":ioport12:pin0.fb"
 	switch ":ioport12:pin0.fb==>Stub-:dsiswitch_bottom@[DSI=(1,0)][side=bottom]:dsihc_bottom:v16+:dsiswitch_bottom@[DSI=(1,0)][side=bottom]:dsihc_bottom:v18"
 	switch "OStub-:dsiswitch_bottom@[DSI=(1,0)][side=bottom]:dsihc_bottom:v16+:dsiswitch_bottom@[DSI=(1,0)][side=bottom]:dsihc_bottom:v18"
@@ -863,8 +863,8 @@ net \I2COLED:Net_1109_0\
 	switch "IStub-:dsiswitch_top@[DSI=(0,1)][side=top]:dsihc_top:v122+:dsiswitch_top@[DSI=(0,1)][side=top]:dsihc_top:v124+:dsiswitch_top@[DSI=(0,1)][side=top]:dsihc_top:v126"
 	switch "Stub-:dsiswitch_top@[DSI=(0,1)][side=top]:dsihc_top:v122+:dsiswitch_top@[DSI=(0,1)][side=top]:dsihc_top:v124+:dsiswitch_top@[DSI=(0,1)][side=top]:dsihc_top:v126==>:i2ccell.scl_in"
 	term   ":i2ccell.scl_in"
-end \I2COLED:Net_1109_0\
-net \I2COLED:Net_1109_1\
+end \I2CMASTER:Net_1109_0\
+net \I2CMASTER:Net_1109_1\
 	term   ":ioport12:pin1.fb"
 	switch ":ioport12:pin1.fb==>Stub-:dsiswitch_bottom@[DSI=(1,0)][side=bottom]:dsihc_bottom:v17+:dsiswitch_bottom@[DSI=(1,0)][side=bottom]:dsihc_bottom:v19"
 	switch "OStub-:dsiswitch_bottom@[DSI=(1,0)][side=bottom]:dsihc_bottom:v17+:dsiswitch_bottom@[DSI=(1,0)][side=bottom]:dsihc_bottom:v19"
@@ -879,8 +879,8 @@ net \I2COLED:Net_1109_1\
 	switch "IStub-:dsiswitch_top@[DSI=(0,1)][side=top]:dsihc_top:v123+:dsiswitch_top@[DSI=(0,1)][side=top]:dsihc_top:v125+:dsiswitch_top@[DSI=(0,1)][side=top]:dsihc_top:v127"
 	switch "Stub-:dsiswitch_top@[DSI=(0,1)][side=top]:dsihc_top:v123+:dsiswitch_top@[DSI=(0,1)][side=top]:dsihc_top:v125+:dsiswitch_top@[DSI=(0,1)][side=top]:dsihc_top:v127==>:i2ccell.sda_in"
 	term   ":i2ccell.sda_in"
-end \I2COLED:Net_1109_1\
-net \I2COLED:Net_643_0\
+end \I2CMASTER:Net_1109_1\
+net \I2CMASTER:Net_643_0\
 	term   ":i2ccell.scl_out"
 	switch ":i2ccell.scl_out==>Stub-:dsiswitch_top@[DSI=(0,1)][side=top]:dsihc_top:v16+:dsiswitch_top@[DSI=(0,1)][side=top]:dsihc_top:v18"
 	switch "OStub-:dsiswitch_top@[DSI=(0,1)][side=top]:dsihc_top:v16+:dsiswitch_top@[DSI=(0,1)][side=top]:dsihc_top:v18"
@@ -896,8 +896,8 @@ net \I2COLED:Net_643_0\
 	switch "Stub-:dsiswitch_bottom@[DSI=(1,0)][side=bottom]:dsihc_bottom:v116+:dsiswitch_bottom@[DSI=(1,0)][side=bottom]:dsihc_bottom:v118+:dsiswitch_bottom@[DSI=(1,0)][side=bottom]:dsihc_bottom:v120==>:ioport12:inputs1_mux.in_0"
 	switch ":ioport12:inputs1_mux.pin0__pin_input==>:ioport12:pin0.pin_input"
 	term   ":ioport12:pin0.pin_input"
-end \I2COLED:Net_643_0\
-net \I2COLED:Net_697\
+end \I2CMASTER:Net_643_0\
+net \I2CMASTER:Net_697\
 	term   ":i2ccell.interrupt"
 	switch ":i2ccell.interrupt==>Stub-:dsiswitch_top@[DSI=(0,1)][side=top]:dsihc_top:v20+:dsiswitch_top@[DSI=(0,1)][side=top]:dsihc_top:v22"
 	switch "OStub-:dsiswitch_top@[DSI=(0,1)][side=top]:dsihc_top:v20+:dsiswitch_top@[DSI=(0,1)][side=top]:dsihc_top:v22"
@@ -914,8 +914,8 @@ net \I2COLED:Net_697\
 	switch "Stub-:dsiswitch_bottom@[DSI=(1,3)][side=bottom]:dsihc_bottom:v57+:dsiswitch_bottom@[DSI=(1,3)][side=bottom]:dsihc_bottom:v59==>:interrupt_idmux_15.in_2"
 	switch ":interrupt_idmux_15.interrupt_idmux_15__out==>:interrupt_15.interrupt"
 	term   ":interrupt_15.interrupt"
-end \I2COLED:Net_697\
-net \I2COLED:sda_x_wire\
+end \I2CMASTER:Net_697\
+net \I2CMASTER:sda_x_wire\
 	term   ":i2ccell.sda_out"
 	switch ":i2ccell.sda_out==>Stub-:dsiswitch_top@[DSI=(0,1)][side=top]:dsihc_top:v17+:dsiswitch_top@[DSI=(0,1)][side=top]:dsihc_top:v19"
 	switch "OStub-:dsiswitch_top@[DSI=(0,1)][side=top]:dsihc_top:v17+:dsiswitch_top@[DSI=(0,1)][side=top]:dsihc_top:v19"
@@ -931,7 +931,7 @@ net \I2COLED:sda_x_wire\
 	switch "Stub-:dsiswitch_bottom@[DSI=(1,0)][side=bottom]:dsihc_bottom:v117+:dsiswitch_bottom@[DSI=(1,0)][side=bottom]:dsihc_bottom:v119+:dsiswitch_bottom@[DSI=(1,0)][side=bottom]:dsihc_bottom:v121==>:ioport12:inputs1_mux.in_1"
 	switch ":ioport12:inputs1_mux.pin1__pin_input==>:ioport12:pin1.pin_input"
 	term   ":ioport12:pin1.pin_input"
-end \I2COLED:sda_x_wire\
+end \I2CMASTER:sda_x_wire\
 net \UART_1:BUART:rx_fifonotempty\
 	term   ":udb@[UDB=(1,1)]:dp_wrapper:datapath.f0_bus_stat_comb"
 	switch ":udb@[UDB=(1,1)]:dp_wrapper:datapath.f0_bus_stat_comb==>:udb@[UDB=(1,1)]:dp_wrapper:output_permute.f0_bus_stat_comb"

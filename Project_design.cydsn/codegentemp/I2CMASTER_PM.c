@@ -1,5 +1,5 @@
 /*******************************************************************************
-* File Name: I2COLED_PM.c
+* File Name: I2CMASTER_PM.c
 * Version 3.50
 *
 * Description:
@@ -12,35 +12,35 @@
 * the software package with which this file was provided.
 *******************************************************************************/
 
-#include "I2COLED_PVT.h"
+#include "I2CMASTER_PVT.h"
 
-I2COLED_BACKUP_STRUCT I2COLED_backup =
+I2CMASTER_BACKUP_STRUCT I2CMASTER_backup =
 {
-    I2COLED_DISABLE,
+    I2CMASTER_DISABLE,
 
-#if (I2COLED_FF_IMPLEMENTED)
-    I2COLED_DEFAULT_XCFG,
-    I2COLED_DEFAULT_CFG,
-    I2COLED_DEFAULT_ADDR,
-    LO8(I2COLED_DEFAULT_DIVIDE_FACTOR),
-    HI8(I2COLED_DEFAULT_DIVIDE_FACTOR),
-#else  /* (I2COLED_UDB_IMPLEMENTED) */
-    I2COLED_DEFAULT_CFG,
-#endif /* (I2COLED_FF_IMPLEMENTED) */
+#if (I2CMASTER_FF_IMPLEMENTED)
+    I2CMASTER_DEFAULT_XCFG,
+    I2CMASTER_DEFAULT_CFG,
+    I2CMASTER_DEFAULT_ADDR,
+    LO8(I2CMASTER_DEFAULT_DIVIDE_FACTOR),
+    HI8(I2CMASTER_DEFAULT_DIVIDE_FACTOR),
+#else  /* (I2CMASTER_UDB_IMPLEMENTED) */
+    I2CMASTER_DEFAULT_CFG,
+#endif /* (I2CMASTER_FF_IMPLEMENTED) */
 
-#if (I2COLED_TIMEOUT_ENABLED)
-    I2COLED_DEFAULT_TMOUT_PERIOD,
-    I2COLED_DEFAULT_TMOUT_INTR_MASK,
-#endif /* (I2COLED_TIMEOUT_ENABLED) */
+#if (I2CMASTER_TIMEOUT_ENABLED)
+    I2CMASTER_DEFAULT_TMOUT_PERIOD,
+    I2CMASTER_DEFAULT_TMOUT_INTR_MASK,
+#endif /* (I2CMASTER_TIMEOUT_ENABLED) */
 };
 
-#if ((I2COLED_FF_IMPLEMENTED) && (I2COLED_WAKEUP_ENABLED))
-    volatile uint8 I2COLED_wakeupSource;
-#endif /* ((I2COLED_FF_IMPLEMENTED) && (I2COLED_WAKEUP_ENABLED)) */
+#if ((I2CMASTER_FF_IMPLEMENTED) && (I2CMASTER_WAKEUP_ENABLED))
+    volatile uint8 I2CMASTER_wakeupSource;
+#endif /* ((I2CMASTER_FF_IMPLEMENTED) && (I2CMASTER_WAKEUP_ENABLED)) */
 
 
 /*******************************************************************************
-* Function Name: I2COLED_SaveConfig
+* Function Name: I2CMASTER_SaveConfig
 ********************************************************************************
 *
 * Summary:
@@ -61,7 +61,7 @@ I2COLED_BACKUP_STRUCT I2COLED_backup =
 *  None.
 *
 * Global Variables:
-*  I2COLED_backup - The global variable used to save the component
+*  I2CMASTER_backup - The global variable used to save the component
 *                            configuration and non-retention registers before
 *                            entering the sleep mode.
 *
@@ -69,27 +69,27 @@ I2COLED_BACKUP_STRUCT I2COLED_backup =
 *  No.
 *
 *******************************************************************************/
-void I2COLED_SaveConfig(void) 
+void I2CMASTER_SaveConfig(void) 
 {
-#if (I2COLED_FF_IMPLEMENTED)
-    #if (I2COLED_WAKEUP_ENABLED)
+#if (I2CMASTER_FF_IMPLEMENTED)
+    #if (I2CMASTER_WAKEUP_ENABLED)
         uint8 intState;
-    #endif /* (I2COLED_WAKEUP_ENABLED) */
+    #endif /* (I2CMASTER_WAKEUP_ENABLED) */
 
     /* Store registers before enter low power mode */
-    I2COLED_backup.cfg     = I2COLED_CFG_REG;
-    I2COLED_backup.xcfg    = I2COLED_XCFG_REG;
-    I2COLED_backup.addr    = I2COLED_ADDR_REG;
-    I2COLED_backup.clkDiv1 = I2COLED_CLKDIV1_REG;
-    I2COLED_backup.clkDiv2 = I2COLED_CLKDIV2_REG;
+    I2CMASTER_backup.cfg     = I2CMASTER_CFG_REG;
+    I2CMASTER_backup.xcfg    = I2CMASTER_XCFG_REG;
+    I2CMASTER_backup.addr    = I2CMASTER_ADDR_REG;
+    I2CMASTER_backup.clkDiv1 = I2CMASTER_CLKDIV1_REG;
+    I2CMASTER_backup.clkDiv2 = I2CMASTER_CLKDIV2_REG;
 
-#if (I2COLED_WAKEUP_ENABLED)
+#if (I2CMASTER_WAKEUP_ENABLED)
     /* Disable master */
-    I2COLED_CFG_REG &= (uint8) ~I2COLED_ENABLE_MASTER;
+    I2CMASTER_CFG_REG &= (uint8) ~I2CMASTER_ENABLE_MASTER;
 
     /* Enable backup regulator to keep block powered in low power mode */
     intState = CyEnterCriticalSection();
-    I2COLED_PWRSYS_CR1_REG |= I2COLED_PWRSYS_CR1_I2C_REG_BACKUP;
+    I2CMASTER_PWRSYS_CR1_REG |= I2CMASTER_PWRSYS_CR1_I2C_REG_BACKUP;
     CyExitCriticalSection(intState);
 
     /* 1) Set force NACK to ignore I2C transactions;
@@ -97,31 +97,31 @@ void I2COLED_SaveConfig(void)
     *  3) These bits are cleared on wake up.
     */
     /* Wait when block is ready for sleep */
-    I2COLED_XCFG_REG |= I2COLED_XCFG_FORCE_NACK;
-    while (0u == (I2COLED_XCFG_REG & I2COLED_XCFG_RDY_TO_SLEEP))
+    I2CMASTER_XCFG_REG |= I2CMASTER_XCFG_FORCE_NACK;
+    while (0u == (I2CMASTER_XCFG_REG & I2CMASTER_XCFG_RDY_TO_SLEEP))
     {
     }
 
     /* Setup wakeup interrupt */
-    I2COLED_DisableInt();
-    (void) CyIntSetVector(I2COLED_ISR_NUMBER, &I2COLED_WAKEUP_ISR);
-    I2COLED_wakeupSource = 0u;
-    I2COLED_EnableInt();
-#endif /* (I2COLED_WAKEUP_ENABLED) */
+    I2CMASTER_DisableInt();
+    (void) CyIntSetVector(I2CMASTER_ISR_NUMBER, &I2CMASTER_WAKEUP_ISR);
+    I2CMASTER_wakeupSource = 0u;
+    I2CMASTER_EnableInt();
+#endif /* (I2CMASTER_WAKEUP_ENABLED) */
 
 #else
     /* Store only address match bit */
-    I2COLED_backup.control = (I2COLED_CFG_REG & I2COLED_CTRL_ANY_ADDRESS_MASK);
-#endif /* (I2COLED_FF_IMPLEMENTED) */
+    I2CMASTER_backup.control = (I2CMASTER_CFG_REG & I2CMASTER_CTRL_ANY_ADDRESS_MASK);
+#endif /* (I2CMASTER_FF_IMPLEMENTED) */
 
-#if (I2COLED_TIMEOUT_ENABLED)
-    I2COLED_TimeoutSaveConfig();
-#endif /* (I2COLED_TIMEOUT_ENABLED) */
+#if (I2CMASTER_TIMEOUT_ENABLED)
+    I2CMASTER_TimeoutSaveConfig();
+#endif /* (I2CMASTER_TIMEOUT_ENABLED) */
 }
 
 
 /*******************************************************************************
-* Function Name: I2COLED_Sleep
+* Function Name: I2CMASTER_Sleep
 ********************************************************************************
 *
 * Summary:
@@ -148,32 +148,32 @@ void I2COLED_SaveConfig(void)
 *  No.
 *
 *******************************************************************************/
-void I2COLED_Sleep(void) 
+void I2CMASTER_Sleep(void) 
 {
-#if (I2COLED_WAKEUP_ENABLED)
+#if (I2CMASTER_WAKEUP_ENABLED)
     /* Do not enable block after exit low power mode if it is wakeup source */
-    I2COLED_backup.enableState = I2COLED_DISABLE;
+    I2CMASTER_backup.enableState = I2CMASTER_DISABLE;
 
-    #if (I2COLED_TIMEOUT_ENABLED)
-        I2COLED_TimeoutStop();
-    #endif /* (I2COLED_TIMEOUT_ENABLED) */
+    #if (I2CMASTER_TIMEOUT_ENABLED)
+        I2CMASTER_TimeoutStop();
+    #endif /* (I2CMASTER_TIMEOUT_ENABLED) */
 
 #else
     /* Store enable state */
-    I2COLED_backup.enableState = (uint8) I2COLED_IS_ENABLED;
+    I2CMASTER_backup.enableState = (uint8) I2CMASTER_IS_ENABLED;
 
-    if (0u != I2COLED_backup.enableState)
+    if (0u != I2CMASTER_backup.enableState)
     {
-        I2COLED_Stop();
+        I2CMASTER_Stop();
     }
-#endif /* (I2COLED_WAKEUP_ENABLED) */
+#endif /* (I2CMASTER_WAKEUP_ENABLED) */
 
-    I2COLED_SaveConfig();
+    I2CMASTER_SaveConfig();
 }
 
 
 /*******************************************************************************
-* Function Name: I2COLED_RestoreConfig
+* Function Name: I2CMASTER_RestoreConfig
 ********************************************************************************
 *
 * Summary:
@@ -194,7 +194,7 @@ void I2COLED_Sleep(void)
 *  None.
 *
 * Global Variables:
-*  I2COLED_backup - The global variable used to save the component
+*  I2CMASTER_backup - The global variable used to save the component
 *                            configuration and non-retention registers before
 *                            exiting the sleep mode.
 *
@@ -202,71 +202,71 @@ void I2COLED_Sleep(void)
 *  No.
 *
 * Side Effects:
-*  Calling this function before I2COLED_SaveConfig() or
-*  I2COLED_Sleep() will lead to unpredictable results.
+*  Calling this function before I2CMASTER_SaveConfig() or
+*  I2CMASTER_Sleep() will lead to unpredictable results.
 *
 *******************************************************************************/
-void I2COLED_RestoreConfig(void) 
+void I2CMASTER_RestoreConfig(void) 
 {
-#if (I2COLED_FF_IMPLEMENTED)
+#if (I2CMASTER_FF_IMPLEMENTED)
     uint8 intState;
 
-    if (I2COLED_CHECK_PWRSYS_I2C_BACKUP)
+    if (I2CMASTER_CHECK_PWRSYS_I2C_BACKUP)
     /* Low power mode was Sleep - backup regulator is enabled */
     {
         /* Enable backup regulator in active mode */
         intState = CyEnterCriticalSection();
-        I2COLED_PWRSYS_CR1_REG &= (uint8) ~I2COLED_PWRSYS_CR1_I2C_REG_BACKUP;
+        I2CMASTER_PWRSYS_CR1_REG &= (uint8) ~I2CMASTER_PWRSYS_CR1_I2C_REG_BACKUP;
         CyExitCriticalSection(intState);
 
         /* Restore master */
-        I2COLED_CFG_REG = I2COLED_backup.cfg;
+        I2CMASTER_CFG_REG = I2CMASTER_backup.cfg;
     }
     else
     /* Low power mode was Hibernate - backup regulator is disabled. All registers are cleared */
     {
-    #if (I2COLED_WAKEUP_ENABLED)
+    #if (I2CMASTER_WAKEUP_ENABLED)
         /* Disable power to block before register restore */
         intState = CyEnterCriticalSection();
-        I2COLED_ACT_PWRMGR_REG  &= (uint8) ~I2COLED_ACT_PWR_EN;
-        I2COLED_STBY_PWRMGR_REG &= (uint8) ~I2COLED_STBY_PWR_EN;
+        I2CMASTER_ACT_PWRMGR_REG  &= (uint8) ~I2CMASTER_ACT_PWR_EN;
+        I2CMASTER_STBY_PWRMGR_REG &= (uint8) ~I2CMASTER_STBY_PWR_EN;
         CyExitCriticalSection(intState);
 
         /* Enable component in I2C_Wakeup() after register restore */
-        I2COLED_backup.enableState = I2COLED_ENABLE;
-    #endif /* (I2COLED_WAKEUP_ENABLED) */
+        I2CMASTER_backup.enableState = I2CMASTER_ENABLE;
+    #endif /* (I2CMASTER_WAKEUP_ENABLED) */
 
         /* Restore component registers after Hibernate */
-        I2COLED_XCFG_REG    = I2COLED_backup.xcfg;
-        I2COLED_CFG_REG     = I2COLED_backup.cfg;
-        I2COLED_ADDR_REG    = I2COLED_backup.addr;
-        I2COLED_CLKDIV1_REG = I2COLED_backup.clkDiv1;
-        I2COLED_CLKDIV2_REG = I2COLED_backup.clkDiv2;
+        I2CMASTER_XCFG_REG    = I2CMASTER_backup.xcfg;
+        I2CMASTER_CFG_REG     = I2CMASTER_backup.cfg;
+        I2CMASTER_ADDR_REG    = I2CMASTER_backup.addr;
+        I2CMASTER_CLKDIV1_REG = I2CMASTER_backup.clkDiv1;
+        I2CMASTER_CLKDIV2_REG = I2CMASTER_backup.clkDiv2;
     }
 
-#if (I2COLED_WAKEUP_ENABLED)
-    I2COLED_DisableInt();
-    (void) CyIntSetVector(I2COLED_ISR_NUMBER, &I2COLED_ISR);
-    if (0u != I2COLED_wakeupSource)
+#if (I2CMASTER_WAKEUP_ENABLED)
+    I2CMASTER_DisableInt();
+    (void) CyIntSetVector(I2CMASTER_ISR_NUMBER, &I2CMASTER_ISR);
+    if (0u != I2CMASTER_wakeupSource)
     {
         /* Generate interrupt to process incoming transaction */
-        I2COLED_SetPendingInt();
+        I2CMASTER_SetPendingInt();
     }
-    I2COLED_EnableInt();
-#endif /* (I2COLED_WAKEUP_ENABLED) */
+    I2CMASTER_EnableInt();
+#endif /* (I2CMASTER_WAKEUP_ENABLED) */
 
 #else
-    I2COLED_CFG_REG = I2COLED_backup.control;
-#endif /* (I2COLED_FF_IMPLEMENTED) */
+    I2CMASTER_CFG_REG = I2CMASTER_backup.control;
+#endif /* (I2CMASTER_FF_IMPLEMENTED) */
 
-#if (I2COLED_TIMEOUT_ENABLED)
-    I2COLED_TimeoutRestoreConfig();
-#endif /* (I2COLED_TIMEOUT_ENABLED) */
+#if (I2CMASTER_TIMEOUT_ENABLED)
+    I2CMASTER_TimeoutRestoreConfig();
+#endif /* (I2CMASTER_TIMEOUT_ENABLED) */
 }
 
 
 /*******************************************************************************
-* Function Name: I2COLED_Wakeup
+* Function Name: I2CMASTER_Wakeup
 ********************************************************************************
 *
 * Summary:
@@ -293,25 +293,25 @@ void I2COLED_RestoreConfig(void)
 *  No.
 *
 * Side Effects:
-*  Calling this function before I2COLED_SaveConfig() or
-*  I2COLED_Sleep() will lead to unpredictable results.
+*  Calling this function before I2CMASTER_SaveConfig() or
+*  I2CMASTER_Sleep() will lead to unpredictable results.
 *
 *******************************************************************************/
-void I2COLED_Wakeup(void) 
+void I2CMASTER_Wakeup(void) 
 {
-    I2COLED_RestoreConfig();
+    I2CMASTER_RestoreConfig();
 
     /* Restore component enable state */
-    if (0u != I2COLED_backup.enableState)
+    if (0u != I2CMASTER_backup.enableState)
     {
-        I2COLED_Enable();
-        I2COLED_EnableInt();
+        I2CMASTER_Enable();
+        I2CMASTER_EnableInt();
     }
     else
     {
-    #if (I2COLED_TIMEOUT_ENABLED)
-        I2COLED_TimeoutEnable();
-    #endif /* (I2COLED_TIMEOUT_ENABLED) */
+    #if (I2CMASTER_TIMEOUT_ENABLED)
+        I2CMASTER_TimeoutEnable();
+    #endif /* (I2CMASTER_TIMEOUT_ENABLED) */
     }
 }
 

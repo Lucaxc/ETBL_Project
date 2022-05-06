@@ -1,13 +1,16 @@
-/* ========================================
+/* ========================================================================
  *
- * Copyright YOUR COMPANY, THE YEAR
- * All Rights Reserved
- * UNPUBLISHED, LICENSED SOFTWARE.
+ * ELECTRONIC TECHNOLOGIES AND BIOSENSORS LABORATORY
+ * Academic year 2021/22, II Semester
+ * Final Project
+
+ * Authors: Group 2
  *
- * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
- *
- * ========================================
+ * --------------------------------- MAIN ---------------------------------
+ * 
+ * ------------------------------------------------------------------------
+ * 
+ * ========================================================================
 */
 #include "project.h"
 #include "OLED_Driver.h"
@@ -15,21 +18,19 @@
 #include "stdio.h"
 #include "RTC_Driver.h"
 #include "ErrorCodes.h"
-#include "time.h"
 #include "Globals.h"
+#include "time.h"
 
 uint8_t seconds = 0;
-int get_day_of_year(){
-    time_t t = time(NULL);
-    struct tm tm = *localtime(&t);
-    return tm.tm_yday;
-}
+
+char rtc_content[64] = {};
+uint8_t rtc_data_register;
 
 int main(void)
 {
     CyGlobalIntEnable;
         
-    I2COLED_Start();
+    I2CMASTER_Start();
     UART_1_Start();
     
     CyDelay(5);
@@ -40,12 +41,10 @@ int main(void)
     /*If you want to setup the RTC, uncomment the following line and insert the needed informations, in order.
       Seconds, Minutes, Hours, Date, Month, Year
     */
-    //set_RTC(0x50,0x08,0x21,0x05,MAY,Y_2022);
+    //set_RTC(0x10,0x10,0x08,0x06,MAY,Y_2022);
     
     int glucose_concentration = 100;
     char unit[] = "mg/dl";
-    char str[30] = {};
-    uint8_t seconds_reg;
     
     int i=0;
     int j=0;
@@ -79,9 +78,9 @@ int main(void)
 		    UART_1_PutString(message);
         }
  
-		rval = I2COLED_MasterSendStart(i2caddress, I2COLED_WRITE_XFER_MODE);
+		rval = I2CMASTER_MasterSendStart(i2caddress, I2CMASTER_WRITE_XFER_MODE);
         
-        if( rval == I2COLED_MSTR_NO_ERROR ) // If you get ACK then print the address
+        if( rval == I2CMASTER_MSTR_NO_ERROR ) // If you get ACK then print the address
 		{
             sprintf(message, "%02X ", i2caddress);
 		    UART_1_PutString(message);
@@ -90,11 +89,9 @@ int main(void)
 		{
 		    UART_1_PutString("-- ");
 		}
-        I2COLED_MasterSendStop();
+        I2CMASTER_MasterSendStop();
 	}
 	UART_1_PutString("\n\n");
-
-    /* Place your initialization/startup code here (e.g. MyInst_Start()) */
 
     for(;;)
     {
@@ -155,63 +152,81 @@ int main(void)
         display_update();*/
         
         UART_1_PutString("Secondi\r\n");
-        ErrorCode error = RTC_ReadRegister(RTC_ADDRESS, RTC_SECONDS, &seconds_reg);
+        ErrorCode error = RTC_ReadRegister(RTC_ADDRESS, RTC_SECONDS, &rtc_data_register);
         if(error == NO_ERROR)
         {
-            sprintf(message, "Seconds register value: 0x%02X\r\n", seconds_reg);
+            sprintf(message, "Seconds register value: 0x%02X\r\n", rtc_data_register);
             UART_1_PutString(message);
         } else {
             UART_1_PutString("I2C error occurred reading Seconds\r\n");
         }
         
-        seconds = RTC_convert_seconds(&seconds_reg);
+        seconds = RTC_convert_seconds(rtc_data_register);
         CyDelay(10);
         
-        len = snprintf(str, sizeof(str), "Secondi: %02x\r\n", seconds_reg);
-        UART_1_PutString(str);
+        len = snprintf(rtc_content, sizeof(rtc_content), "Secondi: %02x\r\n", rtc_data_register);
+        UART_1_PutString(rtc_content);
         CyDelay(10);
+        
+        len = snprintf(rtc_content, sizeof(rtc_content), "Secondi: %d\r\n", seconds);
+        UART_1_PutString(rtc_content);
+        CyDelay(10);
+        
+        /*error = RTC_ReadRegister(RTC_ADDRESS, RTC_MINUTES, &rtc_data_register);
+        
+        CyDelay(10);
+        len = snprintf(rtc_content, sizeof(rtc_content), "Minuti: %02x\r\n", rtc_data_register);
+        UART_1_PutString(rtc_content);
+        
+        error = RTC_ReadRegister(RTC_ADDRESS, RTC_HOURS, &rtc_data_register);
+        
+        CyDelay(10);
+        len = snprintf(rtc_content, sizeof(rtc_content), "Ore: %02x\r\n", rtc_data_register);
+        UART_1_PutString(rtc_content);
+        
+        error = RTC_ReadRegister(RTC_ADDRESS, RTC_DATE, &rtc_data_register);
+        
+        CyDelay(10);
+        len = snprintf(rtc_content, sizeof(rtc_content), "Data: %02x\r\n", rtc_data_register);
+        UART_1_PutString(rtc_content);
+        
+        error = RTC_ReadRegister(RTC_ADDRESS, RTC_MONTH, &rtc_data_register);
+        
+        CyDelay(10);
+        len = snprintf(rtc_content, sizeof(rtc_content), "Mese: %02x\r\n", rtc_data_register);
+        UART_1_PutString(rtc_content);
+        
+        error = RTC_ReadRegister(RTC_ADDRESS, RTC_YEAR, &rtc_data_register);
+
+        CyDelay(10);
+        len = snprintf(rtc_content, sizeof(rtc_content), "Anno: %04x\r\n", (rtc_data_register));
+        UART_1_PutString(rtc_content);*/
+        
+        rtc_read_time(RTC_ADDRESS);
+        len = snprintf(rtc_content, sizeof(rtc_content), "Secondi: %d\r\n", current_seconds);
+        UART_1_PutString(rtc_content);
+        len = snprintf(rtc_content, sizeof(rtc_content), "Minuti: %d\r\n", current_minutes);
+        UART_1_PutString(rtc_content);
+        len = snprintf(rtc_content, sizeof(rtc_content), "Ore: %d\r\n", current_hours);
+        UART_1_PutString(rtc_content);
+        len = snprintf(rtc_content, sizeof(rtc_content), "Giorno: %d\r\n", current_date);
+        UART_1_PutString(rtc_content);
+        len = snprintf(rtc_content, sizeof(rtc_content), "Mese: %d\r\n", current_month);
+        UART_1_PutString(rtc_content);
+        len = snprintf(rtc_content, sizeof(rtc_content), "Anno: %d\r\n\n", current_year);
+        UART_1_PutString(rtc_content);
+        
+        len = snprintf(rtc_content, sizeof(rtc_content), "%d-%d-%d %02d:%02d:%02d", current_date, 
+                       current_month, current_year, current_hours, current_minutes, current_seconds);
+        UART_1_PutString(rtc_content);
         
         display_clear();
         display_update();
         rtx_setTextSize(1);
         rtx_setTextColor(WHITE);
         rtx_setCursor(0,0);
-        rtx_println("Seconds");
-        rtx_setCursor(10,25);
-        rtx_println(str);
+        rtx_println(rtc_content);
         display_update();
-        
-        CyDelay(10);
-        
-        error = RTC_ReadRegister(RTC_ADDRESS, RTC_MINUTES, &seconds_reg);
-        
-        CyDelay(10);
-        len = snprintf(str, sizeof(str), "Minuti: %02x\r\n", seconds_reg);
-        UART_1_PutString(str);
-        
-        error = RTC_ReadRegister(RTC_ADDRESS, RTC_HOURS, &seconds_reg);
-        
-        CyDelay(10);
-        len = snprintf(str, sizeof(str), "Ore: %02x\r\n", seconds_reg);
-        UART_1_PutString(str);
-        
-        error = RTC_ReadRegister(RTC_ADDRESS, RTC_DATE, &seconds_reg);
-        
-        CyDelay(10);
-        len = snprintf(str, sizeof(str), "Data: %02x\r\n", seconds_reg);
-        UART_1_PutString(str);
-        
-        error = RTC_ReadRegister(RTC_ADDRESS, RTC_MONTH, &seconds_reg);
-        
-        CyDelay(10);
-        len = snprintf(str, sizeof(str), "Mese: %02x\r\n", seconds_reg);
-        UART_1_PutString(str);
-        
-        error = RTC_ReadRegister(RTC_ADDRESS, RTC_YEAR, &seconds_reg);
-
-        CyDelay(10);
-        len = snprintf(str, sizeof(str), "Anno: %04x\r\n", (seconds_reg));
-        UART_1_PutString(str);
         
         CyDelay(1000);
     }

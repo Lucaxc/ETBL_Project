@@ -7,7 +7,7 @@
   <width>32</width>
   <peripherals>
     <peripheral>
-      <name>I2COLED</name>
+      <name>I2CMASTER</name>
       <description>No description available</description>
       <baseAddress>0x0</baseAddress>
       <addressBlock>
@@ -17,7 +17,7 @@
       </addressBlock>
       <registers>
         <register>
-          <name>I2COLED_FF_XCFG</name>
+          <name>I2CMASTER_FF_XCFG</name>
           <description>I2C Extended Configuration Register</description>
           <addressOffset>0x400049C8</addressOffset>
           <size>8</size>
@@ -63,7 +63,7 @@
           </fields>
         </register>
         <register>
-          <name>I2COLED_FF_ADDR</name>
+          <name>I2CMASTER_FF_ADDR</name>
           <description>I2C Slave Adddress Register</description>
           <addressOffset>0x400049CA</addressOffset>
           <size>8</size>
@@ -81,7 +81,7 @@
           </fields>
         </register>
         <register>
-          <name>I2COLED_FF_CFG</name>
+          <name>I2CMASTER_FF_CFG</name>
           <description>I2C Configuration Register</description>
           <addressOffset>0x400049D6</addressOffset>
           <size>8</size>
@@ -141,7 +141,7 @@
           </fields>
         </register>
         <register>
-          <name>I2COLED_FF_CSR</name>
+          <name>I2CMASTER_FF_CSR</name>
           <description>I2C Control and Status Register</description>
           <addressOffset>0x400049D7</addressOffset>
           <size>8</size>
@@ -208,7 +208,7 @@
           </fields>
         </register>
         <register>
-          <name>I2COLED_FF_DATA</name>
+          <name>I2CMASTER_FF_DATA</name>
           <description>I2C Data Register</description>
           <addressOffset>0x400049D8</addressOffset>
           <size>8</size>
@@ -226,7 +226,7 @@
           </fields>
         </register>
         <register>
-          <name>I2COLED_FF_MCSR</name>
+          <name>I2CMASTER_FF_MCSR</name>
           <description>Master Control and Status Register: I2C_MCSR</description>
           <addressOffset>0x400049D9</addressOffset>
           <size>8</size>
@@ -272,7 +272,7 @@
           </fields>
         </register>
         <register>
-          <name>I2COLED_FF_CLK_DIV1</name>
+          <name>I2CMASTER_FF_CLK_DIV1</name>
           <description>I2C Clock Divide Factor Register-1</description>
           <addressOffset>0x400049DB</addressOffset>
           <size>8</size>
@@ -290,7 +290,7 @@
           </fields>
         </register>
         <register>
-          <name>I2COLED_FF_CLK_DIV2</name>
+          <name>I2CMASTER_FF_CLK_DIV2</name>
           <description>I2C Clock Divide Factor Register-2</description>
           <addressOffset>0x400049DC</addressOffset>
           <size>8</size>
@@ -308,7 +308,7 @@
           </fields>
         </register>
         <register>
-          <name>I2COLED_FF__TMOUT_CSR</name>
+          <name>I2CMASTER_FF__TMOUT_CSR</name>
           <description>I2C Timerout Control and Status Register</description>
           <addressOffset>0x400049DD</addressOffset>
           <size>8</size>
@@ -354,7 +354,7 @@
           </fields>
         </register>
         <register>
-          <name>I2COLED_FF__TMOUT_SR</name>
+          <name>I2CMASTER_FF__TMOUT_SR</name>
           <description>I2C Timerout Status Register</description>
           <addressOffset>0x400049DE</addressOffset>
           <size>8</size>
@@ -379,7 +379,7 @@
           </fields>
         </register>
         <register>
-          <name>I2COLED_FF__TMOUT_CFG0</name>
+          <name>I2CMASTER_FF__TMOUT_CFG0</name>
           <description>I2C Timerout Period Configuration Register-0</description>
           <addressOffset>0x400049DF</addressOffset>
           <size>8</size>
@@ -397,7 +397,7 @@
           </fields>
         </register>
         <register>
-          <name>I2COLED_FF__TMOUT_CFG1</name>
+          <name>I2CMASTER_FF__TMOUT_CFG1</name>
           <description>Extended Configuration Register: TMOUT_CFG1</description>
           <addressOffset>0x400049E0</addressOffset>
           <size>8</size>

@@ -1,5 +1,5 @@
 /*******************************************************************************
-* File Name: I2COLED_BOOT.c
+* File Name: I2CMASTER_BOOT.c
 * Version 3.50
 *
 * Description:
@@ -13,9 +13,9 @@
 * the software package with which this file was provided.
 *******************************************************************************/
 
-#include "I2COLED_PVT.h"
+#include "I2CMASTER_PVT.h"
 
-#if defined(CYDEV_BOOTLOADER_IO_COMP) && (I2COLED_BOOTLOADER_INTERFACE_ENABLED)
+#if defined(CYDEV_BOOTLOADER_IO_COMP) && (I2CMASTER_BOOTLOADER_INTERFACE_ENABLED)
 
 
 /***************************************
@@ -23,14 +23,14 @@
 ***************************************/
 
 /* I2C write buffer - The host writes commands here */
-static uint8 XDATA I2COLED_slReadBuf[I2COLED_BTLDR_SIZEOF_READ_BUFFER];
+static uint8 XDATA I2CMASTER_slReadBuf[I2CMASTER_BTLDR_SIZEOF_READ_BUFFER];
 
 /* I2C read buffer - The host reads responses from it */
-static uint8 XDATA I2COLED_slWriteBuf[I2COLED_BTLDR_SIZEOF_WRITE_BUFFER];
+static uint8 XDATA I2CMASTER_slWriteBuf[I2CMASTER_BTLDR_SIZEOF_WRITE_BUFFER];
 
 
 /*******************************************************************************
-* Function Name: I2COLED_CyBtldrCommStart
+* Function Name: I2CMASTER_CyBtldrCommStart
 ********************************************************************************
 *
 * Summary:
@@ -49,25 +49,25 @@ static uint8 XDATA I2COLED_slWriteBuf[I2COLED_BTLDR_SIZEOF_WRITE_BUFFER];
 *  without the interrupt enabled, it can lock up the I2C bus.
 *
 * Global variables:
-*  I2COLED_slWriteBuf - The global variable used to store a received
+*  I2CMASTER_slWriteBuf - The global variable used to store a received
 *                                command.
-*  I2COLED_slReadBuf -  The global variable used to store a response.
-*  I2COLED_slRdBufIndex - The global variable used to store a current
+*  I2CMASTER_slReadBuf -  The global variable used to store a response.
+*  I2CMASTER_slRdBufIndex - The global variable used to store a current
 *                                  index within the slave read buffer.
 *
 *******************************************************************************/
-void I2COLED_CyBtldrCommStart(void) CYSMALL 
+void I2CMASTER_CyBtldrCommStart(void) CYSMALL 
 {
     /* Read returns 0xFF when buffer is zero. Write transaction is expected. */
-    I2COLED_SlaveInitWriteBuf(I2COLED_slWriteBuf, I2COLED_BTLDR_SIZEOF_WRITE_BUFFER);
-    I2COLED_SlaveInitReadBuf (I2COLED_slReadBuf, 0u);
+    I2CMASTER_SlaveInitWriteBuf(I2CMASTER_slWriteBuf, I2CMASTER_BTLDR_SIZEOF_WRITE_BUFFER);
+    I2CMASTER_SlaveInitReadBuf (I2CMASTER_slReadBuf, 0u);
 
-    I2COLED_Start();
+    I2CMASTER_Start();
 }
 
 
 /*******************************************************************************
-* Function Name: I2COLED_CyBtldrCommStop
+* Function Name: I2CMASTER_CyBtldrCommStop
 ********************************************************************************
 *
 * Summary:
@@ -80,14 +80,14 @@ void I2COLED_CyBtldrCommStart(void) CYSMALL
 *  None.
 *
 *******************************************************************************/
-void I2COLED_CyBtldrCommStop(void) CYSMALL 
+void I2CMASTER_CyBtldrCommStop(void) CYSMALL 
 {
-    I2COLED_Stop();
+    I2CMASTER_Stop();
 }
 
 
 /*******************************************************************************
-* Function Name: I2COLED_CyBtldrCommReset
+* Function Name: I2CMASTER_CyBtldrCommReset
 ********************************************************************************
 *
 * Summary:
@@ -102,26 +102,26 @@ void I2COLED_CyBtldrCommStop(void) CYSMALL
 *  None.
 *
 * Global variables:
-*  I2COLED_slRdBufIndex - The global variable used to store a current
+*  I2CMASTER_slRdBufIndex - The global variable used to store a current
 *                                  index within the slave read buffer.
 *
 *******************************************************************************/
-void I2COLED_CyBtldrCommReset(void) CYSMALL 
+void I2CMASTER_CyBtldrCommReset(void) CYSMALL 
 {
     /* Make Read buffer full */
-    I2COLED_slRdBufSize = 0u;
+    I2CMASTER_slRdBufSize = 0u;
 
     /* Reset Write buffer and Read buffer */
-    I2COLED_slRdBufIndex = 0u;
-    I2COLED_slWrBufIndex = 0u;
+    I2CMASTER_slRdBufIndex = 0u;
+    I2CMASTER_slWrBufIndex = 0u;
 
     /* Clear read and write status */
-    I2COLED_slStatus = 0u;
+    I2CMASTER_slStatus = 0u;
 }
 
 
 /*******************************************************************************
-* Function Name: I2COLED_CyBtldrCommWrite
+* Function Name: I2CMASTER_CyBtldrCommWrite
 ********************************************************************************
 *
 * Summary:
@@ -142,12 +142,12 @@ void I2COLED_CyBtldrCommReset(void) CYSMALL
 *  The status of transmit operation.
 *
 * Global variables:
-*  I2COLED_slReadBuf - The global variable used to store a response.
-*  I2COLED_slRdBufIndex - The global variable used to store a current
+*  I2CMASTER_slReadBuf - The global variable used to store a response.
+*  I2CMASTER_slRdBufIndex - The global variable used to store a current
 *                                  index within the slave read buffer.
 *
 *******************************************************************************/
-cystatus I2COLED_CyBtldrCommWrite(const uint8 pData[], uint16 size, uint16 * count, uint8 timeOut) CYSMALL
+cystatus I2CMASTER_CyBtldrCommWrite(const uint8 pData[], uint16 size, uint16 * count, uint8 timeOut) CYSMALL
          
 {
     cystatus status;
@@ -161,25 +161,25 @@ cystatus I2COLED_CyBtldrCommWrite(const uint8 pData[], uint16 size, uint16 * cou
         timeoutMs = ((uint16) 10u * timeOut);  /* Convert from 10mS check to 1mS checks */
 
         /* Copy pData to component buffer */
-        (void) memcpy((void *) I2COLED_slReadBuf, (void *) pData, size);
+        (void) memcpy((void *) I2CMASTER_slReadBuf, (void *) pData, size);
         *count = size;  /* Buffer was copied to I2C buffer */
 
         /* Buffer is free to be read */
-        I2COLED_slRdBufSize = ((uint8) size);
+        I2CMASTER_slRdBufSize = ((uint8) size);
 
         while(0u != timeoutMs)  /* Wait till response is read */
         {
             /* Check if host complete read */
-            if(I2COLED_slRdBufIndex == ((uint8) size))
+            if(I2CMASTER_slRdBufIndex == ((uint8) size))
             {
-                I2COLED_slRdBufSize  = 0u;
-                I2COLED_slRdBufIndex = 0u;
+                I2CMASTER_slRdBufSize  = 0u;
+                I2CMASTER_slRdBufIndex = 0u;
 
                 status = CYRET_SUCCESS;
                 break;
             }
 
-            CyDelay(I2COLED_WAIT_1_MS);
+            CyDelay(I2CMASTER_WAIT_1_MS);
             timeoutMs--;
         }
     }
@@ -189,7 +189,7 @@ cystatus I2COLED_CyBtldrCommWrite(const uint8 pData[], uint16 size, uint16 * cou
 
 
 /*******************************************************************************
-* Function Name: I2COLED_CyBtldrCommRead
+* Function Name: I2CMASTER_CyBtldrCommRead
 ********************************************************************************
 *
 * Summary:
@@ -209,11 +209,11 @@ cystatus I2COLED_CyBtldrCommWrite(const uint8 pData[], uint16 size, uint16 * cou
 *  The status of receive operation.
 *
 * Global variables:
-*  I2COLED_slWriteBuf - The global variable used to store a
+*  I2CMASTER_slWriteBuf - The global variable used to store a
 *                                received command.
 *
 *******************************************************************************/
-cystatus I2COLED_CyBtldrCommRead(uint8 pData[], uint16 size, uint16 * count, uint8 timeOut) CYSMALL
+cystatus I2CMASTER_CyBtldrCommRead(uint8 pData[], uint16 size, uint16 * count, uint8 timeOut) CYSMALL
          
 {
     cystatus status;
@@ -230,25 +230,25 @@ cystatus I2COLED_CyBtldrCommRead(uint8 pData[], uint16 size, uint16 * count, uin
         while(0u != timeoutMs)  /* Wait for command from host */
         {
             /* Check if host completes write */
-            if(0u != (I2COLED_slStatus & I2COLED_SSTAT_WR_CMPLT))
+            if(0u != (I2CMASTER_slStatus & I2CMASTER_SSTAT_WR_CMPLT))
             {
                 /* Define how many bytes host has been written */
-                byteCount = I2COLED_slWrBufIndex;
+                byteCount = I2CMASTER_slWrBufIndex;
                 *count = (uint16) byteCount;
 
                 /* Copy command to pData buffer */
-                (void) memcpy((void *) pData, (void *) I2COLED_slWriteBuf,
-                              I2COLED_MIN_UNT16(byteCount, size));
+                (void) memcpy((void *) pData, (void *) I2CMASTER_slWriteBuf,
+                              I2CMASTER_MIN_UNT16(byteCount, size));
 
                 /* Clear I2C write buffer and status */
-                I2COLED_slStatus     = 0u;
-                I2COLED_slWrBufIndex = 0u;
+                I2CMASTER_slStatus     = 0u;
+                I2CMASTER_slWrBufIndex = 0u;
 
                 status = CYRET_SUCCESS;
                 break;
             }
 
-            CyDelay(I2COLED_WAIT_1_MS);
+            CyDelay(I2CMASTER_WAIT_1_MS);
             timeoutMs--;
         }
     }
@@ -256,7 +256,7 @@ cystatus I2COLED_CyBtldrCommRead(uint8 pData[], uint16 size, uint16 * count, uin
     return(status);
 }
 
-#endif /* defined(CYDEV_BOOTLOADER_IO_COMP) && (I2COLED_BOOTLOADER_INTERFACE_ENABLED) */
+#endif /* defined(CYDEV_BOOTLOADER_IO_COMP) && (I2CMASTER_BOOTLOADER_INTERFACE_ENABLED) */
 
 
 /* [] END OF FILE */

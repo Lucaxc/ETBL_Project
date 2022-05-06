@@ -16,9 +16,11 @@
 #include <project.h>
 #include <stdlib.h>
 #include <math.h>
+#include <stdio.h>
 
 #include "RTC_Driver.h"
 #include "ErrorCodes.h"
+#include "Globals.h"
 
 /*------------------------------------------------------------------------
 *                       STATIC VARIABLES DECLARATION
@@ -70,7 +72,12 @@ void set_RTC(uint8_t current_seconds, uint8_t current_minutes, uint8_t current_h
     error = RTC_WriteRegister(RTC_ADDRESS, RTC_YEAR, current_year);
     if(error == ERROR) {
         UART_1_PutString("Error in setting the RTC year");
-    }               
+    }
+    
+    error = RTC_WriteRegister(RTC_ADDRESS, RTC_CTRL_REG, 0x00);
+    if(error == ERROR) {
+        UART_1_PutString("Error in setting the RTC control register");
+    }
  }
 
 /*  RTC INIT
@@ -82,6 +89,54 @@ void set_RTC(uint8_t current_seconds, uint8_t current_minutes, uint8_t current_h
 void rtc_init(uint8_t rtc_address) {
     
     rtc_i2c_address = rtc_address;
+}
+
+/*  RTC READ CURRENT TIME
+*   \brief: Function that returns the current timestamp
+*   \Parameters:
+*       @param rtc_data_address: uint8_t variable where data are stored
+*   \Return: NONE
+*/
+void rtc_read_time(uint8_t rtc_data_register) {
+    
+    ErrorCode error;
+    
+    error = RTC_ReadRegister(RTC_ADDRESS, RTC_SECONDS, &rtc_data_register);
+    if(error == ERROR) {
+        UART_1_PutString("Error in reading the RTC seconds");
+    }
+    current_seconds = RTC_convert_seconds(rtc_data_register);
+    
+    error = RTC_ReadRegister(RTC_ADDRESS, RTC_MINUTES, &rtc_data_register);
+    if(error == ERROR) {
+        UART_1_PutString("Error in reading the RTC minutes");
+    }
+    current_minutes = RTC_convert_minutes(rtc_data_register);
+    
+    error = RTC_ReadRegister(RTC_ADDRESS, RTC_HOURS, &rtc_data_register);
+    if(error == ERROR) {
+        UART_1_PutString("Error in reading the RTC hours");
+    }
+    current_hours = RTC_convert_hours(rtc_data_register);
+    
+    error = RTC_ReadRegister(RTC_ADDRESS, RTC_DATE, &rtc_data_register);
+    if(error == ERROR) {
+        UART_1_PutString("Error in reading the RTC date");
+    }
+    current_date = RTC_convert_date(rtc_data_register);
+    
+    error = RTC_ReadRegister(RTC_ADDRESS, RTC_MONTH, &rtc_data_register);
+    if(error == ERROR) {
+        UART_1_PutString("Error in reading the RTC month");
+    }
+    current_month = RTC_convert_month(rtc_data_register);
+    
+    error = RTC_ReadRegister(RTC_ADDRESS, RTC_YEAR, &rtc_data_register);
+    if(error == ERROR) {
+        UART_1_PutString("Error in reading the RTC year");
+    }
+    current_year = RTC_convert_year(rtc_data_register) + 2000;
+    
 }
 
 /*  RTC READ REGISTER
@@ -96,23 +151,23 @@ ErrorCode RTC_ReadRegister(uint8_t device_address, uint8_t register_address, uin
     
     // Start Condition: we pass the macro I2C_Master_WRITE_XFER_MODE embedded in the API to write into the accelerometer
     //The function returns an ACK or NACK.
-    uint8_t error = I2COLED_MasterSendStart(device_address, I2COLED_WRITE_XFER_MODE);                                        
-    if (error == I2COLED_MSTR_NO_ERROR)
+    uint8_t error = I2CMASTER_MasterSendStart(device_address, I2CMASTER_WRITE_XFER_MODE);                                        
+    if (error == I2CMASTER_MSTR_NO_ERROR)
     {
         //Write the register address to be read
-        error = I2COLED_MasterWriteByte(register_address);
-        if (error == I2COLED_MSTR_NO_ERROR)
+        error = I2CMASTER_MasterWriteByte(register_address);
+        if (error == I2CMASTER_MSTR_NO_ERROR)
         {
             // Send a restart condition: this function is like r 08 x p put in the bridge control panel.
-            error = I2COLED_MasterSendRestart(device_address, I2COLED_READ_XFER_MODE);
-            if (error == I2COLED_MSTR_NO_ERROR)
+            error = I2CMASTER_MasterSendRestart(device_address, I2CMASTER_READ_XFER_MODE);
+            if (error == I2CMASTER_MSTR_NO_ERROR)
             {
-                *data = I2COLED_MasterReadByte(I2COLED_NAK_DATA); //The NACK is needed otherwise the I2C keeps reading
+                *data = I2CMASTER_MasterReadByte(I2CMASTER_NAK_DATA); //The NACK is needed otherwise the I2C keeps reading
             }
         }
     }
     // Stop Comunication
-    I2COLED_MasterSendStop();
+    I2CMASTER_MasterSendStop();
     //Return
     return error ? ERROR : NO_ERROR;   
 }
@@ -127,19 +182,19 @@ ErrorCode RTC_ReadRegister(uint8_t device_address, uint8_t register_address, uin
 */
 ErrorCode RTC_WriteRegister(uint8_t device_address, uint8_t register_address, uint8_t data) {
                                         
-    uint8_t error = I2COLED_MasterSendStart(device_address, I2COLED_WRITE_XFER_MODE);
-    if (error == I2COLED_MSTR_NO_ERROR)
+    uint8_t error = I2CMASTER_MasterSendStart(device_address, I2CMASTER_WRITE_XFER_MODE);
+    if (error == I2CMASTER_MSTR_NO_ERROR)
     {
         // Write Register Address (to be overwritten)
-        error = I2COLED_MasterWriteByte(register_address);
-        if (error == I2COLED_MSTR_NO_ERROR)
+        error = I2CMASTER_MasterWriteByte(register_address);
+        if (error == I2CMASTER_MSTR_NO_ERROR)
         {
             // Write Byte
-            error = I2COLED_MasterWriteByte(data);
+            error = I2CMASTER_MasterWriteByte(data);
         }
     }
     // Close Communication
-    I2COLED_MasterSendStop();
+    I2CMASTER_MasterSendStop();
     // Return
     return error ? ERROR : NO_ERROR;
 }
@@ -153,20 +208,20 @@ ErrorCode RTC_WriteRegister(uint8_t device_address, uint8_t register_address, ui
 *       @param buffer: 8-bit buffer with information
 *   \Return: seconds
 */
-uint8_t RTC_convert_seconds(uint8_t* buffer) {
-    
+uint8_t RTC_convert_seconds(uint8_t buffer) {
+
     uint8_t seconds = 0;
     
     //Bits 0-3 that converts for units
     for(int i = 0; i < 4; i++) {
-        if(*(buffer+i) & (0b00000001<<i)) {
+        if(buffer & (1<<i)) {
             seconds += pow(2,i);
         }
     }
     
     //Bits 4-7 that converts for units
-    for(int j = 4; j < 8; j++) {
-        if(*(buffer+j) & (0b00000001<<j)) {
+    for(int j = 4; j < 7; j++) {
+        if(buffer & (0b00000001<<j)) {
             seconds += 10*pow(2,j-4);
         }
     }
@@ -180,20 +235,20 @@ uint8_t RTC_convert_seconds(uint8_t* buffer) {
 *       @param buffer: 8-bit buffer with information
 *   \Return: minutes
 */
-uint8_t RTC_convert_minutes(uint8_t* buffer) {
+uint8_t RTC_convert_minutes(uint8_t buffer) {
     
     uint8_t minutes = 0;
     
     //Bits 0-3 that converts for units
     for(int i = 0; i < 4; i++) {
-        if(*(buffer+i) & (0b00000001<<i)) {
+        if(buffer & (0b00000001<<i)) {
             minutes += pow(2,i);
         }
     }
     
     //Bits 4-7 that converts for units
     for(int j = 4; j < 8; j++) {
-        if(*(buffer+j) & (0b00000001<<j)) {
+        if(buffer & (0b00000001<<j)) {
             minutes += 10*pow(2,j-4);
         }
     }
@@ -207,17 +262,21 @@ uint8_t RTC_convert_minutes(uint8_t* buffer) {
 *       @param buffer: 8-bit buffer with information
 *   \Return: hours
 */
-uint8_t RTC_convert_hours(uint8_t* buffer) {
+uint8_t RTC_convert_hours(uint8_t buffer) {
     
     uint8_t hours = 0;
     
     for(int i = 0; i < 4; i++) {
-        if(*(buffer+i) & (0b00000001<<i)) {
+        if(buffer & (0b00000001<<i)) {
             hours += pow(2,i);
         }
     }
     
-    hours += 10*(*(buffer+4));
+    for(int j = 4; j < 6; j++) {
+        if(buffer & (0b00000001<<j)) {
+            hours += 10*pow(2,j-4);
+        }
+    }
     
     return hours;
 }
@@ -229,17 +288,23 @@ uint8_t RTC_convert_hours(uint8_t* buffer) {
 *       @param buffer: 8-bit buffer with information
 *   \Return: day
 */
-uint8_t RTC_convert_day(uint8_t* buffer) {
+uint8_t RTC_convert_date(uint8_t buffer) {
     
-    uint8_t day = 0;
+    uint8_t date = 0;
     
-    for(int i = 0; i < 3; i++) {
-        if(*(buffer+i) & (0b00000001<<i)) {
-            day += pow(2,i);
+    for(int i = 0; i < 4; i++) {
+        if(buffer & (0b00000001<<i)) {
+            date += pow(2,i);
         }
     }
     
-    return day;
+    for(int j = 4; j < 6; j++) {
+        if(buffer & (0b00000001<<j)) {
+            date += 10*pow(2,j-4);
+        }
+    }
+    
+    return date;
 }
 
 /*  RTC CONVERT MONTH
@@ -248,17 +313,17 @@ uint8_t RTC_convert_day(uint8_t* buffer) {
 *       @param buffer: 8-bit buffer with information
 *   \Return: month
 */
-uint8_t RTC_convert_month(uint8_t* buffer) {
+uint8_t RTC_convert_month(uint8_t buffer) {
     
     uint8_t month = 0;
     
     for(int i = 0; i < 3; i++) {
-        if(*(buffer+i) & (0b00000001<<i)) {
+        if(buffer & (0b00000001<<i)) {
             month += pow(2,i);
         }
     }
     
-    month += 10*(*(buffer+4));
+    month += 10*(buffer & 0b00010000);
     
     return month;
 }
@@ -269,20 +334,20 @@ uint8_t RTC_convert_month(uint8_t* buffer) {
 *       @param buffer: 8-bit buffer with information
 *   \Return: year
 */
-uint8_t RTC_convert_year(uint8_t* buffer) {
+uint8_t RTC_convert_year(uint8_t buffer) {
     
     uint8_t year = 0;
     
     //Bits 0-3 that converts for units
     for(int i = 0; i < 4; i++) {
-        if(*(buffer+i) & (0b00000001<<i)) {
+        if(buffer & (0b00000001<<i)) {
             year += pow(2,i);
         }
     }
     
     //Bits 4-7 that converts for units
     for(int j = 4; j < 8; j++) {
-        if(*(buffer+j) & (0b00000001<<j)) {
+        if(buffer & (0b00000001<<j)) {
             year += 10*pow(2,j-4);
         }
     }

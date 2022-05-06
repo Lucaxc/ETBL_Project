@@ -1,10 +1,10 @@
 -- ======================================================================
 -- Project_design.ctl generated from Project_design
--- 05/05/2022 at 11:12
+-- 05/06/2022 at 10:08
 -- This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 -- ======================================================================
 
--- I2COLED
+-- I2CMASTER
 
 -- PSoC Clock Editor
 -- Directives Editor
