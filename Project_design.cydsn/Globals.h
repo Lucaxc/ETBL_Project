@@ -3,16 +3,16 @@
  * ELECTRONIC TECHNOLOGIES AND BIOSENSORS LABORATORY
  * Academic year 2021/22, II Semester
  * Final Project
-
+ *
  * Authors: Group 2
  *
- * ------------------------ GLOBALS (header) --------------------------
- * 
+ * -------------------------- GLOBALS (header) ----------------------------
+ * This files contains global variables.
  * ------------------------------------------------------------------------
  * 
  * ========================================================================
 */
-#include "project.h"
+#include <project.h>
 
 // OLED GRAPHIC LOGOS
 /*const uint8_t epd_bitmap_cropped_POLIMI_bianco [] = {

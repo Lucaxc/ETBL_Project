@@ -3,11 +3,12 @@
  * ELECTRONIC TECHNOLOGIES AND BIOSENSORS LABORATORY
  * Academic year 2021/22, II Semester
  * Final Project
-
+ *
  * Authors: Group 2
  *
  * ------------------------- RTC Driver (header) --------------------------
- * 
+ * This header file contains the functions' declarations for the Real Time
+ * Clock driver. Also registers addresses and contents are defined.
  * ------------------------------------------------------------------------
  * 
  * ========================================================================

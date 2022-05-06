@@ -3,11 +3,13 @@
  * ELECTRONIC TECHNOLOGIES AND BIOSENSORS LABORATORY
  * Academic year 2021/22, II Semester
  * Final Project
-
+ *
  * Authors: Group 2
  *
  * ------------------------ OLED Driver (source) --------------------------
- * 
+ * This file contains functions declared in the OLED header file 
+ * implementation. They are divided into core functions to have a working
+ * OLED and graphic functions to display things.
  * ------------------------------------------------------------------------
  * 
  * ========================================================================

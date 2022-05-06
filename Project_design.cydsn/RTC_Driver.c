@@ -3,11 +3,12 @@
  * ELECTRONIC TECHNOLOGIES AND BIOSENSORS LABORATORY
  * Academic year 2021/22, II Semester
  * Final Project
-
+ *
  * Authors: Group 2
  *
  * ------------------------- RTC Driver (source) --------------------------
- * 
+ * This source file contains the implementations of the functions declared
+ * in the RTC header file.
  * ------------------------------------------------------------------------
  * 
  * ========================================================================

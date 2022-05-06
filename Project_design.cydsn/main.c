@@ -3,20 +3,22 @@
  * ELECTRONIC TECHNOLOGIES AND BIOSENSORS LABORATORY
  * Academic year 2021/22, II Semester
  * Final Project
-
+ *
  * Authors: Group 2
  *
  * --------------------------------- MAIN ---------------------------------
- * 
+ * Main file.
  * ------------------------------------------------------------------------
  * 
  * ========================================================================
 */
-#include "project.h"
+#include <project.h>
+#include <string.h>
+#include <stdio.h>
+
 #include "OLED_Driver.h"
-#include "string.h"
-#include "stdio.h"
 #include "RTC_Driver.h"
+#include "EEPROM_Driver.h"
 #include "ErrorCodes.h"
 #include "Globals.h"
 #include "time.h"
@@ -162,15 +164,15 @@ int main(void)
         }
         
         seconds = RTC_convert_seconds(rtc_data_register);
-        CyDelay(10);
+        //CyDelay(10);
         
         len = snprintf(rtc_content, sizeof(rtc_content), "Secondi: %02x\r\n", rtc_data_register);
         UART_1_PutString(rtc_content);
-        CyDelay(10);
+        //CyDelay(10);
         
         len = snprintf(rtc_content, sizeof(rtc_content), "Secondi: %d\r\n", seconds);
         UART_1_PutString(rtc_content);
-        CyDelay(10);
+        //CyDelay(10);
         
         /*error = RTC_ReadRegister(RTC_ADDRESS, RTC_MINUTES, &rtc_data_register);
         
