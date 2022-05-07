@@ -3,11 +3,12 @@
 <!--This file is machine generated and read. It is not intended to be edited by hand.-->
 <!--Due to this, there is no schema for this file.-->
 <CyGuid_2867d519-54d2-4c01-9830-c51cb08bc3dd type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtWorkspaceSerialize" version="5" xml_contents_version="3" name="Project_ETBL" persistent="Project_ETBL.cywrk" platform="NOT_USED">
-<current_project name=".\Project_design.cydsn\Project_design.cyprj" />
+<current_project name="..\..\progetto lab sensori\CODICI\PSOC\FinalProjects\Group2.cydsn\Group2.cyprj" />
 <wrkspc_folders />
 <files />
 <projects>
 <v>.\Project_design.cydsn\Project_design.cyprj</v>
+<v>..\..\progetto lab sensori\CODICI\PSOC\FinalProjects\Group2.cydsn\Group2.cyprj</v>
 </projects>
 <workspace_id v="33a56af7-e8d3-4aca-bedb-e6ae2526c109" />
 <WriteAppVersionLastSavedWith v="4.4.0.80" />
