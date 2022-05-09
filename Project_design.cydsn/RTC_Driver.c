@@ -20,7 +20,6 @@
 #include <stdio.h>
 
 #include "RTC_Driver.h"
-#include "ErrorCodes.h"
 #include "Globals.h"
 
 /*------------------------------------------------------------------------
@@ -150,7 +149,6 @@ void rtc_read_time(uint8_t rtc_data_register) {
 */
 ErrorCode RTC_ReadRegister(uint8_t device_address, uint8_t register_address, uint8_t* data) {
     
-    // Start Condition: we pass the macro I2C_Master_WRITE_XFER_MODE embedded in the API to write into the accelerometer
     //The function returns an ACK or NACK.
     uint8_t error = I2CMASTER_MasterSendStart(device_address, I2CMASTER_WRITE_XFER_MODE);                                        
     if (error == I2CMASTER_MSTR_NO_ERROR)
@@ -179,7 +177,7 @@ ErrorCode RTC_ReadRegister(uint8_t device_address, uint8_t register_address, uin
 *       @param device_address: 8-bit slave device address
 *       @param register_address: 8-bit address of the register where content has to be written
 *       @param data: pointer to array containing values to be written
-*   \Return: error (if reading is successfull or not)
+*   \Return: error (if writing is successfull or not)
 */
 ErrorCode RTC_WriteRegister(uint8_t device_address, uint8_t register_address, uint8_t data) {
                                         

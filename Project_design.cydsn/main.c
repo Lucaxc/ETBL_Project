@@ -20,7 +20,6 @@
 #include "RTC_Driver.h"
 #include "EEPROM_Driver.h"
 #include "ErrorCodes.h"
-#include "Globals.h"
 #include "time.h"
 
 uint8_t seconds = 0;
@@ -39,13 +38,17 @@ int main(void)
 
     display_init(DISPLAY_ADDRESS);
     rtc_init(RTC_ADDRESS);
+    eeprom_current_address = 0x0000;
     
     /*If you want to setup the RTC, uncomment the following line and insert the needed informations, in order.
       Seconds, Minutes, Hours, Date, Month, Year
+      Then run the program, re-comment the line and re-run the program
     */
-    //set_RTC(0x10,0x10,0x08,0x06,MAY,Y_2022);
+    //set_RTC(0x00,0x37,0x15,0x06,MAY,Y_2022);
     
-    int glucose_concentration = 100;
+    uint8_t glucose_concentration = 100;
+    uint8_t glucose_concentration_from_memory = 0;
+    char flag = 0;
     char unit[] = "mg/dl";
     
     int i=0;
@@ -97,112 +100,7 @@ int main(void)
 
     for(;;)
     {
-        /*display_clear();
-        display_update();
-        rtx_setTextSize(2);
-        rtx_setTextColor(WHITE);
-        rtx_setCursor(15,20);
-        rtx_println("Loading..");
-        display_update();
-        
-        for(i=0; i<128; i++) {
-            for(j=0; j<64; j++) {
-                display_setPixel(i,j,INVERSE); 
-            }
-            display_update();
-        }
-        i=0;
-        j=0;
-        
-        display_clear();
-        display_update();
-        
-        rtx_drawBitmap(0, 0, epd_bitmap_cropped_POLIMI_bianco, 128, 64, WHITE, BLACK);
-        display_update();
-        CyDelay(6000);
-        
-        display_clear();
-        display_update();
-        
-        rtx_drawBitmap(0, 0, epd_bitmap_CV1, 128, 64, WHITE, BLACK);
-        display_update();
-        CyDelay(6000);
-        
-        display_clear();
-        display_update();
-        
-        rtx_drawBitmap(0, 0, epd_bitmap_teo, 128, 64, WHITE, BLACK);
-        display_update();
-        CyDelay(6000);
-        
-        display_clear();
-        display_update();
-        
-        rtx_drawBitmap(0, 0, epd_bitmap_Squarda_ginew, 128, 64, WHITE, BLACK);
-        display_update();
-        CyDelay(6000);
-        
-        display_clear();
-        rtx_setTextSize(1);
-        rtx_setTextColor(WHITE);
-        rtx_setCursor(0,0);
-        rtx_println("Glucose concentration");
-        rtx_setCursor(10,25);
-        rtx_setTextSize(2);
-        len = snprintf(str, sizeof(str), "%d mg/dl", glucose_concentration);
-        rtx_println(str);
-        display_update();*/
-        
-        UART_1_PutString("Secondi\r\n");
-        ErrorCode error = RTC_ReadRegister(RTC_ADDRESS, RTC_SECONDS, &rtc_data_register);
-        if(error == NO_ERROR)
-        {
-            sprintf(message, "Seconds register value: 0x%02X\r\n", rtc_data_register);
-            UART_1_PutString(message);
-        } else {
-            UART_1_PutString("I2C error occurred reading Seconds\r\n");
-        }
-        
-        seconds = RTC_convert_seconds(rtc_data_register);
-        //CyDelay(10);
-        
-        len = snprintf(rtc_content, sizeof(rtc_content), "Secondi: %02x\r\n", rtc_data_register);
-        UART_1_PutString(rtc_content);
-        //CyDelay(10);
-        
-        len = snprintf(rtc_content, sizeof(rtc_content), "Secondi: %d\r\n", seconds);
-        UART_1_PutString(rtc_content);
-        //CyDelay(10);
-        
-        /*error = RTC_ReadRegister(RTC_ADDRESS, RTC_MINUTES, &rtc_data_register);
-        
-        CyDelay(10);
-        len = snprintf(rtc_content, sizeof(rtc_content), "Minuti: %02x\r\n", rtc_data_register);
-        UART_1_PutString(rtc_content);
-        
-        error = RTC_ReadRegister(RTC_ADDRESS, RTC_HOURS, &rtc_data_register);
-        
-        CyDelay(10);
-        len = snprintf(rtc_content, sizeof(rtc_content), "Ore: %02x\r\n", rtc_data_register);
-        UART_1_PutString(rtc_content);
-        
-        error = RTC_ReadRegister(RTC_ADDRESS, RTC_DATE, &rtc_data_register);
-        
-        CyDelay(10);
-        len = snprintf(rtc_content, sizeof(rtc_content), "Data: %02x\r\n", rtc_data_register);
-        UART_1_PutString(rtc_content);
-        
-        error = RTC_ReadRegister(RTC_ADDRESS, RTC_MONTH, &rtc_data_register);
-        
-        CyDelay(10);
-        len = snprintf(rtc_content, sizeof(rtc_content), "Mese: %02x\r\n", rtc_data_register);
-        UART_1_PutString(rtc_content);
-        
-        error = RTC_ReadRegister(RTC_ADDRESS, RTC_YEAR, &rtc_data_register);
-
-        CyDelay(10);
-        len = snprintf(rtc_content, sizeof(rtc_content), "Anno: %04x\r\n", (rtc_data_register));
-        UART_1_PutString(rtc_content);*/
+        OLED_welcome_screen();
         
         rtc_read_time(RTC_ADDRESS);
         len = snprintf(rtc_content, sizeof(rtc_content), "Secondi: %d\r\n", current_seconds);
@@ -222,6 +120,13 @@ int main(void)
                        current_month, current_year, current_hours, current_minutes, current_seconds);
         UART_1_PutString(rtc_content);
         
+        if(flag == 0) {
+            flag = 1;
+            save_current_measurement(glucose_concentration);
+            glucose_concentration_from_memory = get_measurement_from_memory(eeprom_current_address - 7);
+        }
+
+        
         display_clear();
         display_update();
         rtx_setTextSize(1);
@@ -230,7 +135,7 @@ int main(void)
         rtx_println(rtc_content);
         display_update();
         
-        CyDelay(1000);
+        CyDelay(2000);
     }
 }
 

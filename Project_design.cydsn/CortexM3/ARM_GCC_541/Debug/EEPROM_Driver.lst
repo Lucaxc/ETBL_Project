@@ -1,0 +1,2252 @@
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"EEPROM_Driver.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.EEPROM_ReadRegister,"ax",%progbits
+  20              		.align	2
+  21              		.global	EEPROM_ReadRegister
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	EEPROM_ReadRegister, %function
+  25              	EEPROM_ReadRegister:
+  26              	.LFB64:
+  27              		.file 1 "EEPROM_Driver.c"
+   1:EEPROM_Driver.c **** /* ========================================================================
+   2:EEPROM_Driver.c ****  *
+   3:EEPROM_Driver.c ****  * ELECTRONIC TECHNOLOGIES AND BIOSENSORS LABORATORY
+   4:EEPROM_Driver.c ****  * Academic year 2021/22, II Semester
+   5:EEPROM_Driver.c ****  * Final Project
+   6:EEPROM_Driver.c ****  *
+   7:EEPROM_Driver.c ****  * Authors: Group 2
+   8:EEPROM_Driver.c ****  *
+   9:EEPROM_Driver.c ****  * ----------------------- EEPROM Driver (source) -------------------------
+  10:EEPROM_Driver.c ****  * 
+  11:EEPROM_Driver.c ****  * ------------------------------------------------------------------------
+  12:EEPROM_Driver.c ****  * 
+  13:EEPROM_Driver.c ****  * ========================================================================
+  14:EEPROM_Driver.c **** */
+  15:EEPROM_Driver.c **** 
+  16:EEPROM_Driver.c **** #include <project.h>
+  17:EEPROM_Driver.c **** #include <stdlib.h>
+  18:EEPROM_Driver.c **** #include <math.h>
+  19:EEPROM_Driver.c **** #include <stdio.h>
+  20:EEPROM_Driver.c **** 
+  21:EEPROM_Driver.c **** #include "EEPROM_Driver.h"
+  22:EEPROM_Driver.c **** 
+  23:EEPROM_Driver.c **** /*------------------------------------------------------------------------
+  24:EEPROM_Driver.c **** *                       FUNCTIONS IMPLEMENTATION
+  25:EEPROM_Driver.c **** -------------------------------------------------------------------------*/
+  26:EEPROM_Driver.c **** /*  EEPROM READ REGISTER
+  27:EEPROM_Driver.c **** *   \brief: Function that reads slave register content
+  28:EEPROM_Driver.c **** *   \Parameters:
+  29:EEPROM_Driver.c **** *       @param device_address: 8-bit slave device address
+  30:EEPROM_Driver.c **** *       @param register_address: 16-bit address of the register where content is stored
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 2
+
+
+  31:EEPROM_Driver.c **** *       @param data: pointer to array where to store read value
+  32:EEPROM_Driver.c **** *   \Return: error (if reading is successfull or not)
+  33:EEPROM_Driver.c **** */
+  34:EEPROM_Driver.c **** ErrorCode EEPROM_ReadRegister(uint8_t device_address, uint16_t register_address, uint8_t* data){
+  28              		.loc 1 34 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  34              		.cfi_def_cfa_offset 24
+  35              		.cfi_offset 3, -24
+  36              		.cfi_offset 4, -20
+  37              		.cfi_offset 5, -16
+  38              		.cfi_offset 6, -12
+  39              		.cfi_offset 7, -8
+  40              		.cfi_offset 14, -4
+  41 0002 0646     		mov	r6, r0
+  42 0004 0D46     		mov	r5, r1
+  43 0006 1746     		mov	r7, r2
+  35:EEPROM_Driver.c ****      
+  36:EEPROM_Driver.c ****     //The function returns an ACK or NACK.
+  37:EEPROM_Driver.c ****     uint8_t error = I2CMASTER_MasterSendStart(device_address, I2CMASTER_WRITE_XFER_MODE);          
+  44              		.loc 1 37 0
+  45 0008 0021     		movs	r1, #0
+  46              	.LVL1:
+  47 000a FFF7FEFF 		bl	I2CMASTER_MasterSendStart
+  48              	.LVL2:
+  38:EEPROM_Driver.c ****     if (error == I2CMASTER_MSTR_NO_ERROR)
+  49              		.loc 1 38 0
+  50 000e 0446     		mov	r4, r0
+  51 0010 78B9     		cbnz	r0, .L2
+  39:EEPROM_Driver.c ****     {
+  40:EEPROM_Driver.c ****         //Write the register address to be read. HIGH byte first, LOW byte then
+  41:EEPROM_Driver.c ****         error = I2CMASTER_MasterWriteByte(register_address & 0xFF00);
+  52              		.loc 1 41 0
+  53 0012 FFF7FEFF 		bl	I2CMASTER_MasterWriteByte
+  54              	.LVL3:
+  42:EEPROM_Driver.c ****         error = I2CMASTER_MasterWriteByte(register_address & 0x00FF);
+  55              		.loc 1 42 0
+  56 0016 E8B2     		uxtb	r0, r5
+  57 0018 FFF7FEFF 		bl	I2CMASTER_MasterWriteByte
+  58              	.LVL4:
+  43:EEPROM_Driver.c ****         if (error == I2CMASTER_MSTR_NO_ERROR)
+  59              		.loc 1 43 0
+  60 001c 0446     		mov	r4, r0
+  61 001e 40B9     		cbnz	r0, .L2
+  44:EEPROM_Driver.c ****         {
+  45:EEPROM_Driver.c ****             
+  46:EEPROM_Driver.c ****             error = I2CMASTER_MasterSendRestart(device_address, I2CMASTER_READ_XFER_MODE);
+  62              		.loc 1 46 0
+  63 0020 0121     		movs	r1, #1
+  64 0022 3046     		mov	r0, r6
+  65              	.LVL5:
+  66 0024 FFF7FEFF 		bl	I2CMASTER_MasterSendRestart
+  67              	.LVL6:
+  47:EEPROM_Driver.c ****             if (error == I2CMASTER_MSTR_NO_ERROR)
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 3
+
+
+  68              		.loc 1 47 0
+  69 0028 0446     		mov	r4, r0
+  70 002a 10B9     		cbnz	r0, .L2
+  48:EEPROM_Driver.c ****             {
+  49:EEPROM_Driver.c ****                 *data = I2CMASTER_MasterReadByte(I2CMASTER_NAK_DATA); //The NACK is needed otherwis
+  71              		.loc 1 49 0
+  72 002c FFF7FEFF 		bl	I2CMASTER_MasterReadByte
+  73              	.LVL7:
+  74 0030 3870     		strb	r0, [r7]
+  75              	.L2:
+  76              	.LVL8:
+  50:EEPROM_Driver.c ****             }
+  51:EEPROM_Driver.c ****         }
+  52:EEPROM_Driver.c ****     }
+  53:EEPROM_Driver.c **** 
+  54:EEPROM_Driver.c ****     I2CMASTER_MasterSendStop();
+  77              		.loc 1 54 0
+  78 0032 FFF7FEFF 		bl	I2CMASTER_MasterSendStop
+  79              	.LVL9:
+  55:EEPROM_Driver.c **** 
+  56:EEPROM_Driver.c ****     return error ? ERROR : NO_ERROR;
+  57:EEPROM_Driver.c **** }
+  80              		.loc 1 57 0
+  81 0036 201C     		adds	r0, r4, #0
+  82 0038 18BF     		it	ne
+  83 003a 0120     		movne	r0, #1
+  84 003c F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+  85              		.cfi_endproc
+  86              	.LFE64:
+  87              		.size	EEPROM_ReadRegister, .-EEPROM_ReadRegister
+  88 003e 00BF     		.section	.text.EEPROM_WriteRegister,"ax",%progbits
+  89              		.align	2
+  90              		.global	EEPROM_WriteRegister
+  91              		.thumb
+  92              		.thumb_func
+  93              		.type	EEPROM_WriteRegister, %function
+  94              	EEPROM_WriteRegister:
+  95              	.LFB65:
+  58:EEPROM_Driver.c **** 
+  59:EEPROM_Driver.c **** /*  EEPROM WRITE REGISTER
+  60:EEPROM_Driver.c **** *   \brief: Function that sets slave register content
+  61:EEPROM_Driver.c **** *   \Parameters:
+  62:EEPROM_Driver.c **** *       @param device_address: 8-bit slave device address
+  63:EEPROM_Driver.c **** *       @param register_address: 16-bit address of the register where content has to be written
+  64:EEPROM_Driver.c **** *       @param data: pointer to array containing values to be written
+  65:EEPROM_Driver.c **** *   \Return: error (if writing is successfull or not)
+  66:EEPROM_Driver.c **** */
+  67:EEPROM_Driver.c **** ErrorCode EEPROM_WriteRegister(uint8_t device_address, uint16_t register_address, uint8_t data){   
+  96              		.loc 1 67 0
+  97              		.cfi_startproc
+  98              		@ args = 0, pretend = 0, frame = 0
+  99              		@ frame_needed = 0, uses_anonymous_args = 0
+ 100              	.LVL10:
+ 101 0000 70B5     		push	{r4, r5, r6, lr}
+ 102              		.cfi_def_cfa_offset 16
+ 103              		.cfi_offset 4, -16
+ 104              		.cfi_offset 5, -12
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 4
+
+
+ 105              		.cfi_offset 6, -8
+ 106              		.cfi_offset 14, -4
+ 107 0002 0D46     		mov	r5, r1
+ 108 0004 1646     		mov	r6, r2
+  68:EEPROM_Driver.c ****     
+  69:EEPROM_Driver.c ****     uint8_t error = I2CMASTER_MasterSendStart(device_address, I2CMASTER_WRITE_XFER_MODE);
+ 109              		.loc 1 69 0
+ 110 0006 0021     		movs	r1, #0
+ 111              	.LVL11:
+ 112 0008 FFF7FEFF 		bl	I2CMASTER_MasterSendStart
+ 113              	.LVL12:
+  70:EEPROM_Driver.c ****     
+  71:EEPROM_Driver.c ****     if (error == I2CMASTER_MSTR_NO_ERROR)
+ 114              		.loc 1 71 0
+ 115 000c 0446     		mov	r4, r0
+ 116 000e 50B9     		cbnz	r0, .L5
+  72:EEPROM_Driver.c ****     {
+  73:EEPROM_Driver.c ****         // Write Register Address HIGH byte first, LOW byte then
+  74:EEPROM_Driver.c ****         error = I2CMASTER_MasterWriteByte(register_address & 0xFF00);
+ 117              		.loc 1 74 0
+ 118 0010 FFF7FEFF 		bl	I2CMASTER_MasterWriteByte
+ 119              	.LVL13:
+  75:EEPROM_Driver.c ****         error = I2CMASTER_MasterWriteByte(register_address & 0x00FF);
+ 120              		.loc 1 75 0
+ 121 0014 E8B2     		uxtb	r0, r5
+ 122 0016 FFF7FEFF 		bl	I2CMASTER_MasterWriteByte
+ 123              	.LVL14:
+  76:EEPROM_Driver.c ****         if (error == I2CMASTER_MSTR_NO_ERROR)
+ 124              		.loc 1 76 0
+ 125 001a 0446     		mov	r4, r0
+ 126 001c 18B9     		cbnz	r0, .L5
+  77:EEPROM_Driver.c ****         {
+  78:EEPROM_Driver.c ****             // Write data byte content
+  79:EEPROM_Driver.c ****             error = I2CMASTER_MasterWriteByte(data);
+ 127              		.loc 1 79 0
+ 128 001e 3046     		mov	r0, r6
+ 129              	.LVL15:
+ 130 0020 FFF7FEFF 		bl	I2CMASTER_MasterWriteByte
+ 131              	.LVL16:
+ 132 0024 0446     		mov	r4, r0
+ 133              	.LVL17:
+ 134              	.L5:
+  80:EEPROM_Driver.c ****         }
+  81:EEPROM_Driver.c ****     }
+  82:EEPROM_Driver.c **** 
+  83:EEPROM_Driver.c ****     I2CMASTER_MasterSendStop();
+ 135              		.loc 1 83 0
+ 136 0026 FFF7FEFF 		bl	I2CMASTER_MasterSendStop
+ 137              	.LVL18:
+  84:EEPROM_Driver.c **** 
+  85:EEPROM_Driver.c ****     return error ? ERROR : NO_ERROR;
+  86:EEPROM_Driver.c **** }
+ 138              		.loc 1 86 0
+ 139 002a 201C     		adds	r0, r4, #0
+ 140 002c 18BF     		it	ne
+ 141 002e 0120     		movne	r0, #1
+ 142 0030 70BD     		pop	{r4, r5, r6, pc}
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 5
+
+
+ 143              		.cfi_endproc
+ 144              	.LFE65:
+ 145              		.size	EEPROM_WriteRegister, .-EEPROM_WriteRegister
+ 146 0032 00BF     		.section	.text.save_current_measurement,"ax",%progbits
+ 147              		.align	2
+ 148              		.global	save_current_measurement
+ 149              		.thumb
+ 150              		.thumb_func
+ 151              		.type	save_current_measurement, %function
+ 152              	save_current_measurement:
+ 153              	.LFB66:
+  87:EEPROM_Driver.c **** 
+  88:EEPROM_Driver.c **** void save_current_measurement(uint8_t glucose_concentration) {
+ 154              		.loc 1 88 0
+ 155              		.cfi_startproc
+ 156              		@ args = 0, pretend = 0, frame = 0
+ 157              		@ frame_needed = 0, uses_anonymous_args = 0
+ 158              	.LVL19:
+ 159 0000 10B5     		push	{r4, lr}
+ 160              		.cfi_def_cfa_offset 8
+ 161              		.cfi_offset 4, -8
+ 162              		.cfi_offset 14, -4
+ 163 0002 0446     		mov	r4, r0
+  89:EEPROM_Driver.c ****     
+  90:EEPROM_Driver.c ****     ErrorCode error;
+  91:EEPROM_Driver.c ****     
+  92:EEPROM_Driver.c ****     error = EEPROM_WriteRegister(EEPROM_ADDRESS, eeprom_current_address, current_seconds);
+ 164              		.loc 1 92 0
+ 165 0004 314B     		ldr	r3, .L16
+ 166 0006 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 167 0008 314B     		ldr	r3, .L16+4
+ 168 000a 1988     		ldrh	r1, [r3]
+ 169 000c 5020     		movs	r0, #80
+ 170              	.LVL20:
+ 171 000e FFF7FEFF 		bl	EEPROM_WriteRegister
+ 172              	.LVL21:
+  93:EEPROM_Driver.c ****     if(error == ERROR) {
+ 173              		.loc 1 93 0
+ 174 0012 0128     		cmp	r0, #1
+ 175 0014 02D1     		bne	.L8
+  94:EEPROM_Driver.c ****         UART_1_PutString("\nError in saving seconds in EEPROM memory\r\n");
+ 176              		.loc 1 94 0
+ 177 0016 2F48     		ldr	r0, .L16+8
+ 178              	.LVL22:
+ 179 0018 FFF7FEFF 		bl	UART_1_PutString
+ 180              	.LVL23:
+ 181              	.L8:
+  95:EEPROM_Driver.c ****     }
+  96:EEPROM_Driver.c ****     
+  97:EEPROM_Driver.c ****     error = EEPROM_WriteRegister(EEPROM_ADDRESS, eeprom_current_address + 1, current_minutes);
+ 182              		.loc 1 97 0
+ 183 001c 2C4B     		ldr	r3, .L16+4
+ 184 001e 1988     		ldrh	r1, [r3]
+ 185 0020 0131     		adds	r1, r1, #1
+ 186 0022 2D4B     		ldr	r3, .L16+12
+ 187 0024 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 188 0026 89B2     		uxth	r1, r1
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 6
+
+
+ 189 0028 5020     		movs	r0, #80
+ 190 002a FFF7FEFF 		bl	EEPROM_WriteRegister
+ 191              	.LVL24:
+  98:EEPROM_Driver.c ****     if(error == ERROR) {
+ 192              		.loc 1 98 0
+ 193 002e 0128     		cmp	r0, #1
+ 194 0030 02D1     		bne	.L9
+  99:EEPROM_Driver.c ****         UART_1_PutString("\nError in saving minutes in EEPROM memory\r\n");
+ 195              		.loc 1 99 0
+ 196 0032 2A48     		ldr	r0, .L16+16
+ 197              	.LVL25:
+ 198 0034 FFF7FEFF 		bl	UART_1_PutString
+ 199              	.LVL26:
+ 200              	.L9:
+ 100:EEPROM_Driver.c ****     }
+ 101:EEPROM_Driver.c ****     
+ 102:EEPROM_Driver.c ****     error = EEPROM_WriteRegister(EEPROM_ADDRESS, eeprom_current_address + 2, current_hours);
+ 201              		.loc 1 102 0
+ 202 0038 254B     		ldr	r3, .L16+4
+ 203 003a 1988     		ldrh	r1, [r3]
+ 204 003c 0231     		adds	r1, r1, #2
+ 205 003e 284B     		ldr	r3, .L16+20
+ 206 0040 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 207 0042 89B2     		uxth	r1, r1
+ 208 0044 5020     		movs	r0, #80
+ 209 0046 FFF7FEFF 		bl	EEPROM_WriteRegister
+ 210              	.LVL27:
+ 103:EEPROM_Driver.c ****     if(error == ERROR) {
+ 211              		.loc 1 103 0
+ 212 004a 0128     		cmp	r0, #1
+ 213 004c 02D1     		bne	.L10
+ 104:EEPROM_Driver.c ****         UART_1_PutString("\nError in saving hours in EEPROM memory\r\n");
+ 214              		.loc 1 104 0
+ 215 004e 2548     		ldr	r0, .L16+24
+ 216              	.LVL28:
+ 217 0050 FFF7FEFF 		bl	UART_1_PutString
+ 218              	.LVL29:
+ 219              	.L10:
+ 105:EEPROM_Driver.c ****     }
+ 106:EEPROM_Driver.c ****     
+ 107:EEPROM_Driver.c ****     error = EEPROM_WriteRegister(EEPROM_ADDRESS, eeprom_current_address + 3, current_date);
+ 220              		.loc 1 107 0
+ 221 0054 1E4B     		ldr	r3, .L16+4
+ 222 0056 1988     		ldrh	r1, [r3]
+ 223 0058 0331     		adds	r1, r1, #3
+ 224 005a 234B     		ldr	r3, .L16+28
+ 225 005c 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 226 005e 89B2     		uxth	r1, r1
+ 227 0060 5020     		movs	r0, #80
+ 228 0062 FFF7FEFF 		bl	EEPROM_WriteRegister
+ 229              	.LVL30:
+ 108:EEPROM_Driver.c ****     if(error == ERROR) {
+ 230              		.loc 1 108 0
+ 231 0066 0128     		cmp	r0, #1
+ 232 0068 02D1     		bne	.L11
+ 109:EEPROM_Driver.c ****         UART_1_PutString("\nError in saving date in EEPROM memory\r\n");
+ 233              		.loc 1 109 0
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 7
+
+
+ 234 006a 2048     		ldr	r0, .L16+32
+ 235              	.LVL31:
+ 236 006c FFF7FEFF 		bl	UART_1_PutString
+ 237              	.LVL32:
+ 238              	.L11:
+ 110:EEPROM_Driver.c ****     }
+ 111:EEPROM_Driver.c ****     
+ 112:EEPROM_Driver.c ****     error = EEPROM_WriteRegister(EEPROM_ADDRESS, eeprom_current_address + 4, current_month);
+ 239              		.loc 1 112 0
+ 240 0070 174B     		ldr	r3, .L16+4
+ 241 0072 1988     		ldrh	r1, [r3]
+ 242 0074 0431     		adds	r1, r1, #4
+ 243 0076 1E4B     		ldr	r3, .L16+36
+ 244 0078 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 245 007a 89B2     		uxth	r1, r1
+ 246 007c 5020     		movs	r0, #80
+ 247 007e FFF7FEFF 		bl	EEPROM_WriteRegister
+ 248              	.LVL33:
+ 113:EEPROM_Driver.c ****     if(error == ERROR) {
+ 249              		.loc 1 113 0
+ 250 0082 0128     		cmp	r0, #1
+ 251 0084 02D1     		bne	.L12
+ 114:EEPROM_Driver.c ****         UART_1_PutString("\nError in saving month in EEPROM memory\r\n");
+ 252              		.loc 1 114 0
+ 253 0086 1B48     		ldr	r0, .L16+40
+ 254              	.LVL34:
+ 255 0088 FFF7FEFF 		bl	UART_1_PutString
+ 256              	.LVL35:
+ 257              	.L12:
+ 115:EEPROM_Driver.c ****     }
+ 116:EEPROM_Driver.c ****     
+ 117:EEPROM_Driver.c ****     error = EEPROM_WriteRegister(EEPROM_ADDRESS, eeprom_current_address + 5, current_year);
+ 258              		.loc 1 117 0
+ 259 008c 104B     		ldr	r3, .L16+4
+ 260 008e 1988     		ldrh	r1, [r3]
+ 261 0090 0531     		adds	r1, r1, #5
+ 262 0092 194B     		ldr	r3, .L16+44
+ 263 0094 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 264 0096 89B2     		uxth	r1, r1
+ 265 0098 5020     		movs	r0, #80
+ 266 009a FFF7FEFF 		bl	EEPROM_WriteRegister
+ 267              	.LVL36:
+ 118:EEPROM_Driver.c ****     if(error == ERROR) {
+ 268              		.loc 1 118 0
+ 269 009e 0128     		cmp	r0, #1
+ 270 00a0 02D1     		bne	.L13
+ 119:EEPROM_Driver.c ****         UART_1_PutString("\nError in saving year in EEPROM memory\r\n");
+ 271              		.loc 1 119 0
+ 272 00a2 1648     		ldr	r0, .L16+48
+ 273              	.LVL37:
+ 274 00a4 FFF7FEFF 		bl	UART_1_PutString
+ 275              	.LVL38:
+ 276              	.L13:
+ 120:EEPROM_Driver.c ****     }
+ 121:EEPROM_Driver.c ****     
+ 122:EEPROM_Driver.c ****     error = EEPROM_WriteRegister(EEPROM_ADDRESS, eeprom_current_address + 6, glucose_concentration)
+ 277              		.loc 1 122 0
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 8
+
+
+ 278 00a8 094B     		ldr	r3, .L16+4
+ 279 00aa 1988     		ldrh	r1, [r3]
+ 280 00ac 0631     		adds	r1, r1, #6
+ 281 00ae 2246     		mov	r2, r4
+ 282 00b0 89B2     		uxth	r1, r1
+ 283 00b2 5020     		movs	r0, #80
+ 284 00b4 FFF7FEFF 		bl	EEPROM_WriteRegister
+ 285              	.LVL39:
+ 123:EEPROM_Driver.c ****     if(error == ERROR) {
+ 286              		.loc 1 123 0
+ 287 00b8 0128     		cmp	r0, #1
+ 288 00ba 02D1     		bne	.L14
+ 124:EEPROM_Driver.c ****         UART_1_PutString("\nError in saving glucose data in EEPROM memory\r\n");
+ 289              		.loc 1 124 0
+ 290 00bc 1048     		ldr	r0, .L16+52
+ 291              	.LVL40:
+ 292 00be FFF7FEFF 		bl	UART_1_PutString
+ 293              	.LVL41:
+ 294              	.L14:
+ 125:EEPROM_Driver.c ****     }
+ 126:EEPROM_Driver.c ****     
+ 127:EEPROM_Driver.c ****     eeprom_current_address += 7;
+ 295              		.loc 1 127 0
+ 296 00c2 034A     		ldr	r2, .L16+4
+ 297 00c4 1388     		ldrh	r3, [r2]
+ 298 00c6 0733     		adds	r3, r3, #7
+ 299 00c8 1380     		strh	r3, [r2]	@ movhi
+ 300 00ca 10BD     		pop	{r4, pc}
+ 301              	.L17:
+ 302              		.align	2
+ 303              	.L16:
+ 304 00cc 00000000 		.word	current_seconds
+ 305 00d0 00000000 		.word	eeprom_current_address
+ 306 00d4 00000000 		.word	.LC0
+ 307 00d8 00000000 		.word	current_minutes
+ 308 00dc 2C000000 		.word	.LC1
+ 309 00e0 00000000 		.word	current_hours
+ 310 00e4 58000000 		.word	.LC2
+ 311 00e8 00000000 		.word	current_date
+ 312 00ec 84000000 		.word	.LC3
+ 313 00f0 00000000 		.word	current_month
+ 314 00f4 B0000000 		.word	.LC4
+ 315 00f8 00000000 		.word	current_year
+ 316 00fc DC000000 		.word	.LC5
+ 317 0100 08010000 		.word	.LC6
+ 318              		.cfi_endproc
+ 319              	.LFE66:
+ 320              		.size	save_current_measurement, .-save_current_measurement
+ 321              		.section	.text.get_measurement_from_memory,"ax",%progbits
+ 322              		.align	2
+ 323              		.global	get_measurement_from_memory
+ 324              		.thumb
+ 325              		.thumb_func
+ 326              		.type	get_measurement_from_memory, %function
+ 327              	get_measurement_from_memory:
+ 328              	.LFB67:
+ 128:EEPROM_Driver.c **** }
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 9
+
+
+ 129:EEPROM_Driver.c **** 
+ 130:EEPROM_Driver.c **** uint8_t get_measurement_from_memory(uint16_t eeprom_address) {
+ 329              		.loc 1 130 0
+ 330              		.cfi_startproc
+ 331              		@ args = 0, pretend = 0, frame = 72
+ 332              		@ frame_needed = 0, uses_anonymous_args = 0
+ 333              	.LVL42:
+ 334 0000 00B5     		push	{lr}
+ 335              		.cfi_def_cfa_offset 4
+ 336              		.cfi_offset 14, -4
+ 337 0002 93B0     		sub	sp, sp, #76
+ 338              		.cfi_def_cfa_offset 80
+ 339              	.LVL43:
+ 131:EEPROM_Driver.c ****     
+ 132:EEPROM_Driver.c ****     ErrorCode error;
+ 133:EEPROM_Driver.c ****     uint8_t data;
+ 134:EEPROM_Driver.c ****     int len = 0;
+ 135:EEPROM_Driver.c ****     char str[64];
+ 136:EEPROM_Driver.c ****     
+ 137:EEPROM_Driver.c ****     error = EEPROM_ReadRegister(EEPROM_ADDRESS, eeprom_address, &data);
+ 340              		.loc 1 137 0
+ 341 0004 0DF14702 		add	r2, sp, #71
+ 342 0008 0146     		mov	r1, r0
+ 343 000a 5020     		movs	r0, #80
+ 344              	.LVL44:
+ 345 000c FFF7FEFF 		bl	EEPROM_ReadRegister
+ 346              	.LVL45:
+ 138:EEPROM_Driver.c ****     
+ 139:EEPROM_Driver.c ****     if(error == ERROR) {
+ 347              		.loc 1 139 0
+ 348 0010 0128     		cmp	r0, #1
+ 349 0012 02D1     		bne	.L19
+ 140:EEPROM_Driver.c ****         UART_1_PutString("\nError in reading data from EEPROM memory\r\n");
+ 350              		.loc 1 140 0
+ 351 0014 0848     		ldr	r0, .L21
+ 352              	.LVL46:
+ 353 0016 FFF7FEFF 		bl	UART_1_PutString
+ 354              	.LVL47:
+ 355              	.L19:
+ 141:EEPROM_Driver.c ****     }
+ 142:EEPROM_Driver.c ****     
+ 143:EEPROM_Driver.c ****     len = snprintf(str, sizeof(str), "\nFrom memory: %d\r\n\n", data);
+ 356              		.loc 1 143 0
+ 357 001a 9DF84730 		ldrb	r3, [sp, #71]	@ zero_extendqisi2
+ 358 001e 074A     		ldr	r2, .L21+4
+ 359 0020 4021     		movs	r1, #64
+ 360 0022 01A8     		add	r0, sp, #4
+ 361 0024 FFF7FEFF 		bl	snprintf
+ 362              	.LVL48:
+ 144:EEPROM_Driver.c ****     UART_1_PutString(str);
+ 363              		.loc 1 144 0
+ 364 0028 01A8     		add	r0, sp, #4
+ 365 002a FFF7FEFF 		bl	UART_1_PutString
+ 366              	.LVL49:
+ 145:EEPROM_Driver.c ****     
+ 146:EEPROM_Driver.c ****     return data;
+ 147:EEPROM_Driver.c **** }
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 10
+
+
+ 367              		.loc 1 147 0
+ 368 002e 9DF84700 		ldrb	r0, [sp, #71]	@ zero_extendqisi2
+ 369 0032 13B0     		add	sp, sp, #76
+ 370              		.cfi_def_cfa_offset 4
+ 371              		@ sp needed
+ 372 0034 5DF804FB 		ldr	pc, [sp], #4
+ 373              	.L22:
+ 374              		.align	2
+ 375              	.L21:
+ 376 0038 3C010000 		.word	.LC7
+ 377 003c 68010000 		.word	.LC8
+ 378              		.cfi_endproc
+ 379              	.LFE67:
+ 380              		.size	get_measurement_from_memory, .-get_measurement_from_memory
+ 381              		.comm	eeprom_current_address,2,2
+ 382              		.comm	current_year,2,2
+ 383              		.comm	current_month,1,1
+ 384              		.comm	current_date,1,1
+ 385              		.comm	current_hours,1,1
+ 386              		.comm	current_minutes,1,1
+ 387              		.comm	current_seconds,1,1
+ 388              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 389              		.align	2
+ 390              	.LC0:
+ 391 0000 0A457272 		.ascii	"\012Error in saving seconds in EEPROM memory\015\012"
+ 391      6F722069 
+ 391      6E207361 
+ 391      76696E67 
+ 391      20736563 
+ 392 002b 00       		.ascii	"\000"
+ 393              	.LC1:
+ 394 002c 0A457272 		.ascii	"\012Error in saving minutes in EEPROM memory\015\012"
+ 394      6F722069 
+ 394      6E207361 
+ 394      76696E67 
+ 394      206D696E 
+ 395 0057 00       		.ascii	"\000"
+ 396              	.LC2:
+ 397 0058 0A457272 		.ascii	"\012Error in saving hours in EEPROM memory\015\012\000"
+ 397      6F722069 
+ 397      6E207361 
+ 397      76696E67 
+ 397      20686F75 
+ 398 0082 0000     		.space	2
+ 399              	.LC3:
+ 400 0084 0A457272 		.ascii	"\012Error in saving date in EEPROM memory\015\012\000"
+ 400      6F722069 
+ 400      6E207361 
+ 400      76696E67 
+ 400      20646174 
+ 401 00ad 000000   		.space	3
+ 402              	.LC4:
+ 403 00b0 0A457272 		.ascii	"\012Error in saving month in EEPROM memory\015\012\000"
+ 403      6F722069 
+ 403      6E207361 
+ 403      76696E67 
+ 403      206D6F6E 
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 11
+
+
+ 404 00da 0000     		.space	2
+ 405              	.LC5:
+ 406 00dc 0A457272 		.ascii	"\012Error in saving year in EEPROM memory\015\012\000"
+ 406      6F722069 
+ 406      6E207361 
+ 406      76696E67 
+ 406      20796561 
+ 407 0105 000000   		.space	3
+ 408              	.LC6:
+ 409 0108 0A457272 		.ascii	"\012Error in saving glucose data in EEPROM memory\015"
+ 409      6F722069 
+ 409      6E207361 
+ 409      76696E67 
+ 409      20676C75 
+ 410 0137 0A00     		.ascii	"\012\000"
+ 411 0139 000000   		.space	3
+ 412              	.LC7:
+ 413 013c 0A457272 		.ascii	"\012Error in reading data from EEPROM memory\015\012"
+ 413      6F722069 
+ 413      6E207265 
+ 413      6164696E 
+ 413      67206461 
+ 414 0167 00       		.ascii	"\000"
+ 415              	.LC8:
+ 416 0168 0A46726F 		.ascii	"\012From memory: %d\015\012\012\000"
+ 416      6D206D65 
+ 416      6D6F7279 
+ 416      3A202564 
+ 416      0D0A0A00 
+ 417              		.text
+ 418              	.Letext0:
+ 419              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 420              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 421              		.file 4 "ErrorCodes.h"
+ 422              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 423              		.file 6 "Globals.h"
+ 424              		.file 7 "Generated_Source\\PSoC5/I2CMASTER.h"
+ 425              		.file 8 "Generated_Source\\PSoC5/UART_1.h"
+ 426              		.file 9 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 427              		.section	.debug_info,"",%progbits
+ 428              	.Ldebug_info0:
+ 429 0000 84050000 		.4byte	0x584
+ 430 0004 0400     		.2byte	0x4
+ 431 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 432 000a 04       		.byte	0x4
+ 433 000b 01       		.uleb128 0x1
+ 434 000c F8000000 		.4byte	.LASF47
+ 435 0010 0C       		.byte	0xc
+ 436 0011 8B000000 		.4byte	.LASF48
+ 437 0015 AE010000 		.4byte	.LASF49
+ 438 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 439 001d 00000000 		.4byte	0
+ 440 0021 00000000 		.4byte	.Ldebug_line0
+ 441 0025 02       		.uleb128 0x2
+ 442 0026 01       		.byte	0x1
+ 443 0027 06       		.byte	0x6
+ 444 0028 C4030000 		.4byte	.LASF0
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 12
+
+
+ 445 002c 03       		.uleb128 0x3
+ 446 002d 1C000000 		.4byte	.LASF3
+ 447 0031 02       		.byte	0x2
+ 448 0032 1D       		.byte	0x1d
+ 449 0033 37000000 		.4byte	0x37
+ 450 0037 02       		.uleb128 0x2
+ 451 0038 01       		.byte	0x1
+ 452 0039 08       		.byte	0x8
+ 453 003a EA000000 		.4byte	.LASF1
+ 454 003e 02       		.uleb128 0x2
+ 455 003f 02       		.byte	0x2
+ 456 0040 05       		.byte	0x5
+ 457 0041 77030000 		.4byte	.LASF2
+ 458 0045 03       		.uleb128 0x3
+ 459 0046 72020000 		.4byte	.LASF4
+ 460 004a 02       		.byte	0x2
+ 461 004b 2B       		.byte	0x2b
+ 462 004c 50000000 		.4byte	0x50
+ 463 0050 02       		.uleb128 0x2
+ 464 0051 02       		.byte	0x2
+ 465 0052 07       		.byte	0x7
+ 466 0053 41020000 		.4byte	.LASF5
+ 467 0057 03       		.uleb128 0x3
+ 468 0058 59000000 		.4byte	.LASF6
+ 469 005c 02       		.byte	0x2
+ 470 005d 3F       		.byte	0x3f
+ 471 005e 62000000 		.4byte	0x62
+ 472 0062 02       		.uleb128 0x2
+ 473 0063 04       		.byte	0x4
+ 474 0064 05       		.byte	0x5
+ 475 0065 79000000 		.4byte	.LASF7
+ 476 0069 02       		.uleb128 0x2
+ 477 006a 04       		.byte	0x4
+ 478 006b 07       		.byte	0x7
+ 479 006c 7D020000 		.4byte	.LASF8
+ 480 0070 02       		.uleb128 0x2
+ 481 0071 08       		.byte	0x8
+ 482 0072 05       		.byte	0x5
+ 483 0073 4D030000 		.4byte	.LASF9
+ 484 0077 02       		.uleb128 0x2
+ 485 0078 08       		.byte	0x8
+ 486 0079 07       		.byte	0x7
+ 487 007a FD020000 		.4byte	.LASF10
+ 488 007e 04       		.uleb128 0x4
+ 489 007f 04       		.byte	0x4
+ 490 0080 05       		.byte	0x5
+ 491 0081 696E7400 		.ascii	"int\000"
+ 492 0085 02       		.uleb128 0x2
+ 493 0086 04       		.byte	0x4
+ 494 0087 07       		.byte	0x7
+ 495 0088 D3020000 		.4byte	.LASF11
+ 496 008c 03       		.uleb128 0x3
+ 497 008d 14030000 		.4byte	.LASF12
+ 498 0091 03       		.byte	0x3
+ 499 0092 18       		.byte	0x18
+ 500 0093 2C000000 		.4byte	0x2c
+ 501 0097 03       		.uleb128 0x3
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 13
+
+
+ 502 0098 6E030000 		.4byte	.LASF13
+ 503 009c 03       		.byte	0x3
+ 504 009d 24       		.byte	0x24
+ 505 009e 45000000 		.4byte	0x45
+ 506 00a2 03       		.uleb128 0x3
+ 507 00a3 36030000 		.4byte	.LASF14
+ 508 00a7 03       		.byte	0x3
+ 509 00a8 2C       		.byte	0x2c
+ 510 00a9 57000000 		.4byte	0x57
+ 511 00ad 02       		.uleb128 0x2
+ 512 00ae 04       		.byte	0x4
+ 513 00af 04       		.byte	0x4
+ 514 00b0 DF000000 		.4byte	.LASF15
+ 515 00b4 02       		.uleb128 0x2
+ 516 00b5 08       		.byte	0x8
+ 517 00b6 04       		.byte	0x4
+ 518 00b7 A5000000 		.4byte	.LASF16
+ 519 00bb 02       		.uleb128 0x2
+ 520 00bc 01       		.byte	0x1
+ 521 00bd 08       		.byte	0x8
+ 522 00be 69030000 		.4byte	.LASF17
+ 523 00c2 02       		.uleb128 0x2
+ 524 00c3 08       		.byte	0x8
+ 525 00c4 04       		.byte	0x4
+ 526 00c5 B8030000 		.4byte	.LASF18
+ 527 00c9 02       		.uleb128 0x2
+ 528 00ca 04       		.byte	0x4
+ 529 00cb 07       		.byte	0x7
+ 530 00cc 3E030000 		.4byte	.LASF19
+ 531 00d0 05       		.uleb128 0x5
+ 532 00d1 01       		.byte	0x1
+ 533 00d2 37000000 		.4byte	0x37
+ 534 00d6 04       		.byte	0x4
+ 535 00d7 15       		.byte	0x15
+ 536 00d8 E9000000 		.4byte	0xe9
+ 537 00dc 06       		.uleb128 0x6
+ 538 00dd A9030000 		.4byte	.LASF20
+ 539 00e1 00       		.byte	0
+ 540 00e2 06       		.uleb128 0x6
+ 541 00e3 B2030000 		.4byte	.LASF21
+ 542 00e7 01       		.byte	0x1
+ 543 00e8 00       		.byte	0
+ 544 00e9 03       		.uleb128 0x3
+ 545 00ea 9B000000 		.4byte	.LASF22
+ 546 00ee 04       		.byte	0x4
+ 547 00ef 18       		.byte	0x18
+ 548 00f0 D0000000 		.4byte	0xd0
+ 549 00f4 07       		.uleb128 0x7
+ 550 00f5 B2020000 		.4byte	.LASF26
+ 551 00f9 01       		.byte	0x1
+ 552 00fa 22       		.byte	0x22
+ 553 00fb E9000000 		.4byte	0xe9
+ 554 00ff 00000000 		.4byte	.LFB64
+ 555 0103 3E000000 		.4byte	.LFE64-.LFB64
+ 556 0107 01       		.uleb128 0x1
+ 557 0108 9C       		.byte	0x9c
+ 558 0109 C1010000 		.4byte	0x1c1
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 14
+
+
+ 559 010d 08       		.uleb128 0x8
+ 560 010e 81030000 		.4byte	.LASF23
+ 561 0112 01       		.byte	0x1
+ 562 0113 22       		.byte	0x22
+ 563 0114 8C000000 		.4byte	0x8c
+ 564 0118 00000000 		.4byte	.LLST0
+ 565 011c 08       		.uleb128 0x8
+ 566 011d 54020000 		.4byte	.LASF24
+ 567 0121 01       		.byte	0x1
+ 568 0122 22       		.byte	0x22
+ 569 0123 97000000 		.4byte	0x97
+ 570 0127 21000000 		.4byte	.LLST1
+ 571 012b 08       		.uleb128 0x8
+ 572 012c E5000000 		.4byte	.LASF25
+ 573 0130 01       		.byte	0x1
+ 574 0131 22       		.byte	0x22
+ 575 0132 C1010000 		.4byte	0x1c1
+ 576 0136 42000000 		.4byte	.LLST2
+ 577 013a 09       		.uleb128 0x9
+ 578 013b 47030000 		.4byte	.LASF28
+ 579 013f 01       		.byte	0x1
+ 580 0140 25       		.byte	0x25
+ 581 0141 8C000000 		.4byte	0x8c
+ 582 0145 60000000 		.4byte	.LLST3
+ 583 0149 0A       		.uleb128 0xa
+ 584 014a 0E000000 		.4byte	.LVL2
+ 585 014e 3A050000 		.4byte	0x53a
+ 586 0152 62010000 		.4byte	0x162
+ 587 0156 0B       		.uleb128 0xb
+ 588 0157 01       		.uleb128 0x1
+ 589 0158 50       		.byte	0x50
+ 590 0159 02       		.uleb128 0x2
+ 591 015a 76       		.byte	0x76
+ 592 015b 00       		.sleb128 0
+ 593 015c 0B       		.uleb128 0xb
+ 594 015d 01       		.uleb128 0x1
+ 595 015e 51       		.byte	0x51
+ 596 015f 01       		.uleb128 0x1
+ 597 0160 30       		.byte	0x30
+ 598 0161 00       		.byte	0
+ 599 0162 0A       		.uleb128 0xa
+ 600 0163 16000000 		.4byte	.LVL3
+ 601 0167 45050000 		.4byte	0x545
+ 602 016b 76010000 		.4byte	0x176
+ 603 016f 0B       		.uleb128 0xb
+ 604 0170 01       		.uleb128 0x1
+ 605 0171 50       		.byte	0x50
+ 606 0172 02       		.uleb128 0x2
+ 607 0173 74       		.byte	0x74
+ 608 0174 00       		.sleb128 0
+ 609 0175 00       		.byte	0
+ 610 0176 0A       		.uleb128 0xa
+ 611 0177 1C000000 		.4byte	.LVL4
+ 612 017b 45050000 		.4byte	0x545
+ 613 017f 8A010000 		.4byte	0x18a
+ 614 0183 0B       		.uleb128 0xb
+ 615 0184 01       		.uleb128 0x1
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 15
+
+
+ 616 0185 50       		.byte	0x50
+ 617 0186 02       		.uleb128 0x2
+ 618 0187 75       		.byte	0x75
+ 619 0188 00       		.sleb128 0
+ 620 0189 00       		.byte	0
+ 621 018a 0A       		.uleb128 0xa
+ 622 018b 28000000 		.4byte	.LVL6
+ 623 018f 50050000 		.4byte	0x550
+ 624 0193 A3010000 		.4byte	0x1a3
+ 625 0197 0B       		.uleb128 0xb
+ 626 0198 01       		.uleb128 0x1
+ 627 0199 50       		.byte	0x50
+ 628 019a 02       		.uleb128 0x2
+ 629 019b 76       		.byte	0x76
+ 630 019c 00       		.sleb128 0
+ 631 019d 0B       		.uleb128 0xb
+ 632 019e 01       		.uleb128 0x1
+ 633 019f 51       		.byte	0x51
+ 634 01a0 01       		.uleb128 0x1
+ 635 01a1 31       		.byte	0x31
+ 636 01a2 00       		.byte	0
+ 637 01a3 0A       		.uleb128 0xa
+ 638 01a4 30000000 		.4byte	.LVL7
+ 639 01a8 5B050000 		.4byte	0x55b
+ 640 01ac B7010000 		.4byte	0x1b7
+ 641 01b0 0B       		.uleb128 0xb
+ 642 01b1 01       		.uleb128 0x1
+ 643 01b2 50       		.byte	0x50
+ 644 01b3 02       		.uleb128 0x2
+ 645 01b4 74       		.byte	0x74
+ 646 01b5 00       		.sleb128 0
+ 647 01b6 00       		.byte	0
+ 648 01b7 0C       		.uleb128 0xc
+ 649 01b8 36000000 		.4byte	.LVL9
+ 650 01bc 66050000 		.4byte	0x566
+ 651 01c0 00       		.byte	0
+ 652 01c1 0D       		.uleb128 0xd
+ 653 01c2 04       		.byte	0x4
+ 654 01c3 8C000000 		.4byte	0x8c
+ 655 01c7 07       		.uleb128 0x7
+ 656 01c8 8F020000 		.4byte	.LASF27
+ 657 01cc 01       		.byte	0x1
+ 658 01cd 43       		.byte	0x43
+ 659 01ce E9000000 		.4byte	0xe9
+ 660 01d2 00000000 		.4byte	.LFB65
+ 661 01d6 32000000 		.4byte	.LFE65-.LFB65
+ 662 01da 01       		.uleb128 0x1
+ 663 01db 9C       		.byte	0x9c
+ 664 01dc 75020000 		.4byte	0x275
+ 665 01e0 08       		.uleb128 0x8
+ 666 01e1 81030000 		.4byte	.LASF23
+ 667 01e5 01       		.byte	0x1
+ 668 01e6 43       		.byte	0x43
+ 669 01e7 8C000000 		.4byte	0x8c
+ 670 01eb 94000000 		.4byte	.LLST4
+ 671 01ef 08       		.uleb128 0x8
+ 672 01f0 54020000 		.4byte	.LASF24
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 16
+
+
+ 673 01f4 01       		.byte	0x1
+ 674 01f5 43       		.byte	0x43
+ 675 01f6 97000000 		.4byte	0x97
+ 676 01fa B5000000 		.4byte	.LLST5
+ 677 01fe 08       		.uleb128 0x8
+ 678 01ff E5000000 		.4byte	.LASF25
+ 679 0203 01       		.byte	0x1
+ 680 0204 43       		.byte	0x43
+ 681 0205 8C000000 		.4byte	0x8c
+ 682 0209 D6000000 		.4byte	.LLST6
+ 683 020d 09       		.uleb128 0x9
+ 684 020e 47030000 		.4byte	.LASF28
+ 685 0212 01       		.byte	0x1
+ 686 0213 45       		.byte	0x45
+ 687 0214 8C000000 		.4byte	0x8c
+ 688 0218 F7000000 		.4byte	.LLST7
+ 689 021c 0A       		.uleb128 0xa
+ 690 021d 0C000000 		.4byte	.LVL12
+ 691 0221 3A050000 		.4byte	0x53a
+ 692 0225 2F020000 		.4byte	0x22f
+ 693 0229 0B       		.uleb128 0xb
+ 694 022a 01       		.uleb128 0x1
+ 695 022b 51       		.byte	0x51
+ 696 022c 01       		.uleb128 0x1
+ 697 022d 30       		.byte	0x30
+ 698 022e 00       		.byte	0
+ 699 022f 0A       		.uleb128 0xa
+ 700 0230 14000000 		.4byte	.LVL13
+ 701 0234 45050000 		.4byte	0x545
+ 702 0238 43020000 		.4byte	0x243
+ 703 023c 0B       		.uleb128 0xb
+ 704 023d 01       		.uleb128 0x1
+ 705 023e 50       		.byte	0x50
+ 706 023f 02       		.uleb128 0x2
+ 707 0240 74       		.byte	0x74
+ 708 0241 00       		.sleb128 0
+ 709 0242 00       		.byte	0
+ 710 0243 0A       		.uleb128 0xa
+ 711 0244 1A000000 		.4byte	.LVL14
+ 712 0248 45050000 		.4byte	0x545
+ 713 024c 57020000 		.4byte	0x257
+ 714 0250 0B       		.uleb128 0xb
+ 715 0251 01       		.uleb128 0x1
+ 716 0252 50       		.byte	0x50
+ 717 0253 02       		.uleb128 0x2
+ 718 0254 75       		.byte	0x75
+ 719 0255 00       		.sleb128 0
+ 720 0256 00       		.byte	0
+ 721 0257 0A       		.uleb128 0xa
+ 722 0258 24000000 		.4byte	.LVL16
+ 723 025c 45050000 		.4byte	0x545
+ 724 0260 6B020000 		.4byte	0x26b
+ 725 0264 0B       		.uleb128 0xb
+ 726 0265 01       		.uleb128 0x1
+ 727 0266 50       		.byte	0x50
+ 728 0267 02       		.uleb128 0x2
+ 729 0268 76       		.byte	0x76
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 17
+
+
+ 730 0269 00       		.sleb128 0
+ 731 026a 00       		.byte	0
+ 732 026b 0C       		.uleb128 0xc
+ 733 026c 2A000000 		.4byte	.LVL18
+ 734 0270 66050000 		.4byte	0x566
+ 735 0274 00       		.byte	0
+ 736 0275 0E       		.uleb128 0xe
+ 737 0276 95010000 		.4byte	.LASF50
+ 738 027a 01       		.byte	0x1
+ 739 027b 58       		.byte	0x58
+ 740 027c 00000000 		.4byte	.LFB66
+ 741 0280 04010000 		.4byte	.LFE66-.LFB66
+ 742 0284 01       		.uleb128 0x1
+ 743 0285 9C       		.byte	0x9c
+ 744 0286 D8030000 		.4byte	0x3d8
+ 745 028a 08       		.uleb128 0x8
+ 746 028b 63000000 		.4byte	.LASF29
+ 747 028f 01       		.byte	0x1
+ 748 0290 58       		.byte	0x58
+ 749 0291 8C000000 		.4byte	0x8c
+ 750 0295 20010000 		.4byte	.LLST8
+ 751 0299 09       		.uleb128 0x9
+ 752 029a 47030000 		.4byte	.LASF28
+ 753 029e 01       		.byte	0x1
+ 754 029f 5A       		.byte	0x5a
+ 755 02a0 E9000000 		.4byte	0xe9
+ 756 02a4 41010000 		.4byte	.LLST9
+ 757 02a8 0A       		.uleb128 0xa
+ 758 02a9 12000000 		.4byte	.LVL21
+ 759 02ad C7010000 		.4byte	0x1c7
+ 760 02b1 BC020000 		.4byte	0x2bc
+ 761 02b5 0B       		.uleb128 0xb
+ 762 02b6 01       		.uleb128 0x1
+ 763 02b7 50       		.byte	0x50
+ 764 02b8 02       		.uleb128 0x2
+ 765 02b9 08       		.byte	0x8
+ 766 02ba 50       		.byte	0x50
+ 767 02bb 00       		.byte	0
+ 768 02bc 0A       		.uleb128 0xa
+ 769 02bd 1C000000 		.4byte	.LVL23
+ 770 02c1 71050000 		.4byte	0x571
+ 771 02c5 D3020000 		.4byte	0x2d3
+ 772 02c9 0B       		.uleb128 0xb
+ 773 02ca 01       		.uleb128 0x1
+ 774 02cb 50       		.byte	0x50
+ 775 02cc 05       		.uleb128 0x5
+ 776 02cd 03       		.byte	0x3
+ 777 02ce 00000000 		.4byte	.LC0
+ 778 02d2 00       		.byte	0
+ 779 02d3 0A       		.uleb128 0xa
+ 780 02d4 2E000000 		.4byte	.LVL24
+ 781 02d8 C7010000 		.4byte	0x1c7
+ 782 02dc E7020000 		.4byte	0x2e7
+ 783 02e0 0B       		.uleb128 0xb
+ 784 02e1 01       		.uleb128 0x1
+ 785 02e2 50       		.byte	0x50
+ 786 02e3 02       		.uleb128 0x2
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 18
+
+
+ 787 02e4 08       		.byte	0x8
+ 788 02e5 50       		.byte	0x50
+ 789 02e6 00       		.byte	0
+ 790 02e7 0A       		.uleb128 0xa
+ 791 02e8 38000000 		.4byte	.LVL26
+ 792 02ec 71050000 		.4byte	0x571
+ 793 02f0 FE020000 		.4byte	0x2fe
+ 794 02f4 0B       		.uleb128 0xb
+ 795 02f5 01       		.uleb128 0x1
+ 796 02f6 50       		.byte	0x50
+ 797 02f7 05       		.uleb128 0x5
+ 798 02f8 03       		.byte	0x3
+ 799 02f9 2C000000 		.4byte	.LC1
+ 800 02fd 00       		.byte	0
+ 801 02fe 0A       		.uleb128 0xa
+ 802 02ff 4A000000 		.4byte	.LVL27
+ 803 0303 C7010000 		.4byte	0x1c7
+ 804 0307 12030000 		.4byte	0x312
+ 805 030b 0B       		.uleb128 0xb
+ 806 030c 01       		.uleb128 0x1
+ 807 030d 50       		.byte	0x50
+ 808 030e 02       		.uleb128 0x2
+ 809 030f 08       		.byte	0x8
+ 810 0310 50       		.byte	0x50
+ 811 0311 00       		.byte	0
+ 812 0312 0A       		.uleb128 0xa
+ 813 0313 54000000 		.4byte	.LVL29
+ 814 0317 71050000 		.4byte	0x571
+ 815 031b 29030000 		.4byte	0x329
+ 816 031f 0B       		.uleb128 0xb
+ 817 0320 01       		.uleb128 0x1
+ 818 0321 50       		.byte	0x50
+ 819 0322 05       		.uleb128 0x5
+ 820 0323 03       		.byte	0x3
+ 821 0324 58000000 		.4byte	.LC2
+ 822 0328 00       		.byte	0
+ 823 0329 0A       		.uleb128 0xa
+ 824 032a 66000000 		.4byte	.LVL30
+ 825 032e C7010000 		.4byte	0x1c7
+ 826 0332 3D030000 		.4byte	0x33d
+ 827 0336 0B       		.uleb128 0xb
+ 828 0337 01       		.uleb128 0x1
+ 829 0338 50       		.byte	0x50
+ 830 0339 02       		.uleb128 0x2
+ 831 033a 08       		.byte	0x8
+ 832 033b 50       		.byte	0x50
+ 833 033c 00       		.byte	0
+ 834 033d 0A       		.uleb128 0xa
+ 835 033e 70000000 		.4byte	.LVL32
+ 836 0342 71050000 		.4byte	0x571
+ 837 0346 54030000 		.4byte	0x354
+ 838 034a 0B       		.uleb128 0xb
+ 839 034b 01       		.uleb128 0x1
+ 840 034c 50       		.byte	0x50
+ 841 034d 05       		.uleb128 0x5
+ 842 034e 03       		.byte	0x3
+ 843 034f 84000000 		.4byte	.LC3
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 19
+
+
+ 844 0353 00       		.byte	0
+ 845 0354 0A       		.uleb128 0xa
+ 846 0355 82000000 		.4byte	.LVL33
+ 847 0359 C7010000 		.4byte	0x1c7
+ 848 035d 68030000 		.4byte	0x368
+ 849 0361 0B       		.uleb128 0xb
+ 850 0362 01       		.uleb128 0x1
+ 851 0363 50       		.byte	0x50
+ 852 0364 02       		.uleb128 0x2
+ 853 0365 08       		.byte	0x8
+ 854 0366 50       		.byte	0x50
+ 855 0367 00       		.byte	0
+ 856 0368 0A       		.uleb128 0xa
+ 857 0369 8C000000 		.4byte	.LVL35
+ 858 036d 71050000 		.4byte	0x571
+ 859 0371 7F030000 		.4byte	0x37f
+ 860 0375 0B       		.uleb128 0xb
+ 861 0376 01       		.uleb128 0x1
+ 862 0377 50       		.byte	0x50
+ 863 0378 05       		.uleb128 0x5
+ 864 0379 03       		.byte	0x3
+ 865 037a B0000000 		.4byte	.LC4
+ 866 037e 00       		.byte	0
+ 867 037f 0A       		.uleb128 0xa
+ 868 0380 9E000000 		.4byte	.LVL36
+ 869 0384 C7010000 		.4byte	0x1c7
+ 870 0388 93030000 		.4byte	0x393
+ 871 038c 0B       		.uleb128 0xb
+ 872 038d 01       		.uleb128 0x1
+ 873 038e 50       		.byte	0x50
+ 874 038f 02       		.uleb128 0x2
+ 875 0390 08       		.byte	0x8
+ 876 0391 50       		.byte	0x50
+ 877 0392 00       		.byte	0
+ 878 0393 0A       		.uleb128 0xa
+ 879 0394 A8000000 		.4byte	.LVL38
+ 880 0398 71050000 		.4byte	0x571
+ 881 039c AA030000 		.4byte	0x3aa
+ 882 03a0 0B       		.uleb128 0xb
+ 883 03a1 01       		.uleb128 0x1
+ 884 03a2 50       		.byte	0x50
+ 885 03a3 05       		.uleb128 0x5
+ 886 03a4 03       		.byte	0x3
+ 887 03a5 DC000000 		.4byte	.LC5
+ 888 03a9 00       		.byte	0
+ 889 03aa 0A       		.uleb128 0xa
+ 890 03ab B8000000 		.4byte	.LVL39
+ 891 03af C7010000 		.4byte	0x1c7
+ 892 03b3 C4030000 		.4byte	0x3c4
+ 893 03b7 0B       		.uleb128 0xb
+ 894 03b8 01       		.uleb128 0x1
+ 895 03b9 50       		.byte	0x50
+ 896 03ba 02       		.uleb128 0x2
+ 897 03bb 08       		.byte	0x8
+ 898 03bc 50       		.byte	0x50
+ 899 03bd 0B       		.uleb128 0xb
+ 900 03be 01       		.uleb128 0x1
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 20
+
+
+ 901 03bf 52       		.byte	0x52
+ 902 03c0 02       		.uleb128 0x2
+ 903 03c1 74       		.byte	0x74
+ 904 03c2 00       		.sleb128 0
+ 905 03c3 00       		.byte	0
+ 906 03c4 0F       		.uleb128 0xf
+ 907 03c5 C2000000 		.4byte	.LVL41
+ 908 03c9 71050000 		.4byte	0x571
+ 909 03cd 0B       		.uleb128 0xb
+ 910 03ce 01       		.uleb128 0x1
+ 911 03cf 50       		.byte	0x50
+ 912 03d0 05       		.uleb128 0x5
+ 913 03d1 03       		.byte	0x3
+ 914 03d2 08010000 		.4byte	.LC6
+ 915 03d6 00       		.byte	0
+ 916 03d7 00       		.byte	0
+ 917 03d8 07       		.uleb128 0x7
+ 918 03d9 C3000000 		.4byte	.LASF30
+ 919 03dd 01       		.byte	0x1
+ 920 03de 82       		.byte	0x82
+ 921 03df 8C000000 		.4byte	0x8c
+ 922 03e3 00000000 		.4byte	.LFB67
+ 923 03e7 40000000 		.4byte	.LFE67-.LFB67
+ 924 03eb 01       		.uleb128 0x1
+ 925 03ec 9C       		.byte	0x9c
+ 926 03ed A2040000 		.4byte	0x4a2
+ 927 03f1 08       		.uleb128 0x8
+ 928 03f2 86010000 		.4byte	.LASF31
+ 929 03f6 01       		.byte	0x1
+ 930 03f7 82       		.byte	0x82
+ 931 03f8 97000000 		.4byte	0x97
+ 932 03fc 96010000 		.4byte	.LLST10
+ 933 0400 09       		.uleb128 0x9
+ 934 0401 47030000 		.4byte	.LASF28
+ 935 0405 01       		.byte	0x1
+ 936 0406 84       		.byte	0x84
+ 937 0407 E9000000 		.4byte	0xe9
+ 938 040b B7010000 		.4byte	.LLST11
+ 939 040f 10       		.uleb128 0x10
+ 940 0410 E5000000 		.4byte	.LASF25
+ 941 0414 01       		.byte	0x1
+ 942 0415 85       		.byte	0x85
+ 943 0416 8C000000 		.4byte	0x8c
+ 944 041a 02       		.uleb128 0x2
+ 945 041b 91       		.byte	0x91
+ 946 041c 77       		.sleb128 -9
+ 947 041d 11       		.uleb128 0x11
+ 948 041e 6C656E00 		.ascii	"len\000"
+ 949 0422 01       		.byte	0x1
+ 950 0423 86       		.byte	0x86
+ 951 0424 7E000000 		.4byte	0x7e
+ 952 0428 CA010000 		.4byte	.LLST12
+ 953 042c 12       		.uleb128 0x12
+ 954 042d 73747200 		.ascii	"str\000"
+ 955 0431 01       		.byte	0x1
+ 956 0432 87       		.byte	0x87
+ 957 0433 A2040000 		.4byte	0x4a2
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 21
+
+
+ 958 0437 03       		.uleb128 0x3
+ 959 0438 91       		.byte	0x91
+ 960 0439 B47F     		.sleb128 -76
+ 961 043b 0A       		.uleb128 0xa
+ 962 043c 10000000 		.4byte	.LVL45
+ 963 0440 F4000000 		.4byte	0xf4
+ 964 0444 55040000 		.4byte	0x455
+ 965 0448 0B       		.uleb128 0xb
+ 966 0449 01       		.uleb128 0x1
+ 967 044a 50       		.byte	0x50
+ 968 044b 02       		.uleb128 0x2
+ 969 044c 08       		.byte	0x8
+ 970 044d 50       		.byte	0x50
+ 971 044e 0B       		.uleb128 0xb
+ 972 044f 01       		.uleb128 0x1
+ 973 0450 52       		.byte	0x52
+ 974 0451 02       		.uleb128 0x2
+ 975 0452 91       		.byte	0x91
+ 976 0453 77       		.sleb128 -9
+ 977 0454 00       		.byte	0
+ 978 0455 0A       		.uleb128 0xa
+ 979 0456 1A000000 		.4byte	.LVL47
+ 980 045a 71050000 		.4byte	0x571
+ 981 045e 6C040000 		.4byte	0x46c
+ 982 0462 0B       		.uleb128 0xb
+ 983 0463 01       		.uleb128 0x1
+ 984 0464 50       		.byte	0x50
+ 985 0465 05       		.uleb128 0x5
+ 986 0466 03       		.byte	0x3
+ 987 0467 3C010000 		.4byte	.LC7
+ 988 046b 00       		.byte	0
+ 989 046c 0A       		.uleb128 0xa
+ 990 046d 28000000 		.4byte	.LVL48
+ 991 0471 7C050000 		.4byte	0x57c
+ 992 0475 90040000 		.4byte	0x490
+ 993 0479 0B       		.uleb128 0xb
+ 994 047a 01       		.uleb128 0x1
+ 995 047b 50       		.byte	0x50
+ 996 047c 03       		.uleb128 0x3
+ 997 047d 91       		.byte	0x91
+ 998 047e B47F     		.sleb128 -76
+ 999 0480 0B       		.uleb128 0xb
+ 1000 0481 01       		.uleb128 0x1
+ 1001 0482 51       		.byte	0x51
+ 1002 0483 02       		.uleb128 0x2
+ 1003 0484 08       		.byte	0x8
+ 1004 0485 40       		.byte	0x40
+ 1005 0486 0B       		.uleb128 0xb
+ 1006 0487 01       		.uleb128 0x1
+ 1007 0488 52       		.byte	0x52
+ 1008 0489 05       		.uleb128 0x5
+ 1009 048a 03       		.byte	0x3
+ 1010 048b 68010000 		.4byte	.LC8
+ 1011 048f 00       		.byte	0
+ 1012 0490 0F       		.uleb128 0xf
+ 1013 0491 2E000000 		.4byte	.LVL49
+ 1014 0495 71050000 		.4byte	0x571
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 22
+
+
+ 1015 0499 0B       		.uleb128 0xb
+ 1016 049a 01       		.uleb128 0x1
+ 1017 049b 50       		.byte	0x50
+ 1018 049c 03       		.uleb128 0x3
+ 1019 049d 91       		.byte	0x91
+ 1020 049e B47F     		.sleb128 -76
+ 1021 04a0 00       		.byte	0
+ 1022 04a1 00       		.byte	0
+ 1023 04a2 13       		.uleb128 0x13
+ 1024 04a3 BB000000 		.4byte	0xbb
+ 1025 04a7 B2040000 		.4byte	0x4b2
+ 1026 04ab 14       		.uleb128 0x14
+ 1027 04ac C9000000 		.4byte	0xc9
+ 1028 04b0 3F       		.byte	0x3f
+ 1029 04b1 00       		.byte	0
+ 1030 04b2 15       		.uleb128 0x15
+ 1031 04b3 65020000 		.4byte	.LASF32
+ 1032 04b7 05       		.byte	0x5
+ 1033 04b8 1207     		.2byte	0x712
+ 1034 04ba BE040000 		.4byte	0x4be
+ 1035 04be 16       		.uleb128 0x16
+ 1036 04bf A2000000 		.4byte	0xa2
+ 1037 04c3 17       		.uleb128 0x17
+ 1038 04c4 E0020000 		.4byte	.LASF33
+ 1039 04c8 06       		.byte	0x6
+ 1040 04c9 19       		.byte	0x19
+ 1041 04ca 8C000000 		.4byte	0x8c
+ 1042 04ce 05       		.uleb128 0x5
+ 1043 04cf 03       		.byte	0x3
+ 1044 04d0 00000000 		.4byte	current_seconds
+ 1045 04d4 17       		.uleb128 0x17
+ 1046 04d5 E1030000 		.4byte	.LASF34
+ 1047 04d9 06       		.byte	0x6
+ 1048 04da 1A       		.byte	0x1a
+ 1049 04db 8C000000 		.4byte	0x8c
+ 1050 04df 05       		.uleb128 0x5
+ 1051 04e0 03       		.byte	0x3
+ 1052 04e1 00000000 		.4byte	current_minutes
+ 1053 04e5 17       		.uleb128 0x17
+ 1054 04e6 5B030000 		.4byte	.LASF35
+ 1055 04ea 06       		.byte	0x6
+ 1056 04eb 1B       		.byte	0x1b
+ 1057 04ec 8C000000 		.4byte	0x8c
+ 1058 04f0 05       		.uleb128 0x5
+ 1059 04f1 03       		.byte	0x3
+ 1060 04f2 00000000 		.4byte	current_hours
+ 1061 04f6 17       		.uleb128 0x17
+ 1062 04f7 F0020000 		.4byte	.LASF36
+ 1063 04fb 06       		.byte	0x6
+ 1064 04fc 1C       		.byte	0x1c
+ 1065 04fd 8C000000 		.4byte	0x8c
+ 1066 0501 05       		.uleb128 0x5
+ 1067 0502 03       		.byte	0x3
+ 1068 0503 00000000 		.4byte	current_date
+ 1069 0507 17       		.uleb128 0x17
+ 1070 0508 A4020000 		.4byte	.LASF37
+ 1071 050c 06       		.byte	0x6
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 23
+
+
+ 1072 050d 1D       		.byte	0x1d
+ 1073 050e 8C000000 		.4byte	0x8c
+ 1074 0512 05       		.uleb128 0x5
+ 1075 0513 03       		.byte	0x3
+ 1076 0514 00000000 		.4byte	current_month
+ 1077 0518 17       		.uleb128 0x17
+ 1078 0519 C6020000 		.4byte	.LASF38
+ 1079 051d 06       		.byte	0x6
+ 1080 051e 1E       		.byte	0x1e
+ 1081 051f 97000000 		.4byte	0x97
+ 1082 0523 05       		.uleb128 0x5
+ 1083 0524 03       		.byte	0x3
+ 1084 0525 00000000 		.4byte	current_year
+ 1085 0529 17       		.uleb128 0x17
+ 1086 052a AC000000 		.4byte	.LASF39
+ 1087 052e 06       		.byte	0x6
+ 1088 052f 21       		.byte	0x21
+ 1089 0530 97000000 		.4byte	0x97
+ 1090 0534 05       		.uleb128 0x5
+ 1091 0535 03       		.byte	0x3
+ 1092 0536 00000000 		.4byte	eeprom_current_address
+ 1093 053a 18       		.uleb128 0x18
+ 1094 053b 3F000000 		.4byte	.LASF40
+ 1095 053f 3F000000 		.4byte	.LASF40
+ 1096 0543 07       		.byte	0x7
+ 1097 0544 B1       		.byte	0xb1
+ 1098 0545 18       		.uleb128 0x18
+ 1099 0546 1C030000 		.4byte	.LASF41
+ 1100 054a 1C030000 		.4byte	.LASF41
+ 1101 054e 07       		.byte	0x7
+ 1102 054f B6       		.byte	0xb6
+ 1103 0550 18       		.uleb128 0x18
+ 1104 0551 00000000 		.4byte	.LASF42
+ 1105 0555 00000000 		.4byte	.LASF42
+ 1106 0559 07       		.byte	0x7
+ 1107 055a B3       		.byte	0xb3
+ 1108 055b 18       		.uleb128 0x18
+ 1109 055c 90030000 		.4byte	.LASF43
+ 1110 0560 90030000 		.4byte	.LASF43
+ 1111 0564 07       		.byte	0x7
+ 1112 0565 B7       		.byte	0xb7
+ 1113 0566 18       		.uleb128 0x18
+ 1114 0567 26000000 		.4byte	.LASF44
+ 1115 056b 26000000 		.4byte	.LASF44
+ 1116 056f 07       		.byte	0x7
+ 1117 0570 B5       		.byte	0xb5
+ 1118 0571 18       		.uleb128 0x18
+ 1119 0572 D0030000 		.4byte	.LASF45
+ 1120 0576 D0030000 		.4byte	.LASF45
+ 1121 057a 08       		.byte	0x8
+ 1122 057b 8B       		.byte	0x8b
+ 1123 057c 18       		.uleb128 0x18
+ 1124 057d 82000000 		.4byte	.LASF46
+ 1125 0581 82000000 		.4byte	.LASF46
+ 1126 0585 09       		.byte	0x9
+ 1127 0586 FD       		.byte	0xfd
+ 1128 0587 00       		.byte	0
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 24
+
+
+ 1129              		.section	.debug_abbrev,"",%progbits
+ 1130              	.Ldebug_abbrev0:
+ 1131 0000 01       		.uleb128 0x1
+ 1132 0001 11       		.uleb128 0x11
+ 1133 0002 01       		.byte	0x1
+ 1134 0003 25       		.uleb128 0x25
+ 1135 0004 0E       		.uleb128 0xe
+ 1136 0005 13       		.uleb128 0x13
+ 1137 0006 0B       		.uleb128 0xb
+ 1138 0007 03       		.uleb128 0x3
+ 1139 0008 0E       		.uleb128 0xe
+ 1140 0009 1B       		.uleb128 0x1b
+ 1141 000a 0E       		.uleb128 0xe
+ 1142 000b 55       		.uleb128 0x55
+ 1143 000c 17       		.uleb128 0x17
+ 1144 000d 11       		.uleb128 0x11
+ 1145 000e 01       		.uleb128 0x1
+ 1146 000f 10       		.uleb128 0x10
+ 1147 0010 17       		.uleb128 0x17
+ 1148 0011 00       		.byte	0
+ 1149 0012 00       		.byte	0
+ 1150 0013 02       		.uleb128 0x2
+ 1151 0014 24       		.uleb128 0x24
+ 1152 0015 00       		.byte	0
+ 1153 0016 0B       		.uleb128 0xb
+ 1154 0017 0B       		.uleb128 0xb
+ 1155 0018 3E       		.uleb128 0x3e
+ 1156 0019 0B       		.uleb128 0xb
+ 1157 001a 03       		.uleb128 0x3
+ 1158 001b 0E       		.uleb128 0xe
+ 1159 001c 00       		.byte	0
+ 1160 001d 00       		.byte	0
+ 1161 001e 03       		.uleb128 0x3
+ 1162 001f 16       		.uleb128 0x16
+ 1163 0020 00       		.byte	0
+ 1164 0021 03       		.uleb128 0x3
+ 1165 0022 0E       		.uleb128 0xe
+ 1166 0023 3A       		.uleb128 0x3a
+ 1167 0024 0B       		.uleb128 0xb
+ 1168 0025 3B       		.uleb128 0x3b
+ 1169 0026 0B       		.uleb128 0xb
+ 1170 0027 49       		.uleb128 0x49
+ 1171 0028 13       		.uleb128 0x13
+ 1172 0029 00       		.byte	0
+ 1173 002a 00       		.byte	0
+ 1174 002b 04       		.uleb128 0x4
+ 1175 002c 24       		.uleb128 0x24
+ 1176 002d 00       		.byte	0
+ 1177 002e 0B       		.uleb128 0xb
+ 1178 002f 0B       		.uleb128 0xb
+ 1179 0030 3E       		.uleb128 0x3e
+ 1180 0031 0B       		.uleb128 0xb
+ 1181 0032 03       		.uleb128 0x3
+ 1182 0033 08       		.uleb128 0x8
+ 1183 0034 00       		.byte	0
+ 1184 0035 00       		.byte	0
+ 1185 0036 05       		.uleb128 0x5
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 25
+
+
+ 1186 0037 04       		.uleb128 0x4
+ 1187 0038 01       		.byte	0x1
+ 1188 0039 0B       		.uleb128 0xb
+ 1189 003a 0B       		.uleb128 0xb
+ 1190 003b 49       		.uleb128 0x49
+ 1191 003c 13       		.uleb128 0x13
+ 1192 003d 3A       		.uleb128 0x3a
+ 1193 003e 0B       		.uleb128 0xb
+ 1194 003f 3B       		.uleb128 0x3b
+ 1195 0040 0B       		.uleb128 0xb
+ 1196 0041 01       		.uleb128 0x1
+ 1197 0042 13       		.uleb128 0x13
+ 1198 0043 00       		.byte	0
+ 1199 0044 00       		.byte	0
+ 1200 0045 06       		.uleb128 0x6
+ 1201 0046 28       		.uleb128 0x28
+ 1202 0047 00       		.byte	0
+ 1203 0048 03       		.uleb128 0x3
+ 1204 0049 0E       		.uleb128 0xe
+ 1205 004a 1C       		.uleb128 0x1c
+ 1206 004b 0B       		.uleb128 0xb
+ 1207 004c 00       		.byte	0
+ 1208 004d 00       		.byte	0
+ 1209 004e 07       		.uleb128 0x7
+ 1210 004f 2E       		.uleb128 0x2e
+ 1211 0050 01       		.byte	0x1
+ 1212 0051 3F       		.uleb128 0x3f
+ 1213 0052 19       		.uleb128 0x19
+ 1214 0053 03       		.uleb128 0x3
+ 1215 0054 0E       		.uleb128 0xe
+ 1216 0055 3A       		.uleb128 0x3a
+ 1217 0056 0B       		.uleb128 0xb
+ 1218 0057 3B       		.uleb128 0x3b
+ 1219 0058 0B       		.uleb128 0xb
+ 1220 0059 27       		.uleb128 0x27
+ 1221 005a 19       		.uleb128 0x19
+ 1222 005b 49       		.uleb128 0x49
+ 1223 005c 13       		.uleb128 0x13
+ 1224 005d 11       		.uleb128 0x11
+ 1225 005e 01       		.uleb128 0x1
+ 1226 005f 12       		.uleb128 0x12
+ 1227 0060 06       		.uleb128 0x6
+ 1228 0061 40       		.uleb128 0x40
+ 1229 0062 18       		.uleb128 0x18
+ 1230 0063 9742     		.uleb128 0x2117
+ 1231 0065 19       		.uleb128 0x19
+ 1232 0066 01       		.uleb128 0x1
+ 1233 0067 13       		.uleb128 0x13
+ 1234 0068 00       		.byte	0
+ 1235 0069 00       		.byte	0
+ 1236 006a 08       		.uleb128 0x8
+ 1237 006b 05       		.uleb128 0x5
+ 1238 006c 00       		.byte	0
+ 1239 006d 03       		.uleb128 0x3
+ 1240 006e 0E       		.uleb128 0xe
+ 1241 006f 3A       		.uleb128 0x3a
+ 1242 0070 0B       		.uleb128 0xb
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 26
+
+
+ 1243 0071 3B       		.uleb128 0x3b
+ 1244 0072 0B       		.uleb128 0xb
+ 1245 0073 49       		.uleb128 0x49
+ 1246 0074 13       		.uleb128 0x13
+ 1247 0075 02       		.uleb128 0x2
+ 1248 0076 17       		.uleb128 0x17
+ 1249 0077 00       		.byte	0
+ 1250 0078 00       		.byte	0
+ 1251 0079 09       		.uleb128 0x9
+ 1252 007a 34       		.uleb128 0x34
+ 1253 007b 00       		.byte	0
+ 1254 007c 03       		.uleb128 0x3
+ 1255 007d 0E       		.uleb128 0xe
+ 1256 007e 3A       		.uleb128 0x3a
+ 1257 007f 0B       		.uleb128 0xb
+ 1258 0080 3B       		.uleb128 0x3b
+ 1259 0081 0B       		.uleb128 0xb
+ 1260 0082 49       		.uleb128 0x49
+ 1261 0083 13       		.uleb128 0x13
+ 1262 0084 02       		.uleb128 0x2
+ 1263 0085 17       		.uleb128 0x17
+ 1264 0086 00       		.byte	0
+ 1265 0087 00       		.byte	0
+ 1266 0088 0A       		.uleb128 0xa
+ 1267 0089 898201   		.uleb128 0x4109
+ 1268 008c 01       		.byte	0x1
+ 1269 008d 11       		.uleb128 0x11
+ 1270 008e 01       		.uleb128 0x1
+ 1271 008f 31       		.uleb128 0x31
+ 1272 0090 13       		.uleb128 0x13
+ 1273 0091 01       		.uleb128 0x1
+ 1274 0092 13       		.uleb128 0x13
+ 1275 0093 00       		.byte	0
+ 1276 0094 00       		.byte	0
+ 1277 0095 0B       		.uleb128 0xb
+ 1278 0096 8A8201   		.uleb128 0x410a
+ 1279 0099 00       		.byte	0
+ 1280 009a 02       		.uleb128 0x2
+ 1281 009b 18       		.uleb128 0x18
+ 1282 009c 9142     		.uleb128 0x2111
+ 1283 009e 18       		.uleb128 0x18
+ 1284 009f 00       		.byte	0
+ 1285 00a0 00       		.byte	0
+ 1286 00a1 0C       		.uleb128 0xc
+ 1287 00a2 898201   		.uleb128 0x4109
+ 1288 00a5 00       		.byte	0
+ 1289 00a6 11       		.uleb128 0x11
+ 1290 00a7 01       		.uleb128 0x1
+ 1291 00a8 31       		.uleb128 0x31
+ 1292 00a9 13       		.uleb128 0x13
+ 1293 00aa 00       		.byte	0
+ 1294 00ab 00       		.byte	0
+ 1295 00ac 0D       		.uleb128 0xd
+ 1296 00ad 0F       		.uleb128 0xf
+ 1297 00ae 00       		.byte	0
+ 1298 00af 0B       		.uleb128 0xb
+ 1299 00b0 0B       		.uleb128 0xb
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 27
+
+
+ 1300 00b1 49       		.uleb128 0x49
+ 1301 00b2 13       		.uleb128 0x13
+ 1302 00b3 00       		.byte	0
+ 1303 00b4 00       		.byte	0
+ 1304 00b5 0E       		.uleb128 0xe
+ 1305 00b6 2E       		.uleb128 0x2e
+ 1306 00b7 01       		.byte	0x1
+ 1307 00b8 3F       		.uleb128 0x3f
+ 1308 00b9 19       		.uleb128 0x19
+ 1309 00ba 03       		.uleb128 0x3
+ 1310 00bb 0E       		.uleb128 0xe
+ 1311 00bc 3A       		.uleb128 0x3a
+ 1312 00bd 0B       		.uleb128 0xb
+ 1313 00be 3B       		.uleb128 0x3b
+ 1314 00bf 0B       		.uleb128 0xb
+ 1315 00c0 27       		.uleb128 0x27
+ 1316 00c1 19       		.uleb128 0x19
+ 1317 00c2 11       		.uleb128 0x11
+ 1318 00c3 01       		.uleb128 0x1
+ 1319 00c4 12       		.uleb128 0x12
+ 1320 00c5 06       		.uleb128 0x6
+ 1321 00c6 40       		.uleb128 0x40
+ 1322 00c7 18       		.uleb128 0x18
+ 1323 00c8 9742     		.uleb128 0x2117
+ 1324 00ca 19       		.uleb128 0x19
+ 1325 00cb 01       		.uleb128 0x1
+ 1326 00cc 13       		.uleb128 0x13
+ 1327 00cd 00       		.byte	0
+ 1328 00ce 00       		.byte	0
+ 1329 00cf 0F       		.uleb128 0xf
+ 1330 00d0 898201   		.uleb128 0x4109
+ 1331 00d3 01       		.byte	0x1
+ 1332 00d4 11       		.uleb128 0x11
+ 1333 00d5 01       		.uleb128 0x1
+ 1334 00d6 31       		.uleb128 0x31
+ 1335 00d7 13       		.uleb128 0x13
+ 1336 00d8 00       		.byte	0
+ 1337 00d9 00       		.byte	0
+ 1338 00da 10       		.uleb128 0x10
+ 1339 00db 34       		.uleb128 0x34
+ 1340 00dc 00       		.byte	0
+ 1341 00dd 03       		.uleb128 0x3
+ 1342 00de 0E       		.uleb128 0xe
+ 1343 00df 3A       		.uleb128 0x3a
+ 1344 00e0 0B       		.uleb128 0xb
+ 1345 00e1 3B       		.uleb128 0x3b
+ 1346 00e2 0B       		.uleb128 0xb
+ 1347 00e3 49       		.uleb128 0x49
+ 1348 00e4 13       		.uleb128 0x13
+ 1349 00e5 02       		.uleb128 0x2
+ 1350 00e6 18       		.uleb128 0x18
+ 1351 00e7 00       		.byte	0
+ 1352 00e8 00       		.byte	0
+ 1353 00e9 11       		.uleb128 0x11
+ 1354 00ea 34       		.uleb128 0x34
+ 1355 00eb 00       		.byte	0
+ 1356 00ec 03       		.uleb128 0x3
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 28
+
+
+ 1357 00ed 08       		.uleb128 0x8
+ 1358 00ee 3A       		.uleb128 0x3a
+ 1359 00ef 0B       		.uleb128 0xb
+ 1360 00f0 3B       		.uleb128 0x3b
+ 1361 00f1 0B       		.uleb128 0xb
+ 1362 00f2 49       		.uleb128 0x49
+ 1363 00f3 13       		.uleb128 0x13
+ 1364 00f4 02       		.uleb128 0x2
+ 1365 00f5 17       		.uleb128 0x17
+ 1366 00f6 00       		.byte	0
+ 1367 00f7 00       		.byte	0
+ 1368 00f8 12       		.uleb128 0x12
+ 1369 00f9 34       		.uleb128 0x34
+ 1370 00fa 00       		.byte	0
+ 1371 00fb 03       		.uleb128 0x3
+ 1372 00fc 08       		.uleb128 0x8
+ 1373 00fd 3A       		.uleb128 0x3a
+ 1374 00fe 0B       		.uleb128 0xb
+ 1375 00ff 3B       		.uleb128 0x3b
+ 1376 0100 0B       		.uleb128 0xb
+ 1377 0101 49       		.uleb128 0x49
+ 1378 0102 13       		.uleb128 0x13
+ 1379 0103 02       		.uleb128 0x2
+ 1380 0104 18       		.uleb128 0x18
+ 1381 0105 00       		.byte	0
+ 1382 0106 00       		.byte	0
+ 1383 0107 13       		.uleb128 0x13
+ 1384 0108 01       		.uleb128 0x1
+ 1385 0109 01       		.byte	0x1
+ 1386 010a 49       		.uleb128 0x49
+ 1387 010b 13       		.uleb128 0x13
+ 1388 010c 01       		.uleb128 0x1
+ 1389 010d 13       		.uleb128 0x13
+ 1390 010e 00       		.byte	0
+ 1391 010f 00       		.byte	0
+ 1392 0110 14       		.uleb128 0x14
+ 1393 0111 21       		.uleb128 0x21
+ 1394 0112 00       		.byte	0
+ 1395 0113 49       		.uleb128 0x49
+ 1396 0114 13       		.uleb128 0x13
+ 1397 0115 2F       		.uleb128 0x2f
+ 1398 0116 0B       		.uleb128 0xb
+ 1399 0117 00       		.byte	0
+ 1400 0118 00       		.byte	0
+ 1401 0119 15       		.uleb128 0x15
+ 1402 011a 34       		.uleb128 0x34
+ 1403 011b 00       		.byte	0
+ 1404 011c 03       		.uleb128 0x3
+ 1405 011d 0E       		.uleb128 0xe
+ 1406 011e 3A       		.uleb128 0x3a
+ 1407 011f 0B       		.uleb128 0xb
+ 1408 0120 3B       		.uleb128 0x3b
+ 1409 0121 05       		.uleb128 0x5
+ 1410 0122 49       		.uleb128 0x49
+ 1411 0123 13       		.uleb128 0x13
+ 1412 0124 3F       		.uleb128 0x3f
+ 1413 0125 19       		.uleb128 0x19
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 29
+
+
+ 1414 0126 3C       		.uleb128 0x3c
+ 1415 0127 19       		.uleb128 0x19
+ 1416 0128 00       		.byte	0
+ 1417 0129 00       		.byte	0
+ 1418 012a 16       		.uleb128 0x16
+ 1419 012b 35       		.uleb128 0x35
+ 1420 012c 00       		.byte	0
+ 1421 012d 49       		.uleb128 0x49
+ 1422 012e 13       		.uleb128 0x13
+ 1423 012f 00       		.byte	0
+ 1424 0130 00       		.byte	0
+ 1425 0131 17       		.uleb128 0x17
+ 1426 0132 34       		.uleb128 0x34
+ 1427 0133 00       		.byte	0
+ 1428 0134 03       		.uleb128 0x3
+ 1429 0135 0E       		.uleb128 0xe
+ 1430 0136 3A       		.uleb128 0x3a
+ 1431 0137 0B       		.uleb128 0xb
+ 1432 0138 3B       		.uleb128 0x3b
+ 1433 0139 0B       		.uleb128 0xb
+ 1434 013a 49       		.uleb128 0x49
+ 1435 013b 13       		.uleb128 0x13
+ 1436 013c 3F       		.uleb128 0x3f
+ 1437 013d 19       		.uleb128 0x19
+ 1438 013e 02       		.uleb128 0x2
+ 1439 013f 18       		.uleb128 0x18
+ 1440 0140 00       		.byte	0
+ 1441 0141 00       		.byte	0
+ 1442 0142 18       		.uleb128 0x18
+ 1443 0143 2E       		.uleb128 0x2e
+ 1444 0144 00       		.byte	0
+ 1445 0145 3F       		.uleb128 0x3f
+ 1446 0146 19       		.uleb128 0x19
+ 1447 0147 3C       		.uleb128 0x3c
+ 1448 0148 19       		.uleb128 0x19
+ 1449 0149 6E       		.uleb128 0x6e
+ 1450 014a 0E       		.uleb128 0xe
+ 1451 014b 03       		.uleb128 0x3
+ 1452 014c 0E       		.uleb128 0xe
+ 1453 014d 3A       		.uleb128 0x3a
+ 1454 014e 0B       		.uleb128 0xb
+ 1455 014f 3B       		.uleb128 0x3b
+ 1456 0150 0B       		.uleb128 0xb
+ 1457 0151 00       		.byte	0
+ 1458 0152 00       		.byte	0
+ 1459 0153 00       		.byte	0
+ 1460              		.section	.debug_loc,"",%progbits
+ 1461              	.Ldebug_loc0:
+ 1462              	.LLST0:
+ 1463 0000 00000000 		.4byte	.LVL0
+ 1464 0004 0D000000 		.4byte	.LVL2-1
+ 1465 0008 0100     		.2byte	0x1
+ 1466 000a 50       		.byte	0x50
+ 1467 000b 0D000000 		.4byte	.LVL2-1
+ 1468 000f 3E000000 		.4byte	.LFE64
+ 1469 0013 0400     		.2byte	0x4
+ 1470 0015 F3       		.byte	0xf3
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 30
+
+
+ 1471 0016 01       		.uleb128 0x1
+ 1472 0017 50       		.byte	0x50
+ 1473 0018 9F       		.byte	0x9f
+ 1474 0019 00000000 		.4byte	0
+ 1475 001d 00000000 		.4byte	0
+ 1476              	.LLST1:
+ 1477 0021 00000000 		.4byte	.LVL0
+ 1478 0025 0A000000 		.4byte	.LVL1
+ 1479 0029 0100     		.2byte	0x1
+ 1480 002b 51       		.byte	0x51
+ 1481 002c 0A000000 		.4byte	.LVL1
+ 1482 0030 3E000000 		.4byte	.LFE64
+ 1483 0034 0400     		.2byte	0x4
+ 1484 0036 F3       		.byte	0xf3
+ 1485 0037 01       		.uleb128 0x1
+ 1486 0038 51       		.byte	0x51
+ 1487 0039 9F       		.byte	0x9f
+ 1488 003a 00000000 		.4byte	0
+ 1489 003e 00000000 		.4byte	0
+ 1490              	.LLST2:
+ 1491 0042 00000000 		.4byte	.LVL0
+ 1492 0046 0D000000 		.4byte	.LVL2-1
+ 1493 004a 0100     		.2byte	0x1
+ 1494 004c 52       		.byte	0x52
+ 1495 004d 0D000000 		.4byte	.LVL2-1
+ 1496 0051 3E000000 		.4byte	.LFE64
+ 1497 0055 0100     		.2byte	0x1
+ 1498 0057 57       		.byte	0x57
+ 1499 0058 00000000 		.4byte	0
+ 1500 005c 00000000 		.4byte	0
+ 1501              	.LLST3:
+ 1502 0060 0E000000 		.4byte	.LVL2
+ 1503 0064 15000000 		.4byte	.LVL3-1
+ 1504 0068 0100     		.2byte	0x1
+ 1505 006a 50       		.byte	0x50
+ 1506 006b 1C000000 		.4byte	.LVL4
+ 1507 006f 24000000 		.4byte	.LVL5
+ 1508 0073 0100     		.2byte	0x1
+ 1509 0075 50       		.byte	0x50
+ 1510 0076 28000000 		.4byte	.LVL6
+ 1511 007a 2F000000 		.4byte	.LVL7-1
+ 1512 007e 0100     		.2byte	0x1
+ 1513 0080 50       		.byte	0x50
+ 1514 0081 32000000 		.4byte	.LVL8
+ 1515 0085 3E000000 		.4byte	.LFE64
+ 1516 0089 0100     		.2byte	0x1
+ 1517 008b 54       		.byte	0x54
+ 1518 008c 00000000 		.4byte	0
+ 1519 0090 00000000 		.4byte	0
+ 1520              	.LLST4:
+ 1521 0094 00000000 		.4byte	.LVL10
+ 1522 0098 0B000000 		.4byte	.LVL12-1
+ 1523 009c 0100     		.2byte	0x1
+ 1524 009e 50       		.byte	0x50
+ 1525 009f 0B000000 		.4byte	.LVL12-1
+ 1526 00a3 32000000 		.4byte	.LFE65
+ 1527 00a7 0400     		.2byte	0x4
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 31
+
+
+ 1528 00a9 F3       		.byte	0xf3
+ 1529 00aa 01       		.uleb128 0x1
+ 1530 00ab 50       		.byte	0x50
+ 1531 00ac 9F       		.byte	0x9f
+ 1532 00ad 00000000 		.4byte	0
+ 1533 00b1 00000000 		.4byte	0
+ 1534              	.LLST5:
+ 1535 00b5 00000000 		.4byte	.LVL10
+ 1536 00b9 08000000 		.4byte	.LVL11
+ 1537 00bd 0100     		.2byte	0x1
+ 1538 00bf 51       		.byte	0x51
+ 1539 00c0 08000000 		.4byte	.LVL11
+ 1540 00c4 32000000 		.4byte	.LFE65
+ 1541 00c8 0400     		.2byte	0x4
+ 1542 00ca F3       		.byte	0xf3
+ 1543 00cb 01       		.uleb128 0x1
+ 1544 00cc 51       		.byte	0x51
+ 1545 00cd 9F       		.byte	0x9f
+ 1546 00ce 00000000 		.4byte	0
+ 1547 00d2 00000000 		.4byte	0
+ 1548              	.LLST6:
+ 1549 00d6 00000000 		.4byte	.LVL10
+ 1550 00da 0B000000 		.4byte	.LVL12-1
+ 1551 00de 0100     		.2byte	0x1
+ 1552 00e0 52       		.byte	0x52
+ 1553 00e1 0B000000 		.4byte	.LVL12-1
+ 1554 00e5 32000000 		.4byte	.LFE65
+ 1555 00e9 0400     		.2byte	0x4
+ 1556 00eb F3       		.byte	0xf3
+ 1557 00ec 01       		.uleb128 0x1
+ 1558 00ed 52       		.byte	0x52
+ 1559 00ee 9F       		.byte	0x9f
+ 1560 00ef 00000000 		.4byte	0
+ 1561 00f3 00000000 		.4byte	0
+ 1562              	.LLST7:
+ 1563 00f7 0C000000 		.4byte	.LVL12
+ 1564 00fb 13000000 		.4byte	.LVL13-1
+ 1565 00ff 0100     		.2byte	0x1
+ 1566 0101 50       		.byte	0x50
+ 1567 0102 1A000000 		.4byte	.LVL14
+ 1568 0106 20000000 		.4byte	.LVL15
+ 1569 010a 0100     		.2byte	0x1
+ 1570 010c 50       		.byte	0x50
+ 1571 010d 26000000 		.4byte	.LVL17
+ 1572 0111 32000000 		.4byte	.LFE65
+ 1573 0115 0100     		.2byte	0x1
+ 1574 0117 54       		.byte	0x54
+ 1575 0118 00000000 		.4byte	0
+ 1576 011c 00000000 		.4byte	0
+ 1577              	.LLST8:
+ 1578 0120 00000000 		.4byte	.LVL19
+ 1579 0124 0E000000 		.4byte	.LVL20
+ 1580 0128 0100     		.2byte	0x1
+ 1581 012a 50       		.byte	0x50
+ 1582 012b 0E000000 		.4byte	.LVL20
+ 1583 012f 04010000 		.4byte	.LFE66
+ 1584 0133 0400     		.2byte	0x4
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 32
+
+
+ 1585 0135 F3       		.byte	0xf3
+ 1586 0136 01       		.uleb128 0x1
+ 1587 0137 50       		.byte	0x50
+ 1588 0138 9F       		.byte	0x9f
+ 1589 0139 00000000 		.4byte	0
+ 1590 013d 00000000 		.4byte	0
+ 1591              	.LLST9:
+ 1592 0141 12000000 		.4byte	.LVL21
+ 1593 0145 18000000 		.4byte	.LVL22
+ 1594 0149 0100     		.2byte	0x1
+ 1595 014b 50       		.byte	0x50
+ 1596 014c 2E000000 		.4byte	.LVL24
+ 1597 0150 34000000 		.4byte	.LVL25
+ 1598 0154 0100     		.2byte	0x1
+ 1599 0156 50       		.byte	0x50
+ 1600 0157 4A000000 		.4byte	.LVL27
+ 1601 015b 50000000 		.4byte	.LVL28
+ 1602 015f 0100     		.2byte	0x1
+ 1603 0161 50       		.byte	0x50
+ 1604 0162 66000000 		.4byte	.LVL30
+ 1605 0166 6C000000 		.4byte	.LVL31
+ 1606 016a 0100     		.2byte	0x1
+ 1607 016c 50       		.byte	0x50
+ 1608 016d 82000000 		.4byte	.LVL33
+ 1609 0171 88000000 		.4byte	.LVL34
+ 1610 0175 0100     		.2byte	0x1
+ 1611 0177 50       		.byte	0x50
+ 1612 0178 9E000000 		.4byte	.LVL36
+ 1613 017c A4000000 		.4byte	.LVL37
+ 1614 0180 0100     		.2byte	0x1
+ 1615 0182 50       		.byte	0x50
+ 1616 0183 B8000000 		.4byte	.LVL39
+ 1617 0187 BE000000 		.4byte	.LVL40
+ 1618 018b 0100     		.2byte	0x1
+ 1619 018d 50       		.byte	0x50
+ 1620 018e 00000000 		.4byte	0
+ 1621 0192 00000000 		.4byte	0
+ 1622              	.LLST10:
+ 1623 0196 00000000 		.4byte	.LVL42
+ 1624 019a 0C000000 		.4byte	.LVL44
+ 1625 019e 0100     		.2byte	0x1
+ 1626 01a0 50       		.byte	0x50
+ 1627 01a1 0C000000 		.4byte	.LVL44
+ 1628 01a5 40000000 		.4byte	.LFE67
+ 1629 01a9 0400     		.2byte	0x4
+ 1630 01ab F3       		.byte	0xf3
+ 1631 01ac 01       		.uleb128 0x1
+ 1632 01ad 50       		.byte	0x50
+ 1633 01ae 9F       		.byte	0x9f
+ 1634 01af 00000000 		.4byte	0
+ 1635 01b3 00000000 		.4byte	0
+ 1636              	.LLST11:
+ 1637 01b7 10000000 		.4byte	.LVL45
+ 1638 01bb 16000000 		.4byte	.LVL46
+ 1639 01bf 0100     		.2byte	0x1
+ 1640 01c1 50       		.byte	0x50
+ 1641 01c2 00000000 		.4byte	0
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 33
+
+
+ 1642 01c6 00000000 		.4byte	0
+ 1643              	.LLST12:
+ 1644 01ca 04000000 		.4byte	.LVL43
+ 1645 01ce 28000000 		.4byte	.LVL48
+ 1646 01d2 0200     		.2byte	0x2
+ 1647 01d4 30       		.byte	0x30
+ 1648 01d5 9F       		.byte	0x9f
+ 1649 01d6 00000000 		.4byte	0
+ 1650 01da 00000000 		.4byte	0
+ 1651              		.section	.debug_aranges,"",%progbits
+ 1652 0000 34000000 		.4byte	0x34
+ 1653 0004 0200     		.2byte	0x2
+ 1654 0006 00000000 		.4byte	.Ldebug_info0
+ 1655 000a 04       		.byte	0x4
+ 1656 000b 00       		.byte	0
+ 1657 000c 0000     		.2byte	0
+ 1658 000e 0000     		.2byte	0
+ 1659 0010 00000000 		.4byte	.LFB64
+ 1660 0014 3E000000 		.4byte	.LFE64-.LFB64
+ 1661 0018 00000000 		.4byte	.LFB65
+ 1662 001c 32000000 		.4byte	.LFE65-.LFB65
+ 1663 0020 00000000 		.4byte	.LFB66
+ 1664 0024 04010000 		.4byte	.LFE66-.LFB66
+ 1665 0028 00000000 		.4byte	.LFB67
+ 1666 002c 40000000 		.4byte	.LFE67-.LFB67
+ 1667 0030 00000000 		.4byte	0
+ 1668 0034 00000000 		.4byte	0
+ 1669              		.section	.debug_ranges,"",%progbits
+ 1670              	.Ldebug_ranges0:
+ 1671 0000 00000000 		.4byte	.LFB64
+ 1672 0004 3E000000 		.4byte	.LFE64
+ 1673 0008 00000000 		.4byte	.LFB65
+ 1674 000c 32000000 		.4byte	.LFE65
+ 1675 0010 00000000 		.4byte	.LFB66
+ 1676 0014 04010000 		.4byte	.LFE66
+ 1677 0018 00000000 		.4byte	.LFB67
+ 1678 001c 40000000 		.4byte	.LFE67
+ 1679 0020 00000000 		.4byte	0
+ 1680 0024 00000000 		.4byte	0
+ 1681              		.section	.debug_line,"",%progbits
+ 1682              	.Ldebug_line0:
+ 1683 0000 66020000 		.section	.debug_str,"MS",%progbits,1
+ 1683      0200F301 
+ 1683      00000201 
+ 1683      FB0E0D00 
+ 1683      01010101 
+ 1684              	.LASF42:
+ 1685 0000 4932434D 		.ascii	"I2CMASTER_MasterSendRestart\000"
+ 1685      41535445 
+ 1685      525F4D61 
+ 1685      73746572 
+ 1685      53656E64 
+ 1686              	.LASF3:
+ 1687 001c 5F5F7569 		.ascii	"__uint8_t\000"
+ 1687      6E74385F 
+ 1687      7400
+ 1688              	.LASF44:
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 34
+
+
+ 1689 0026 4932434D 		.ascii	"I2CMASTER_MasterSendStop\000"
+ 1689      41535445 
+ 1689      525F4D61 
+ 1689      73746572 
+ 1689      53656E64 
+ 1690              	.LASF40:
+ 1691 003f 4932434D 		.ascii	"I2CMASTER_MasterSendStart\000"
+ 1691      41535445 
+ 1691      525F4D61 
+ 1691      73746572 
+ 1691      53656E64 
+ 1692              	.LASF6:
+ 1693 0059 5F5F696E 		.ascii	"__int32_t\000"
+ 1693      7433325F 
+ 1693      7400
+ 1694              	.LASF29:
+ 1695 0063 676C7563 		.ascii	"glucose_concentration\000"
+ 1695      6F73655F 
+ 1695      636F6E63 
+ 1695      656E7472 
+ 1695      6174696F 
+ 1696              	.LASF7:
+ 1697 0079 6C6F6E67 		.ascii	"long int\000"
+ 1697      20696E74 
+ 1697      00
+ 1698              	.LASF46:
+ 1699 0082 736E7072 		.ascii	"snprintf\000"
+ 1699      696E7466 
+ 1699      00
+ 1700              	.LASF48:
+ 1701 008b 45455052 		.ascii	"EEPROM_Driver.c\000"
+ 1701      4F4D5F44 
+ 1701      72697665 
+ 1701      722E6300 
+ 1702              	.LASF22:
+ 1703 009b 4572726F 		.ascii	"ErrorCode\000"
+ 1703      72436F64 
+ 1703      6500
+ 1704              	.LASF16:
+ 1705 00a5 646F7562 		.ascii	"double\000"
+ 1705      6C6500
+ 1706              	.LASF39:
+ 1707 00ac 65657072 		.ascii	"eeprom_current_address\000"
+ 1707      6F6D5F63 
+ 1707      75727265 
+ 1707      6E745F61 
+ 1707      64647265 
+ 1708              	.LASF30:
+ 1709 00c3 6765745F 		.ascii	"get_measurement_from_memory\000"
+ 1709      6D656173 
+ 1709      7572656D 
+ 1709      656E745F 
+ 1709      66726F6D 
+ 1710              	.LASF15:
+ 1711 00df 666C6F61 		.ascii	"float\000"
+ 1711      7400
+ 1712              	.LASF25:
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 35
+
+
+ 1713 00e5 64617461 		.ascii	"data\000"
+ 1713      00
+ 1714              	.LASF1:
+ 1715 00ea 756E7369 		.ascii	"unsigned char\000"
+ 1715      676E6564 
+ 1715      20636861 
+ 1715      7200
+ 1716              	.LASF47:
+ 1717 00f8 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1717      43313120 
+ 1717      352E342E 
+ 1717      31203230 
+ 1717      31363036 
+ 1718 012b 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1718      20726576 
+ 1718      6973696F 
+ 1718      6E203233 
+ 1718      37373135 
+ 1719 015e 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1719      66756E63 
+ 1719      74696F6E 
+ 1719      2D736563 
+ 1719      74696F6E 
+ 1720              	.LASF31:
+ 1721 0186 65657072 		.ascii	"eeprom_address\000"
+ 1721      6F6D5F61 
+ 1721      64647265 
+ 1721      737300
+ 1722              	.LASF50:
+ 1723 0195 73617665 		.ascii	"save_current_measurement\000"
+ 1723      5F637572 
+ 1723      72656E74 
+ 1723      5F6D6561 
+ 1723      73757265 
+ 1724              	.LASF49:
+ 1725 01ae 433A5C55 		.ascii	"C:\\Users\\lucac\\Desktop\\Luca\\PoliMi\\Magistrale"
+ 1725      73657273 
+ 1725      5C6C7563 
+ 1725      61635C44 
+ 1725      65736B74 
+ 1726 01db 5C494920 		.ascii	"\\II anno\\Electronic technologies and biosensors l"
+ 1726      616E6E6F 
+ 1726      5C456C65 
+ 1726      6374726F 
+ 1726      6E696320 
+ 1727 020c 61626F72 		.ascii	"aboratory\\Projects\\Project_ETBL\\Project_design.c"
+ 1727      61746F72 
+ 1727      795C5072 
+ 1727      6F6A6563 
+ 1727      74735C50 
+ 1728 023c 7964736E 		.ascii	"ydsn\000"
+ 1728      00
+ 1729              	.LASF5:
+ 1730 0241 73686F72 		.ascii	"short unsigned int\000"
+ 1730      7420756E 
+ 1730      7369676E 
+ 1730      65642069 
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 36
+
+
+ 1730      6E7400
+ 1731              	.LASF24:
+ 1732 0254 72656769 		.ascii	"register_address\000"
+ 1732      73746572 
+ 1732      5F616464 
+ 1732      72657373 
+ 1732      00
+ 1733              	.LASF32:
+ 1734 0265 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1734      52784275 
+ 1734      66666572 
+ 1734      00
+ 1735              	.LASF4:
+ 1736 0272 5F5F7569 		.ascii	"__uint16_t\000"
+ 1736      6E743136 
+ 1736      5F7400
+ 1737              	.LASF8:
+ 1738 027d 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1738      20756E73 
+ 1738      69676E65 
+ 1738      6420696E 
+ 1738      7400
+ 1739              	.LASF27:
+ 1740 028f 45455052 		.ascii	"EEPROM_WriteRegister\000"
+ 1740      4F4D5F57 
+ 1740      72697465 
+ 1740      52656769 
+ 1740      73746572 
+ 1741              	.LASF37:
+ 1742 02a4 63757272 		.ascii	"current_month\000"
+ 1742      656E745F 
+ 1742      6D6F6E74 
+ 1742      6800
+ 1743              	.LASF26:
+ 1744 02b2 45455052 		.ascii	"EEPROM_ReadRegister\000"
+ 1744      4F4D5F52 
+ 1744      65616452 
+ 1744      65676973 
+ 1744      74657200 
+ 1745              	.LASF38:
+ 1746 02c6 63757272 		.ascii	"current_year\000"
+ 1746      656E745F 
+ 1746      79656172 
+ 1746      00
+ 1747              	.LASF11:
+ 1748 02d3 756E7369 		.ascii	"unsigned int\000"
+ 1748      676E6564 
+ 1748      20696E74 
+ 1748      00
+ 1749              	.LASF33:
+ 1750 02e0 63757272 		.ascii	"current_seconds\000"
+ 1750      656E745F 
+ 1750      7365636F 
+ 1750      6E647300 
+ 1751              	.LASF36:
+ 1752 02f0 63757272 		.ascii	"current_date\000"
+ 1752      656E745F 
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 37
+
+
+ 1752      64617465 
+ 1752      00
+ 1753              	.LASF10:
+ 1754 02fd 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1754      206C6F6E 
+ 1754      6720756E 
+ 1754      7369676E 
+ 1754      65642069 
+ 1755              	.LASF12:
+ 1756 0314 75696E74 		.ascii	"uint8_t\000"
+ 1756      385F7400 
+ 1757              	.LASF41:
+ 1758 031c 4932434D 		.ascii	"I2CMASTER_MasterWriteByte\000"
+ 1758      41535445 
+ 1758      525F4D61 
+ 1758      73746572 
+ 1758      57726974 
+ 1759              	.LASF14:
+ 1760 0336 696E7433 		.ascii	"int32_t\000"
+ 1760      325F7400 
+ 1761              	.LASF19:
+ 1762 033e 73697A65 		.ascii	"sizetype\000"
+ 1762      74797065 
+ 1762      00
+ 1763              	.LASF28:
+ 1764 0347 6572726F 		.ascii	"error\000"
+ 1764      7200
+ 1765              	.LASF9:
+ 1766 034d 6C6F6E67 		.ascii	"long long int\000"
+ 1766      206C6F6E 
+ 1766      6720696E 
+ 1766      7400
+ 1767              	.LASF35:
+ 1768 035b 63757272 		.ascii	"current_hours\000"
+ 1768      656E745F 
+ 1768      686F7572 
+ 1768      7300
+ 1769              	.LASF17:
+ 1770 0369 63686172 		.ascii	"char\000"
+ 1770      00
+ 1771              	.LASF13:
+ 1772 036e 75696E74 		.ascii	"uint16_t\000"
+ 1772      31365F74 
+ 1772      00
+ 1773              	.LASF2:
+ 1774 0377 73686F72 		.ascii	"short int\000"
+ 1774      7420696E 
+ 1774      7400
+ 1775              	.LASF23:
+ 1776 0381 64657669 		.ascii	"device_address\000"
+ 1776      63655F61 
+ 1776      64647265 
+ 1776      737300
+ 1777              	.LASF43:
+ 1778 0390 4932434D 		.ascii	"I2CMASTER_MasterReadByte\000"
+ 1778      41535445 
+ 1778      525F4D61 
+ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccgthfnp.s 			page 38
+
+
+ 1778      73746572 
+ 1778      52656164 
+ 1779              	.LASF20:
+ 1780 03a9 4E4F5F45 		.ascii	"NO_ERROR\000"
+ 1780      52524F52 
+ 1780      00
+ 1781              	.LASF21:
+ 1782 03b2 4552524F 		.ascii	"ERROR\000"
+ 1782      5200
+ 1783              	.LASF18:
+ 1784 03b8 6C6F6E67 		.ascii	"long double\000"
+ 1784      20646F75 
+ 1784      626C6500 
+ 1785              	.LASF0:
+ 1786 03c4 7369676E 		.ascii	"signed char\000"
+ 1786      65642063 
+ 1786      68617200 
+ 1787              	.LASF45:
+ 1788 03d0 55415254 		.ascii	"UART_1_PutString\000"
+ 1788      5F315F50 
+ 1788      75745374 
+ 1788      72696E67 
+ 1788      00
+ 1789              	.LASF34:
+ 1790 03e1 63757272 		.ascii	"current_minutes\000"
+ 1790      656E745F 
+ 1790      6D696E75 
+ 1790      74657300 
+ 1791              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
