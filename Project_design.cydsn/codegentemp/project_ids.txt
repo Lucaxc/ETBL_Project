@@ -1,6 +1,8 @@
-C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\Project_design.cyprj|68621d2f-89a3-45ff-aab9-1f49999a7a5d
-C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|f9de4335-16d8-4b36-a9b7-e17ea5e0bdcb
-C:\Users\lucac\Documents\PSoC Creator\4.4\Downloads ( 4.4).cylib\Downloads ( 4.4).cyprj|07009a69-c58d-4c10-824d-ed8726e93385
-C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|644c99de-f36b-4383-9eab-a64e6198f107
-C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|b4051f11-172d-41eb-bbc6-7cf04ffebb84
-C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|2af8f4c2-4216-4dfd-aca4-385ccfa7ae7a
+C:\Users\teo8d\Desktop\repo_test\ETBL_Project\Project_design.cydsn\Project_design.cyprj|c596f1b6-ead4-4fab-b71d-d08f7cc8bb2d
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|347cd162-bc71-4285-b743-0434f1ec1274
+C:\Users\teo8d\OneDrive - Politecnico di Milano\Documenti\PSoC Creator\4.4\Downloads ( 4.4).cylib\Downloads ( 4.4).cyprj|a91bffb3-c875-4898-be52-df18fc055576
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|e9aec01c-15b4-4fb1-ad41-2a1a71daa5c7
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|e9efa410-81e1-43ef-b376-05efad4abfbe
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|0d03f4c6-3c30-4b37-aef7-77fa1b62f25d
+C:\Users\teo8d\Desktop\progetto lab sensori\CODICI\PSOC\FinalProjects\Group2.cydsn\Group2.cyprj|e75bc8a9-b4db-47ce-ac2d-e3bcdfb1d19d
+C:\Users\teo8d\OneDrive - Politecnico di Milano\Documenti\PSoC Creator\AnnotationLibrary\AnnotationLibrary_lib\AnnotationLibrary_lib.cylib\AnnotationLibrary_lib.cyprj|59079f80-997b-413d-88ad-f7d482f2d78c
