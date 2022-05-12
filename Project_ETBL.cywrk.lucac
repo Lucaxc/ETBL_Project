@@ -50,6 +50,7 @@
 </ExpandedNodeIds>
 <VisibleNodeIds>
 <v>Project_ETBL</v>
+<v>Project_ETBL\Group2</v>
 <v>Project_ETBL\Project_design</v>
 <v>Project_ETBL\Project_design\TopDesign</v>
 <v>Project_ETBL\Project_design\Project_design.cydwr</v>
@@ -87,6 +88,7 @@
 </ExpandedNodeIds>
 <VisibleNodeIds>
 <v>Project_ETBL</v>
+<v>Project_ETBL\Group2</v>
 <v>Project_ETBL\Project_design</v>
 <v>Project_ETBL\Project_design\TopDesign</v>
 <v>Project_ETBL\Project_design\TopDesign\TopDesign.cysch</v>
@@ -137,6 +139,7 @@
 </ExpandedNodeIds>
 <VisibleNodeIds>
 <v>Project_ETBL</v>
+<v>Project_ETBL\Group2</v>
 <v>Project_ETBL\Project_design</v>
 <v>Project_ETBL\Project_design\CortexM3</v>
 <v>Project_ETBL\Project_design\CortexM3\ARM_GCC_541</v>
@@ -190,11 +193,6 @@
 <v>Project_ETBL\Project_design\PSoC 5LP Architecture TRM</v>
 <v>Project_ETBL\Project_design\CY8C58LP Family Datasheet</v>
 <v>Project_ETBL\Project_design\System Reference Guides</v>
-<v>Project_ETBL\Project_design\System Reference Guides\cy_boot_v6_10</v>
-<v>Project_ETBL\Project_design\cy_pins_v2_20</v>
-<v>Project_ETBL\Project_design\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
-<v>Project_ETBL\Project_design\I2C_v3_50.pdf</v>
-<v>Project_ETBL\Project_design\UART_v2_50.pdf</v>
 </ExpandedNodeIds>
 <VisibleNodeIds>
 <v>Project_ETBL</v>
@@ -202,11 +200,6 @@
 <v>Project_ETBL\Project_design\PSoC 5LP Architecture TRM</v>
 <v>Project_ETBL\Project_design\CY8C58LP Family Datasheet</v>
 <v>Project_ETBL\Project_design\System Reference Guides</v>
-<v>Project_ETBL\Project_design\System Reference Guides\cy_boot_v6_10</v>
-<v>Project_ETBL\Project_design\cy_pins_v2_20</v>
-<v>Project_ETBL\Project_design\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
-<v>Project_ETBL\Project_design\I2C_v3_50.pdf</v>
-<v>Project_ETBL\Project_design\UART_v2_50.pdf</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStatesV2>
@@ -225,7 +218,6 @@
 <name v=".\Project_design.cydsn\EEPROM_Driver.c" />
 <name v=".\Project_design.cydsn\Globals.h" />
 <name v=".\Project_design.cydsn\ErrorCodes.h" />
-<name v=".\Project_design.cydsn\Generated_Source\PSoC5\I2CMASTER_MASTER.c" />
 </OpenDocs>
 <OpenDocsLayout><![CDATA[<?xml version="1.0"?><!--
 
@@ -233,7 +225,7 @@
   Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
   http://www.actiprosoftware.com
 
---><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1142, 589" SelectedTabbedMdiWindow="434f434a-152d-480e-bd24-705d90f36025"><DocumentWindow Key="C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\main.c" Guid="128b98f2-eaec-415b-a683-272deaeea906" /><DocumentWindow Key="C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\OLED_Driver.h" Guid="c4e7e9bb-3c11-46f1-95f0-d67be6ca380d" /><DocumentWindow Key="C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\OLED_Driver.c" Guid="b4a555a8-09e1-4939-9429-8a4bf509f75c" /><DocumentWindow Key="C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\RTC_Driver.h" Guid="133ff539-8521-4dcc-aa22-8d8b5e10b403" /><DocumentWindow Key="C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\RTC_Driver.c" Guid="434f434a-152d-480e-bd24-705d90f36025" /><DocumentWindow Key="C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\EEPROM_Driver.h" Guid="0dddaac7-2377-4e6c-84a3-dbbd362d86ed" /><DocumentWindow Key="C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\EEPROM_Driver.c" Guid="e109964a-d168-47f7-94e8-2ae6da4c82c2" /><DocumentWindow Key="C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\Globals.h" Guid="1ce0b4fd-0d1e-4d2c-832c-837e4f65e665" /><DocumentWindow Key="C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\ErrorCodes.h" Guid="00560ff9-d865-4a37-adbf-6ce3f8382062" /><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="e32a5192-30e5-492e-a0ab-b3f4e2bd83c7" /><DocumentWindow Key="C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\Generated_Source\PSoC5\I2CMASTER_MASTER.c" Guid="54feb7d5-3d81-406a-880f-cf2f4f4cc56a" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1142, 589" SelectedTabbedMdiWindow="128b98f2-eaec-415b-a683-272deaeea906"><DocumentWindow Key="C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\main.c" Guid="128b98f2-eaec-415b-a683-272deaeea906" /><DocumentWindow Key="C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\OLED_Driver.h" Guid="c4e7e9bb-3c11-46f1-95f0-d67be6ca380d" /><DocumentWindow Key="C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\OLED_Driver.c" Guid="b4a555a8-09e1-4939-9429-8a4bf509f75c" /><DocumentWindow Key="C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\RTC_Driver.h" Guid="133ff539-8521-4dcc-aa22-8d8b5e10b403" /><DocumentWindow Key="C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\RTC_Driver.c" Guid="434f434a-152d-480e-bd24-705d90f36025" /><DocumentWindow Key="C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\EEPROM_Driver.h" Guid="0dddaac7-2377-4e6c-84a3-dbbd362d86ed" /><DocumentWindow Key="C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\EEPROM_Driver.c" Guid="e109964a-d168-47f7-94e8-2ae6da4c82c2" /><DocumentWindow Key="C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\Globals.h" Guid="1ce0b4fd-0d1e-4d2c-832c-837e4f65e665" /><DocumentWindow Key="C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\ErrorCodes.h" Guid="00560ff9-d865-4a37-adbf-6ce3f8382062" /><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="e32a5192-30e5-492e-a0ab-b3f4e2bd83c7" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
 <config v="" />
 <AutoUpdate v="true" />
 </CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>

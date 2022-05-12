@@ -1,0 +1,2115 @@
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"user_selections.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.user_start_cv_run,"ax",%progbits
+  20              		.align	2
+  21              		.global	user_start_cv_run
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	user_start_cv_run, %function
+  25              	user_start_cv_run:
+  26              	.LFB64:
+  27              		.file 1 "user_selections.c"
+   1:user_selections.c **** /*******************************************************************************
+   2:user_selections.c **** * File Name: user_selections.c
+   3:user_selections.c **** *
+   4:user_selections.c **** * Description:
+   5:user_selections.c **** *  Make some of functions the user can call through the UART. 
+   6:user_selections.c **** *  Only for the longer functions to keep main clearer
+   7:user_selections.c **** *
+   8:user_selections.c **** *********************************************************************************/
+   9:user_selections.c **** 
+  10:user_selections.c **** #include <project.h>
+  11:user_selections.c **** 
+  12:user_selections.c **** #include "user_selections.h"
+  13:user_selections.c **** #include "InterruptRoutines.h"
+  14:user_selections.c **** #include "lut_functions.h"
+  15:user_selections.c **** 
+  16:user_selections.c **** 
+  17:user_selections.c **** 
+  18:user_selections.c **** 
+  19:user_selections.c **** /******************************************************************************
+  20:user_selections.c **** * Function Name: user_start_cv_run
+  21:user_selections.c **** *******************************************************************************
+  22:user_selections.c **** *
+  23:user_selections.c **** * Summary:
+  24:user_selections.c **** *  Start a cyclic voltammetry experiment.  The look up table in waveform_CV_lut should
+  25:user_selections.c **** *  already be created.  If the dac isr is already running this will not start and throws
+  26:user_selections.c **** *  and error through the USB.  
+  27:user_selections.c **** *  
+  28:user_selections.c **** * Global variables:
+  29:user_selections.c **** *  uint16 lut_value: value gotten from the look up table that is to be applied to the DAC
+  30:user_selections.c **** *  uint16 lut_index: current index of the look up table
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 2
+
+
+  31:user_selections.c **** *  uint16 waveform_CV_lut[]:  look up table of the waveform to apply to the DAC
+  32:user_selections.c **** *
+  33:user_selections.c **** * Parameters:
+  34:user_selections.c **** *  None
+  35:user_selections.c **** *
+  36:user_selections.c **** * Return:
+  37:user_selections.c **** *  Starts the isr's used to perform an experiment else if the dac is already running,
+  38:user_selections.c **** *  possibly because another experiment is already running, return an error through the USB
+  39:user_selections.c **** *
+  40:user_selections.c **** *******************************************************************************/
+  41:user_selections.c **** 
+  42:user_selections.c **** // It is used to setup everything that is needed for a CV scan, then the look up table is actually 
+  43:user_selections.c **** void user_start_cv_run(void){
+  28              		.loc 1 43 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 10B5     		push	{r4, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 4, -8
+  35              		.cfi_offset 14, -4
+  44:user_selections.c ****     if (!isr_dac_GetState()){  // enable the dac isr if it isn't already enabled
+  36              		.loc 1 44 0
+  37 0002 FFF7FEFF 		bl	isr_dac_GetState
+  38              	.LVL0:
+  39 0006 E0B9     		cbnz	r0, .L1
+  45:user_selections.c ****         if (isr_adcAmp_GetState()) {  // User has started cyclic voltammetry while amp is already r
+  40              		.loc 1 45 0
+  41 0008 FFF7FEFF 		bl	isr_adcAmp_GetState
+  42              	.LVL1:
+  43 000c 08B1     		cbz	r0, .L3
+  46:user_selections.c ****             isr_adcAmp_Disable();
+  44              		.loc 1 46 0
+  45 000e FFF7FEFF 		bl	isr_adcAmp_Disable
+  46              	.LVL2:
+  47              	.L3:
+  47:user_selections.c ****         }
+  48:user_selections.c ****         lut_index = 0;  // start at the beginning of the look up table
+  48              		.loc 1 48 0
+  49 0012 0022     		movs	r2, #0
+  50 0014 0B4B     		ldr	r3, .L5
+  51 0016 1A80     		strh	r2, [r3]	@ movhi
+  49:user_selections.c ****         lut_value = waveform_CV_lut[0];
+  52              		.loc 1 49 0
+  53 0018 0B4B     		ldr	r3, .L5+4
+  54 001a 1B88     		ldrh	r3, [r3]
+  55 001c 0B4C     		ldr	r4, .L5+8
+  56 001e 2380     		strh	r3, [r4]	@ movhi
+  50:user_selections.c ****         helper_HardwareWakeup();  // start the hardware
+  57              		.loc 1 50 0
+  58 0020 FFF7FEFF 		bl	helper_HardwareWakeup
+  59              	.LVL3:
+  51:user_selections.c ****         DVDAC_SetValue(lut_value);  // let the electrode equilibriate
+  60              		.loc 1 51 0
+  61 0024 2088     		ldrh	r0, [r4]
+  62 0026 FFF7FEFF 		bl	DVDAC_SetValue
+  63              	.LVL4:
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 3
+
+
+  52:user_selections.c ****         CyDelay(1);  // let the electrode voltage settle
+  64              		.loc 1 52 0
+  65 002a 0120     		movs	r0, #1
+  66 002c FFF7FEFF 		bl	CyDelay
+  67              	.LVL5:
+  53:user_selections.c ****         ADC_SigDel_StartConvert();  // start the converstion process of the delta sigma adc so it w
+  68              		.loc 1 53 0
+  69 0030 FFF7FEFF 		bl	ADC_SigDel_StartConvert
+  70              	.LVL6:
+  54:user_selections.c ****         CyDelay(20);
+  71              		.loc 1 54 0
+  72 0034 1420     		movs	r0, #20
+  73 0036 FFF7FEFF 		bl	CyDelay
+  74              	.LVL7:
+  55:user_selections.c ****         //ADC_array[0].data[lut_index] = ADC_SigDel_GetResult16();  // Hack, get first adc reading,
+  56:user_selections.c ****         isr_dac_Enable();  // enable the interrupts to start the dac
+  75              		.loc 1 56 0
+  76 003a FFF7FEFF 		bl	isr_dac_Enable
+  77              	.LVL8:
+  57:user_selections.c ****         isr_adc_Enable();  // and the adc
+  78              		.loc 1 57 0
+  79 003e FFF7FEFF 		bl	isr_adc_Enable
+  80              	.LVL9:
+  81              	.L1:
+  82 0042 10BD     		pop	{r4, pc}
+  83              	.L6:
+  84              		.align	2
+  85              	.L5:
+  86 0044 00000000 		.word	lut_index
+  87 0048 00000000 		.word	waveform_CV_lut
+  88 004c 00000000 		.word	lut_value
+  89              		.cfi_endproc
+  90              	.LFE64:
+  91              		.size	user_start_cv_run, .-user_start_cv_run
+  92              		.section	.text.user_reset_device,"ax",%progbits
+  93              		.align	2
+  94              		.global	user_reset_device
+  95              		.thumb
+  96              		.thumb_func
+  97              		.type	user_reset_device, %function
+  98              	user_reset_device:
+  99              	.LFB65:
+  58:user_selections.c ****     }
+  59:user_selections.c **** 
+  60:user_selections.c **** }
+  61:user_selections.c **** 
+  62:user_selections.c **** /******************************************************************************
+  63:user_selections.c **** * Function Name: user_reset_device
+  64:user_selections.c **** *******************************************************************************
+  65:user_selections.c **** *
+  66:user_selections.c **** * Summary:
+  67:user_selections.c **** *  Stop all operations by disabling all the isrs and reset the look up table index to 0
+  68:user_selections.c **** *  
+  69:user_selections.c **** * Global variables:
+  70:user_selections.c **** *  uint16 lut_index: current index of the look up table
+  71:user_selections.c **** *
+  72:user_selections.c **** * Parameters:
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 4
+
+
+  73:user_selections.c **** *  None
+  74:user_selections.c **** *
+  75:user_selections.c **** * Return:
+  76:user_selections.c **** *  None
+  77:user_selections.c **** *
+  78:user_selections.c **** *******************************************************************************/
+  79:user_selections.c **** 
+  80:user_selections.c **** void user_reset_device(void) {
+ 100              		.loc 1 80 0
+ 101              		.cfi_startproc
+ 102              		@ args = 0, pretend = 0, frame = 0
+ 103              		@ frame_needed = 0, uses_anonymous_args = 0
+ 104 0000 08B5     		push	{r3, lr}
+ 105              		.cfi_def_cfa_offset 8
+ 106              		.cfi_offset 3, -8
+ 107              		.cfi_offset 14, -4
+  81:user_selections.c ****     isr_dac_Disable();
+ 108              		.loc 1 81 0
+ 109 0002 FFF7FEFF 		bl	isr_dac_Disable
+ 110              	.LVL10:
+  82:user_selections.c ****     isr_adc_Disable();
+ 111              		.loc 1 82 0
+ 112 0006 FFF7FEFF 		bl	isr_adc_Disable
+ 113              	.LVL11:
+  83:user_selections.c ****     isr_adcAmp_Disable();
+ 114              		.loc 1 83 0
+ 115 000a FFF7FEFF 		bl	isr_adcAmp_Disable
+ 116              	.LVL12:
+  84:user_selections.c ****     helper_HardwareSleep();
+ 117              		.loc 1 84 0
+ 118 000e FFF7FEFF 		bl	helper_HardwareSleep
+ 119              	.LVL13:
+  85:user_selections.c ****     
+  86:user_selections.c ****     lut_index = 0;  
+ 120              		.loc 1 86 0
+ 121 0012 0022     		movs	r2, #0
+ 122 0014 014B     		ldr	r3, .L9
+ 123 0016 1A80     		strh	r2, [r3]	@ movhi
+ 124 0018 08BD     		pop	{r3, pc}
+ 125              	.L10:
+ 126 001a 00BF     		.align	2
+ 127              	.L9:
+ 128 001c 00000000 		.word	lut_index
+ 129              		.cfi_endproc
+ 130              	.LFE65:
+ 131              		.size	user_reset_device, .-user_reset_device
+ 132              		.section	.text.user_set_isr_timer,"ax",%progbits
+ 133              		.align	2
+ 134              		.global	user_set_isr_timer
+ 135              		.thumb
+ 136              		.thumb_func
+ 137              		.type	user_set_isr_timer, %function
+ 138              	user_set_isr_timer:
+ 139              	.LFB66:
+  87:user_selections.c **** }
+  88:user_selections.c **** 
+  89:user_selections.c **** 
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 5
+
+
+  90:user_selections.c **** 
+  91:user_selections.c **** /******************************************************************************
+  92:user_selections.c **** * Function Name: user_set_isr_timer
+  93:user_selections.c **** *******************************************************************************
+  94:user_selections.c **** *
+  95:user_selections.c **** * Summary:
+  96:user_selections.c **** *  Set the PWM that is used as the isr timer
+  97:user_selections.c **** * 
+  98:user_selections.c **** * Parameters:
+  99:user_selections.c **** *  uint8 command
+ 100:user_selections.c **** *
+ 101:user_selections.c **** * Explanation:
+ 102:user_selections.c **** * the look up table for CV is created with all values in mV between the start and the end value
+ 103:user_selections.c **** * Then this look up table is scanned in the interrupt of the DAC a value at a time based on the isr
+ 104:user_selections.c **** * By setting a proper period for PWM, the look up table will be scanned with different speeds
+ 105:user_selections.c **** * ex. scan rate=100 mV/sec --> PWM period = 1000 (i.e. 1 sec) / 100 = 10 ms (i.e. 100Hz) --> look u
+ 106:user_selections.c **** *  
+ 107:user_selections.c **** * Return:
+ 108:user_selections.c **** *  Set the period register of the pwm 
+ 109:user_selections.c **** *
+ 110:user_selections.c **** *******************************************************************************/
+ 111:user_selections.c **** 
+ 112:user_selections.c **** 
+ 113:user_selections.c **** void user_set_isr_timer(uint8 command[]) {
+ 140              		.loc 1 113 0
+ 141              		.cfi_startproc
+ 142              		@ args = 0, pretend = 0, frame = 0
+ 143              		@ frame_needed = 0, uses_anonymous_args = 0
+ 144              	.LVL14:
+ 145 0000 10B5     		push	{r4, lr}
+ 146              		.cfi_def_cfa_offset 8
+ 147              		.cfi_offset 4, -8
+ 148              		.cfi_offset 14, -4
+ 149 0002 0446     		mov	r4, r0
+ 114:user_selections.c ****     PWM_isr_Wakeup();
+ 150              		.loc 1 114 0
+ 151 0004 FFF7FEFF 		bl	PWM_isr_Wakeup
+ 152              	.LVL15:
+ 115:user_selections.c ****     uint16 scan_rate = command[1];  // capire come gestire variabili a 16 bit
+ 153              		.loc 1 115 0
+ 154 0008 6478     		ldrb	r4, [r4, #1]	@ zero_extendqisi2
+ 155              	.LVL16:
+ 116:user_selections.c ****     uint16 new_period = 1000/scan_rate;
+ 156              		.loc 1 116 0
+ 157 000a 4FF47A73 		mov	r3, #1000
+ 158 000e 93FBF4F4 		sdiv	r4, r3, r4
+ 159              	.LVL17:
+ 117:user_selections.c ****     PWM_isr_WritePeriod((new_period*PWM_PERIOD_10_ms)/10); //that's needed because a period value o
+ 160              		.loc 1 117 0
+ 161 0012 40F65F13 		movw	r3, #2399
+ 162 0016 03FB04F3 		mul	r3, r3, r4
+ 163 001a 0848     		ldr	r0, .L13
+ 164 001c 80FB0320 		smull	r2, r0, r0, r3
+ 165 0020 DB17     		asrs	r3, r3, #31
+ 166 0022 C3EBA000 		rsb	r0, r3, r0, asr #2
+ 167 0026 80B2     		uxth	r0, r0
+ 168 0028 FFF7FEFF 		bl	PWM_isr_WritePeriod
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 6
+
+
+ 169              	.LVL18:
+ 118:user_selections.c ****     PWM_isr_WriteCompare(new_period/2+1); //keep a DC value of 50%
+ 170              		.loc 1 118 0
+ 171 002c 6008     		lsrs	r0, r4, #1
+ 172 002e 0130     		adds	r0, r0, #1
+ 173 0030 80B2     		uxth	r0, r0
+ 174 0032 FFF7FEFF 		bl	PWM_isr_WriteCompare
+ 175              	.LVL19:
+ 119:user_selections.c ****     PWM_isr_Sleep();
+ 176              		.loc 1 119 0
+ 177 0036 FFF7FEFF 		bl	PWM_isr_Sleep
+ 178              	.LVL20:
+ 179 003a 10BD     		pop	{r4, pc}
+ 180              	.LVL21:
+ 181              	.L14:
+ 182              		.align	2
+ 183              	.L13:
+ 184 003c 67666666 		.word	1717986919
+ 185              		.cfi_endproc
+ 186              	.LFE66:
+ 187              		.size	user_set_isr_timer, .-user_set_isr_timer
+ 188              		.section	.text.user_chrono_lut_maker,"ax",%progbits
+ 189              		.align	2
+ 190              		.global	user_chrono_lut_maker
+ 191              		.thumb
+ 192              		.thumb_func
+ 193              		.type	user_chrono_lut_maker, %function
+ 194              	user_chrono_lut_maker:
+ 195              	.LFB67:
+ 120:user_selections.c **** }
+ 121:user_selections.c **** 
+ 122:user_selections.c **** /******************************************************************************
+ 123:user_selections.c **** * Function Name: user_chrono_lut_maker
+ 124:user_selections.c **** *******************************************************************************
+ 125:user_selections.c **** *
+ 126:user_selections.c **** * Summary:
+ 127:user_selections.c **** *  Make a look up table that will run a chronoamperometry experiment.  Hackish now
+ 128:user_selections.c **** * 
+ 129:user_selections.c **** *
+ 130:user_selections.c **** *  
+ 131:user_selections.c **** * Global variables:
+ 132:user_selections.c **** *  uint16 lut_value: value gotten from the look up table that is to be applied to the DAC
+ 133:user_selections.c **** *  uint16 waveform_amp_lut[]:  look up table of the waveform to apply to the DAC
+ 134:user_selections.c **** *  
+ 135:user_selections.c **** * Return:
+ 136:user_selections.c **** *  4000 - how long the look up table will be
+ 137:user_selections.c **** *
+ 138:user_selections.c **** *******************************************************************************/
+ 139:user_selections.c **** 
+ 140:user_selections.c **** void user_chrono_lut_maker() {
+ 196              		.loc 1 140 0
+ 197              		.cfi_startproc
+ 198              		@ args = 0, pretend = 0, frame = 0
+ 199              		@ frame_needed = 0, uses_anonymous_args = 0
+ 200 0000 08B5     		push	{r3, lr}
+ 201              		.cfi_def_cfa_offset 8
+ 202              		.cfi_offset 3, -8
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 7
+
+
+ 203              		.cfi_offset 14, -4
+ 141:user_selections.c ****     PWM_isr_Wakeup();
+ 204              		.loc 1 141 0
+ 205 0002 FFF7FEFF 		bl	PWM_isr_Wakeup
+ 206              	.LVL22:
+ 142:user_selections.c ****     
+ 143:user_selections.c ****     PWM_isr_WritePeriod(PWM_PERIOD_10_ms);  //period of the PWM fixed at 10 ms for a chronoamperome
+ 207              		.loc 1 143 0
+ 208 0006 40F65F10 		movw	r0, #2399
+ 209 000a FFF7FEFF 		bl	PWM_isr_WritePeriod
+ 210              	.LVL23:
+ 144:user_selections.c ****     LUT_MakePulse(0, potential_max_current); //it creates a look up table for chronoamperometry bas
+ 211              		.loc 1 144 0
+ 212 000e 064B     		ldr	r3, .L17
+ 213 0010 1988     		ldrh	r1, [r3]
+ 214 0012 0020     		movs	r0, #0
+ 215 0014 FFF7FEFF 		bl	LUT_MakePulse
+ 216              	.LVL24:
+ 145:user_selections.c ****     lut_value = waveform_amp_lut[0];  // setup the dac so when it starts it will be at the correct 
+ 217              		.loc 1 145 0
+ 218 0018 044B     		ldr	r3, .L17+4
+ 219 001a 1A88     		ldrh	r2, [r3]
+ 220 001c 044B     		ldr	r3, .L17+8
+ 221 001e 1A80     		strh	r2, [r3]	@ movhi
+ 146:user_selections.c ****                 
+ 147:user_selections.c ****     PWM_isr_Sleep();
+ 222              		.loc 1 147 0
+ 223 0020 FFF7FEFF 		bl	PWM_isr_Sleep
+ 224              	.LVL25:
+ 225 0024 08BD     		pop	{r3, pc}
+ 226              	.L18:
+ 227 0026 00BF     		.align	2
+ 228              	.L17:
+ 229 0028 00000000 		.word	potential_max_current
+ 230 002c 00000000 		.word	waveform_amp_lut
+ 231 0030 00000000 		.word	lut_value
+ 232              		.cfi_endproc
+ 233              	.LFE67:
+ 234              		.size	user_chrono_lut_maker, .-user_chrono_lut_maker
+ 235              		.section	.text.user_lookup_table_maker,"ax",%progbits
+ 236              		.align	2
+ 237              		.global	user_lookup_table_maker
+ 238              		.thumb
+ 239              		.thumb_func
+ 240              		.type	user_lookup_table_maker, %function
+ 241              	user_lookup_table_maker:
+ 242              	.LFB68:
+ 148:user_selections.c **** 
+ 149:user_selections.c **** }
+ 150:user_selections.c **** 
+ 151:user_selections.c **** /******************************************************************************
+ 152:user_selections.c **** * Function Name: user_lookup_table_maker
+ 153:user_selections.c **** *******************************************************************************
+ 154:user_selections.c **** *
+ 155:user_selections.c **** * Summary:
+ 156:user_selections.c **** *  Make a look up table for CV
+ 157:user_selections.c **** * 
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 8
+
+
+ 158:user_selections.c **** * Global variables:
+ 159:user_selections.c **** *  uint16 lut_value: value to get from the look up table and apply to the DAC
+ 160:user_selections.c **** *  uint16 waveform_CV_lut[]:  look up table of the waveform to apply to the DAC
+ 161:user_selections.c **** *  
+ 162:user_selections.c **** * Return:
+ 163:user_selections.c **** *  uint16 lut_length - how many look up table elements there are
+ 164:user_selections.c **** *
+ 165:user_selections.c **** *******************************************************************************/
+ 166:user_selections.c **** 
+ 167:user_selections.c **** uint16 user_lookup_table_maker(void) {
+ 243              		.loc 1 167 0
+ 244              		.cfi_startproc
+ 245              		@ args = 0, pretend = 0, frame = 0
+ 246              		@ frame_needed = 0, uses_anonymous_args = 0
+ 247 0000 10B5     		push	{r4, lr}
+ 248              		.cfi_def_cfa_offset 8
+ 249              		.cfi_offset 4, -8
+ 250              		.cfi_offset 14, -4
+ 168:user_selections.c ****     PWM_isr_Wakeup();
+ 251              		.loc 1 168 0
+ 252 0002 FFF7FEFF 		bl	PWM_isr_Wakeup
+ 253              	.LVL26:
+ 169:user_selections.c **** 
+ 170:user_selections.c ****     uint16 lut_length;
+ 171:user_selections.c **** 
+ 172:user_selections.c ****     lut_length = LUT_MakeTriangle_Wave(start_dac_value, end_dac_value); // these values are loaded 
+ 254              		.loc 1 172 0
+ 255 0006 074B     		ldr	r3, .L21
+ 256 0008 1988     		ldrh	r1, [r3]
+ 257 000a 074B     		ldr	r3, .L21+4
+ 258 000c 1888     		ldrh	r0, [r3]
+ 259 000e FFF7FEFF 		bl	LUT_MakeTriangle_Wave
+ 260              	.LVL27:
+ 261 0012 0446     		mov	r4, r0
+ 262              	.LVL28:
+ 173:user_selections.c ****      
+ 174:user_selections.c ****     lut_value = waveform_CV_lut[0];  // Initialize for the start of the experiment
+ 263              		.loc 1 174 0
+ 264 0014 054B     		ldr	r3, .L21+8
+ 265 0016 1A88     		ldrh	r2, [r3]
+ 266 0018 054B     		ldr	r3, .L21+12
+ 267 001a 1A80     		strh	r2, [r3]	@ movhi
+ 175:user_selections.c ****     PWM_isr_Sleep();
+ 268              		.loc 1 175 0
+ 269 001c FFF7FEFF 		bl	PWM_isr_Sleep
+ 270              	.LVL29:
+ 176:user_selections.c ****     
+ 177:user_selections.c ****     return lut_length;
+ 178:user_selections.c **** }
+ 271              		.loc 1 178 0
+ 272 0020 2046     		mov	r0, r4
+ 273 0022 10BD     		pop	{r4, pc}
+ 274              	.LVL30:
+ 275              	.L22:
+ 276              		.align	2
+ 277              	.L21:
+ 278 0024 00000000 		.word	end_dac_value
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 9
+
+
+ 279 0028 00000000 		.word	start_dac_value
+ 280 002c 00000000 		.word	waveform_CV_lut
+ 281 0030 00000000 		.word	lut_value
+ 282              		.cfi_endproc
+ 283              	.LFE68:
+ 284              		.size	user_lookup_table_maker, .-user_lookup_table_maker
+ 285              		.section	.text.user_run_amperometry,"ax",%progbits
+ 286              		.align	2
+ 287              		.global	user_run_amperometry
+ 288              		.thumb
+ 289              		.thumb_func
+ 290              		.type	user_run_amperometry, %function
+ 291              	user_run_amperometry:
+ 292              	.LFB69:
+ 179:user_selections.c **** 
+ 180:user_selections.c **** /******************************************************************************
+ 181:user_selections.c **** * Function Name: user_run_amperometry
+ 182:user_selections.c **** 
+ 183:user_selections.c **** *******************************************************************************/
+ 184:user_selections.c **** 
+ 185:user_selections.c **** void user_run_amperometry(void) {
+ 293              		.loc 1 185 0
+ 294              		.cfi_startproc
+ 295              		@ args = 0, pretend = 0, frame = 0
+ 296              		@ frame_needed = 0, uses_anonymous_args = 0
+ 297 0000 08B5     		push	{r3, lr}
+ 298              		.cfi_def_cfa_offset 8
+ 299              		.cfi_offset 3, -8
+ 300              		.cfi_offset 14, -4
+ 186:user_selections.c ****     helper_HardwareWakeup();  
+ 301              		.loc 1 186 0
+ 302 0002 FFF7FEFF 		bl	helper_HardwareWakeup
+ 303              	.LVL31:
+ 187:user_selections.c ****     if (!isr_adcAmp_GetState()) {  // enable isr if it is not already
+ 304              		.loc 1 187 0
+ 305 0006 FFF7FEFF 		bl	isr_adcAmp_GetState
+ 306              	.LVL32:
+ 307 000a 30B9     		cbnz	r0, .L24
+ 188:user_selections.c ****         if (isr_dac_GetState()) {  // User selected to run amperometry but a CV is still running 
+ 308              		.loc 1 188 0
+ 309 000c FFF7FEFF 		bl	isr_dac_GetState
+ 310              	.LVL33:
+ 311 0010 18B1     		cbz	r0, .L24
+ 189:user_selections.c ****             isr_dac_Disable();
+ 312              		.loc 1 189 0
+ 313 0012 FFF7FEFF 		bl	isr_dac_Disable
+ 314              	.LVL34:
+ 190:user_selections.c ****             isr_adc_Disable();
+ 315              		.loc 1 190 0
+ 316 0016 FFF7FEFF 		bl	isr_adc_Disable
+ 317              	.LVL35:
+ 318              	.L24:
+ 191:user_selections.c ****         }
+ 192:user_selections.c ****     }
+ 193:user_selections.c ****     uint16 dac_value = 0;  // Start by setting 0 to the DAC
+ 194:user_selections.c ****     lut_index = 0;
+ 319              		.loc 1 194 0
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 10
+
+
+ 320 001a 0020     		movs	r0, #0
+ 321 001c 054B     		ldr	r3, .L26
+ 322 001e 1880     		strh	r0, [r3]	@ movhi
+ 195:user_selections.c ****     DVDAC_SetValue(dac_value);
+ 323              		.loc 1 195 0
+ 324 0020 FFF7FEFF 		bl	DVDAC_SetValue
+ 325              	.LVL36:
+ 196:user_selections.c ****     
+ 197:user_selections.c ****     ADC_SigDel_StartConvert(); // looh at the isr_adcamp in the main.c for the actual operation 
+ 326              		.loc 1 197 0
+ 327 0024 FFF7FEFF 		bl	ADC_SigDel_StartConvert
+ 328              	.LVL37:
+ 198:user_selections.c ****     CyDelay(15);
+ 329              		.loc 1 198 0
+ 330 0028 0F20     		movs	r0, #15
+ 331 002a FFF7FEFF 		bl	CyDelay
+ 332              	.LVL38:
+ 199:user_selections.c ****     isr_adcAmp_Enable();
+ 333              		.loc 1 199 0
+ 334 002e FFF7FEFF 		bl	isr_adcAmp_Enable
+ 335              	.LVL39:
+ 336 0032 08BD     		pop	{r3, pc}
+ 337              	.L27:
+ 338              		.align	2
+ 339              	.L26:
+ 340 0034 00000000 		.word	lut_index
+ 341              		.cfi_endproc
+ 342              	.LFE69:
+ 343              		.size	user_run_amperometry, .-user_run_amperometry
+ 344              		.comm	selected_voltage_source,1,1
+ 345              		.comm	command_lenght,1,1
+ 346              		.comm	command,40,4
+ 347              		.comm	potential_max_current,2,2
+ 348              		.comm	end_dac_value,2,2
+ 349              		.comm	start_dac_value,2,2
+ 350              		.comm	uA_per_adc_count,4,4
+ 351              		.comm	ADC_CV_array,10000,4
+ 352              		.comm	lut_length,2,2
+ 353              		.comm	lut_index,2,2
+ 354              		.comm	waveform_amp_lut,4000,4
+ 355              		.comm	waveform_CV_lut,10000,4
+ 356              		.comm	lut_value,2,2
+ 357              		.comm	dac_ground_value,2,2
+ 358              		.comm	Input_Flag,1,1
+ 359              		.text
+ 360              	.Letext0:
+ 361              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 362              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 363              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 364              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 365              		.file 6 "Global_variables.h"
+ 366              		.file 7 "lut_functions.h"
+ 367              		.file 8 "Helper_functions.h"
+ 368              		.file 9 "Generated_Source\\PSoC5/isr_dac.h"
+ 369              		.file 10 "Generated_Source\\PSoC5/isr_adcAmp.h"
+ 370              		.file 11 "DVDAC.h"
+ 371              		.file 12 "Generated_Source\\PSoC5/CyLib.h"
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 11
+
+
+ 372              		.file 13 "Generated_Source\\PSoC5/ADC_SigDel.h"
+ 373              		.file 14 "Generated_Source\\PSoC5/isr_adc.h"
+ 374              		.file 15 "Generated_Source\\PSoC5/PWM_isr.h"
+ 375              		.section	.debug_info,"",%progbits
+ 376              	.Ldebug_info0:
+ 377 0000 92050000 		.4byte	0x592
+ 378 0004 0400     		.2byte	0x4
+ 379 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 380 000a 04       		.byte	0x4
+ 381 000b 01       		.uleb128 0x1
+ 382 000c E5030000 		.4byte	.LASF66
+ 383 0010 0C       		.byte	0xc
+ 384 0011 89010000 		.4byte	.LASF67
+ 385 0015 E9010000 		.4byte	.LASF68
+ 386 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 387 001d 00000000 		.4byte	0
+ 388 0021 00000000 		.4byte	.Ldebug_line0
+ 389 0025 02       		.uleb128 0x2
+ 390 0026 08       		.byte	0x8
+ 391 0027 07       		.byte	0x7
+ 392 0028 6C020000 		.4byte	.LASF0
+ 393 002c 02       		.uleb128 0x2
+ 394 002d 04       		.byte	0x4
+ 395 002e 07       		.byte	0x7
+ 396 002f 83020000 		.4byte	.LASF1
+ 397 0033 03       		.uleb128 0x3
+ 398 0034 04       		.byte	0x4
+ 399 0035 05       		.byte	0x5
+ 400 0036 696E7400 		.ascii	"int\000"
+ 401 003a 02       		.uleb128 0x2
+ 402 003b 01       		.byte	0x1
+ 403 003c 06       		.byte	0x6
+ 404 003d BA030000 		.4byte	.LASF2
+ 405 0041 04       		.uleb128 0x4
+ 406 0042 B8010000 		.4byte	.LASF5
+ 407 0046 02       		.byte	0x2
+ 408 0047 1D       		.byte	0x1d
+ 409 0048 4C000000 		.4byte	0x4c
+ 410 004c 02       		.uleb128 0x2
+ 411 004d 01       		.byte	0x1
+ 412 004e 08       		.byte	0x8
+ 413 004f 48020000 		.4byte	.LASF3
+ 414 0053 02       		.uleb128 0x2
+ 415 0054 02       		.byte	0x2
+ 416 0055 05       		.byte	0x5
+ 417 0056 7E000000 		.4byte	.LASF4
+ 418 005a 04       		.uleb128 0x4
+ 419 005b F8000000 		.4byte	.LASF6
+ 420 005f 02       		.byte	0x2
+ 421 0060 2B       		.byte	0x2b
+ 422 0061 65000000 		.4byte	0x65
+ 423 0065 02       		.uleb128 0x2
+ 424 0066 02       		.byte	0x2
+ 425 0067 07       		.byte	0x7
+ 426 0068 C4020000 		.4byte	.LASF7
+ 427 006c 04       		.uleb128 0x4
+ 428 006d B0030000 		.4byte	.LASF8
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 12
+
+
+ 429 0071 02       		.byte	0x2
+ 430 0072 3F       		.byte	0x3f
+ 431 0073 77000000 		.4byte	0x77
+ 432 0077 02       		.uleb128 0x2
+ 433 0078 04       		.byte	0x4
+ 434 0079 05       		.byte	0x5
+ 435 007a 9B010000 		.4byte	.LASF9
+ 436 007e 02       		.uleb128 0x2
+ 437 007f 04       		.byte	0x4
+ 438 0080 07       		.byte	0x7
+ 439 0081 40030000 		.4byte	.LASF10
+ 440 0085 02       		.uleb128 0x2
+ 441 0086 08       		.byte	0x8
+ 442 0087 05       		.byte	0x5
+ 443 0088 7B010000 		.4byte	.LASF11
+ 444 008c 04       		.uleb128 0x4
+ 445 008d 1C010000 		.4byte	.LASF12
+ 446 0091 03       		.byte	0x3
+ 447 0092 18       		.byte	0x18
+ 448 0093 41000000 		.4byte	0x41
+ 449 0097 04       		.uleb128 0x4
+ 450 0098 90020000 		.4byte	.LASF13
+ 451 009c 03       		.byte	0x3
+ 452 009d 24       		.byte	0x24
+ 453 009e 5A000000 		.4byte	0x5a
+ 454 00a2 04       		.uleb128 0x4
+ 455 00a3 F0020000 		.4byte	.LASF14
+ 456 00a7 03       		.byte	0x3
+ 457 00a8 2C       		.byte	0x2c
+ 458 00a9 6C000000 		.4byte	0x6c
+ 459 00ad 05       		.uleb128 0x5
+ 460 00ae 2A010000 		.4byte	.LASF15
+ 461 00b2 04       		.byte	0x4
+ 462 00b3 E901     		.2byte	0x1e9
+ 463 00b5 4C000000 		.4byte	0x4c
+ 464 00b9 05       		.uleb128 0x5
+ 465 00ba 15010000 		.4byte	.LASF16
+ 466 00be 04       		.byte	0x4
+ 467 00bf EA01     		.2byte	0x1ea
+ 468 00c1 65000000 		.4byte	0x65
+ 469 00c5 05       		.uleb128 0x5
+ 470 00c6 24010000 		.4byte	.LASF17
+ 471 00ca 04       		.byte	0x4
+ 472 00cb ED01     		.2byte	0x1ed
+ 473 00cd 53000000 		.4byte	0x53
+ 474 00d1 05       		.uleb128 0x5
+ 475 00d2 59000000 		.4byte	.LASF18
+ 476 00d6 04       		.byte	0x4
+ 477 00d7 EF01     		.2byte	0x1ef
+ 478 00d9 DD000000 		.4byte	0xdd
+ 479 00dd 02       		.uleb128 0x2
+ 480 00de 04       		.byte	0x4
+ 481 00df 04       		.byte	0x4
+ 482 00e0 58010000 		.4byte	.LASF19
+ 483 00e4 02       		.uleb128 0x2
+ 484 00e5 08       		.byte	0x8
+ 485 00e6 04       		.byte	0x4
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 13
+
+
+ 486 00e7 D1030000 		.4byte	.LASF20
+ 487 00eb 02       		.uleb128 0x2
+ 488 00ec 01       		.byte	0x1
+ 489 00ed 08       		.byte	0x8
+ 490 00ee D7020000 		.4byte	.LASF21
+ 491 00f2 02       		.uleb128 0x2
+ 492 00f3 08       		.byte	0x8
+ 493 00f4 04       		.byte	0x4
+ 494 00f5 3C020000 		.4byte	.LASF22
+ 495 00f9 02       		.uleb128 0x2
+ 496 00fa 04       		.byte	0x4
+ 497 00fb 07       		.byte	0x7
+ 498 00fc 9C000000 		.4byte	.LASF23
+ 499 0100 06       		.uleb128 0x6
+ 500 0101 A5000000 		.4byte	.LASF24
+ 501 0105 01       		.byte	0x1
+ 502 0106 2B       		.byte	0x2b
+ 503 0107 00000000 		.4byte	.LFB64
+ 504 010b 50000000 		.4byte	.LFE64-.LFB64
+ 505 010f 01       		.uleb128 0x1
+ 506 0110 9C       		.byte	0x9c
+ 507 0111 84010000 		.4byte	0x184
+ 508 0115 07       		.uleb128 0x7
+ 509 0116 06000000 		.4byte	.LVL0
+ 510 011a C4040000 		.4byte	0x4c4
+ 511 011e 07       		.uleb128 0x7
+ 512 011f 0C000000 		.4byte	.LVL1
+ 513 0123 CF040000 		.4byte	0x4cf
+ 514 0127 07       		.uleb128 0x7
+ 515 0128 12000000 		.4byte	.LVL2
+ 516 012c DA040000 		.4byte	0x4da
+ 517 0130 07       		.uleb128 0x7
+ 518 0131 24000000 		.4byte	.LVL3
+ 519 0135 E5040000 		.4byte	0x4e5
+ 520 0139 07       		.uleb128 0x7
+ 521 013a 2A000000 		.4byte	.LVL4
+ 522 013e F0040000 		.4byte	0x4f0
+ 523 0142 08       		.uleb128 0x8
+ 524 0143 30000000 		.4byte	.LVL5
+ 525 0147 FB040000 		.4byte	0x4fb
+ 526 014b 55010000 		.4byte	0x155
+ 527 014f 09       		.uleb128 0x9
+ 528 0150 01       		.uleb128 0x1
+ 529 0151 50       		.byte	0x50
+ 530 0152 01       		.uleb128 0x1
+ 531 0153 31       		.byte	0x31
+ 532 0154 00       		.byte	0
+ 533 0155 07       		.uleb128 0x7
+ 534 0156 34000000 		.4byte	.LVL6
+ 535 015a 06050000 		.4byte	0x506
+ 536 015e 08       		.uleb128 0x8
+ 537 015f 3A000000 		.4byte	.LVL7
+ 538 0163 FB040000 		.4byte	0x4fb
+ 539 0167 71010000 		.4byte	0x171
+ 540 016b 09       		.uleb128 0x9
+ 541 016c 01       		.uleb128 0x1
+ 542 016d 50       		.byte	0x50
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 14
+
+
+ 543 016e 01       		.uleb128 0x1
+ 544 016f 44       		.byte	0x44
+ 545 0170 00       		.byte	0
+ 546 0171 07       		.uleb128 0x7
+ 547 0172 3E000000 		.4byte	.LVL8
+ 548 0176 11050000 		.4byte	0x511
+ 549 017a 07       		.uleb128 0x7
+ 550 017b 42000000 		.4byte	.LVL9
+ 551 017f 1C050000 		.4byte	0x51c
+ 552 0183 00       		.byte	0
+ 553 0184 06       		.uleb128 0x6
+ 554 0185 03010000 		.4byte	.LASF25
+ 555 0189 01       		.byte	0x1
+ 556 018a 50       		.byte	0x50
+ 557 018b 00000000 		.4byte	.LFB65
+ 558 018f 20000000 		.4byte	.LFE65-.LFB65
+ 559 0193 01       		.uleb128 0x1
+ 560 0194 9C       		.byte	0x9c
+ 561 0195 BE010000 		.4byte	0x1be
+ 562 0199 07       		.uleb128 0x7
+ 563 019a 06000000 		.4byte	.LVL10
+ 564 019e 27050000 		.4byte	0x527
+ 565 01a2 07       		.uleb128 0x7
+ 566 01a3 0A000000 		.4byte	.LVL11
+ 567 01a7 32050000 		.4byte	0x532
+ 568 01ab 07       		.uleb128 0x7
+ 569 01ac 0E000000 		.4byte	.LVL12
+ 570 01b0 DA040000 		.4byte	0x4da
+ 571 01b4 07       		.uleb128 0x7
+ 572 01b5 12000000 		.4byte	.LVL13
+ 573 01b9 3D050000 		.4byte	0x53d
+ 574 01bd 00       		.byte	0
+ 575 01be 06       		.uleb128 0x6
+ 576 01bf B1020000 		.4byte	.LASF26
+ 577 01c3 01       		.byte	0x1
+ 578 01c4 71       		.byte	0x71
+ 579 01c5 00000000 		.4byte	.LFB66
+ 580 01c9 40000000 		.4byte	.LFE66-.LFB66
+ 581 01cd 01       		.uleb128 0x1
+ 582 01ce 9C       		.byte	0x9c
+ 583 01cf 61020000 		.4byte	0x261
+ 584 01d3 0A       		.uleb128 0xa
+ 585 01d4 86040000 		.4byte	.LASF44
+ 586 01d8 01       		.byte	0x1
+ 587 01d9 71       		.byte	0x71
+ 588 01da 61020000 		.4byte	0x261
+ 589 01de 00000000 		.4byte	.LLST0
+ 590 01e2 0B       		.uleb128 0xb
+ 591 01e3 DC020000 		.4byte	.LASF27
+ 592 01e7 01       		.byte	0x1
+ 593 01e8 73       		.byte	0x73
+ 594 01e9 B9000000 		.4byte	0xb9
+ 595 01ed 2C000000 		.4byte	.LLST1
+ 596 01f1 0B       		.uleb128 0xb
+ 597 01f2 4E000000 		.4byte	.LASF28
+ 598 01f6 01       		.byte	0x1
+ 599 01f7 74       		.byte	0x74
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 15
+
+
+ 600 01f8 B9000000 		.4byte	0xb9
+ 601 01fc 59000000 		.4byte	.LLST2
+ 602 0200 07       		.uleb128 0x7
+ 603 0201 08000000 		.4byte	.LVL15
+ 604 0205 48050000 		.4byte	0x548
+ 605 0209 08       		.uleb128 0x8
+ 606 020a 2C000000 		.4byte	.LVL18
+ 607 020e 53050000 		.4byte	0x553
+ 608 0212 3F020000 		.4byte	0x23f
+ 609 0216 09       		.uleb128 0x9
+ 610 0217 01       		.uleb128 0x1
+ 611 0218 50       		.byte	0x50
+ 612 0219 24       		.uleb128 0x24
+ 613 021a 74       		.byte	0x74
+ 614 021b 00       		.sleb128 0
+ 615 021c 0A       		.byte	0xa
+ 616 021d 5F09     		.2byte	0x95f
+ 617 021f 1E       		.byte	0x1e
+ 618 0220 F7       		.byte	0xf7
+ 619 0221 33       		.uleb128 0x33
+ 620 0222 F7       		.byte	0xf7
+ 621 0223 25       		.uleb128 0x25
+ 622 0224 0C       		.byte	0xc
+ 623 0225 67666666 		.4byte	0x66666667
+ 624 0229 F7       		.byte	0xf7
+ 625 022a 25       		.uleb128 0x25
+ 626 022b 1E       		.byte	0x1e
+ 627 022c 08       		.byte	0x8
+ 628 022d 20       		.byte	0x20
+ 629 022e F7       		.byte	0xf7
+ 630 022f 25       		.uleb128 0x25
+ 631 0230 25       		.byte	0x25
+ 632 0231 F7       		.byte	0xf7
+ 633 0232 2C       		.uleb128 0x2c
+ 634 0233 32       		.byte	0x32
+ 635 0234 26       		.byte	0x26
+ 636 0235 74       		.byte	0x74
+ 637 0236 00       		.sleb128 0
+ 638 0237 0A       		.byte	0xa
+ 639 0238 5F09     		.2byte	0x95f
+ 640 023a 1E       		.byte	0x1e
+ 641 023b 4F       		.byte	0x4f
+ 642 023c 26       		.byte	0x26
+ 643 023d 1C       		.byte	0x1c
+ 644 023e 00       		.byte	0
+ 645 023f 08       		.uleb128 0x8
+ 646 0240 36000000 		.4byte	.LVL19
+ 647 0244 5E050000 		.4byte	0x55e
+ 648 0248 57020000 		.4byte	0x257
+ 649 024c 09       		.uleb128 0x9
+ 650 024d 01       		.uleb128 0x1
+ 651 024e 50       		.byte	0x50
+ 652 024f 06       		.uleb128 0x6
+ 653 0250 74       		.byte	0x74
+ 654 0251 00       		.sleb128 0
+ 655 0252 31       		.byte	0x31
+ 656 0253 25       		.byte	0x25
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 16
+
+
+ 657 0254 23       		.byte	0x23
+ 658 0255 01       		.uleb128 0x1
+ 659 0256 00       		.byte	0
+ 660 0257 07       		.uleb128 0x7
+ 661 0258 3A000000 		.4byte	.LVL20
+ 662 025c 69050000 		.4byte	0x569
+ 663 0260 00       		.byte	0
+ 664 0261 0C       		.uleb128 0xc
+ 665 0262 04       		.byte	0x4
+ 666 0263 AD000000 		.4byte	0xad
+ 667 0267 0D       		.uleb128 0xd
+ 668 0268 56020000 		.4byte	.LASF69
+ 669 026c 01       		.byte	0x1
+ 670 026d 8C       		.byte	0x8c
+ 671 026e 00000000 		.4byte	.LFB67
+ 672 0272 34000000 		.4byte	.LFE67-.LFB67
+ 673 0276 01       		.uleb128 0x1
+ 674 0277 9C       		.byte	0x9c
+ 675 0278 B7020000 		.4byte	0x2b7
+ 676 027c 07       		.uleb128 0x7
+ 677 027d 06000000 		.4byte	.LVL22
+ 678 0281 48050000 		.4byte	0x548
+ 679 0285 08       		.uleb128 0x8
+ 680 0286 0E000000 		.4byte	.LVL23
+ 681 028a 53050000 		.4byte	0x553
+ 682 028e 9A020000 		.4byte	0x29a
+ 683 0292 09       		.uleb128 0x9
+ 684 0293 01       		.uleb128 0x1
+ 685 0294 50       		.byte	0x50
+ 686 0295 03       		.uleb128 0x3
+ 687 0296 0A       		.byte	0xa
+ 688 0297 5F09     		.2byte	0x95f
+ 689 0299 00       		.byte	0
+ 690 029a 08       		.uleb128 0x8
+ 691 029b 18000000 		.4byte	.LVL24
+ 692 029f 74050000 		.4byte	0x574
+ 693 02a3 AD020000 		.4byte	0x2ad
+ 694 02a7 09       		.uleb128 0x9
+ 695 02a8 01       		.uleb128 0x1
+ 696 02a9 50       		.byte	0x50
+ 697 02aa 01       		.uleb128 0x1
+ 698 02ab 30       		.byte	0x30
+ 699 02ac 00       		.byte	0
+ 700 02ad 07       		.uleb128 0x7
+ 701 02ae 24000000 		.4byte	.LVL25
+ 702 02b2 69050000 		.4byte	0x569
+ 703 02b6 00       		.byte	0
+ 704 02b7 0E       		.uleb128 0xe
+ 705 02b8 E0000000 		.4byte	.LASF70
+ 706 02bc 01       		.byte	0x1
+ 707 02bd A7       		.byte	0xa7
+ 708 02be B9000000 		.4byte	0xb9
+ 709 02c2 00000000 		.4byte	.LFB68
+ 710 02c6 34000000 		.4byte	.LFE68-.LFB68
+ 711 02ca 01       		.uleb128 0x1
+ 712 02cb 9C       		.byte	0x9c
+ 713 02cc FB020000 		.4byte	0x2fb
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 17
+
+
+ 714 02d0 0B       		.uleb128 0xb
+ 715 02d1 C6030000 		.4byte	.LASF29
+ 716 02d5 01       		.byte	0x1
+ 717 02d6 AA       		.byte	0xaa
+ 718 02d7 B9000000 		.4byte	0xb9
+ 719 02db 6C000000 		.4byte	.LLST3
+ 720 02df 07       		.uleb128 0x7
+ 721 02e0 06000000 		.4byte	.LVL26
+ 722 02e4 48050000 		.4byte	0x548
+ 723 02e8 07       		.uleb128 0x7
+ 724 02e9 12000000 		.4byte	.LVL27
+ 725 02ed 7F050000 		.4byte	0x57f
+ 726 02f1 07       		.uleb128 0x7
+ 727 02f2 20000000 		.4byte	.LVL29
+ 728 02f6 69050000 		.4byte	0x569
+ 729 02fa 00       		.byte	0
+ 730 02fb 06       		.uleb128 0x6
+ 731 02fc 8E040000 		.4byte	.LASF30
+ 732 0300 01       		.byte	0x1
+ 733 0301 B9       		.byte	0xb9
+ 734 0302 00000000 		.4byte	.LFB69
+ 735 0306 38000000 		.4byte	.LFE69-.LFB69
+ 736 030a 01       		.uleb128 0x1
+ 737 030b 9C       		.byte	0x9c
+ 738 030c 82030000 		.4byte	0x382
+ 739 0310 0F       		.uleb128 0xf
+ 740 0311 30010000 		.4byte	.LASF31
+ 741 0315 01       		.byte	0x1
+ 742 0316 C1       		.byte	0xc1
+ 743 0317 B9000000 		.4byte	0xb9
+ 744 031b 00       		.byte	0
+ 745 031c 07       		.uleb128 0x7
+ 746 031d 06000000 		.4byte	.LVL31
+ 747 0321 E5040000 		.4byte	0x4e5
+ 748 0325 07       		.uleb128 0x7
+ 749 0326 0A000000 		.4byte	.LVL32
+ 750 032a CF040000 		.4byte	0x4cf
+ 751 032e 07       		.uleb128 0x7
+ 752 032f 10000000 		.4byte	.LVL33
+ 753 0333 C4040000 		.4byte	0x4c4
+ 754 0337 07       		.uleb128 0x7
+ 755 0338 16000000 		.4byte	.LVL34
+ 756 033c 27050000 		.4byte	0x527
+ 757 0340 07       		.uleb128 0x7
+ 758 0341 1A000000 		.4byte	.LVL35
+ 759 0345 32050000 		.4byte	0x532
+ 760 0349 08       		.uleb128 0x8
+ 761 034a 24000000 		.4byte	.LVL36
+ 762 034e F0040000 		.4byte	0x4f0
+ 763 0352 5C030000 		.4byte	0x35c
+ 764 0356 09       		.uleb128 0x9
+ 765 0357 01       		.uleb128 0x1
+ 766 0358 50       		.byte	0x50
+ 767 0359 01       		.uleb128 0x1
+ 768 035a 30       		.byte	0x30
+ 769 035b 00       		.byte	0
+ 770 035c 07       		.uleb128 0x7
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 18
+
+
+ 771 035d 28000000 		.4byte	.LVL37
+ 772 0361 06050000 		.4byte	0x506
+ 773 0365 08       		.uleb128 0x8
+ 774 0366 2E000000 		.4byte	.LVL38
+ 775 036a FB040000 		.4byte	0x4fb
+ 776 036e 78030000 		.4byte	0x378
+ 777 0372 09       		.uleb128 0x9
+ 778 0373 01       		.uleb128 0x1
+ 779 0374 50       		.byte	0x50
+ 780 0375 01       		.uleb128 0x1
+ 781 0376 3F       		.byte	0x3f
+ 782 0377 00       		.byte	0
+ 783 0378 07       		.uleb128 0x7
+ 784 0379 32000000 		.4byte	.LVL39
+ 785 037d 8A050000 		.4byte	0x58a
+ 786 0381 00       		.byte	0
+ 787 0382 10       		.uleb128 0x10
+ 788 0383 D8030000 		.4byte	.LASF32
+ 789 0387 05       		.byte	0x5
+ 790 0388 1207     		.2byte	0x712
+ 791 038a 8E030000 		.4byte	0x38e
+ 792 038e 11       		.uleb128 0x11
+ 793 038f A2000000 		.4byte	0xa2
+ 794 0393 12       		.uleb128 0x12
+ 795 0394 7B040000 		.4byte	.LASF33
+ 796 0398 06       		.byte	0x6
+ 797 0399 1B       		.byte	0x1b
+ 798 039a AD000000 		.4byte	0xad
+ 799 039e 05       		.uleb128 0x5
+ 800 039f 03       		.byte	0x3
+ 801 03a0 00000000 		.4byte	Input_Flag
+ 802 03a4 12       		.uleb128 0x12
+ 803 03a5 B7000000 		.4byte	.LASF34
+ 804 03a9 06       		.byte	0x6
+ 805 03aa 3B       		.byte	0x3b
+ 806 03ab B9000000 		.4byte	0xb9
+ 807 03af 05       		.uleb128 0x5
+ 808 03b0 03       		.byte	0x3
+ 809 03b1 00000000 		.4byte	dac_ground_value
+ 810 03b5 12       		.uleb128 0x12
+ 811 03b6 E6020000 		.4byte	.LASF35
+ 812 03ba 06       		.byte	0x6
+ 813 03bb 3F       		.byte	0x3f
+ 814 03bc B9000000 		.4byte	0xb9
+ 815 03c0 05       		.uleb128 0x5
+ 816 03c1 03       		.byte	0x3
+ 817 03c2 00000000 		.4byte	lut_value
+ 818 03c6 13       		.uleb128 0x13
+ 819 03c7 B9000000 		.4byte	0xb9
+ 820 03cb D7030000 		.4byte	0x3d7
+ 821 03cf 14       		.uleb128 0x14
+ 822 03d0 F9000000 		.4byte	0xf9
+ 823 03d4 8713     		.2byte	0x1387
+ 824 03d6 00       		.byte	0
+ 825 03d7 12       		.uleb128 0x12
+ 826 03d8 79030000 		.4byte	.LASF36
+ 827 03dc 07       		.byte	0x7
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 19
+
+
+ 828 03dd 1B       		.byte	0x1b
+ 829 03de C6030000 		.4byte	0x3c6
+ 830 03e2 05       		.uleb128 0x5
+ 831 03e3 03       		.byte	0x3
+ 832 03e4 00000000 		.4byte	waveform_CV_lut
+ 833 03e8 13       		.uleb128 0x13
+ 834 03e9 B9000000 		.4byte	0xb9
+ 835 03ed F9030000 		.4byte	0x3f9
+ 836 03f1 14       		.uleb128 0x14
+ 837 03f2 F9000000 		.4byte	0xf9
+ 838 03f6 CF07     		.2byte	0x7cf
+ 839 03f8 00       		.byte	0
+ 840 03f9 12       		.uleb128 0x12
+ 841 03fa C2010000 		.4byte	.LASF37
+ 842 03fe 07       		.byte	0x7
+ 843 03ff 1C       		.byte	0x1c
+ 844 0400 E8030000 		.4byte	0x3e8
+ 845 0404 05       		.uleb128 0x5
+ 846 0405 03       		.byte	0x3
+ 847 0406 00000000 		.4byte	waveform_amp_lut
+ 848 040a 12       		.uleb128 0x12
+ 849 040b F8020000 		.4byte	.LASF38
+ 850 040f 06       		.byte	0x6
+ 851 0410 42       		.byte	0x42
+ 852 0411 B9000000 		.4byte	0xb9
+ 853 0415 05       		.uleb128 0x5
+ 854 0416 03       		.byte	0x3
+ 855 0417 00000000 		.4byte	lut_index
+ 856 041b 12       		.uleb128 0x12
+ 857 041c C6030000 		.4byte	.LASF29
+ 858 0420 06       		.byte	0x6
+ 859 0421 43       		.byte	0x43
+ 860 0422 97000000 		.4byte	0x97
+ 861 0426 05       		.uleb128 0x5
+ 862 0427 03       		.byte	0x3
+ 863 0428 00000000 		.4byte	lut_length
+ 864 042c 12       		.uleb128 0x12
+ 865 042d 61000000 		.4byte	.LASF39
+ 866 0431 06       		.byte	0x6
+ 867 0432 44       		.byte	0x44
+ 868 0433 C6030000 		.4byte	0x3c6
+ 869 0437 05       		.uleb128 0x5
+ 870 0438 03       		.byte	0x3
+ 871 0439 00000000 		.4byte	ADC_CV_array
+ 872 043d 12       		.uleb128 0x12
+ 873 043e 2E000000 		.4byte	.LASF40
+ 874 0442 06       		.byte	0x6
+ 875 0443 45       		.byte	0x45
+ 876 0444 D1000000 		.4byte	0xd1
+ 877 0448 05       		.uleb128 0x5
+ 878 0449 03       		.byte	0x3
+ 879 044a 00000000 		.4byte	uA_per_adc_count
+ 880 044e 12       		.uleb128 0x12
+ 881 044f 6E000000 		.4byte	.LASF41
+ 882 0453 06       		.byte	0x6
+ 883 0454 48       		.byte	0x48
+ 884 0455 B9000000 		.4byte	0xb9
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 20
+
+
+ 885 0459 05       		.uleb128 0x5
+ 886 045a 03       		.byte	0x3
+ 887 045b 00000000 		.4byte	start_dac_value
+ 888 045f 12       		.uleb128 0x12
+ 889 0460 B2040000 		.4byte	.LASF42
+ 890 0464 06       		.byte	0x6
+ 891 0465 49       		.byte	0x49
+ 892 0466 B9000000 		.4byte	0xb9
+ 893 046a 05       		.uleb128 0x5
+ 894 046b 03       		.byte	0x3
+ 895 046c 00000000 		.4byte	end_dac_value
+ 896 0470 12       		.uleb128 0x12
+ 897 0471 D3010000 		.4byte	.LASF43
+ 898 0475 06       		.byte	0x6
+ 899 0476 4A       		.byte	0x4a
+ 900 0477 C5000000 		.4byte	0xc5
+ 901 047b 05       		.uleb128 0x5
+ 902 047c 03       		.byte	0x3
+ 903 047d 00000000 		.4byte	potential_max_current
+ 904 0481 13       		.uleb128 0x13
+ 905 0482 8C000000 		.4byte	0x8c
+ 906 0486 91040000 		.4byte	0x491
+ 907 048a 15       		.uleb128 0x15
+ 908 048b F9000000 		.4byte	0xf9
+ 909 048f 27       		.byte	0x27
+ 910 0490 00       		.byte	0
+ 911 0491 12       		.uleb128 0x12
+ 912 0492 86040000 		.4byte	.LASF44
+ 913 0496 06       		.byte	0x6
+ 914 0497 4F       		.byte	0x4f
+ 915 0498 81040000 		.4byte	0x481
+ 916 049c 05       		.uleb128 0x5
+ 917 049d 03       		.byte	0x3
+ 918 049e 00000000 		.4byte	command
+ 919 04a2 12       		.uleb128 0x12
+ 920 04a3 49010000 		.4byte	.LASF45
+ 921 04a7 06       		.byte	0x6
+ 922 04a8 50       		.byte	0x50
+ 923 04a9 8C000000 		.4byte	0x8c
+ 924 04ad 05       		.uleb128 0x5
+ 925 04ae 03       		.byte	0x3
+ 926 04af 00000000 		.4byte	command_lenght
+ 927 04b3 12       		.uleb128 0x12
+ 928 04b4 99020000 		.4byte	.LASF46
+ 929 04b8 08       		.byte	0x8
+ 930 04b9 15       		.byte	0x15
+ 931 04ba AD000000 		.4byte	0xad
+ 932 04be 05       		.uleb128 0x5
+ 933 04bf 03       		.byte	0x3
+ 934 04c0 00000000 		.4byte	selected_voltage_source
+ 935 04c4 16       		.uleb128 0x16
+ 936 04c5 89030000 		.4byte	.LASF47
+ 937 04c9 89030000 		.4byte	.LASF47
+ 938 04cd 09       		.byte	0x9
+ 939 04ce 24       		.byte	0x24
+ 940 04cf 16       		.uleb128 0x16
+ 941 04d0 88000000 		.4byte	.LASF48
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 21
+
+
+ 942 04d4 88000000 		.4byte	.LASF48
+ 943 04d8 0A       		.byte	0xa
+ 944 04d9 24       		.byte	0x24
+ 945 04da 16       		.uleb128 0x16
+ 946 04db 18030000 		.4byte	.LASF49
+ 947 04df 18030000 		.4byte	.LASF49
+ 948 04e3 0A       		.byte	0xa
+ 949 04e4 25       		.byte	0x25
+ 950 04e5 16       		.uleb128 0x16
+ 951 04e6 9A030000 		.4byte	.LASF50
+ 952 04ea 9A030000 		.4byte	.LASF50
+ 953 04ee 08       		.byte	0x8
+ 954 04ef 24       		.byte	0x24
+ 955 04f0 16       		.uleb128 0x16
+ 956 04f1 A3040000 		.4byte	.LASF51
+ 957 04f5 A3040000 		.4byte	.LASF51
+ 958 04f9 0B       		.byte	0xb
+ 959 04fa 28       		.byte	0x28
+ 960 04fb 16       		.uleb128 0x16
+ 961 04fc 73040000 		.4byte	.LASF52
+ 962 0500 73040000 		.4byte	.LASF52
+ 963 0504 0C       		.byte	0xc
+ 964 0505 76       		.byte	0x76
+ 965 0506 16       		.uleb128 0x16
+ 966 0507 C8000000 		.4byte	.LASF53
+ 967 050b C8000000 		.4byte	.LASF53
+ 968 050f 0D       		.byte	0xd
+ 969 0510 3D       		.byte	0x3d
+ 970 0511 16       		.uleb128 0x16
+ 971 0512 3F000000 		.4byte	.LASF54
+ 972 0516 3F000000 		.4byte	.LASF54
+ 973 051a 09       		.byte	0x9
+ 974 051b 23       		.byte	0x23
+ 975 051c 16       		.uleb128 0x16
+ 976 051d 6C010000 		.4byte	.LASF55
+ 977 0521 6C010000 		.4byte	.LASF55
+ 978 0525 0E       		.byte	0xe
+ 979 0526 23       		.byte	0x23
+ 980 0527 16       		.uleb128 0x16
+ 981 0528 1E000000 		.4byte	.LASF56
+ 982 052c 1E000000 		.4byte	.LASF56
+ 983 0530 09       		.byte	0x9
+ 984 0531 25       		.byte	0x25
+ 985 0532 16       		.uleb128 0x16
+ 986 0533 0E000000 		.4byte	.LASF57
+ 987 0537 0E000000 		.4byte	.LASF57
+ 988 053b 0E       		.byte	0xe
+ 989 053c 25       		.byte	0x25
+ 990 053d 16       		.uleb128 0x16
+ 991 053e 52030000 		.4byte	.LASF58
+ 992 0542 52030000 		.4byte	.LASF58
+ 993 0546 08       		.byte	0x8
+ 994 0547 23       		.byte	0x23
+ 995 0548 16       		.uleb128 0x16
+ 996 0549 3A010000 		.4byte	.LASF59
+ 997 054d 3A010000 		.4byte	.LASF59
+ 998 0551 0F       		.byte	0xf
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 22
+
+
+ 999 0552 DD       		.byte	0xdd
+ 1000 0553 16       		.uleb128 0x16
+ 1001 0554 A4010000 		.4byte	.LASF60
+ 1002 0558 A4010000 		.4byte	.LASF60
+ 1003 055c 0F       		.byte	0xf
+ 1004 055d BE       		.byte	0xbe
+ 1005 055e 16       		.uleb128 0x16
+ 1006 055f 2B030000 		.4byte	.LASF61
+ 1007 0563 2B030000 		.4byte	.LASF61
+ 1008 0567 0F       		.byte	0xf
+ 1009 0568 C3       		.byte	0xc3
+ 1010 0569 16       		.uleb128 0x16
+ 1011 056a 00000000 		.4byte	.LASF62
+ 1012 056e 00000000 		.4byte	.LASF62
+ 1013 0572 0F       		.byte	0xf
+ 1014 0573 DC       		.byte	0xdc
+ 1015 0574 16       		.uleb128 0x16
+ 1016 0575 5E010000 		.4byte	.LASF63
+ 1017 0579 5E010000 		.4byte	.LASF63
+ 1018 057d 07       		.byte	0x7
+ 1019 057e 15       		.byte	0x15
+ 1020 057f 16       		.uleb128 0x16
+ 1021 0580 02030000 		.4byte	.LASF64
+ 1022 0584 02030000 		.4byte	.LASF64
+ 1023 0588 07       		.byte	0x7
+ 1024 0589 14       		.byte	0x14
+ 1025 058a 16       		.uleb128 0x16
+ 1026 058b 67030000 		.4byte	.LASF65
+ 1027 058f 67030000 		.4byte	.LASF65
+ 1028 0593 0A       		.byte	0xa
+ 1029 0594 23       		.byte	0x23
+ 1030 0595 00       		.byte	0
+ 1031              		.section	.debug_abbrev,"",%progbits
+ 1032              	.Ldebug_abbrev0:
+ 1033 0000 01       		.uleb128 0x1
+ 1034 0001 11       		.uleb128 0x11
+ 1035 0002 01       		.byte	0x1
+ 1036 0003 25       		.uleb128 0x25
+ 1037 0004 0E       		.uleb128 0xe
+ 1038 0005 13       		.uleb128 0x13
+ 1039 0006 0B       		.uleb128 0xb
+ 1040 0007 03       		.uleb128 0x3
+ 1041 0008 0E       		.uleb128 0xe
+ 1042 0009 1B       		.uleb128 0x1b
+ 1043 000a 0E       		.uleb128 0xe
+ 1044 000b 55       		.uleb128 0x55
+ 1045 000c 17       		.uleb128 0x17
+ 1046 000d 11       		.uleb128 0x11
+ 1047 000e 01       		.uleb128 0x1
+ 1048 000f 10       		.uleb128 0x10
+ 1049 0010 17       		.uleb128 0x17
+ 1050 0011 00       		.byte	0
+ 1051 0012 00       		.byte	0
+ 1052 0013 02       		.uleb128 0x2
+ 1053 0014 24       		.uleb128 0x24
+ 1054 0015 00       		.byte	0
+ 1055 0016 0B       		.uleb128 0xb
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 23
+
+
+ 1056 0017 0B       		.uleb128 0xb
+ 1057 0018 3E       		.uleb128 0x3e
+ 1058 0019 0B       		.uleb128 0xb
+ 1059 001a 03       		.uleb128 0x3
+ 1060 001b 0E       		.uleb128 0xe
+ 1061 001c 00       		.byte	0
+ 1062 001d 00       		.byte	0
+ 1063 001e 03       		.uleb128 0x3
+ 1064 001f 24       		.uleb128 0x24
+ 1065 0020 00       		.byte	0
+ 1066 0021 0B       		.uleb128 0xb
+ 1067 0022 0B       		.uleb128 0xb
+ 1068 0023 3E       		.uleb128 0x3e
+ 1069 0024 0B       		.uleb128 0xb
+ 1070 0025 03       		.uleb128 0x3
+ 1071 0026 08       		.uleb128 0x8
+ 1072 0027 00       		.byte	0
+ 1073 0028 00       		.byte	0
+ 1074 0029 04       		.uleb128 0x4
+ 1075 002a 16       		.uleb128 0x16
+ 1076 002b 00       		.byte	0
+ 1077 002c 03       		.uleb128 0x3
+ 1078 002d 0E       		.uleb128 0xe
+ 1079 002e 3A       		.uleb128 0x3a
+ 1080 002f 0B       		.uleb128 0xb
+ 1081 0030 3B       		.uleb128 0x3b
+ 1082 0031 0B       		.uleb128 0xb
+ 1083 0032 49       		.uleb128 0x49
+ 1084 0033 13       		.uleb128 0x13
+ 1085 0034 00       		.byte	0
+ 1086 0035 00       		.byte	0
+ 1087 0036 05       		.uleb128 0x5
+ 1088 0037 16       		.uleb128 0x16
+ 1089 0038 00       		.byte	0
+ 1090 0039 03       		.uleb128 0x3
+ 1091 003a 0E       		.uleb128 0xe
+ 1092 003b 3A       		.uleb128 0x3a
+ 1093 003c 0B       		.uleb128 0xb
+ 1094 003d 3B       		.uleb128 0x3b
+ 1095 003e 05       		.uleb128 0x5
+ 1096 003f 49       		.uleb128 0x49
+ 1097 0040 13       		.uleb128 0x13
+ 1098 0041 00       		.byte	0
+ 1099 0042 00       		.byte	0
+ 1100 0043 06       		.uleb128 0x6
+ 1101 0044 2E       		.uleb128 0x2e
+ 1102 0045 01       		.byte	0x1
+ 1103 0046 3F       		.uleb128 0x3f
+ 1104 0047 19       		.uleb128 0x19
+ 1105 0048 03       		.uleb128 0x3
+ 1106 0049 0E       		.uleb128 0xe
+ 1107 004a 3A       		.uleb128 0x3a
+ 1108 004b 0B       		.uleb128 0xb
+ 1109 004c 3B       		.uleb128 0x3b
+ 1110 004d 0B       		.uleb128 0xb
+ 1111 004e 27       		.uleb128 0x27
+ 1112 004f 19       		.uleb128 0x19
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 24
+
+
+ 1113 0050 11       		.uleb128 0x11
+ 1114 0051 01       		.uleb128 0x1
+ 1115 0052 12       		.uleb128 0x12
+ 1116 0053 06       		.uleb128 0x6
+ 1117 0054 40       		.uleb128 0x40
+ 1118 0055 18       		.uleb128 0x18
+ 1119 0056 9742     		.uleb128 0x2117
+ 1120 0058 19       		.uleb128 0x19
+ 1121 0059 01       		.uleb128 0x1
+ 1122 005a 13       		.uleb128 0x13
+ 1123 005b 00       		.byte	0
+ 1124 005c 00       		.byte	0
+ 1125 005d 07       		.uleb128 0x7
+ 1126 005e 898201   		.uleb128 0x4109
+ 1127 0061 00       		.byte	0
+ 1128 0062 11       		.uleb128 0x11
+ 1129 0063 01       		.uleb128 0x1
+ 1130 0064 31       		.uleb128 0x31
+ 1131 0065 13       		.uleb128 0x13
+ 1132 0066 00       		.byte	0
+ 1133 0067 00       		.byte	0
+ 1134 0068 08       		.uleb128 0x8
+ 1135 0069 898201   		.uleb128 0x4109
+ 1136 006c 01       		.byte	0x1
+ 1137 006d 11       		.uleb128 0x11
+ 1138 006e 01       		.uleb128 0x1
+ 1139 006f 31       		.uleb128 0x31
+ 1140 0070 13       		.uleb128 0x13
+ 1141 0071 01       		.uleb128 0x1
+ 1142 0072 13       		.uleb128 0x13
+ 1143 0073 00       		.byte	0
+ 1144 0074 00       		.byte	0
+ 1145 0075 09       		.uleb128 0x9
+ 1146 0076 8A8201   		.uleb128 0x410a
+ 1147 0079 00       		.byte	0
+ 1148 007a 02       		.uleb128 0x2
+ 1149 007b 18       		.uleb128 0x18
+ 1150 007c 9142     		.uleb128 0x2111
+ 1151 007e 18       		.uleb128 0x18
+ 1152 007f 00       		.byte	0
+ 1153 0080 00       		.byte	0
+ 1154 0081 0A       		.uleb128 0xa
+ 1155 0082 05       		.uleb128 0x5
+ 1156 0083 00       		.byte	0
+ 1157 0084 03       		.uleb128 0x3
+ 1158 0085 0E       		.uleb128 0xe
+ 1159 0086 3A       		.uleb128 0x3a
+ 1160 0087 0B       		.uleb128 0xb
+ 1161 0088 3B       		.uleb128 0x3b
+ 1162 0089 0B       		.uleb128 0xb
+ 1163 008a 49       		.uleb128 0x49
+ 1164 008b 13       		.uleb128 0x13
+ 1165 008c 02       		.uleb128 0x2
+ 1166 008d 17       		.uleb128 0x17
+ 1167 008e 00       		.byte	0
+ 1168 008f 00       		.byte	0
+ 1169 0090 0B       		.uleb128 0xb
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 25
+
+
+ 1170 0091 34       		.uleb128 0x34
+ 1171 0092 00       		.byte	0
+ 1172 0093 03       		.uleb128 0x3
+ 1173 0094 0E       		.uleb128 0xe
+ 1174 0095 3A       		.uleb128 0x3a
+ 1175 0096 0B       		.uleb128 0xb
+ 1176 0097 3B       		.uleb128 0x3b
+ 1177 0098 0B       		.uleb128 0xb
+ 1178 0099 49       		.uleb128 0x49
+ 1179 009a 13       		.uleb128 0x13
+ 1180 009b 02       		.uleb128 0x2
+ 1181 009c 17       		.uleb128 0x17
+ 1182 009d 00       		.byte	0
+ 1183 009e 00       		.byte	0
+ 1184 009f 0C       		.uleb128 0xc
+ 1185 00a0 0F       		.uleb128 0xf
+ 1186 00a1 00       		.byte	0
+ 1187 00a2 0B       		.uleb128 0xb
+ 1188 00a3 0B       		.uleb128 0xb
+ 1189 00a4 49       		.uleb128 0x49
+ 1190 00a5 13       		.uleb128 0x13
+ 1191 00a6 00       		.byte	0
+ 1192 00a7 00       		.byte	0
+ 1193 00a8 0D       		.uleb128 0xd
+ 1194 00a9 2E       		.uleb128 0x2e
+ 1195 00aa 01       		.byte	0x1
+ 1196 00ab 3F       		.uleb128 0x3f
+ 1197 00ac 19       		.uleb128 0x19
+ 1198 00ad 03       		.uleb128 0x3
+ 1199 00ae 0E       		.uleb128 0xe
+ 1200 00af 3A       		.uleb128 0x3a
+ 1201 00b0 0B       		.uleb128 0xb
+ 1202 00b1 3B       		.uleb128 0x3b
+ 1203 00b2 0B       		.uleb128 0xb
+ 1204 00b3 11       		.uleb128 0x11
+ 1205 00b4 01       		.uleb128 0x1
+ 1206 00b5 12       		.uleb128 0x12
+ 1207 00b6 06       		.uleb128 0x6
+ 1208 00b7 40       		.uleb128 0x40
+ 1209 00b8 18       		.uleb128 0x18
+ 1210 00b9 9742     		.uleb128 0x2117
+ 1211 00bb 19       		.uleb128 0x19
+ 1212 00bc 01       		.uleb128 0x1
+ 1213 00bd 13       		.uleb128 0x13
+ 1214 00be 00       		.byte	0
+ 1215 00bf 00       		.byte	0
+ 1216 00c0 0E       		.uleb128 0xe
+ 1217 00c1 2E       		.uleb128 0x2e
+ 1218 00c2 01       		.byte	0x1
+ 1219 00c3 3F       		.uleb128 0x3f
+ 1220 00c4 19       		.uleb128 0x19
+ 1221 00c5 03       		.uleb128 0x3
+ 1222 00c6 0E       		.uleb128 0xe
+ 1223 00c7 3A       		.uleb128 0x3a
+ 1224 00c8 0B       		.uleb128 0xb
+ 1225 00c9 3B       		.uleb128 0x3b
+ 1226 00ca 0B       		.uleb128 0xb
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 26
+
+
+ 1227 00cb 27       		.uleb128 0x27
+ 1228 00cc 19       		.uleb128 0x19
+ 1229 00cd 49       		.uleb128 0x49
+ 1230 00ce 13       		.uleb128 0x13
+ 1231 00cf 11       		.uleb128 0x11
+ 1232 00d0 01       		.uleb128 0x1
+ 1233 00d1 12       		.uleb128 0x12
+ 1234 00d2 06       		.uleb128 0x6
+ 1235 00d3 40       		.uleb128 0x40
+ 1236 00d4 18       		.uleb128 0x18
+ 1237 00d5 9742     		.uleb128 0x2117
+ 1238 00d7 19       		.uleb128 0x19
+ 1239 00d8 01       		.uleb128 0x1
+ 1240 00d9 13       		.uleb128 0x13
+ 1241 00da 00       		.byte	0
+ 1242 00db 00       		.byte	0
+ 1243 00dc 0F       		.uleb128 0xf
+ 1244 00dd 34       		.uleb128 0x34
+ 1245 00de 00       		.byte	0
+ 1246 00df 03       		.uleb128 0x3
+ 1247 00e0 0E       		.uleb128 0xe
+ 1248 00e1 3A       		.uleb128 0x3a
+ 1249 00e2 0B       		.uleb128 0xb
+ 1250 00e3 3B       		.uleb128 0x3b
+ 1251 00e4 0B       		.uleb128 0xb
+ 1252 00e5 49       		.uleb128 0x49
+ 1253 00e6 13       		.uleb128 0x13
+ 1254 00e7 1C       		.uleb128 0x1c
+ 1255 00e8 0B       		.uleb128 0xb
+ 1256 00e9 00       		.byte	0
+ 1257 00ea 00       		.byte	0
+ 1258 00eb 10       		.uleb128 0x10
+ 1259 00ec 34       		.uleb128 0x34
+ 1260 00ed 00       		.byte	0
+ 1261 00ee 03       		.uleb128 0x3
+ 1262 00ef 0E       		.uleb128 0xe
+ 1263 00f0 3A       		.uleb128 0x3a
+ 1264 00f1 0B       		.uleb128 0xb
+ 1265 00f2 3B       		.uleb128 0x3b
+ 1266 00f3 05       		.uleb128 0x5
+ 1267 00f4 49       		.uleb128 0x49
+ 1268 00f5 13       		.uleb128 0x13
+ 1269 00f6 3F       		.uleb128 0x3f
+ 1270 00f7 19       		.uleb128 0x19
+ 1271 00f8 3C       		.uleb128 0x3c
+ 1272 00f9 19       		.uleb128 0x19
+ 1273 00fa 00       		.byte	0
+ 1274 00fb 00       		.byte	0
+ 1275 00fc 11       		.uleb128 0x11
+ 1276 00fd 35       		.uleb128 0x35
+ 1277 00fe 00       		.byte	0
+ 1278 00ff 49       		.uleb128 0x49
+ 1279 0100 13       		.uleb128 0x13
+ 1280 0101 00       		.byte	0
+ 1281 0102 00       		.byte	0
+ 1282 0103 12       		.uleb128 0x12
+ 1283 0104 34       		.uleb128 0x34
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 27
+
+
+ 1284 0105 00       		.byte	0
+ 1285 0106 03       		.uleb128 0x3
+ 1286 0107 0E       		.uleb128 0xe
+ 1287 0108 3A       		.uleb128 0x3a
+ 1288 0109 0B       		.uleb128 0xb
+ 1289 010a 3B       		.uleb128 0x3b
+ 1290 010b 0B       		.uleb128 0xb
+ 1291 010c 49       		.uleb128 0x49
+ 1292 010d 13       		.uleb128 0x13
+ 1293 010e 3F       		.uleb128 0x3f
+ 1294 010f 19       		.uleb128 0x19
+ 1295 0110 02       		.uleb128 0x2
+ 1296 0111 18       		.uleb128 0x18
+ 1297 0112 00       		.byte	0
+ 1298 0113 00       		.byte	0
+ 1299 0114 13       		.uleb128 0x13
+ 1300 0115 01       		.uleb128 0x1
+ 1301 0116 01       		.byte	0x1
+ 1302 0117 49       		.uleb128 0x49
+ 1303 0118 13       		.uleb128 0x13
+ 1304 0119 01       		.uleb128 0x1
+ 1305 011a 13       		.uleb128 0x13
+ 1306 011b 00       		.byte	0
+ 1307 011c 00       		.byte	0
+ 1308 011d 14       		.uleb128 0x14
+ 1309 011e 21       		.uleb128 0x21
+ 1310 011f 00       		.byte	0
+ 1311 0120 49       		.uleb128 0x49
+ 1312 0121 13       		.uleb128 0x13
+ 1313 0122 2F       		.uleb128 0x2f
+ 1314 0123 05       		.uleb128 0x5
+ 1315 0124 00       		.byte	0
+ 1316 0125 00       		.byte	0
+ 1317 0126 15       		.uleb128 0x15
+ 1318 0127 21       		.uleb128 0x21
+ 1319 0128 00       		.byte	0
+ 1320 0129 49       		.uleb128 0x49
+ 1321 012a 13       		.uleb128 0x13
+ 1322 012b 2F       		.uleb128 0x2f
+ 1323 012c 0B       		.uleb128 0xb
+ 1324 012d 00       		.byte	0
+ 1325 012e 00       		.byte	0
+ 1326 012f 16       		.uleb128 0x16
+ 1327 0130 2E       		.uleb128 0x2e
+ 1328 0131 00       		.byte	0
+ 1329 0132 3F       		.uleb128 0x3f
+ 1330 0133 19       		.uleb128 0x19
+ 1331 0134 3C       		.uleb128 0x3c
+ 1332 0135 19       		.uleb128 0x19
+ 1333 0136 6E       		.uleb128 0x6e
+ 1334 0137 0E       		.uleb128 0xe
+ 1335 0138 03       		.uleb128 0x3
+ 1336 0139 0E       		.uleb128 0xe
+ 1337 013a 3A       		.uleb128 0x3a
+ 1338 013b 0B       		.uleb128 0xb
+ 1339 013c 3B       		.uleb128 0x3b
+ 1340 013d 0B       		.uleb128 0xb
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 28
+
+
+ 1341 013e 00       		.byte	0
+ 1342 013f 00       		.byte	0
+ 1343 0140 00       		.byte	0
+ 1344              		.section	.debug_loc,"",%progbits
+ 1345              	.Ldebug_loc0:
+ 1346              	.LLST0:
+ 1347 0000 00000000 		.4byte	.LVL14
+ 1348 0004 07000000 		.4byte	.LVL15-1
+ 1349 0008 0100     		.2byte	0x1
+ 1350 000a 50       		.byte	0x50
+ 1351 000b 07000000 		.4byte	.LVL15-1
+ 1352 000f 0A000000 		.4byte	.LVL16
+ 1353 0013 0100     		.2byte	0x1
+ 1354 0015 54       		.byte	0x54
+ 1355 0016 0A000000 		.4byte	.LVL16
+ 1356 001a 40000000 		.4byte	.LFE66
+ 1357 001e 0400     		.2byte	0x4
+ 1358 0020 F3       		.byte	0xf3
+ 1359 0021 01       		.uleb128 0x1
+ 1360 0022 50       		.byte	0x50
+ 1361 0023 9F       		.byte	0x9f
+ 1362 0024 00000000 		.4byte	0
+ 1363 0028 00000000 		.4byte	0
+ 1364              	.LLST1:
+ 1365 002c 0A000000 		.4byte	.LVL16
+ 1366 0030 12000000 		.4byte	.LVL17
+ 1367 0034 0600     		.2byte	0x6
+ 1368 0036 74       		.byte	0x74
+ 1369 0037 00       		.sleb128 0
+ 1370 0038 08       		.byte	0x8
+ 1371 0039 FF       		.byte	0xff
+ 1372 003a 1A       		.byte	0x1a
+ 1373 003b 9F       		.byte	0x9f
+ 1374 003c 12000000 		.4byte	.LVL17
+ 1375 0040 2B000000 		.4byte	.LVL18-1
+ 1376 0044 0B00     		.2byte	0xb
+ 1377 0046 F3       		.byte	0xf3
+ 1378 0047 01       		.uleb128 0x1
+ 1379 0048 50       		.byte	0x50
+ 1380 0049 23       		.byte	0x23
+ 1381 004a 01       		.uleb128 0x1
+ 1382 004b 94       		.byte	0x94
+ 1383 004c 01       		.byte	0x1
+ 1384 004d 08       		.byte	0x8
+ 1385 004e FF       		.byte	0xff
+ 1386 004f 1A       		.byte	0x1a
+ 1387 0050 9F       		.byte	0x9f
+ 1388 0051 00000000 		.4byte	0
+ 1389 0055 00000000 		.4byte	0
+ 1390              	.LLST2:
+ 1391 0059 12000000 		.4byte	.LVL17
+ 1392 005d 3C000000 		.4byte	.LVL21
+ 1393 0061 0100     		.2byte	0x1
+ 1394 0063 54       		.byte	0x54
+ 1395 0064 00000000 		.4byte	0
+ 1396 0068 00000000 		.4byte	0
+ 1397              	.LLST3:
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 29
+
+
+ 1398 006c 14000000 		.4byte	.LVL28
+ 1399 0070 24000000 		.4byte	.LVL30
+ 1400 0074 0100     		.2byte	0x1
+ 1401 0076 54       		.byte	0x54
+ 1402 0077 00000000 		.4byte	0
+ 1403 007b 00000000 		.4byte	0
+ 1404              		.section	.debug_aranges,"",%progbits
+ 1405 0000 44000000 		.4byte	0x44
+ 1406 0004 0200     		.2byte	0x2
+ 1407 0006 00000000 		.4byte	.Ldebug_info0
+ 1408 000a 04       		.byte	0x4
+ 1409 000b 00       		.byte	0
+ 1410 000c 0000     		.2byte	0
+ 1411 000e 0000     		.2byte	0
+ 1412 0010 00000000 		.4byte	.LFB64
+ 1413 0014 50000000 		.4byte	.LFE64-.LFB64
+ 1414 0018 00000000 		.4byte	.LFB65
+ 1415 001c 20000000 		.4byte	.LFE65-.LFB65
+ 1416 0020 00000000 		.4byte	.LFB66
+ 1417 0024 40000000 		.4byte	.LFE66-.LFB66
+ 1418 0028 00000000 		.4byte	.LFB67
+ 1419 002c 34000000 		.4byte	.LFE67-.LFB67
+ 1420 0030 00000000 		.4byte	.LFB68
+ 1421 0034 34000000 		.4byte	.LFE68-.LFB68
+ 1422 0038 00000000 		.4byte	.LFB69
+ 1423 003c 38000000 		.4byte	.LFE69-.LFB69
+ 1424 0040 00000000 		.4byte	0
+ 1425 0044 00000000 		.4byte	0
+ 1426              		.section	.debug_ranges,"",%progbits
+ 1427              	.Ldebug_ranges0:
+ 1428 0000 00000000 		.4byte	.LFB64
+ 1429 0004 50000000 		.4byte	.LFE64
+ 1430 0008 00000000 		.4byte	.LFB65
+ 1431 000c 20000000 		.4byte	.LFE65
+ 1432 0010 00000000 		.4byte	.LFB66
+ 1433 0014 40000000 		.4byte	.LFE66
+ 1434 0018 00000000 		.4byte	.LFB67
+ 1435 001c 34000000 		.4byte	.LFE67
+ 1436 0020 00000000 		.4byte	.LFB68
+ 1437 0024 34000000 		.4byte	.LFE68
+ 1438 0028 00000000 		.4byte	.LFB69
+ 1439 002c 38000000 		.4byte	.LFE69
+ 1440 0030 00000000 		.4byte	0
+ 1441 0034 00000000 		.4byte	0
+ 1442              		.section	.debug_line,"",%progbits
+ 1443              	.Ldebug_line0:
+ 1444 0000 83020000 		.section	.debug_str,"MS",%progbits,1
+ 1444      0200F301 
+ 1444      00000201 
+ 1444      FB0E0D00 
+ 1444      01010101 
+ 1445              	.LASF62:
+ 1446 0000 50574D5F 		.ascii	"PWM_isr_Sleep\000"
+ 1446      6973725F 
+ 1446      536C6565 
+ 1446      7000
+ 1447              	.LASF57:
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 30
+
+
+ 1448 000e 6973725F 		.ascii	"isr_adc_Disable\000"
+ 1448      6164635F 
+ 1448      44697361 
+ 1448      626C6500 
+ 1449              	.LASF56:
+ 1450 001e 6973725F 		.ascii	"isr_dac_Disable\000"
+ 1450      6461635F 
+ 1450      44697361 
+ 1450      626C6500 
+ 1451              	.LASF40:
+ 1452 002e 75415F70 		.ascii	"uA_per_adc_count\000"
+ 1452      65725F61 
+ 1452      64635F63 
+ 1452      6F756E74 
+ 1452      00
+ 1453              	.LASF54:
+ 1454 003f 6973725F 		.ascii	"isr_dac_Enable\000"
+ 1454      6461635F 
+ 1454      456E6162 
+ 1454      6C6500
+ 1455              	.LASF28:
+ 1456 004e 6E65775F 		.ascii	"new_period\000"
+ 1456      70657269 
+ 1456      6F6400
+ 1457              	.LASF18:
+ 1458 0059 666C6F61 		.ascii	"float32\000"
+ 1458      74333200 
+ 1459              	.LASF39:
+ 1460 0061 4144435F 		.ascii	"ADC_CV_array\000"
+ 1460      43565F61 
+ 1460      72726179 
+ 1460      00
+ 1461              	.LASF41:
+ 1462 006e 73746172 		.ascii	"start_dac_value\000"
+ 1462      745F6461 
+ 1462      635F7661 
+ 1462      6C756500 
+ 1463              	.LASF4:
+ 1464 007e 73686F72 		.ascii	"short int\000"
+ 1464      7420696E 
+ 1464      7400
+ 1465              	.LASF48:
+ 1466 0088 6973725F 		.ascii	"isr_adcAmp_GetState\000"
+ 1466      61646341 
+ 1466      6D705F47 
+ 1466      65745374 
+ 1466      61746500 
+ 1467              	.LASF23:
+ 1468 009c 73697A65 		.ascii	"sizetype\000"
+ 1468      74797065 
+ 1468      00
+ 1469              	.LASF24:
+ 1470 00a5 75736572 		.ascii	"user_start_cv_run\000"
+ 1470      5F737461 
+ 1470      72745F63 
+ 1470      765F7275 
+ 1470      6E00
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 31
+
+
+ 1471              	.LASF34:
+ 1472 00b7 6461635F 		.ascii	"dac_ground_value\000"
+ 1472      67726F75 
+ 1472      6E645F76 
+ 1472      616C7565 
+ 1472      00
+ 1473              	.LASF53:
+ 1474 00c8 4144435F 		.ascii	"ADC_SigDel_StartConvert\000"
+ 1474      53696744 
+ 1474      656C5F53 
+ 1474      74617274 
+ 1474      436F6E76 
+ 1475              	.LASF70:
+ 1476 00e0 75736572 		.ascii	"user_lookup_table_maker\000"
+ 1476      5F6C6F6F 
+ 1476      6B75705F 
+ 1476      7461626C 
+ 1476      655F6D61 
+ 1477              	.LASF6:
+ 1478 00f8 5F5F7569 		.ascii	"__uint16_t\000"
+ 1478      6E743136 
+ 1478      5F7400
+ 1479              	.LASF25:
+ 1480 0103 75736572 		.ascii	"user_reset_device\000"
+ 1480      5F726573 
+ 1480      65745F64 
+ 1480      65766963 
+ 1480      6500
+ 1481              	.LASF16:
+ 1482 0115 75696E74 		.ascii	"uint16\000"
+ 1482      313600
+ 1483              	.LASF12:
+ 1484 011c 75696E74 		.ascii	"uint8_t\000"
+ 1484      385F7400 
+ 1485              	.LASF17:
+ 1486 0124 696E7431 		.ascii	"int16\000"
+ 1486      3600
+ 1487              	.LASF15:
+ 1488 012a 75696E74 		.ascii	"uint8\000"
+ 1488      3800
+ 1489              	.LASF31:
+ 1490 0130 6461635F 		.ascii	"dac_value\000"
+ 1490      76616C75 
+ 1490      6500
+ 1491              	.LASF59:
+ 1492 013a 50574D5F 		.ascii	"PWM_isr_Wakeup\000"
+ 1492      6973725F 
+ 1492      57616B65 
+ 1492      757000
+ 1493              	.LASF45:
+ 1494 0149 636F6D6D 		.ascii	"command_lenght\000"
+ 1494      616E645F 
+ 1494      6C656E67 
+ 1494      687400
+ 1495              	.LASF19:
+ 1496 0158 666C6F61 		.ascii	"float\000"
+ 1496      7400
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 32
+
+
+ 1497              	.LASF63:
+ 1498 015e 4C55545F 		.ascii	"LUT_MakePulse\000"
+ 1498      4D616B65 
+ 1498      50756C73 
+ 1498      6500
+ 1499              	.LASF55:
+ 1500 016c 6973725F 		.ascii	"isr_adc_Enable\000"
+ 1500      6164635F 
+ 1500      456E6162 
+ 1500      6C6500
+ 1501              	.LASF11:
+ 1502 017b 6C6F6E67 		.ascii	"long long int\000"
+ 1502      206C6F6E 
+ 1502      6720696E 
+ 1502      7400
+ 1503              	.LASF67:
+ 1504 0189 75736572 		.ascii	"user_selections.c\000"
+ 1504      5F73656C 
+ 1504      65637469 
+ 1504      6F6E732E 
+ 1504      6300
+ 1505              	.LASF9:
+ 1506 019b 6C6F6E67 		.ascii	"long int\000"
+ 1506      20696E74 
+ 1506      00
+ 1507              	.LASF60:
+ 1508 01a4 50574D5F 		.ascii	"PWM_isr_WritePeriod\000"
+ 1508      6973725F 
+ 1508      57726974 
+ 1508      65506572 
+ 1508      696F6400 
+ 1509              	.LASF5:
+ 1510 01b8 5F5F7569 		.ascii	"__uint8_t\000"
+ 1510      6E74385F 
+ 1510      7400
+ 1511              	.LASF37:
+ 1512 01c2 77617665 		.ascii	"waveform_amp_lut\000"
+ 1512      666F726D 
+ 1512      5F616D70 
+ 1512      5F6C7574 
+ 1512      00
+ 1513              	.LASF43:
+ 1514 01d3 706F7465 		.ascii	"potential_max_current\000"
+ 1514      6E746961 
+ 1514      6C5F6D61 
+ 1514      785F6375 
+ 1514      7272656E 
+ 1515              	.LASF68:
+ 1516 01e9 433A5C55 		.ascii	"C:\\Users\\teo8d\\Desktop\\progetto lab sensori\\CO"
+ 1516      73657273 
+ 1516      5C74656F 
+ 1516      38645C44 
+ 1516      65736B74 
+ 1517 0217 44494349 		.ascii	"DICI\\PSOC\\FinalProjects\\Group2.cydsn\000"
+ 1517      5C50534F 
+ 1517      435C4669 
+ 1517      6E616C50 
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 33
+
+
+ 1517      726F6A65 
+ 1518              	.LASF22:
+ 1519 023c 6C6F6E67 		.ascii	"long double\000"
+ 1519      20646F75 
+ 1519      626C6500 
+ 1520              	.LASF3:
+ 1521 0248 756E7369 		.ascii	"unsigned char\000"
+ 1521      676E6564 
+ 1521      20636861 
+ 1521      7200
+ 1522              	.LASF69:
+ 1523 0256 75736572 		.ascii	"user_chrono_lut_maker\000"
+ 1523      5F636872 
+ 1523      6F6E6F5F 
+ 1523      6C75745F 
+ 1523      6D616B65 
+ 1524              	.LASF0:
+ 1525 026c 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1525      206C6F6E 
+ 1525      6720756E 
+ 1525      7369676E 
+ 1525      65642069 
+ 1526              	.LASF1:
+ 1527 0283 756E7369 		.ascii	"unsigned int\000"
+ 1527      676E6564 
+ 1527      20696E74 
+ 1527      00
+ 1528              	.LASF13:
+ 1529 0290 75696E74 		.ascii	"uint16_t\000"
+ 1529      31365F74 
+ 1529      00
+ 1530              	.LASF46:
+ 1531 0299 73656C65 		.ascii	"selected_voltage_source\000"
+ 1531      63746564 
+ 1531      5F766F6C 
+ 1531      74616765 
+ 1531      5F736F75 
+ 1532              	.LASF26:
+ 1533 02b1 75736572 		.ascii	"user_set_isr_timer\000"
+ 1533      5F736574 
+ 1533      5F697372 
+ 1533      5F74696D 
+ 1533      657200
+ 1534              	.LASF7:
+ 1535 02c4 73686F72 		.ascii	"short unsigned int\000"
+ 1535      7420756E 
+ 1535      7369676E 
+ 1535      65642069 
+ 1535      6E7400
+ 1536              	.LASF21:
+ 1537 02d7 63686172 		.ascii	"char\000"
+ 1537      00
+ 1538              	.LASF27:
+ 1539 02dc 7363616E 		.ascii	"scan_rate\000"
+ 1539      5F726174 
+ 1539      6500
+ 1540              	.LASF35:
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 34
+
+
+ 1541 02e6 6C75745F 		.ascii	"lut_value\000"
+ 1541      76616C75 
+ 1541      6500
+ 1542              	.LASF14:
+ 1543 02f0 696E7433 		.ascii	"int32_t\000"
+ 1543      325F7400 
+ 1544              	.LASF38:
+ 1545 02f8 6C75745F 		.ascii	"lut_index\000"
+ 1545      696E6465 
+ 1545      7800
+ 1546              	.LASF64:
+ 1547 0302 4C55545F 		.ascii	"LUT_MakeTriangle_Wave\000"
+ 1547      4D616B65 
+ 1547      54726961 
+ 1547      6E676C65 
+ 1547      5F576176 
+ 1548              	.LASF49:
+ 1549 0318 6973725F 		.ascii	"isr_adcAmp_Disable\000"
+ 1549      61646341 
+ 1549      6D705F44 
+ 1549      69736162 
+ 1549      6C6500
+ 1550              	.LASF61:
+ 1551 032b 50574D5F 		.ascii	"PWM_isr_WriteCompare\000"
+ 1551      6973725F 
+ 1551      57726974 
+ 1551      65436F6D 
+ 1551      70617265 
+ 1552              	.LASF10:
+ 1553 0340 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1553      20756E73 
+ 1553      69676E65 
+ 1553      6420696E 
+ 1553      7400
+ 1554              	.LASF58:
+ 1555 0352 68656C70 		.ascii	"helper_HardwareSleep\000"
+ 1555      65725F48 
+ 1555      61726477 
+ 1555      61726553 
+ 1555      6C656570 
+ 1556              	.LASF65:
+ 1557 0367 6973725F 		.ascii	"isr_adcAmp_Enable\000"
+ 1557      61646341 
+ 1557      6D705F45 
+ 1557      6E61626C 
+ 1557      6500
+ 1558              	.LASF36:
+ 1559 0379 77617665 		.ascii	"waveform_CV_lut\000"
+ 1559      666F726D 
+ 1559      5F43565F 
+ 1559      6C757400 
+ 1560              	.LASF47:
+ 1561 0389 6973725F 		.ascii	"isr_dac_GetState\000"
+ 1561      6461635F 
+ 1561      47657453 
+ 1561      74617465 
+ 1561      00
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 35
+
+
+ 1562              	.LASF50:
+ 1563 039a 68656C70 		.ascii	"helper_HardwareWakeup\000"
+ 1563      65725F48 
+ 1563      61726477 
+ 1563      61726557 
+ 1563      616B6575 
+ 1564              	.LASF8:
+ 1565 03b0 5F5F696E 		.ascii	"__int32_t\000"
+ 1565      7433325F 
+ 1565      7400
+ 1566              	.LASF2:
+ 1567 03ba 7369676E 		.ascii	"signed char\000"
+ 1567      65642063 
+ 1567      68617200 
+ 1568              	.LASF29:
+ 1569 03c6 6C75745F 		.ascii	"lut_length\000"
+ 1569      6C656E67 
+ 1569      746800
+ 1570              	.LASF20:
+ 1571 03d1 646F7562 		.ascii	"double\000"
+ 1571      6C6500
+ 1572              	.LASF32:
+ 1573 03d8 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1573      52784275 
+ 1573      66666572 
+ 1573      00
+ 1574              	.LASF66:
+ 1575 03e5 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1575      43313120 
+ 1575      352E342E 
+ 1575      31203230 
+ 1575      31363036 
+ 1576 0418 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1576      20726576 
+ 1576      6973696F 
+ 1576      6E203233 
+ 1576      37373135 
+ 1577 044b 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1577      66756E63 
+ 1577      74696F6E 
+ 1577      2D736563 
+ 1577      74696F6E 
+ 1578              	.LASF52:
+ 1579 0473 43794465 		.ascii	"CyDelay\000"
+ 1579      6C617900 
+ 1580              	.LASF33:
+ 1581 047b 496E7075 		.ascii	"Input_Flag\000"
+ 1581      745F466C 
+ 1581      616700
+ 1582              	.LASF44:
+ 1583 0486 636F6D6D 		.ascii	"command\000"
+ 1583      616E6400 
+ 1584              	.LASF30:
+ 1585 048e 75736572 		.ascii	"user_run_amperometry\000"
+ 1585      5F72756E 
+ 1585      5F616D70 
+ 1585      65726F6D 
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccbjIYRt.s 			page 36
+
+
+ 1585      65747279 
+ 1586              	.LASF51:
+ 1587 04a3 44564441 		.ascii	"DVDAC_SetValue\000"
+ 1587      435F5365 
+ 1587      7456616C 
+ 1587      756500
+ 1588              	.LASF42:
+ 1589 04b2 656E645F 		.ascii	"end_dac_value\000"
+ 1589      6461635F 
+ 1589      76616C75 
+ 1589      6500
+ 1590              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

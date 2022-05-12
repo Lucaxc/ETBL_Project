@@ -1,0 +1,1517 @@
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccX1lqZD.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"lut_functions.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.LUT_make_line,"ax",%progbits
+  20              		.align	2
+  21              		.global	LUT_make_line
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	LUT_make_line, %function
+  25              	LUT_make_line:
+  26              	.LFB65:
+  27              		.file 1 "lut_functions.c"
+   1:lut_functions.c **** /*******************************************************************************
+   2:lut_functions.c **** * File Name: lut_functions.c
+   3:lut_functions.c **** *
+   4:lut_functions.c **** * Description:
+   5:lut_functions.c **** *  This file contains the protocols to create look up tables
+   6:lut_functions.c **** *
+   7:lut_functions.c **** *********************************************************************************/
+   8:lut_functions.c **** 
+   9:lut_functions.c **** #include "lut_functions.h"
+  10:lut_functions.c **** #include "Global_variables.h"
+  11:lut_functions.c **** extern char LCD_str[];  // for debug
+  12:lut_functions.c **** 
+  13:lut_functions.c **** /******************************************************************************
+  14:lut_functions.c **** * Function Name: LUT_MakeTriangleWave
+  15:lut_functions.c **** *******************************************************************************
+  16:lut_functions.c **** *
+  17:lut_functions.c **** * Summary:
+  18:lut_functions.c **** *  Fill in the look up table (waveform_CV_lut) for the DACs to perform a cyclic voltammetry experim
+  19:lut_functions.c **** *
+  20:lut_functions.c **** * Parameters:
+  21:lut_functions.c **** *  uint16 start_value: first value to put in the dac
+  22:lut_functions.c **** *  uint16 end_value: to peak dac value
+  23:lut_functions.c **** *
+  24:lut_functions.c **** * Return:
+  25:lut_functions.c **** *  uint16: how long the look up table is
+  26:lut_functions.c **** *
+  27:lut_functions.c **** * Global variables:
+  28:lut_functions.c **** *  waveform_CV_lut: Array the look up table is stored in
+  29:lut_functions.c **** *
+  30:lut_functions.c **** *******************************************************************************/
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccX1lqZD.s 			page 2
+
+
+  31:lut_functions.c **** 
+  32:lut_functions.c **** uint16 LUT_MakeTriangle_Wave(uint16 start_value, uint16 end_value) {
+  33:lut_functions.c ****     uint16 _lut_index = 0;  // start at the beginning of the lut
+  34:lut_functions.c ****     
+  35:lut_functions.c ****     
+  36:lut_functions.c ****     _lut_index = LUT_make_line(start_value, end_value, 0);
+  37:lut_functions.c ****     
+  38:lut_functions.c ****     _lut_index = LUT_make_line(end_value, start_value, _lut_index-1);
+  39:lut_functions.c ****     waveform_CV_lut[_lut_index] = start_value;  // the DAC is changed before the value is checked i
+  40:lut_functions.c ****     _lut_index++;
+  41:lut_functions.c **** 
+  42:lut_functions.c ****     
+  43:lut_functions.c ****     return _lut_index;  
+  44:lut_functions.c **** }
+  45:lut_functions.c **** 
+  46:lut_functions.c **** 
+  47:lut_functions.c **** 
+  48:lut_functions.c **** /******************************************************************************
+  49:lut_functions.c **** * Function Name: LUT_make_line
+  50:lut_functions.c **** *******************************************************************************
+  51:lut_functions.c **** *
+  52:lut_functions.c **** * Summary:
+  53:lut_functions.c **** *  Make a ramp from start to end in waveform_CV_lut starting at index
+  54:lut_functions.c **** *
+  55:lut_functions.c **** * Parameters:
+  56:lut_functions.c **** *  uint16 start: first value to put in the look up table
+  57:lut_functions.c **** *  uint16 end: end value to put in the look up table
+  58:lut_functions.c **** *  uint16 index: the place to start putting in numbers in the look up table
+  59:lut_functions.c **** *
+  60:lut_functions.c **** * Return:
+  61:lut_functions.c **** *  uint16: first place after the filled in area of the look up table
+  62:lut_functions.c **** *
+  63:lut_functions.c **** * Global variables:
+  64:lut_functions.c **** *  waveform_CV_lut: Array the look up table is stored in
+  65:lut_functions.c **** *
+  66:lut_functions.c **** *******************************************************************************/
+  67:lut_functions.c **** 
+  68:lut_functions.c **** uint16 LUT_make_line(uint16 start, uint16 end, uint16 index) {
+  28              		.loc 1 68 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.LVL0:
+  34 0000 0346     		mov	r3, r0
+  69:lut_functions.c ****     if (start < end) {
+  35              		.loc 1 69 0
+  36 0002 8842     		cmp	r0, r1
+  37 0004 07D3     		bcc	.L2
+  38 0006 10E0     		b	.L3
+  39              	.LVL1:
+  40              	.L4:
+  41              	.LBB2:
+  70:lut_functions.c ****         for (uint16 value = start; value <= end; value++) {  //increasing part of the triangular wa
+  71:lut_functions.c ****             waveform_CV_lut[index] = value;
+  42              		.loc 1 71 0 discriminator 3
+  43 0008 0A48     		ldr	r0, .L7
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccX1lqZD.s 			page 3
+
+
+  44 000a 20F81230 		strh	r3, [r0, r2, lsl #1]	@ movhi
+  72:lut_functions.c ****             index ++;
+  45              		.loc 1 72 0 discriminator 3
+  46 000e 0132     		adds	r2, r2, #1
+  47              	.LVL2:
+  48 0010 92B2     		uxth	r2, r2
+  49              	.LVL3:
+  70:lut_functions.c ****         for (uint16 value = start; value <= end; value++) {  //increasing part of the triangular wa
+  50              		.loc 1 70 0 discriminator 3
+  51 0012 0133     		adds	r3, r3, #1
+  52              	.LVL4:
+  53 0014 9BB2     		uxth	r3, r3
+  54              	.LVL5:
+  55              	.L2:
+  70:lut_functions.c ****         for (uint16 value = start; value <= end; value++) {  //increasing part of the triangular wa
+  56              		.loc 1 70 0 is_stmt 0 discriminator 1
+  57 0016 8B42     		cmp	r3, r1
+  58 0018 F6D9     		bls	.L4
+  59 001a 08E0     		b	.L5
+  60              	.LVL6:
+  61              	.L6:
+  62              	.LBE2:
+  63              	.LBB3:
+  73:lut_functions.c ****         }
+  74:lut_functions.c ****     }
+  75:lut_functions.c ****     else {
+  76:lut_functions.c ****         for (uint16 value = start; value >= end; value--) { //decreasing part of the triangular wav
+  77:lut_functions.c ****             waveform_CV_lut[index] = value;
+  64              		.loc 1 77 0 is_stmt 1 discriminator 3
+  65 001c 0548     		ldr	r0, .L7
+  66 001e 20F81230 		strh	r3, [r0, r2, lsl #1]	@ movhi
+  78:lut_functions.c ****             index ++;
+  67              		.loc 1 78 0 discriminator 3
+  68 0022 0132     		adds	r2, r2, #1
+  69              	.LVL7:
+  70 0024 92B2     		uxth	r2, r2
+  71              	.LVL8:
+  76:lut_functions.c ****             waveform_CV_lut[index] = value;
+  72              		.loc 1 76 0 discriminator 3
+  73 0026 013B     		subs	r3, r3, #1
+  74              	.LVL9:
+  75 0028 9BB2     		uxth	r3, r3
+  76              	.LVL10:
+  77              	.L3:
+  76:lut_functions.c ****             waveform_CV_lut[index] = value;
+  78              		.loc 1 76 0 is_stmt 0 discriminator 1
+  79 002a 8B42     		cmp	r3, r1
+  80 002c F6D2     		bcs	.L6
+  81              	.LVL11:
+  82              	.L5:
+  83              	.LBE3:
+  79:lut_functions.c ****         }
+  80:lut_functions.c ****     }
+  81:lut_functions.c ****     return index;
+  82:lut_functions.c **** }
+  84              		.loc 1 82 0 is_stmt 1
+  85 002e 1046     		mov	r0, r2
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccX1lqZD.s 			page 4
+
+
+  86 0030 7047     		bx	lr
+  87              	.L8:
+  88 0032 00BF     		.align	2
+  89              	.L7:
+  90 0034 00000000 		.word	waveform_CV_lut
+  91              		.cfi_endproc
+  92              	.LFE65:
+  93              		.size	LUT_make_line, .-LUT_make_line
+  94              		.section	.text.LUT_MakeTriangle_Wave,"ax",%progbits
+  95              		.align	2
+  96              		.global	LUT_MakeTriangle_Wave
+  97              		.thumb
+  98              		.thumb_func
+  99              		.type	LUT_MakeTriangle_Wave, %function
+ 100              	LUT_MakeTriangle_Wave:
+ 101              	.LFB64:
+  32:lut_functions.c ****     uint16 _lut_index = 0;  // start at the beginning of the lut
+ 102              		.loc 1 32 0
+ 103              		.cfi_startproc
+ 104              		@ args = 0, pretend = 0, frame = 0
+ 105              		@ frame_needed = 0, uses_anonymous_args = 0
+ 106              	.LVL12:
+ 107 0000 38B5     		push	{r3, r4, r5, lr}
+ 108              		.cfi_def_cfa_offset 16
+ 109              		.cfi_offset 3, -16
+ 110              		.cfi_offset 4, -12
+ 111              		.cfi_offset 5, -8
+ 112              		.cfi_offset 14, -4
+ 113 0002 0446     		mov	r4, r0
+ 114 0004 0D46     		mov	r5, r1
+ 115              	.LVL13:
+  36:lut_functions.c ****     
+ 116              		.loc 1 36 0
+ 117 0006 0022     		movs	r2, #0
+ 118 0008 FFF7FEFF 		bl	LUT_make_line
+ 119              	.LVL14:
+  38:lut_functions.c ****     waveform_CV_lut[_lut_index] = start_value;  // the DAC is changed before the value is checked i
+ 120              		.loc 1 38 0
+ 121 000c 421E     		subs	r2, r0, #1
+ 122 000e 92B2     		uxth	r2, r2
+ 123 0010 2146     		mov	r1, r4
+ 124 0012 2846     		mov	r0, r5
+ 125              	.LVL15:
+ 126 0014 FFF7FEFF 		bl	LUT_make_line
+ 127              	.LVL16:
+  39:lut_functions.c ****     _lut_index++;
+ 128              		.loc 1 39 0
+ 129 0018 024B     		ldr	r3, .L11
+ 130 001a 23F81040 		strh	r4, [r3, r0, lsl #1]	@ movhi
+  40:lut_functions.c **** 
+ 131              		.loc 1 40 0
+ 132 001e 0130     		adds	r0, r0, #1
+ 133              	.LVL17:
+  44:lut_functions.c **** 
+ 134              		.loc 1 44 0
+ 135 0020 80B2     		uxth	r0, r0
+ 136 0022 38BD     		pop	{r3, r4, r5, pc}
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccX1lqZD.s 			page 5
+
+
+ 137              	.L12:
+ 138              		.align	2
+ 139              	.L11:
+ 140 0024 00000000 		.word	waveform_CV_lut
+ 141              		.cfi_endproc
+ 142              	.LFE64:
+ 143              		.size	LUT_MakeTriangle_Wave, .-LUT_MakeTriangle_Wave
+ 144              		.section	.text.LUT_MakePulse,"ax",%progbits
+ 145              		.align	2
+ 146              		.global	LUT_MakePulse
+ 147              		.thumb
+ 148              		.thumb_func
+ 149              		.type	LUT_MakePulse, %function
+ 150              	LUT_MakePulse:
+ 151              	.LFB66:
+  83:lut_functions.c **** 
+  84:lut_functions.c **** /******************************************************************************
+  85:lut_functions.c **** * Function Name: LUT_MakePulse
+  86:lut_functions.c **** *******************************************************************************
+  87:lut_functions.c **** *
+  88:lut_functions.c **** * Summary:
+  89:lut_functions.c **** *  Make a look up table that stores a square pulse sequence
+  90:lut_functions.c **** *  Quick hack for chronoamperomerty
+  91:lut_functions.c **** *  TODO: THIS SHOULD BE REPLACED
+  92:lut_functions.c **** *
+  93:lut_functions.c **** * Parameters:
+  94:lut_functions.c **** *  uint16 base: value to be placed in the DAC to maintain the baseline potential
+  95:lut_functions.c **** *  uint16 pulse: value to put in the DAC for the voltage pulse
+  96:lut_functions.c **** *
+  97:lut_functions.c **** * Global variables:
+  98:lut_functions.c **** *  waveform_amp_lut: Array the look up table is stored in
+  99:lut_functions.c **** *
+ 100:lut_functions.c **** *******************************************************************************/
+ 101:lut_functions.c **** 
+ 102:lut_functions.c **** void LUT_MakePulse(uint16 base, uint16 pulse) {
+ 152              		.loc 1 102 0
+ 153              		.cfi_startproc
+ 154              		@ args = 0, pretend = 0, frame = 0
+ 155              		@ frame_needed = 0, uses_anonymous_args = 0
+ 156              		@ link register save eliminated.
+ 157              	.LVL18:
+ 103:lut_functions.c ****     int _lut_index = 0;
+ 158              		.loc 1 103 0
+ 159 0000 0023     		movs	r3, #0
+ 104:lut_functions.c ****     while (_lut_index < 100) {  //set the base value for the first 100 values (@10 ms (i.e. 100Hz),
+ 160              		.loc 1 104 0
+ 161 0002 03E0     		b	.L14
+ 162              	.LVL19:
+ 163              	.L15:
+ 105:lut_functions.c ****         waveform_amp_lut[_lut_index] = base;
+ 164              		.loc 1 105 0
+ 165 0004 074A     		ldr	r2, .L18
+ 166 0006 22F81300 		strh	r0, [r2, r3, lsl #1]	@ movhi
+ 106:lut_functions.c ****         _lut_index++;
+ 167              		.loc 1 106 0
+ 168 000a 0133     		adds	r3, r3, #1
+ 169              	.LVL20:
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccX1lqZD.s 			page 6
+
+
+ 170              	.L14:
+ 104:lut_functions.c ****     while (_lut_index < 100) {  //set the base value for the first 100 values (@10 ms (i.e. 100Hz),
+ 171              		.loc 1 104 0
+ 172 000c 632B     		cmp	r3, #99
+ 173 000e F9DD     		ble	.L15
+ 174 0010 03E0     		b	.L16
+ 175              	.L17:
+ 107:lut_functions.c ****     }
+ 108:lut_functions.c ****     while (_lut_index < 2000) { //set the pulse value for the following 1900 values (@10 ms (i.e. 1
+ 109:lut_functions.c ****         waveform_amp_lut[_lut_index] = pulse;
+ 176              		.loc 1 109 0
+ 177 0012 044A     		ldr	r2, .L18
+ 178 0014 22F81310 		strh	r1, [r2, r3, lsl #1]	@ movhi
+ 110:lut_functions.c ****         _lut_index++;
+ 179              		.loc 1 110 0
+ 180 0018 0133     		adds	r3, r3, #1
+ 181              	.LVL21:
+ 182              	.L16:
+ 108:lut_functions.c ****         waveform_amp_lut[_lut_index] = pulse;
+ 183              		.loc 1 108 0
+ 184 001a B3F5FA6F 		cmp	r3, #2000
+ 185 001e F8DB     		blt	.L17
+ 111:lut_functions.c ****     }
+ 112:lut_functions.c **** 
+ 113:lut_functions.c **** }
+ 186              		.loc 1 113 0
+ 187 0020 7047     		bx	lr
+ 188              	.L19:
+ 189 0022 00BF     		.align	2
+ 190              	.L18:
+ 191 0024 00000000 		.word	waveform_amp_lut
+ 192              		.cfi_endproc
+ 193              	.LFE66:
+ 194              		.size	LUT_MakePulse, .-LUT_MakePulse
+ 195              		.comm	command_lenght,1,1
+ 196              		.comm	command,40,4
+ 197              		.comm	potential_max_current,2,2
+ 198              		.comm	end_dac_value,2,2
+ 199              		.comm	start_dac_value,2,2
+ 200              		.comm	uA_per_adc_count,4,4
+ 201              		.comm	ADC_CV_array,10000,4
+ 202              		.comm	lut_length,2,2
+ 203              		.comm	lut_index,2,2
+ 204              		.comm	waveform_amp_lut,4000,4
+ 205              		.comm	waveform_CV_lut,10000,4
+ 206              		.comm	lut_value,2,2
+ 207              		.comm	dac_ground_value,2,2
+ 208              		.comm	Input_Flag,1,1
+ 209              		.text
+ 210              	.Letext0:
+ 211              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 212              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 213              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 214              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 215              		.file 6 "Global_variables.h"
+ 216              		.section	.debug_info,"",%progbits
+ 217              	.Ldebug_info0:
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccX1lqZD.s 			page 7
+
+
+ 218 0000 64030000 		.4byte	0x364
+ 219 0004 0400     		.2byte	0x4
+ 220 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 221 000a 04       		.byte	0x4
+ 222 000b 01       		.uleb128 0x1
+ 223 000c 1F010000 		.4byte	.LASF49
+ 224 0010 0C       		.byte	0xc
+ 225 0011 C8010000 		.4byte	.LASF50
+ 226 0015 6E000000 		.4byte	.LASF51
+ 227 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 228 001d 00000000 		.4byte	0
+ 229 0021 00000000 		.4byte	.Ldebug_line0
+ 230 0025 02       		.uleb128 0x2
+ 231 0026 01       		.byte	0x1
+ 232 0027 06       		.byte	0x6
+ 233 0028 F9020000 		.4byte	.LASF0
+ 234 002c 03       		.uleb128 0x3
+ 235 002d 17000000 		.4byte	.LASF3
+ 236 0031 02       		.byte	0x2
+ 237 0032 1D       		.byte	0x1d
+ 238 0033 37000000 		.4byte	0x37
+ 239 0037 02       		.uleb128 0x2
+ 240 0038 01       		.byte	0x1
+ 241 0039 08       		.byte	0x8
+ 242 003a F8010000 		.4byte	.LASF1
+ 243 003e 02       		.uleb128 0x2
+ 244 003f 02       		.byte	0x2
+ 245 0040 05       		.byte	0x5
+ 246 0041 BC020000 		.4byte	.LASF2
+ 247 0045 03       		.uleb128 0x3
+ 248 0046 06020000 		.4byte	.LASF4
+ 249 004a 02       		.byte	0x2
+ 250 004b 2B       		.byte	0x2b
+ 251 004c 50000000 		.4byte	0x50
+ 252 0050 02       		.uleb128 0x2
+ 253 0051 02       		.byte	0x2
+ 254 0052 07       		.byte	0x7
+ 255 0053 D8010000 		.4byte	.LASF5
+ 256 0057 03       		.uleb128 0x3
+ 257 0058 27000000 		.4byte	.LASF6
+ 258 005c 02       		.byte	0x2
+ 259 005d 3F       		.byte	0x3f
+ 260 005e 62000000 		.4byte	0x62
+ 261 0062 02       		.uleb128 0x2
+ 262 0063 04       		.byte	0x4
+ 263 0064 05       		.byte	0x5
+ 264 0065 31000000 		.4byte	.LASF7
+ 265 0069 02       		.uleb128 0x2
+ 266 006a 04       		.byte	0x4
+ 267 006b 07       		.byte	0x7
+ 268 006c 11020000 		.4byte	.LASF8
+ 269 0070 02       		.uleb128 0x2
+ 270 0071 08       		.byte	0x8
+ 271 0072 05       		.byte	0x5
+ 272 0073 8F020000 		.4byte	.LASF9
+ 273 0077 02       		.uleb128 0x2
+ 274 0078 08       		.byte	0x8
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccX1lqZD.s 			page 8
+
+
+ 275 0079 07       		.byte	0x7
+ 276 007a 3D020000 		.4byte	.LASF10
+ 277 007e 04       		.uleb128 0x4
+ 278 007f 04       		.byte	0x4
+ 279 0080 05       		.byte	0x5
+ 280 0081 696E7400 		.ascii	"int\000"
+ 281 0085 02       		.uleb128 0x2
+ 282 0086 04       		.byte	0x4
+ 283 0087 07       		.byte	0x7
+ 284 0088 2A020000 		.4byte	.LASF11
+ 285 008c 03       		.uleb128 0x3
+ 286 008d 54020000 		.4byte	.LASF12
+ 287 0091 03       		.byte	0x3
+ 288 0092 18       		.byte	0x18
+ 289 0093 2C000000 		.4byte	0x2c
+ 290 0097 03       		.uleb128 0x3
+ 291 0098 B3020000 		.4byte	.LASF13
+ 292 009c 03       		.byte	0x3
+ 293 009d 24       		.byte	0x24
+ 294 009e 45000000 		.4byte	0x45
+ 295 00a2 03       		.uleb128 0x3
+ 296 00a3 7E020000 		.4byte	.LASF14
+ 297 00a7 03       		.byte	0x3
+ 298 00a8 2C       		.byte	0x2c
+ 299 00a9 57000000 		.4byte	0x57
+ 300 00ad 05       		.uleb128 0x5
+ 301 00ae 68000000 		.4byte	.LASF15
+ 302 00b2 04       		.byte	0x4
+ 303 00b3 E901     		.2byte	0x1e9
+ 304 00b5 37000000 		.4byte	0x37
+ 305 00b9 05       		.uleb128 0x5
+ 306 00ba 23020000 		.4byte	.LASF16
+ 307 00be 04       		.byte	0x4
+ 308 00bf EA01     		.2byte	0x1ea
+ 309 00c1 50000000 		.4byte	0x50
+ 310 00c5 05       		.uleb128 0x5
+ 311 00c6 BD010000 		.4byte	.LASF17
+ 312 00ca 04       		.byte	0x4
+ 313 00cb ED01     		.2byte	0x1ed
+ 314 00cd 3E000000 		.4byte	0x3e
+ 315 00d1 05       		.uleb128 0x5
+ 316 00d2 E5020000 		.4byte	.LASF18
+ 317 00d6 04       		.byte	0x4
+ 318 00d7 EF01     		.2byte	0x1ef
+ 319 00d9 DD000000 		.4byte	0xdd
+ 320 00dd 02       		.uleb128 0x2
+ 321 00de 04       		.byte	0x4
+ 322 00df 04       		.byte	0x4
+ 323 00e0 F0000000 		.4byte	.LASF19
+ 324 00e4 02       		.uleb128 0x2
+ 325 00e5 08       		.byte	0x8
+ 326 00e6 04       		.byte	0x4
+ 327 00e7 6D020000 		.4byte	.LASF20
+ 328 00eb 02       		.uleb128 0x2
+ 329 00ec 01       		.byte	0x1
+ 330 00ed 08       		.byte	0x8
+ 331 00ee 9D020000 		.4byte	.LASF21
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccX1lqZD.s 			page 9
+
+
+ 332 00f2 02       		.uleb128 0x2
+ 333 00f3 08       		.byte	0x8
+ 334 00f4 04       		.byte	0x4
+ 335 00f5 ED020000 		.4byte	.LASF22
+ 336 00f9 02       		.uleb128 0x2
+ 337 00fa 04       		.byte	0x4
+ 338 00fb 07       		.byte	0x7
+ 339 00fc 86020000 		.4byte	.LASF23
+ 340 0100 06       		.uleb128 0x6
+ 341 0101 D7000000 		.4byte	.LASF27
+ 342 0105 01       		.byte	0x1
+ 343 0106 44       		.byte	0x44
+ 344 0107 B9000000 		.4byte	0xb9
+ 345 010b 00000000 		.4byte	.LFB65
+ 346 010f 38000000 		.4byte	.LFE65-.LFB65
+ 347 0113 01       		.uleb128 0x1
+ 348 0114 9C       		.byte	0x9c
+ 349 0115 7B010000 		.4byte	0x17b
+ 350 0119 07       		.uleb128 0x7
+ 351 011a 37020000 		.4byte	.LASF24
+ 352 011e 01       		.byte	0x1
+ 353 011f 44       		.byte	0x44
+ 354 0120 B9000000 		.4byte	0xb9
+ 355 0124 00000000 		.4byte	.LLST0
+ 356 0128 08       		.uleb128 0x8
+ 357 0129 656E6400 		.ascii	"end\000"
+ 358 012d 01       		.byte	0x1
+ 359 012e 44       		.byte	0x44
+ 360 012f B9000000 		.4byte	0xb9
+ 361 0133 01       		.uleb128 0x1
+ 362 0134 51       		.byte	0x51
+ 363 0135 07       		.uleb128 0x7
+ 364 0136 D4020000 		.4byte	.LASF25
+ 365 013a 01       		.byte	0x1
+ 366 013b 44       		.byte	0x44
+ 367 013c B9000000 		.4byte	0xb9
+ 368 0140 21000000 		.4byte	.LLST1
+ 369 0144 09       		.uleb128 0x9
+ 370 0145 08000000 		.4byte	.LBB2
+ 371 0149 14000000 		.4byte	.LBE2-.LBB2
+ 372 014d 61010000 		.4byte	0x161
+ 373 0151 0A       		.uleb128 0xa
+ 374 0152 21000000 		.4byte	.LASF26
+ 375 0156 01       		.byte	0x1
+ 376 0157 46       		.byte	0x46
+ 377 0158 B9000000 		.4byte	0xb9
+ 378 015c 4A000000 		.4byte	.LLST2
+ 379 0160 00       		.byte	0
+ 380 0161 0B       		.uleb128 0xb
+ 381 0162 1C000000 		.4byte	.LBB3
+ 382 0166 12000000 		.4byte	.LBE3-.LBB3
+ 383 016a 0A       		.uleb128 0xa
+ 384 016b 21000000 		.4byte	.LASF26
+ 385 016f 01       		.byte	0x1
+ 386 0170 4C       		.byte	0x4c
+ 387 0171 B9000000 		.4byte	0xb9
+ 388 0175 68000000 		.4byte	.LLST3
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccX1lqZD.s 			page 10
+
+
+ 389 0179 00       		.byte	0
+ 390 017a 00       		.byte	0
+ 391 017b 06       		.uleb128 0x6
+ 392 017c C1000000 		.4byte	.LASF28
+ 393 0180 01       		.byte	0x1
+ 394 0181 20       		.byte	0x20
+ 395 0182 B9000000 		.4byte	0xb9
+ 396 0186 00000000 		.4byte	.LFB64
+ 397 018a 28000000 		.4byte	.LFE64-.LFB64
+ 398 018e 01       		.uleb128 0x1
+ 399 018f 9C       		.byte	0x9c
+ 400 0190 F7010000 		.4byte	0x1f7
+ 401 0194 07       		.uleb128 0x7
+ 402 0195 13010000 		.4byte	.LASF29
+ 403 0199 01       		.byte	0x1
+ 404 019a 20       		.byte	0x20
+ 405 019b B9000000 		.4byte	0xb9
+ 406 019f 86000000 		.4byte	.LLST4
+ 407 01a3 07       		.uleb128 0x7
+ 408 01a4 45000000 		.4byte	.LASF30
+ 409 01a8 01       		.byte	0x1
+ 410 01a9 20       		.byte	0x20
+ 411 01aa B9000000 		.4byte	0xb9
+ 412 01ae A7000000 		.4byte	.LLST5
+ 413 01b2 0A       		.uleb128 0xa
+ 414 01b3 E5000000 		.4byte	.LASF31
+ 415 01b7 01       		.byte	0x1
+ 416 01b8 21       		.byte	0x21
+ 417 01b9 B9000000 		.4byte	0xb9
+ 418 01bd C8000000 		.4byte	.LLST6
+ 419 01c1 0C       		.uleb128 0xc
+ 420 01c2 0C000000 		.4byte	.LVL14
+ 421 01c6 00010000 		.4byte	0x100
+ 422 01ca E0010000 		.4byte	0x1e0
+ 423 01ce 0D       		.uleb128 0xd
+ 424 01cf 01       		.uleb128 0x1
+ 425 01d0 50       		.byte	0x50
+ 426 01d1 02       		.uleb128 0x2
+ 427 01d2 74       		.byte	0x74
+ 428 01d3 00       		.sleb128 0
+ 429 01d4 0D       		.uleb128 0xd
+ 430 01d5 01       		.uleb128 0x1
+ 431 01d6 51       		.byte	0x51
+ 432 01d7 02       		.uleb128 0x2
+ 433 01d8 75       		.byte	0x75
+ 434 01d9 00       		.sleb128 0
+ 435 01da 0D       		.uleb128 0xd
+ 436 01db 01       		.uleb128 0x1
+ 437 01dc 52       		.byte	0x52
+ 438 01dd 01       		.uleb128 0x1
+ 439 01de 30       		.byte	0x30
+ 440 01df 00       		.byte	0
+ 441 01e0 0E       		.uleb128 0xe
+ 442 01e1 18000000 		.4byte	.LVL16
+ 443 01e5 00010000 		.4byte	0x100
+ 444 01e9 0D       		.uleb128 0xd
+ 445 01ea 01       		.uleb128 0x1
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccX1lqZD.s 			page 11
+
+
+ 446 01eb 50       		.byte	0x50
+ 447 01ec 02       		.uleb128 0x2
+ 448 01ed 75       		.byte	0x75
+ 449 01ee 00       		.sleb128 0
+ 450 01ef 0D       		.uleb128 0xd
+ 451 01f0 01       		.uleb128 0x1
+ 452 01f1 51       		.byte	0x51
+ 453 01f2 02       		.uleb128 0x2
+ 454 01f3 74       		.byte	0x74
+ 455 01f4 00       		.sleb128 0
+ 456 01f5 00       		.byte	0
+ 457 01f6 00       		.byte	0
+ 458 01f7 0F       		.uleb128 0xf
+ 459 01f8 C6020000 		.4byte	.LASF52
+ 460 01fc 01       		.byte	0x1
+ 461 01fd 66       		.byte	0x66
+ 462 01fe 00000000 		.4byte	.LFB66
+ 463 0202 28000000 		.4byte	.LFE66-.LFB66
+ 464 0206 01       		.uleb128 0x1
+ 465 0207 9C       		.byte	0x9c
+ 466 0208 36020000 		.4byte	0x236
+ 467 020c 10       		.uleb128 0x10
+ 468 020d C3010000 		.4byte	.LASF32
+ 469 0211 01       		.byte	0x1
+ 470 0212 66       		.byte	0x66
+ 471 0213 B9000000 		.4byte	0xb9
+ 472 0217 01       		.uleb128 0x1
+ 473 0218 50       		.byte	0x50
+ 474 0219 10       		.uleb128 0x10
+ 475 021a 1B030000 		.4byte	.LASF33
+ 476 021e 01       		.byte	0x1
+ 477 021f 66       		.byte	0x66
+ 478 0220 B9000000 		.4byte	0xb9
+ 479 0224 01       		.uleb128 0x1
+ 480 0225 51       		.byte	0x51
+ 481 0226 0A       		.uleb128 0xa
+ 482 0227 E5000000 		.4byte	.LASF31
+ 483 022b 01       		.byte	0x1
+ 484 022c 67       		.byte	0x67
+ 485 022d 7E000000 		.4byte	0x7e
+ 486 0231 F2000000 		.4byte	.LLST7
+ 487 0235 00       		.byte	0
+ 488 0236 11       		.uleb128 0x11
+ 489 0237 EB010000 		.4byte	.LASF34
+ 490 023b 05       		.byte	0x5
+ 491 023c 1207     		.2byte	0x712
+ 492 023e 42020000 		.4byte	0x242
+ 493 0242 12       		.uleb128 0x12
+ 494 0243 A2000000 		.4byte	0xa2
+ 495 0247 13       		.uleb128 0x13
+ 496 0248 B9000000 		.4byte	0xb9
+ 497 024c 58020000 		.4byte	0x258
+ 498 0250 14       		.uleb128 0x14
+ 499 0251 F9000000 		.4byte	0xf9
+ 500 0255 8713     		.2byte	0x1387
+ 501 0257 00       		.byte	0
+ 502 0258 15       		.uleb128 0x15
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccX1lqZD.s 			page 12
+
+
+ 503 0259 AD010000 		.4byte	.LASF35
+ 504 025d 06       		.byte	0x6
+ 505 025e 40       		.byte	0x40
+ 506 025f 47020000 		.4byte	0x247
+ 507 0263 05       		.uleb128 0x5
+ 508 0264 03       		.byte	0x3
+ 509 0265 00000000 		.4byte	waveform_CV_lut
+ 510 0269 13       		.uleb128 0x13
+ 511 026a B9000000 		.4byte	0xb9
+ 512 026e 7A020000 		.4byte	0x27a
+ 513 0272 14       		.uleb128 0x14
+ 514 0273 F9000000 		.4byte	0xf9
+ 515 0277 CF07     		.2byte	0x7cf
+ 516 0279 00       		.byte	0
+ 517 027a 15       		.uleb128 0x15
+ 518 027b 5C020000 		.4byte	.LASF36
+ 519 027f 06       		.byte	0x6
+ 520 0280 41       		.byte	0x41
+ 521 0281 69020000 		.4byte	0x269
+ 522 0285 05       		.uleb128 0x5
+ 523 0286 03       		.byte	0x3
+ 524 0287 00000000 		.4byte	waveform_amp_lut
+ 525 028b 15       		.uleb128 0x15
+ 526 028c 3A000000 		.4byte	.LASF37
+ 527 0290 06       		.byte	0x6
+ 528 0291 1B       		.byte	0x1b
+ 529 0292 AD000000 		.4byte	0xad
+ 530 0296 05       		.uleb128 0x5
+ 531 0297 03       		.byte	0x3
+ 532 0298 00000000 		.4byte	Input_Flag
+ 533 029c 15       		.uleb128 0x15
+ 534 029d 57000000 		.4byte	.LASF38
+ 535 02a1 06       		.byte	0x6
+ 536 02a2 3B       		.byte	0x3b
+ 537 02a3 B9000000 		.4byte	0xb9
+ 538 02a7 05       		.uleb128 0x5
+ 539 02a8 03       		.byte	0x3
+ 540 02a9 00000000 		.4byte	dac_ground_value
+ 541 02ad 15       		.uleb128 0x15
+ 542 02ae 00000000 		.4byte	.LASF39
+ 543 02b2 06       		.byte	0x6
+ 544 02b3 3F       		.byte	0x3f
+ 545 02b4 B9000000 		.4byte	0xb9
+ 546 02b8 05       		.uleb128 0x5
+ 547 02b9 03       		.byte	0x3
+ 548 02ba 00000000 		.4byte	lut_value
+ 549 02be 15       		.uleb128 0x15
+ 550 02bf 74020000 		.4byte	.LASF40
+ 551 02c3 06       		.byte	0x6
+ 552 02c4 42       		.byte	0x42
+ 553 02c5 B9000000 		.4byte	0xb9
+ 554 02c9 05       		.uleb128 0x5
+ 555 02ca 03       		.byte	0x3
+ 556 02cb 00000000 		.4byte	lut_index
+ 557 02cf 15       		.uleb128 0x15
+ 558 02d0 DA020000 		.4byte	.LASF41
+ 559 02d4 06       		.byte	0x6
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccX1lqZD.s 			page 13
+
+
+ 560 02d5 43       		.byte	0x43
+ 561 02d6 97000000 		.4byte	0x97
+ 562 02da 05       		.uleb128 0x5
+ 563 02db 03       		.byte	0x3
+ 564 02dc 00000000 		.4byte	lut_length
+ 565 02e0 15       		.uleb128 0x15
+ 566 02e1 0A000000 		.4byte	.LASF42
+ 567 02e5 06       		.byte	0x6
+ 568 02e6 44       		.byte	0x44
+ 569 02e7 47020000 		.4byte	0x247
+ 570 02eb 05       		.uleb128 0x5
+ 571 02ec 03       		.byte	0x3
+ 572 02ed 00000000 		.4byte	ADC_CV_array
+ 573 02f1 15       		.uleb128 0x15
+ 574 02f2 A2020000 		.4byte	.LASF43
+ 575 02f6 06       		.byte	0x6
+ 576 02f7 45       		.byte	0x45
+ 577 02f8 D1000000 		.4byte	0xd1
+ 578 02fc 05       		.uleb128 0x5
+ 579 02fd 03       		.byte	0x3
+ 580 02fe 00000000 		.4byte	uA_per_adc_count
+ 581 0302 15       		.uleb128 0x15
+ 582 0303 21030000 		.4byte	.LASF44
+ 583 0307 06       		.byte	0x6
+ 584 0308 48       		.byte	0x48
+ 585 0309 B9000000 		.4byte	0xb9
+ 586 030d 05       		.uleb128 0x5
+ 587 030e 03       		.byte	0x3
+ 588 030f 00000000 		.4byte	start_dac_value
+ 589 0313 15       		.uleb128 0x15
+ 590 0314 F6000000 		.4byte	.LASF45
+ 591 0318 06       		.byte	0x6
+ 592 0319 49       		.byte	0x49
+ 593 031a B9000000 		.4byte	0xb9
+ 594 031e 05       		.uleb128 0x5
+ 595 031f 03       		.byte	0x3
+ 596 0320 00000000 		.4byte	end_dac_value
+ 597 0324 15       		.uleb128 0x15
+ 598 0325 05030000 		.4byte	.LASF46
+ 599 0329 06       		.byte	0x6
+ 600 032a 4A       		.byte	0x4a
+ 601 032b C5000000 		.4byte	0xc5
+ 602 032f 05       		.uleb128 0x5
+ 603 0330 03       		.byte	0x3
+ 604 0331 00000000 		.4byte	potential_max_current
+ 605 0335 13       		.uleb128 0x13
+ 606 0336 8C000000 		.4byte	0x8c
+ 607 033a 45030000 		.4byte	0x345
+ 608 033e 16       		.uleb128 0x16
+ 609 033f F9000000 		.4byte	0xf9
+ 610 0343 27       		.byte	0x27
+ 611 0344 00       		.byte	0
+ 612 0345 15       		.uleb128 0x15
+ 613 0346 4F000000 		.4byte	.LASF47
+ 614 034a 06       		.byte	0x6
+ 615 034b 4F       		.byte	0x4f
+ 616 034c 35030000 		.4byte	0x335
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccX1lqZD.s 			page 14
+
+
+ 617 0350 05       		.uleb128 0x5
+ 618 0351 03       		.byte	0x3
+ 619 0352 00000000 		.4byte	command
+ 620 0356 15       		.uleb128 0x15
+ 621 0357 04010000 		.4byte	.LASF48
+ 622 035b 06       		.byte	0x6
+ 623 035c 50       		.byte	0x50
+ 624 035d 8C000000 		.4byte	0x8c
+ 625 0361 05       		.uleb128 0x5
+ 626 0362 03       		.byte	0x3
+ 627 0363 00000000 		.4byte	command_lenght
+ 628 0367 00       		.byte	0
+ 629              		.section	.debug_abbrev,"",%progbits
+ 630              	.Ldebug_abbrev0:
+ 631 0000 01       		.uleb128 0x1
+ 632 0001 11       		.uleb128 0x11
+ 633 0002 01       		.byte	0x1
+ 634 0003 25       		.uleb128 0x25
+ 635 0004 0E       		.uleb128 0xe
+ 636 0005 13       		.uleb128 0x13
+ 637 0006 0B       		.uleb128 0xb
+ 638 0007 03       		.uleb128 0x3
+ 639 0008 0E       		.uleb128 0xe
+ 640 0009 1B       		.uleb128 0x1b
+ 641 000a 0E       		.uleb128 0xe
+ 642 000b 55       		.uleb128 0x55
+ 643 000c 17       		.uleb128 0x17
+ 644 000d 11       		.uleb128 0x11
+ 645 000e 01       		.uleb128 0x1
+ 646 000f 10       		.uleb128 0x10
+ 647 0010 17       		.uleb128 0x17
+ 648 0011 00       		.byte	0
+ 649 0012 00       		.byte	0
+ 650 0013 02       		.uleb128 0x2
+ 651 0014 24       		.uleb128 0x24
+ 652 0015 00       		.byte	0
+ 653 0016 0B       		.uleb128 0xb
+ 654 0017 0B       		.uleb128 0xb
+ 655 0018 3E       		.uleb128 0x3e
+ 656 0019 0B       		.uleb128 0xb
+ 657 001a 03       		.uleb128 0x3
+ 658 001b 0E       		.uleb128 0xe
+ 659 001c 00       		.byte	0
+ 660 001d 00       		.byte	0
+ 661 001e 03       		.uleb128 0x3
+ 662 001f 16       		.uleb128 0x16
+ 663 0020 00       		.byte	0
+ 664 0021 03       		.uleb128 0x3
+ 665 0022 0E       		.uleb128 0xe
+ 666 0023 3A       		.uleb128 0x3a
+ 667 0024 0B       		.uleb128 0xb
+ 668 0025 3B       		.uleb128 0x3b
+ 669 0026 0B       		.uleb128 0xb
+ 670 0027 49       		.uleb128 0x49
+ 671 0028 13       		.uleb128 0x13
+ 672 0029 00       		.byte	0
+ 673 002a 00       		.byte	0
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccX1lqZD.s 			page 15
+
+
+ 674 002b 04       		.uleb128 0x4
+ 675 002c 24       		.uleb128 0x24
+ 676 002d 00       		.byte	0
+ 677 002e 0B       		.uleb128 0xb
+ 678 002f 0B       		.uleb128 0xb
+ 679 0030 3E       		.uleb128 0x3e
+ 680 0031 0B       		.uleb128 0xb
+ 681 0032 03       		.uleb128 0x3
+ 682 0033 08       		.uleb128 0x8
+ 683 0034 00       		.byte	0
+ 684 0035 00       		.byte	0
+ 685 0036 05       		.uleb128 0x5
+ 686 0037 16       		.uleb128 0x16
+ 687 0038 00       		.byte	0
+ 688 0039 03       		.uleb128 0x3
+ 689 003a 0E       		.uleb128 0xe
+ 690 003b 3A       		.uleb128 0x3a
+ 691 003c 0B       		.uleb128 0xb
+ 692 003d 3B       		.uleb128 0x3b
+ 693 003e 05       		.uleb128 0x5
+ 694 003f 49       		.uleb128 0x49
+ 695 0040 13       		.uleb128 0x13
+ 696 0041 00       		.byte	0
+ 697 0042 00       		.byte	0
+ 698 0043 06       		.uleb128 0x6
+ 699 0044 2E       		.uleb128 0x2e
+ 700 0045 01       		.byte	0x1
+ 701 0046 3F       		.uleb128 0x3f
+ 702 0047 19       		.uleb128 0x19
+ 703 0048 03       		.uleb128 0x3
+ 704 0049 0E       		.uleb128 0xe
+ 705 004a 3A       		.uleb128 0x3a
+ 706 004b 0B       		.uleb128 0xb
+ 707 004c 3B       		.uleb128 0x3b
+ 708 004d 0B       		.uleb128 0xb
+ 709 004e 27       		.uleb128 0x27
+ 710 004f 19       		.uleb128 0x19
+ 711 0050 49       		.uleb128 0x49
+ 712 0051 13       		.uleb128 0x13
+ 713 0052 11       		.uleb128 0x11
+ 714 0053 01       		.uleb128 0x1
+ 715 0054 12       		.uleb128 0x12
+ 716 0055 06       		.uleb128 0x6
+ 717 0056 40       		.uleb128 0x40
+ 718 0057 18       		.uleb128 0x18
+ 719 0058 9742     		.uleb128 0x2117
+ 720 005a 19       		.uleb128 0x19
+ 721 005b 01       		.uleb128 0x1
+ 722 005c 13       		.uleb128 0x13
+ 723 005d 00       		.byte	0
+ 724 005e 00       		.byte	0
+ 725 005f 07       		.uleb128 0x7
+ 726 0060 05       		.uleb128 0x5
+ 727 0061 00       		.byte	0
+ 728 0062 03       		.uleb128 0x3
+ 729 0063 0E       		.uleb128 0xe
+ 730 0064 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccX1lqZD.s 			page 16
+
+
+ 731 0065 0B       		.uleb128 0xb
+ 732 0066 3B       		.uleb128 0x3b
+ 733 0067 0B       		.uleb128 0xb
+ 734 0068 49       		.uleb128 0x49
+ 735 0069 13       		.uleb128 0x13
+ 736 006a 02       		.uleb128 0x2
+ 737 006b 17       		.uleb128 0x17
+ 738 006c 00       		.byte	0
+ 739 006d 00       		.byte	0
+ 740 006e 08       		.uleb128 0x8
+ 741 006f 05       		.uleb128 0x5
+ 742 0070 00       		.byte	0
+ 743 0071 03       		.uleb128 0x3
+ 744 0072 08       		.uleb128 0x8
+ 745 0073 3A       		.uleb128 0x3a
+ 746 0074 0B       		.uleb128 0xb
+ 747 0075 3B       		.uleb128 0x3b
+ 748 0076 0B       		.uleb128 0xb
+ 749 0077 49       		.uleb128 0x49
+ 750 0078 13       		.uleb128 0x13
+ 751 0079 02       		.uleb128 0x2
+ 752 007a 18       		.uleb128 0x18
+ 753 007b 00       		.byte	0
+ 754 007c 00       		.byte	0
+ 755 007d 09       		.uleb128 0x9
+ 756 007e 0B       		.uleb128 0xb
+ 757 007f 01       		.byte	0x1
+ 758 0080 11       		.uleb128 0x11
+ 759 0081 01       		.uleb128 0x1
+ 760 0082 12       		.uleb128 0x12
+ 761 0083 06       		.uleb128 0x6
+ 762 0084 01       		.uleb128 0x1
+ 763 0085 13       		.uleb128 0x13
+ 764 0086 00       		.byte	0
+ 765 0087 00       		.byte	0
+ 766 0088 0A       		.uleb128 0xa
+ 767 0089 34       		.uleb128 0x34
+ 768 008a 00       		.byte	0
+ 769 008b 03       		.uleb128 0x3
+ 770 008c 0E       		.uleb128 0xe
+ 771 008d 3A       		.uleb128 0x3a
+ 772 008e 0B       		.uleb128 0xb
+ 773 008f 3B       		.uleb128 0x3b
+ 774 0090 0B       		.uleb128 0xb
+ 775 0091 49       		.uleb128 0x49
+ 776 0092 13       		.uleb128 0x13
+ 777 0093 02       		.uleb128 0x2
+ 778 0094 17       		.uleb128 0x17
+ 779 0095 00       		.byte	0
+ 780 0096 00       		.byte	0
+ 781 0097 0B       		.uleb128 0xb
+ 782 0098 0B       		.uleb128 0xb
+ 783 0099 01       		.byte	0x1
+ 784 009a 11       		.uleb128 0x11
+ 785 009b 01       		.uleb128 0x1
+ 786 009c 12       		.uleb128 0x12
+ 787 009d 06       		.uleb128 0x6
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccX1lqZD.s 			page 17
+
+
+ 788 009e 00       		.byte	0
+ 789 009f 00       		.byte	0
+ 790 00a0 0C       		.uleb128 0xc
+ 791 00a1 898201   		.uleb128 0x4109
+ 792 00a4 01       		.byte	0x1
+ 793 00a5 11       		.uleb128 0x11
+ 794 00a6 01       		.uleb128 0x1
+ 795 00a7 31       		.uleb128 0x31
+ 796 00a8 13       		.uleb128 0x13
+ 797 00a9 01       		.uleb128 0x1
+ 798 00aa 13       		.uleb128 0x13
+ 799 00ab 00       		.byte	0
+ 800 00ac 00       		.byte	0
+ 801 00ad 0D       		.uleb128 0xd
+ 802 00ae 8A8201   		.uleb128 0x410a
+ 803 00b1 00       		.byte	0
+ 804 00b2 02       		.uleb128 0x2
+ 805 00b3 18       		.uleb128 0x18
+ 806 00b4 9142     		.uleb128 0x2111
+ 807 00b6 18       		.uleb128 0x18
+ 808 00b7 00       		.byte	0
+ 809 00b8 00       		.byte	0
+ 810 00b9 0E       		.uleb128 0xe
+ 811 00ba 898201   		.uleb128 0x4109
+ 812 00bd 01       		.byte	0x1
+ 813 00be 11       		.uleb128 0x11
+ 814 00bf 01       		.uleb128 0x1
+ 815 00c0 31       		.uleb128 0x31
+ 816 00c1 13       		.uleb128 0x13
+ 817 00c2 00       		.byte	0
+ 818 00c3 00       		.byte	0
+ 819 00c4 0F       		.uleb128 0xf
+ 820 00c5 2E       		.uleb128 0x2e
+ 821 00c6 01       		.byte	0x1
+ 822 00c7 3F       		.uleb128 0x3f
+ 823 00c8 19       		.uleb128 0x19
+ 824 00c9 03       		.uleb128 0x3
+ 825 00ca 0E       		.uleb128 0xe
+ 826 00cb 3A       		.uleb128 0x3a
+ 827 00cc 0B       		.uleb128 0xb
+ 828 00cd 3B       		.uleb128 0x3b
+ 829 00ce 0B       		.uleb128 0xb
+ 830 00cf 27       		.uleb128 0x27
+ 831 00d0 19       		.uleb128 0x19
+ 832 00d1 11       		.uleb128 0x11
+ 833 00d2 01       		.uleb128 0x1
+ 834 00d3 12       		.uleb128 0x12
+ 835 00d4 06       		.uleb128 0x6
+ 836 00d5 40       		.uleb128 0x40
+ 837 00d6 18       		.uleb128 0x18
+ 838 00d7 9742     		.uleb128 0x2117
+ 839 00d9 19       		.uleb128 0x19
+ 840 00da 01       		.uleb128 0x1
+ 841 00db 13       		.uleb128 0x13
+ 842 00dc 00       		.byte	0
+ 843 00dd 00       		.byte	0
+ 844 00de 10       		.uleb128 0x10
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccX1lqZD.s 			page 18
+
+
+ 845 00df 05       		.uleb128 0x5
+ 846 00e0 00       		.byte	0
+ 847 00e1 03       		.uleb128 0x3
+ 848 00e2 0E       		.uleb128 0xe
+ 849 00e3 3A       		.uleb128 0x3a
+ 850 00e4 0B       		.uleb128 0xb
+ 851 00e5 3B       		.uleb128 0x3b
+ 852 00e6 0B       		.uleb128 0xb
+ 853 00e7 49       		.uleb128 0x49
+ 854 00e8 13       		.uleb128 0x13
+ 855 00e9 02       		.uleb128 0x2
+ 856 00ea 18       		.uleb128 0x18
+ 857 00eb 00       		.byte	0
+ 858 00ec 00       		.byte	0
+ 859 00ed 11       		.uleb128 0x11
+ 860 00ee 34       		.uleb128 0x34
+ 861 00ef 00       		.byte	0
+ 862 00f0 03       		.uleb128 0x3
+ 863 00f1 0E       		.uleb128 0xe
+ 864 00f2 3A       		.uleb128 0x3a
+ 865 00f3 0B       		.uleb128 0xb
+ 866 00f4 3B       		.uleb128 0x3b
+ 867 00f5 05       		.uleb128 0x5
+ 868 00f6 49       		.uleb128 0x49
+ 869 00f7 13       		.uleb128 0x13
+ 870 00f8 3F       		.uleb128 0x3f
+ 871 00f9 19       		.uleb128 0x19
+ 872 00fa 3C       		.uleb128 0x3c
+ 873 00fb 19       		.uleb128 0x19
+ 874 00fc 00       		.byte	0
+ 875 00fd 00       		.byte	0
+ 876 00fe 12       		.uleb128 0x12
+ 877 00ff 35       		.uleb128 0x35
+ 878 0100 00       		.byte	0
+ 879 0101 49       		.uleb128 0x49
+ 880 0102 13       		.uleb128 0x13
+ 881 0103 00       		.byte	0
+ 882 0104 00       		.byte	0
+ 883 0105 13       		.uleb128 0x13
+ 884 0106 01       		.uleb128 0x1
+ 885 0107 01       		.byte	0x1
+ 886 0108 49       		.uleb128 0x49
+ 887 0109 13       		.uleb128 0x13
+ 888 010a 01       		.uleb128 0x1
+ 889 010b 13       		.uleb128 0x13
+ 890 010c 00       		.byte	0
+ 891 010d 00       		.byte	0
+ 892 010e 14       		.uleb128 0x14
+ 893 010f 21       		.uleb128 0x21
+ 894 0110 00       		.byte	0
+ 895 0111 49       		.uleb128 0x49
+ 896 0112 13       		.uleb128 0x13
+ 897 0113 2F       		.uleb128 0x2f
+ 898 0114 05       		.uleb128 0x5
+ 899 0115 00       		.byte	0
+ 900 0116 00       		.byte	0
+ 901 0117 15       		.uleb128 0x15
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccX1lqZD.s 			page 19
+
+
+ 902 0118 34       		.uleb128 0x34
+ 903 0119 00       		.byte	0
+ 904 011a 03       		.uleb128 0x3
+ 905 011b 0E       		.uleb128 0xe
+ 906 011c 3A       		.uleb128 0x3a
+ 907 011d 0B       		.uleb128 0xb
+ 908 011e 3B       		.uleb128 0x3b
+ 909 011f 0B       		.uleb128 0xb
+ 910 0120 49       		.uleb128 0x49
+ 911 0121 13       		.uleb128 0x13
+ 912 0122 3F       		.uleb128 0x3f
+ 913 0123 19       		.uleb128 0x19
+ 914 0124 02       		.uleb128 0x2
+ 915 0125 18       		.uleb128 0x18
+ 916 0126 00       		.byte	0
+ 917 0127 00       		.byte	0
+ 918 0128 16       		.uleb128 0x16
+ 919 0129 21       		.uleb128 0x21
+ 920 012a 00       		.byte	0
+ 921 012b 49       		.uleb128 0x49
+ 922 012c 13       		.uleb128 0x13
+ 923 012d 2F       		.uleb128 0x2f
+ 924 012e 0B       		.uleb128 0xb
+ 925 012f 00       		.byte	0
+ 926 0130 00       		.byte	0
+ 927 0131 00       		.byte	0
+ 928              		.section	.debug_loc,"",%progbits
+ 929              	.Ldebug_loc0:
+ 930              	.LLST0:
+ 931 0000 00000000 		.4byte	.LVL0
+ 932 0004 08000000 		.4byte	.LVL1
+ 933 0008 0100     		.2byte	0x1
+ 934 000a 50       		.byte	0x50
+ 935 000b 08000000 		.4byte	.LVL1
+ 936 000f 38000000 		.4byte	.LFE65
+ 937 0013 0400     		.2byte	0x4
+ 938 0015 F3       		.byte	0xf3
+ 939 0016 01       		.uleb128 0x1
+ 940 0017 50       		.byte	0x50
+ 941 0018 9F       		.byte	0x9f
+ 942 0019 00000000 		.4byte	0
+ 943 001d 00000000 		.4byte	0
+ 944              	.LLST1:
+ 945 0021 00000000 		.4byte	.LVL0
+ 946 0025 10000000 		.4byte	.LVL2
+ 947 0029 0100     		.2byte	0x1
+ 948 002b 52       		.byte	0x52
+ 949 002c 12000000 		.4byte	.LVL3
+ 950 0030 24000000 		.4byte	.LVL7
+ 951 0034 0100     		.2byte	0x1
+ 952 0036 52       		.byte	0x52
+ 953 0037 26000000 		.4byte	.LVL8
+ 954 003b 38000000 		.4byte	.LFE65
+ 955 003f 0100     		.2byte	0x1
+ 956 0041 52       		.byte	0x52
+ 957 0042 00000000 		.4byte	0
+ 958 0046 00000000 		.4byte	0
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccX1lqZD.s 			page 20
+
+
+ 959              	.LLST2:
+ 960 004a 08000000 		.4byte	.LVL1
+ 961 004e 14000000 		.4byte	.LVL4
+ 962 0052 0100     		.2byte	0x1
+ 963 0054 53       		.byte	0x53
+ 964 0055 16000000 		.4byte	.LVL5
+ 965 0059 1C000000 		.4byte	.LVL6
+ 966 005d 0100     		.2byte	0x1
+ 967 005f 53       		.byte	0x53
+ 968 0060 00000000 		.4byte	0
+ 969 0064 00000000 		.4byte	0
+ 970              	.LLST3:
+ 971 0068 1C000000 		.4byte	.LVL6
+ 972 006c 28000000 		.4byte	.LVL9
+ 973 0070 0100     		.2byte	0x1
+ 974 0072 53       		.byte	0x53
+ 975 0073 2A000000 		.4byte	.LVL10
+ 976 0077 2E000000 		.4byte	.LVL11
+ 977 007b 0100     		.2byte	0x1
+ 978 007d 53       		.byte	0x53
+ 979 007e 00000000 		.4byte	0
+ 980 0082 00000000 		.4byte	0
+ 981              	.LLST4:
+ 982 0086 00000000 		.4byte	.LVL12
+ 983 008a 0B000000 		.4byte	.LVL14-1
+ 984 008e 0100     		.2byte	0x1
+ 985 0090 50       		.byte	0x50
+ 986 0091 0B000000 		.4byte	.LVL14-1
+ 987 0095 28000000 		.4byte	.LFE64
+ 988 0099 0400     		.2byte	0x4
+ 989 009b F3       		.byte	0xf3
+ 990 009c 01       		.uleb128 0x1
+ 991 009d 50       		.byte	0x50
+ 992 009e 9F       		.byte	0x9f
+ 993 009f 00000000 		.4byte	0
+ 994 00a3 00000000 		.4byte	0
+ 995              	.LLST5:
+ 996 00a7 00000000 		.4byte	.LVL12
+ 997 00ab 0B000000 		.4byte	.LVL14-1
+ 998 00af 0100     		.2byte	0x1
+ 999 00b1 51       		.byte	0x51
+ 1000 00b2 0B000000 		.4byte	.LVL14-1
+ 1001 00b6 28000000 		.4byte	.LFE64
+ 1002 00ba 0400     		.2byte	0x4
+ 1003 00bc F3       		.byte	0xf3
+ 1004 00bd 01       		.uleb128 0x1
+ 1005 00be 51       		.byte	0x51
+ 1006 00bf 9F       		.byte	0x9f
+ 1007 00c0 00000000 		.4byte	0
+ 1008 00c4 00000000 		.4byte	0
+ 1009              	.LLST6:
+ 1010 00c8 06000000 		.4byte	.LVL13
+ 1011 00cc 0C000000 		.4byte	.LVL14
+ 1012 00d0 0200     		.2byte	0x2
+ 1013 00d2 30       		.byte	0x30
+ 1014 00d3 9F       		.byte	0x9f
+ 1015 00d4 0C000000 		.4byte	.LVL14
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccX1lqZD.s 			page 21
+
+
+ 1016 00d8 14000000 		.4byte	.LVL15
+ 1017 00dc 0100     		.2byte	0x1
+ 1018 00de 50       		.byte	0x50
+ 1019 00df 18000000 		.4byte	.LVL16
+ 1020 00e3 28000000 		.4byte	.LFE64
+ 1021 00e7 0100     		.2byte	0x1
+ 1022 00e9 50       		.byte	0x50
+ 1023 00ea 00000000 		.4byte	0
+ 1024 00ee 00000000 		.4byte	0
+ 1025              	.LLST7:
+ 1026 00f2 00000000 		.4byte	.LVL18
+ 1027 00f6 04000000 		.4byte	.LVL19
+ 1028 00fa 0200     		.2byte	0x2
+ 1029 00fc 30       		.byte	0x30
+ 1030 00fd 9F       		.byte	0x9f
+ 1031 00fe 04000000 		.4byte	.LVL19
+ 1032 0102 28000000 		.4byte	.LFE66
+ 1033 0106 0100     		.2byte	0x1
+ 1034 0108 53       		.byte	0x53
+ 1035 0109 00000000 		.4byte	0
+ 1036 010d 00000000 		.4byte	0
+ 1037              		.section	.debug_aranges,"",%progbits
+ 1038 0000 2C000000 		.4byte	0x2c
+ 1039 0004 0200     		.2byte	0x2
+ 1040 0006 00000000 		.4byte	.Ldebug_info0
+ 1041 000a 04       		.byte	0x4
+ 1042 000b 00       		.byte	0
+ 1043 000c 0000     		.2byte	0
+ 1044 000e 0000     		.2byte	0
+ 1045 0010 00000000 		.4byte	.LFB65
+ 1046 0014 38000000 		.4byte	.LFE65-.LFB65
+ 1047 0018 00000000 		.4byte	.LFB64
+ 1048 001c 28000000 		.4byte	.LFE64-.LFB64
+ 1049 0020 00000000 		.4byte	.LFB66
+ 1050 0024 28000000 		.4byte	.LFE66-.LFB66
+ 1051 0028 00000000 		.4byte	0
+ 1052 002c 00000000 		.4byte	0
+ 1053              		.section	.debug_ranges,"",%progbits
+ 1054              	.Ldebug_ranges0:
+ 1055 0000 00000000 		.4byte	.LFB65
+ 1056 0004 38000000 		.4byte	.LFE65
+ 1057 0008 00000000 		.4byte	.LFB64
+ 1058 000c 28000000 		.4byte	.LFE64
+ 1059 0010 00000000 		.4byte	.LFB66
+ 1060 0014 28000000 		.4byte	.LFE66
+ 1061 0018 00000000 		.4byte	0
+ 1062 001c 00000000 		.4byte	0
+ 1063              		.section	.debug_line,"",%progbits
+ 1064              	.Ldebug_line0:
+ 1065 0000 DC010000 		.section	.debug_str,"MS",%progbits,1
+ 1065      02006B01 
+ 1065      00000201 
+ 1065      FB0E0D00 
+ 1065      01010101 
+ 1066              	.LASF39:
+ 1067 0000 6C75745F 		.ascii	"lut_value\000"
+ 1067      76616C75 
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccX1lqZD.s 			page 22
+
+
+ 1067      6500
+ 1068              	.LASF42:
+ 1069 000a 4144435F 		.ascii	"ADC_CV_array\000"
+ 1069      43565F61 
+ 1069      72726179 
+ 1069      00
+ 1070              	.LASF3:
+ 1071 0017 5F5F7569 		.ascii	"__uint8_t\000"
+ 1071      6E74385F 
+ 1071      7400
+ 1072              	.LASF26:
+ 1073 0021 76616C75 		.ascii	"value\000"
+ 1073      6500
+ 1074              	.LASF6:
+ 1075 0027 5F5F696E 		.ascii	"__int32_t\000"
+ 1075      7433325F 
+ 1075      7400
+ 1076              	.LASF7:
+ 1077 0031 6C6F6E67 		.ascii	"long int\000"
+ 1077      20696E74 
+ 1077      00
+ 1078              	.LASF37:
+ 1079 003a 496E7075 		.ascii	"Input_Flag\000"
+ 1079      745F466C 
+ 1079      616700
+ 1080              	.LASF30:
+ 1081 0045 656E645F 		.ascii	"end_value\000"
+ 1081      76616C75 
+ 1081      6500
+ 1082              	.LASF47:
+ 1083 004f 636F6D6D 		.ascii	"command\000"
+ 1083      616E6400 
+ 1084              	.LASF38:
+ 1085 0057 6461635F 		.ascii	"dac_ground_value\000"
+ 1085      67726F75 
+ 1085      6E645F76 
+ 1085      616C7565 
+ 1085      00
+ 1086              	.LASF15:
+ 1087 0068 75696E74 		.ascii	"uint8\000"
+ 1087      3800
+ 1088              	.LASF51:
+ 1089 006e 433A5C55 		.ascii	"C:\\Users\\teo8d\\Desktop\\progetto lab sensori\\CO"
+ 1089      73657273 
+ 1089      5C74656F 
+ 1089      38645C44 
+ 1089      65736B74 
+ 1090 009c 44494349 		.ascii	"DICI\\PSOC\\FinalProjects\\Group2.cydsn\000"
+ 1090      5C50534F 
+ 1090      435C4669 
+ 1090      6E616C50 
+ 1090      726F6A65 
+ 1091              	.LASF28:
+ 1092 00c1 4C55545F 		.ascii	"LUT_MakeTriangle_Wave\000"
+ 1092      4D616B65 
+ 1092      54726961 
+ 1092      6E676C65 
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccX1lqZD.s 			page 23
+
+
+ 1092      5F576176 
+ 1093              	.LASF27:
+ 1094 00d7 4C55545F 		.ascii	"LUT_make_line\000"
+ 1094      6D616B65 
+ 1094      5F6C696E 
+ 1094      6500
+ 1095              	.LASF31:
+ 1096 00e5 5F6C7574 		.ascii	"_lut_index\000"
+ 1096      5F696E64 
+ 1096      657800
+ 1097              	.LASF19:
+ 1098 00f0 666C6F61 		.ascii	"float\000"
+ 1098      7400
+ 1099              	.LASF45:
+ 1100 00f6 656E645F 		.ascii	"end_dac_value\000"
+ 1100      6461635F 
+ 1100      76616C75 
+ 1100      6500
+ 1101              	.LASF48:
+ 1102 0104 636F6D6D 		.ascii	"command_lenght\000"
+ 1102      616E645F 
+ 1102      6C656E67 
+ 1102      687400
+ 1103              	.LASF29:
+ 1104 0113 73746172 		.ascii	"start_value\000"
+ 1104      745F7661 
+ 1104      6C756500 
+ 1105              	.LASF49:
+ 1106 011f 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1106      43313120 
+ 1106      352E342E 
+ 1106      31203230 
+ 1106      31363036 
+ 1107 0152 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1107      20726576 
+ 1107      6973696F 
+ 1107      6E203233 
+ 1107      37373135 
+ 1108 0185 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1108      66756E63 
+ 1108      74696F6E 
+ 1108      2D736563 
+ 1108      74696F6E 
+ 1109              	.LASF35:
+ 1110 01ad 77617665 		.ascii	"waveform_CV_lut\000"
+ 1110      666F726D 
+ 1110      5F43565F 
+ 1110      6C757400 
+ 1111              	.LASF17:
+ 1112 01bd 696E7431 		.ascii	"int16\000"
+ 1112      3600
+ 1113              	.LASF32:
+ 1114 01c3 62617365 		.ascii	"base\000"
+ 1114      00
+ 1115              	.LASF50:
+ 1116 01c8 6C75745F 		.ascii	"lut_functions.c\000"
+ 1116      66756E63 
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccX1lqZD.s 			page 24
+
+
+ 1116      74696F6E 
+ 1116      732E6300 
+ 1117              	.LASF5:
+ 1118 01d8 73686F72 		.ascii	"short unsigned int\000"
+ 1118      7420756E 
+ 1118      7369676E 
+ 1118      65642069 
+ 1118      6E7400
+ 1119              	.LASF34:
+ 1120 01eb 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1120      52784275 
+ 1120      66666572 
+ 1120      00
+ 1121              	.LASF1:
+ 1122 01f8 756E7369 		.ascii	"unsigned char\000"
+ 1122      676E6564 
+ 1122      20636861 
+ 1122      7200
+ 1123              	.LASF4:
+ 1124 0206 5F5F7569 		.ascii	"__uint16_t\000"
+ 1124      6E743136 
+ 1124      5F7400
+ 1125              	.LASF8:
+ 1126 0211 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1126      20756E73 
+ 1126      69676E65 
+ 1126      6420696E 
+ 1126      7400
+ 1127              	.LASF16:
+ 1128 0223 75696E74 		.ascii	"uint16\000"
+ 1128      313600
+ 1129              	.LASF11:
+ 1130 022a 756E7369 		.ascii	"unsigned int\000"
+ 1130      676E6564 
+ 1130      20696E74 
+ 1130      00
+ 1131              	.LASF24:
+ 1132 0237 73746172 		.ascii	"start\000"
+ 1132      7400
+ 1133              	.LASF10:
+ 1134 023d 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1134      206C6F6E 
+ 1134      6720756E 
+ 1134      7369676E 
+ 1134      65642069 
+ 1135              	.LASF12:
+ 1136 0254 75696E74 		.ascii	"uint8_t\000"
+ 1136      385F7400 
+ 1137              	.LASF36:
+ 1138 025c 77617665 		.ascii	"waveform_amp_lut\000"
+ 1138      666F726D 
+ 1138      5F616D70 
+ 1138      5F6C7574 
+ 1138      00
+ 1139              	.LASF20:
+ 1140 026d 646F7562 		.ascii	"double\000"
+ 1140      6C6500
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccX1lqZD.s 			page 25
+
+
+ 1141              	.LASF40:
+ 1142 0274 6C75745F 		.ascii	"lut_index\000"
+ 1142      696E6465 
+ 1142      7800
+ 1143              	.LASF14:
+ 1144 027e 696E7433 		.ascii	"int32_t\000"
+ 1144      325F7400 
+ 1145              	.LASF23:
+ 1146 0286 73697A65 		.ascii	"sizetype\000"
+ 1146      74797065 
+ 1146      00
+ 1147              	.LASF9:
+ 1148 028f 6C6F6E67 		.ascii	"long long int\000"
+ 1148      206C6F6E 
+ 1148      6720696E 
+ 1148      7400
+ 1149              	.LASF21:
+ 1150 029d 63686172 		.ascii	"char\000"
+ 1150      00
+ 1151              	.LASF43:
+ 1152 02a2 75415F70 		.ascii	"uA_per_adc_count\000"
+ 1152      65725F61 
+ 1152      64635F63 
+ 1152      6F756E74 
+ 1152      00
+ 1153              	.LASF13:
+ 1154 02b3 75696E74 		.ascii	"uint16_t\000"
+ 1154      31365F74 
+ 1154      00
+ 1155              	.LASF2:
+ 1156 02bc 73686F72 		.ascii	"short int\000"
+ 1156      7420696E 
+ 1156      7400
+ 1157              	.LASF52:
+ 1158 02c6 4C55545F 		.ascii	"LUT_MakePulse\000"
+ 1158      4D616B65 
+ 1158      50756C73 
+ 1158      6500
+ 1159              	.LASF25:
+ 1160 02d4 696E6465 		.ascii	"index\000"
+ 1160      7800
+ 1161              	.LASF41:
+ 1162 02da 6C75745F 		.ascii	"lut_length\000"
+ 1162      6C656E67 
+ 1162      746800
+ 1163              	.LASF18:
+ 1164 02e5 666C6F61 		.ascii	"float32\000"
+ 1164      74333200 
+ 1165              	.LASF22:
+ 1166 02ed 6C6F6E67 		.ascii	"long double\000"
+ 1166      20646F75 
+ 1166      626C6500 
+ 1167              	.LASF0:
+ 1168 02f9 7369676E 		.ascii	"signed char\000"
+ 1168      65642063 
+ 1168      68617200 
+ 1169              	.LASF46:
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccX1lqZD.s 			page 26
+
+
+ 1170 0305 706F7465 		.ascii	"potential_max_current\000"
+ 1170      6E746961 
+ 1170      6C5F6D61 
+ 1170      785F6375 
+ 1170      7272656E 
+ 1171              	.LASF33:
+ 1172 031b 70756C73 		.ascii	"pulse\000"
+ 1172      6500
+ 1173              	.LASF44:
+ 1174 0321 73746172 		.ascii	"start_dac_value\000"
+ 1174      745F6461 
+ 1174      635F7661 
+ 1174      6C756500 
+ 1175              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

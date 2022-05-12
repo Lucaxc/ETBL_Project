@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
+=======
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 1
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
 
 
    1              		.syntax unified
@@ -50,6 +54,7 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
   20:RTC_Driver.c  **** #include <stdio.h>
   21:RTC_Driver.c  **** 
   22:RTC_Driver.c  **** #include "RTC_Driver.h"
+<<<<<<< HEAD
   23:RTC_Driver.c  **** #include "Globals.h"
   24:RTC_Driver.c  **** 
   25:RTC_Driver.c  **** /*------------------------------------------------------------------------
@@ -119,6 +124,77 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
   86:RTC_Driver.c  **** *       @param rtc_address: I2C RTC slave address
   87:RTC_Driver.c  **** *   \Return: NONE
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 3
+=======
+  23:RTC_Driver.c  **** #include "ErrorCodes.h"
+  24:RTC_Driver.c  **** #include "Globals.h"
+  25:RTC_Driver.c  **** 
+  26:RTC_Driver.c  **** /*------------------------------------------------------------------------
+  27:RTC_Driver.c  **** *                       STATIC VARIABLES DECLARATION
+  28:RTC_Driver.c  **** -------------------------------------------------------------------------*/
+  29:RTC_Driver.c  **** static uint8_t rtc_i2c_address;
+  30:RTC_Driver.c  **** 
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 2
+
+
+  31:RTC_Driver.c  **** /*------------------------------------------------------------------------
+  32:RTC_Driver.c  **** *                       FUNCTIONS IMPLEMENTATION
+  33:RTC_Driver.c  **** -------------------------------------------------------------------------*/
+  34:RTC_Driver.c  **** /*  RTC SET UP
+  35:RTC_Driver.c  **** *   \brief: Function that, given the user-inserted values, sets the RTC.
+  36:RTC_Driver.c  **** *   \Parameters:
+  37:RTC_Driver.c  **** *       @param current_seconds: real time seconds
+  38:RTC_Driver.c  **** *       @param current_minutes: real time minutes
+  39:RTC_Driver.c  **** *       @param current_hours: real time hours
+  40:RTC_Driver.c  **** *       @param current_date: real time date
+  41:RTC_Driver.c  **** *       @param current_month: real time month
+  42:RTC_Driver.c  **** *       @param current_year: real time year
+  43:RTC_Driver.c  **** *   \Return: NONE
+  44:RTC_Driver.c  **** */
+  45:RTC_Driver.c  **** void set_RTC(uint8_t current_seconds, uint8_t current_minutes, uint8_t current_hours, uint8_t curre
+  46:RTC_Driver.c  ****              uint8_t current_month, uint8_t current_year) {
+  47:RTC_Driver.c  ****     
+  48:RTC_Driver.c  ****     ErrorCode error = RTC_WriteRegister(RTC_ADDRESS, RTC_SECONDS, current_seconds);
+  49:RTC_Driver.c  ****     if(error == ERROR) {
+  50:RTC_Driver.c  ****         UART_1_PutString("Error in setting the RTC seconds");
+  51:RTC_Driver.c  ****     }
+  52:RTC_Driver.c  ****     
+  53:RTC_Driver.c  ****     error = RTC_WriteRegister(RTC_ADDRESS, RTC_MINUTES, current_minutes);
+  54:RTC_Driver.c  ****     if(error == ERROR) {
+  55:RTC_Driver.c  ****         UART_1_PutString("Error in setting the RTC minutes");
+  56:RTC_Driver.c  ****     }
+  57:RTC_Driver.c  ****     
+  58:RTC_Driver.c  ****     error = RTC_WriteRegister(RTC_ADDRESS, RTC_HOURS, current_hours);
+  59:RTC_Driver.c  ****     if(error == ERROR) {
+  60:RTC_Driver.c  ****         UART_1_PutString("Error in setting the RTC hours");
+  61:RTC_Driver.c  ****     }
+  62:RTC_Driver.c  ****     
+  63:RTC_Driver.c  ****     error = RTC_WriteRegister(RTC_ADDRESS, RTC_DATE, current_date);
+  64:RTC_Driver.c  ****     if(error == ERROR) {
+  65:RTC_Driver.c  ****         UART_1_PutString("Error in setting the RTC date");
+  66:RTC_Driver.c  ****     }
+  67:RTC_Driver.c  ****     
+  68:RTC_Driver.c  ****     error = RTC_WriteRegister(RTC_ADDRESS, RTC_MONTH, current_month);
+  69:RTC_Driver.c  ****     if(error == ERROR) {
+  70:RTC_Driver.c  ****         UART_1_PutString("Error in setting the RTC month");
+  71:RTC_Driver.c  ****     }
+  72:RTC_Driver.c  ****     
+  73:RTC_Driver.c  ****     error = RTC_WriteRegister(RTC_ADDRESS, RTC_YEAR, current_year);
+  74:RTC_Driver.c  ****     if(error == ERROR) {
+  75:RTC_Driver.c  ****         UART_1_PutString("Error in setting the RTC year");
+  76:RTC_Driver.c  ****     }
+  77:RTC_Driver.c  ****     
+  78:RTC_Driver.c  ****     error = RTC_WriteRegister(RTC_ADDRESS, RTC_CTRL_REG, 0x00);
+  79:RTC_Driver.c  ****     if(error == ERROR) {
+  80:RTC_Driver.c  ****         UART_1_PutString("Error in setting the RTC control register");
+  81:RTC_Driver.c  ****     }
+  82:RTC_Driver.c  ****  }
+  83:RTC_Driver.c  **** 
+  84:RTC_Driver.c  **** /*  RTC INIT
+  85:RTC_Driver.c  **** *   \brief: Function that initializes the pheripheral
+  86:RTC_Driver.c  **** *   \Parameters:
+  87:RTC_Driver.c  **** *       @param rtc_address: I2C RTC slave address
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 3
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
 
 
   88:RTC_Driver.c  **** */
@@ -141,6 +217,7 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
   43              		.type	RTC_ReadRegister, %function
   44              	RTC_ReadRegister:
   45              	.LFB67:
+<<<<<<< HEAD
   90:RTC_Driver.c  ****     
   91:RTC_Driver.c  ****     rtc_i2c_address = rtc_address;
   92:RTC_Driver.c  **** }
@@ -179,6 +256,45 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  125:RTC_Driver.c  ****     }
  126:RTC_Driver.c  ****     current_date = RTC_convert_date(rtc_data_register);
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 4
+=======
+  91:RTC_Driver.c  ****     
+  92:RTC_Driver.c  ****     rtc_i2c_address = rtc_address;
+  93:RTC_Driver.c  **** }
+  94:RTC_Driver.c  **** 
+  95:RTC_Driver.c  **** /*  RTC READ CURRENT TIME
+  96:RTC_Driver.c  **** *   \brief: Function that returns the current timestamp
+  97:RTC_Driver.c  **** *   \Parameters:
+  98:RTC_Driver.c  **** *       @param rtc_data_address: uint8_t variable where data are stored
+  99:RTC_Driver.c  **** *   \Return: NONE
+ 100:RTC_Driver.c  **** */
+ 101:RTC_Driver.c  **** void rtc_read_time(uint8_t rtc_data_register) {
+ 102:RTC_Driver.c  ****     
+ 103:RTC_Driver.c  ****     ErrorCode error;
+ 104:RTC_Driver.c  ****     
+ 105:RTC_Driver.c  ****     error = RTC_ReadRegister(RTC_ADDRESS, RTC_SECONDS, &rtc_data_register);
+ 106:RTC_Driver.c  ****     if(error == ERROR) {
+ 107:RTC_Driver.c  ****         UART_1_PutString("Error in reading the RTC seconds");
+ 108:RTC_Driver.c  ****     }
+ 109:RTC_Driver.c  ****     current_seconds = RTC_convert_seconds(rtc_data_register);
+ 110:RTC_Driver.c  ****     
+ 111:RTC_Driver.c  ****     error = RTC_ReadRegister(RTC_ADDRESS, RTC_MINUTES, &rtc_data_register);
+ 112:RTC_Driver.c  ****     if(error == ERROR) {
+ 113:RTC_Driver.c  ****         UART_1_PutString("Error in reading the RTC minutes");
+ 114:RTC_Driver.c  ****     }
+ 115:RTC_Driver.c  ****     current_minutes = RTC_convert_minutes(rtc_data_register);
+ 116:RTC_Driver.c  ****     
+ 117:RTC_Driver.c  ****     error = RTC_ReadRegister(RTC_ADDRESS, RTC_HOURS, &rtc_data_register);
+ 118:RTC_Driver.c  ****     if(error == ERROR) {
+ 119:RTC_Driver.c  ****         UART_1_PutString("Error in reading the RTC hours");
+ 120:RTC_Driver.c  ****     }
+ 121:RTC_Driver.c  ****     current_hours = RTC_convert_hours(rtc_data_register);
+ 122:RTC_Driver.c  ****     
+ 123:RTC_Driver.c  ****     error = RTC_ReadRegister(RTC_ADDRESS, RTC_DATE, &rtc_data_register);
+ 124:RTC_Driver.c  ****     if(error == ERROR) {
+ 125:RTC_Driver.c  ****         UART_1_PutString("Error in reading the RTC date");
+ 126:RTC_Driver.c  ****     }
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 4
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
 
 
  127:RTC_Driver.c  ****     
@@ -234,11 +350,17 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
   68              		.loc 1 154 0
   69 000e 0446     		mov	r4, r0
   70 0010 68B9     		cbnz	r0, .L3
+<<<<<<< HEAD
  155:RTC_Driver.c  ****     {
  156:RTC_Driver.c  ****         //Write the register address to be read
  157:RTC_Driver.c  ****         error = I2CMASTER_MasterWriteByte(register_address);
   71              		.loc 1 157 0
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 5
+=======
+ 157:RTC_Driver.c  ****     {
+ 158:RTC_Driver.c  ****         //Write the register address to be read
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 5
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
 
 
   72 0012 2846     		mov	r0, r5
@@ -296,6 +418,12 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  109              		.thumb_func
  110              		.type	RTC_WriteRegister, %function
  111              	RTC_WriteRegister:
+<<<<<<< HEAD
+=======
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 6
+
+
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
  112              	.LFB68:
  173:RTC_Driver.c  **** 
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 6
@@ -356,6 +484,12 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  146              	.LVL17:
  147 0020 0446     		mov	r4, r0
  148              	.LVL18:
+<<<<<<< HEAD
+=======
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 7
+
+
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
  149              	.L6:
  193:RTC_Driver.c  ****         }
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 7
@@ -415,8 +549,16 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  192              		.loc 1 48 0
  193 0012 0128     		cmp	r0, #1
  194 0014 02D1     		bne	.L9
+<<<<<<< HEAD
   49:RTC_Driver.c  ****     }
  195              		.loc 1 49 0
+=======
+  50:RTC_Driver.c  ****     }
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 8
+
+
+ 195              		.loc 1 50 0
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
  196 0016 2148     		ldr	r0, .L17
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 8
 
@@ -476,6 +618,12 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  240              		.loc 1 64 0
  241 0052 1548     		ldr	r0, .L17+12
  242              	.LVL34:
+<<<<<<< HEAD
+=======
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 9
+
+
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
  243 0054 FFF7FEFF 		bl	UART_1_PutString
  244              	.LVL35:
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 9
@@ -536,6 +684,12 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  288 0094 FFF7FEFF 		bl	UART_1_PutString
  289              	.LVL44:
  290              	.L8:
+<<<<<<< HEAD
+=======
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 10
+
+
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
  291 0098 70BD     		pop	{r4, r5, r6, pc}
  292              	.LVL45:
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 10
@@ -593,12 +747,19 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  331 0004 0546     		mov	r5, r0
  332              	.LVL47:
  333              	.LBB2:
+<<<<<<< HEAD
  211:RTC_Driver.c  **** 
  212:RTC_Driver.c  ****     uint8_t seconds = 0;
  213:RTC_Driver.c  ****     
  214:RTC_Driver.c  ****     //Bits 0-3 that converts for units
  215:RTC_Driver.c  ****     for(int i = 0; i < 4; i++) {
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 11
+=======
+ 213:RTC_Driver.c  **** 
+ 214:RTC_Driver.c  ****     uint8_t seconds = 0;
+ 215:RTC_Driver.c  ****     
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 11
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
 
 
  334              		.loc 1 215 0
@@ -656,6 +817,12 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  381 004a 1FE0     		b	.L23
  382              	.LVL57:
  383              	.L25:
+<<<<<<< HEAD
+=======
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 12
+
+
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
  384              	.LBE3:
  385              	.LBB4:
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 12
@@ -710,12 +877,24 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  423 008c 062C     		cmp	r4, #6
  424 008e DDDD     		ble	.L25
  425              	.LBE4:
+<<<<<<< HEAD
  225:RTC_Driver.c  ****         }
  226:RTC_Driver.c  ****     }
  227:RTC_Driver.c  ****     
  228:RTC_Driver.c  ****     return seconds;
  229:RTC_Driver.c  **** }
  426              		.loc 1 229 0 is_stmt 1
+=======
+ 227:RTC_Driver.c  ****         }
+ 228:RTC_Driver.c  ****     }
+ 229:RTC_Driver.c  ****     
+ 230:RTC_Driver.c  ****     return seconds;
+ 231:RTC_Driver.c  **** }
+ 426              		.loc 1 231 0 is_stmt 1
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 13
+
+
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
  427 0090 3046     		mov	r0, r6
  428 0092 BDE87083 		pop	{r4, r5, r6, r8, r9, pc}
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 13
@@ -776,6 +955,12 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  467              		.loc 1 242 0
  468 000a 1BE0     		b	.L30
  469              	.LVL69:
+<<<<<<< HEAD
+=======
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 14
+
+
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
  470              	.L32:
  243:RTC_Driver.c  ****         if(buffer & (0b00000001<<i)) {
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 14
@@ -836,9 +1021,13 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  514 004c 45FA04F3 		asr	r3, r5, r4
  515 0050 13F0010F 		tst	r3, #1
  516 0054 19D0     		beq	.L34
+<<<<<<< HEAD
  251:RTC_Driver.c  ****             minutes += 10*pow(2,j-4);
  517              		.loc 1 251 0
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 15
+=======
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 15
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
 
 
  518 0056 201F     		subs	r0, r4, #4
@@ -896,6 +1085,12 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  563              		.size	RTC_convert_minutes, .-RTC_convert_minutes
  564              		.section	.text.RTC_convert_hours,"ax",%progbits
  565              		.align	2
+<<<<<<< HEAD
+=======
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 16
+
+
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
  566              		.global	RTC_convert_hours
  567              		.thumb
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 16
@@ -956,6 +1151,12 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  605              	.LVL91:
  606 001c 0246     		mov	r2, r0
  607 001e 0B46     		mov	r3, r1
+<<<<<<< HEAD
+=======
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 17
+
+
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
  608 0020 0020     		movs	r0, #0
  609 0022 4FF08041 		mov	r1, #1073741824
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 17
@@ -1016,6 +1217,12 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  654 006a 0022     		movs	r2, #0
  655 006c 0A4B     		ldr	r3, .L47
  656 006e FFF7FEFF 		bl	__aeabi_dmul
+<<<<<<< HEAD
+=======
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 18
+
+
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
  657              	.LVL102:
  658 0072 8046     		mov	r8, r0
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 18
@@ -1068,6 +1275,7 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  696              		.type	RTC_convert_date, %function
  697              	RTC_convert_date:
  698              	.LFB72:
+<<<<<<< HEAD
  282:RTC_Driver.c  **** 
  283:RTC_Driver.c  **** 
  284:RTC_Driver.c  **** /*  RTC CONVERT DAY
@@ -1079,6 +1287,17 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  290:RTC_Driver.c  **** uint8_t RTC_convert_date(uint8_t buffer) {
  699              		.loc 1 290 0
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 19
+=======
+ 284:RTC_Driver.c  **** 
+ 285:RTC_Driver.c  **** 
+ 286:RTC_Driver.c  **** /*  RTC CONVERT DAY
+ 287:RTC_Driver.c  **** *   \brief: converts the day buffer in int
+ 288:RTC_Driver.c  **** *   \Parameters:
+ 289:RTC_Driver.c  **** *       @param buffer: 8-bit buffer with information
+ 290:RTC_Driver.c  **** *   \Return: day
+ 291:RTC_Driver.c  **** */
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 19
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
 
 
  700              		.cfi_startproc
@@ -1136,6 +1355,12 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  745 0036 4B46     		mov	r3, r9
  746 0038 FFF7FEFF 		bl	__aeabi_dadd
  747              	.LVL115:
+<<<<<<< HEAD
+=======
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 20
+
+
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
  748 003c FFF7FEFF 		bl	__aeabi_d2uiz
  749              	.LVL116:
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 20
@@ -1196,6 +1421,12 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  794 0084 FFF7FEFF 		bl	__aeabi_d2uiz
  795              	.LVL126:
  796 0088 C6B2     		uxtb	r6, r0
+<<<<<<< HEAD
+=======
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 21
+
+
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
  797              	.LVL127:
  798              	.L54:
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 21
@@ -1256,6 +1487,12 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  836              		.cfi_offset 8, -12
  837              		.cfi_offset 9, -8
  838              		.cfi_offset 14, -4
+<<<<<<< HEAD
+=======
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 22
+
+
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
  839 0004 0546     		mov	r5, r0
  840              	.LVL131:
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 22
@@ -1316,6 +1553,12 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  884              		.loc 1 319 0 is_stmt 0 discriminator 1
  885 0044 022C     		cmp	r4, #2
  886 0046 E1DD     		ble	.L62
+<<<<<<< HEAD
+=======
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 23
+
+
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
  887              	.LBE15:
  322:RTC_Driver.c  ****         }
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 23
@@ -1375,10 +1618,17 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  337:RTC_Driver.c  ****     
  338:RTC_Driver.c  ****     uint8_t year = 0;
  339:RTC_Driver.c  ****     
+<<<<<<< HEAD
  340:RTC_Driver.c  ****     //Bits 0-3 that converts for units
  341:RTC_Driver.c  ****     for(int i = 0; i < 4; i++) {
  925              		.loc 1 341 0
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 24
+=======
+ 340:RTC_Driver.c  ****     uint8_t year = 0;
+ 341:RTC_Driver.c  ****     
+ 342:RTC_Driver.c  ****     //Bits 0-3 that converts for units
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 24
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
 
 
  926 0006 0024     		movs	r4, #0
@@ -1436,6 +1686,12 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  973              	.LVL152:
  974              	.L70:
  975              	.LBE17:
+<<<<<<< HEAD
+=======
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 25
+
+
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
  976              	.LBB18:
  344:RTC_Driver.c  ****         }
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 25
@@ -1496,6 +1752,12 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  355:RTC_Driver.c  **** } 
  1017              		.loc 1 355 0 is_stmt 1
  1018 0090 3046     		mov	r0, r6
+<<<<<<< HEAD
+=======
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 26
+
+
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
  1019 0092 BDE87083 		pop	{r4, r5, r6, r8, r9, pc}
  1020              	.LVL161:
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 26
@@ -1556,6 +1818,12 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  1068              	.LVL168:
  1069 0022 FFF7FEFF 		bl	RTC_convert_seconds
  1070              	.LVL169:
+<<<<<<< HEAD
+=======
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 27
+
+
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
  1071 0026 2E4B     		ldr	r3, .L82+4
  1072 0028 1870     		strb	r0, [r3]
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 27
@@ -1616,6 +1884,12 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  1117 0066 FFF7FEFF 		bl	RTC_convert_hours
  1118              	.LVL181:
  1119 006a 214B     		ldr	r3, .L82+20
+<<<<<<< HEAD
+=======
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 28
+
+
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
  1120 006c 1870     		strb	r0, [r3]
  122:RTC_Driver.c  ****     if(error == ERROR) {
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 28
@@ -1676,9 +1950,13 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  1166              	.LVL193:
  1167 00ae 144B     		ldr	r3, .L82+36
  1168 00b0 1870     		strb	r0, [r3]
+<<<<<<< HEAD
  134:RTC_Driver.c  ****     if(error == ERROR) {
  1169              		.loc 1 134 0
 ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 29
+=======
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 29
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
 
 
  1170 00b2 2246     		mov	r2, r4
@@ -1730,6 +2008,7 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  1212              		.cfi_endproc
  1213              	.LFE66:
  1214              		.size	rtc_read_time, .-rtc_read_time
+<<<<<<< HEAD
  1215              		.comm	eeprom_current_address,2,2
  1216              		.comm	current_year,2,2
  1217              		.comm	current_month,1,1
@@ -4422,6 +4701,2724 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  3698      5F7400
  3699              	.LASF37:
  3700 004a 63757272 		.ascii	"current_month\000"
+=======
+ 1215              		.comm	current_year,2,2
+ 1216              		.comm	current_month,1,1
+ 1217              		.comm	current_date,1,1
+ 1218              		.comm	current_hours,1,1
+ 1219              		.comm	current_minutes,1,1
+ 1220              		.comm	current_seconds,1,1
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 30
+
+
+ 1221              		.comm	Current_time,8,4
+ 1222              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 1223              		.align	2
+ 1224              	.LC0:
+ 1225 0000 4572726F 		.ascii	"Error in setting the RTC seconds\000"
+ 1225      7220696E 
+ 1225      20736574 
+ 1225      74696E67 
+ 1225      20746865 
+ 1226 0021 000000   		.space	3
+ 1227              	.LC1:
+ 1228 0024 4572726F 		.ascii	"Error in setting the RTC minutes\000"
+ 1228      7220696E 
+ 1228      20736574 
+ 1228      74696E67 
+ 1228      20746865 
+ 1229 0045 000000   		.space	3
+ 1230              	.LC2:
+ 1231 0048 4572726F 		.ascii	"Error in setting the RTC hours\000"
+ 1231      7220696E 
+ 1231      20736574 
+ 1231      74696E67 
+ 1231      20746865 
+ 1232 0067 00       		.space	1
+ 1233              	.LC3:
+ 1234 0068 4572726F 		.ascii	"Error in setting the RTC date\000"
+ 1234      7220696E 
+ 1234      20736574 
+ 1234      74696E67 
+ 1234      20746865 
+ 1235 0086 0000     		.space	2
+ 1236              	.LC4:
+ 1237 0088 4572726F 		.ascii	"Error in setting the RTC month\000"
+ 1237      7220696E 
+ 1237      20736574 
+ 1237      74696E67 
+ 1237      20746865 
+ 1238 00a7 00       		.space	1
+ 1239              	.LC5:
+ 1240 00a8 4572726F 		.ascii	"Error in setting the RTC year\000"
+ 1240      7220696E 
+ 1240      20736574 
+ 1240      74696E67 
+ 1240      20746865 
+ 1241 00c6 0000     		.space	2
+ 1242              	.LC6:
+ 1243 00c8 4572726F 		.ascii	"Error in setting the RTC control register\000"
+ 1243      7220696E 
+ 1243      20736574 
+ 1243      74696E67 
+ 1243      20746865 
+ 1244 00f2 0000     		.space	2
+ 1245              	.LC7:
+ 1246 00f4 4572726F 		.ascii	"Error in reading the RTC seconds\000"
+ 1246      7220696E 
+ 1246      20726561 
+ 1246      64696E67 
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 31
+
+
+ 1246      20746865 
+ 1247 0115 000000   		.space	3
+ 1248              	.LC8:
+ 1249 0118 4572726F 		.ascii	"Error in reading the RTC minutes\000"
+ 1249      7220696E 
+ 1249      20726561 
+ 1249      64696E67 
+ 1249      20746865 
+ 1250 0139 000000   		.space	3
+ 1251              	.LC9:
+ 1252 013c 4572726F 		.ascii	"Error in reading the RTC hours\000"
+ 1252      7220696E 
+ 1252      20726561 
+ 1252      64696E67 
+ 1252      20746865 
+ 1253 015b 00       		.space	1
+ 1254              	.LC10:
+ 1255 015c 4572726F 		.ascii	"Error in reading the RTC date\000"
+ 1255      7220696E 
+ 1255      20726561 
+ 1255      64696E67 
+ 1255      20746865 
+ 1256 017a 0000     		.space	2
+ 1257              	.LC11:
+ 1258 017c 4572726F 		.ascii	"Error in reading the RTC month\000"
+ 1258      7220696E 
+ 1258      20726561 
+ 1258      64696E67 
+ 1258      20746865 
+ 1259 019b 00       		.space	1
+ 1260              	.LC12:
+ 1261 019c 4572726F 		.ascii	"Error in reading the RTC year\000"
+ 1261      7220696E 
+ 1261      20726561 
+ 1261      64696E67 
+ 1261      20746865 
+ 1262              		.text
+ 1263              	.Letext0:
+ 1264              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 1265              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 1266              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 1267              		.file 5 "./ErrorCodes.h"
+ 1268              		.file 6 "Generated_Source\\PSoC5/core_cm3.h"
+ 1269              		.file 7 "RTC_Driver.h"
+ 1270              		.file 8 "Globals.h"
+ 1271              		.file 9 "Generated_Source\\PSoC5/I2CMASTER.h"
+ 1272              		.file 10 "Generated_Source\\PSoC5/UART_1.h"
+ 1273              		.file 11 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4
+ 1274              		.section	.debug_info,"",%progbits
+ 1275              	.Ldebug_info0:
+ 1276 0000 C8090000 		.4byte	0x9c8
+ 1277 0004 0400     		.2byte	0x4
+ 1278 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 1279 000a 04       		.byte	0x4
+ 1280 000b 01       		.uleb128 0x1
+ 1281 000c 57030000 		.4byte	.LASF62
+ 1282 0010 0C       		.byte	0xc
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 32
+
+
+ 1283 0011 0E030000 		.4byte	.LASF63
+ 1284 0015 0A020000 		.4byte	.LASF64
+ 1285 0019 90000000 		.4byte	.Ldebug_ranges0+0x90
+ 1286 001d 00000000 		.4byte	0
+ 1287 0021 00000000 		.4byte	.Ldebug_line0
+ 1288 0025 02       		.uleb128 0x2
+ 1289 0026 01       		.byte	0x1
+ 1290 0027 06       		.byte	0x6
+ 1291 0028 48010000 		.4byte	.LASF0
+ 1292 002c 03       		.uleb128 0x3
+ 1293 002d 04010000 		.4byte	.LASF3
+ 1294 0031 02       		.byte	0x2
+ 1295 0032 1D       		.byte	0x1d
+ 1296 0033 37000000 		.4byte	0x37
+ 1297 0037 02       		.uleb128 0x2
+ 1298 0038 01       		.byte	0x1
+ 1299 0039 08       		.byte	0x8
+ 1300 003a 20010000 		.4byte	.LASF1
+ 1301 003e 02       		.uleb128 0x2
+ 1302 003f 02       		.byte	0x2
+ 1303 0040 05       		.byte	0x5
+ 1304 0041 68000000 		.4byte	.LASF2
+ 1305 0045 03       		.uleb128 0x3
+ 1306 0046 39000000 		.4byte	.LASF4
+ 1307 004a 02       		.byte	0x2
+ 1308 004b 2B       		.byte	0x2b
+ 1309 004c 50000000 		.4byte	0x50
+ 1310 0050 02       		.uleb128 0x2
+ 1311 0051 02       		.byte	0x2
+ 1312 0052 07       		.byte	0x7
+ 1313 0053 C2010000 		.4byte	.LASF5
+ 1314 0057 03       		.uleb128 0x3
+ 1315 0058 04030000 		.4byte	.LASF6
+ 1316 005c 02       		.byte	0x2
+ 1317 005d 3F       		.byte	0x3f
+ 1318 005e 62000000 		.4byte	0x62
+ 1319 0062 02       		.uleb128 0x2
+ 1320 0063 04       		.byte	0x4
+ 1321 0064 05       		.byte	0x5
+ 1322 0065 D6000000 		.4byte	.LASF7
+ 1323 0069 02       		.uleb128 0x2
+ 1324 006a 04       		.byte	0x4
+ 1325 006b 07       		.byte	0x7
+ 1326 006c 92020000 		.4byte	.LASF8
+ 1327 0070 02       		.uleb128 0x2
+ 1328 0071 08       		.byte	0x8
+ 1329 0072 05       		.byte	0x5
+ 1330 0073 C8000000 		.4byte	.LASF9
+ 1331 0077 02       		.uleb128 0x2
+ 1332 0078 08       		.byte	0x8
+ 1333 0079 07       		.byte	0x7
+ 1334 007a 5C010000 		.4byte	.LASF10
+ 1335 007e 04       		.uleb128 0x4
+ 1336 007f 04       		.byte	0x4
+ 1337 0080 05       		.byte	0x5
+ 1338 0081 696E7400 		.ascii	"int\000"
+ 1339 0085 02       		.uleb128 0x2
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 33
+
+
+ 1340 0086 04       		.byte	0x4
+ 1341 0087 07       		.byte	0x7
+ 1342 0088 7B010000 		.4byte	.LASF11
+ 1343 008c 03       		.uleb128 0x3
+ 1344 008d 7A000000 		.4byte	.LASF12
+ 1345 0091 03       		.byte	0x3
+ 1346 0092 18       		.byte	0x18
+ 1347 0093 2C000000 		.4byte	0x2c
+ 1348 0097 03       		.uleb128 0x3
+ 1349 0098 88010000 		.4byte	.LASF13
+ 1350 009c 03       		.byte	0x3
+ 1351 009d 24       		.byte	0x24
+ 1352 009e 45000000 		.4byte	0x45
+ 1353 00a2 03       		.uleb128 0x3
+ 1354 00a3 54010000 		.4byte	.LASF14
+ 1355 00a7 03       		.byte	0x3
+ 1356 00a8 2C       		.byte	0x2c
+ 1357 00a9 57000000 		.4byte	0x57
+ 1358 00ad 05       		.uleb128 0x5
+ 1359 00ae 9B000000 		.4byte	.LASF15
+ 1360 00b2 04       		.byte	0x4
+ 1361 00b3 E901     		.2byte	0x1e9
+ 1362 00b5 37000000 		.4byte	0x37
+ 1363 00b9 02       		.uleb128 0x2
+ 1364 00ba 04       		.byte	0x4
+ 1365 00bb 04       		.byte	0x4
+ 1366 00bc B5000000 		.4byte	.LASF16
+ 1367 00c0 02       		.uleb128 0x2
+ 1368 00c1 08       		.byte	0x8
+ 1369 00c2 04       		.byte	0x4
+ 1370 00c3 C3020000 		.4byte	.LASF17
+ 1371 00c7 02       		.uleb128 0x2
+ 1372 00c8 01       		.byte	0x1
+ 1373 00c9 08       		.byte	0x8
+ 1374 00ca F5010000 		.4byte	.LASF18
+ 1375 00ce 02       		.uleb128 0x2
+ 1376 00cf 08       		.byte	0x8
+ 1377 00d0 04       		.byte	0x4
+ 1378 00d1 14010000 		.4byte	.LASF19
+ 1379 00d5 02       		.uleb128 0x2
+ 1380 00d6 04       		.byte	0x4
+ 1381 00d7 07       		.byte	0x7
+ 1382 00d8 22000000 		.4byte	.LASF20
+ 1383 00dc 06       		.uleb128 0x6
+ 1384 00dd 01       		.byte	0x1
+ 1385 00de 37000000 		.4byte	0x37
+ 1386 00e2 05       		.byte	0x5
+ 1387 00e3 15       		.byte	0x15
+ 1388 00e4 F5000000 		.4byte	0xf5
+ 1389 00e8 07       		.uleb128 0x7
+ 1390 00e9 05000000 		.4byte	.LASF21
+ 1391 00ed 00       		.byte	0
+ 1392 00ee 07       		.uleb128 0x7
+ 1393 00ef 0E010000 		.4byte	.LASF22
+ 1394 00f3 01       		.byte	0x1
+ 1395 00f4 00       		.byte	0
+ 1396 00f5 03       		.uleb128 0x3
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 34
+
+
+ 1397 00f6 F1030000 		.4byte	.LASF23
+ 1398 00fa 05       		.byte	0x5
+ 1399 00fb 18       		.byte	0x18
+ 1400 00fc DC000000 		.4byte	0xdc
+ 1401 0100 08       		.uleb128 0x8
+ 1402 0101 FB000000 		.4byte	.LASF31
+ 1403 0105 01       		.byte	0x1
+ 1404 0106 5A       		.byte	0x5a
+ 1405 0107 00000000 		.4byte	.LFB65
+ 1406 010b 02000000 		.4byte	.LFE65-.LFB65
+ 1407 010f 01       		.uleb128 0x1
+ 1408 0110 9C       		.byte	0x9c
+ 1409 0111 23010000 		.4byte	0x123
+ 1410 0115 09       		.uleb128 0x9
+ 1411 0116 E5030000 		.4byte	.LASF24
+ 1412 011a 01       		.byte	0x1
+ 1413 011b 5A       		.byte	0x5a
+ 1414 011c 8C000000 		.4byte	0x8c
+ 1415 0120 01       		.uleb128 0x1
+ 1416 0121 50       		.byte	0x50
+ 1417 0122 00       		.byte	0
+ 1418 0123 0A       		.uleb128 0xa
+ 1419 0124 FB030000 		.4byte	.LASF28
+ 1420 0128 01       		.byte	0x1
+ 1421 0129 97       		.byte	0x97
+ 1422 012a F5000000 		.4byte	0xf5
+ 1423 012e 00000000 		.4byte	.LFB67
+ 1424 0132 3A000000 		.4byte	.LFE67-.LFB67
+ 1425 0136 01       		.uleb128 0x1
+ 1426 0137 9C       		.byte	0x9c
+ 1427 0138 DC010000 		.4byte	0x1dc
+ 1428 013c 0B       		.uleb128 0xb
+ 1429 013d 3B030000 		.4byte	.LASF25
+ 1430 0141 01       		.byte	0x1
+ 1431 0142 97       		.byte	0x97
+ 1432 0143 8C000000 		.4byte	0x8c
+ 1433 0147 00000000 		.4byte	.LLST0
+ 1434 014b 0B       		.uleb128 0xb
+ 1435 014c 52000000 		.4byte	.LASF26
+ 1436 0150 01       		.byte	0x1
+ 1437 0151 97       		.byte	0x97
+ 1438 0152 8C000000 		.4byte	0x8c
+ 1439 0156 21000000 		.4byte	.LLST1
+ 1440 015a 0B       		.uleb128 0xb
+ 1441 015b 86020000 		.4byte	.LASF27
+ 1442 015f 01       		.byte	0x1
+ 1443 0160 97       		.byte	0x97
+ 1444 0161 DC010000 		.4byte	0x1dc
+ 1445 0165 42000000 		.4byte	.LLST2
+ 1446 0169 0C       		.uleb128 0xc
+ 1447 016a 35030000 		.4byte	.LASF30
+ 1448 016e 01       		.byte	0x1
+ 1449 016f 9B       		.byte	0x9b
+ 1450 0170 8C000000 		.4byte	0x8c
+ 1451 0174 60000000 		.4byte	.LLST3
+ 1452 0178 0D       		.uleb128 0xd
+ 1453 0179 0E000000 		.4byte	.LVL3
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 35
+
+
+ 1454 017d 7E090000 		.4byte	0x97e
+ 1455 0181 91010000 		.4byte	0x191
+ 1456 0185 0E       		.uleb128 0xe
+ 1457 0186 01       		.uleb128 0x1
+ 1458 0187 50       		.byte	0x50
+ 1459 0188 02       		.uleb128 0x2
+ 1460 0189 76       		.byte	0x76
+ 1461 018a 00       		.sleb128 0
+ 1462 018b 0E       		.uleb128 0xe
+ 1463 018c 01       		.uleb128 0x1
+ 1464 018d 51       		.byte	0x51
+ 1465 018e 01       		.uleb128 0x1
+ 1466 018f 30       		.byte	0x30
+ 1467 0190 00       		.byte	0
+ 1468 0191 0D       		.uleb128 0xd
+ 1469 0192 18000000 		.4byte	.LVL5
+ 1470 0196 89090000 		.4byte	0x989
+ 1471 019a A5010000 		.4byte	0x1a5
+ 1472 019e 0E       		.uleb128 0xe
+ 1473 019f 01       		.uleb128 0x1
+ 1474 01a0 50       		.byte	0x50
+ 1475 01a1 02       		.uleb128 0x2
+ 1476 01a2 75       		.byte	0x75
+ 1477 01a3 00       		.sleb128 0
+ 1478 01a4 00       		.byte	0
+ 1479 01a5 0D       		.uleb128 0xd
+ 1480 01a6 24000000 		.4byte	.LVL7
+ 1481 01aa 94090000 		.4byte	0x994
+ 1482 01ae BE010000 		.4byte	0x1be
+ 1483 01b2 0E       		.uleb128 0xe
+ 1484 01b3 01       		.uleb128 0x1
+ 1485 01b4 50       		.byte	0x50
+ 1486 01b5 02       		.uleb128 0x2
+ 1487 01b6 76       		.byte	0x76
+ 1488 01b7 00       		.sleb128 0
+ 1489 01b8 0E       		.uleb128 0xe
+ 1490 01b9 01       		.uleb128 0x1
+ 1491 01ba 51       		.byte	0x51
+ 1492 01bb 01       		.uleb128 0x1
+ 1493 01bc 31       		.byte	0x31
+ 1494 01bd 00       		.byte	0
+ 1495 01be 0D       		.uleb128 0xd
+ 1496 01bf 2C000000 		.4byte	.LVL8
+ 1497 01c3 9F090000 		.4byte	0x99f
+ 1498 01c7 D2010000 		.4byte	0x1d2
+ 1499 01cb 0E       		.uleb128 0xe
+ 1500 01cc 01       		.uleb128 0x1
+ 1501 01cd 50       		.byte	0x50
+ 1502 01ce 02       		.uleb128 0x2
+ 1503 01cf 74       		.byte	0x74
+ 1504 01d0 00       		.sleb128 0
+ 1505 01d1 00       		.byte	0
+ 1506 01d2 0F       		.uleb128 0xf
+ 1507 01d3 32000000 		.4byte	.LVL10
+ 1508 01d7 AA090000 		.4byte	0x9aa
+ 1509 01db 00       		.byte	0
+ 1510 01dc 10       		.uleb128 0x10
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 36
+
+
+ 1511 01dd 04       		.byte	0x4
+ 1512 01de 8C000000 		.4byte	0x8c
+ 1513 01e2 0A       		.uleb128 0xa
+ 1514 01e3 D5010000 		.4byte	.LASF29
+ 1515 01e7 01       		.byte	0x1
+ 1516 01e8 B8       		.byte	0xb8
+ 1517 01e9 F5000000 		.4byte	0xf5
+ 1518 01ed 00000000 		.4byte	.LFB68
+ 1519 01f1 2E000000 		.4byte	.LFE68-.LFB68
+ 1520 01f5 01       		.uleb128 0x1
+ 1521 01f6 9C       		.byte	0x9c
+ 1522 01f7 7C020000 		.4byte	0x27c
+ 1523 01fb 0B       		.uleb128 0xb
+ 1524 01fc 3B030000 		.4byte	.LASF25
+ 1525 0200 01       		.byte	0x1
+ 1526 0201 B8       		.byte	0xb8
+ 1527 0202 8C000000 		.4byte	0x8c
+ 1528 0206 94000000 		.4byte	.LLST4
+ 1529 020a 0B       		.uleb128 0xb
+ 1530 020b 52000000 		.4byte	.LASF26
+ 1531 020f 01       		.byte	0x1
+ 1532 0210 B8       		.byte	0xb8
+ 1533 0211 8C000000 		.4byte	0x8c
+ 1534 0215 B5000000 		.4byte	.LLST5
+ 1535 0219 0B       		.uleb128 0xb
+ 1536 021a 86020000 		.4byte	.LASF27
+ 1537 021e 01       		.byte	0x1
+ 1538 021f B8       		.byte	0xb8
+ 1539 0220 8C000000 		.4byte	0x8c
+ 1540 0224 D6000000 		.4byte	.LLST6
+ 1541 0228 0C       		.uleb128 0xc
+ 1542 0229 35030000 		.4byte	.LASF30
+ 1543 022d 01       		.byte	0x1
+ 1544 022e BA       		.byte	0xba
+ 1545 022f 8C000000 		.4byte	0x8c
+ 1546 0233 F7000000 		.4byte	.LLST7
+ 1547 0237 0D       		.uleb128 0xd
+ 1548 0238 0C000000 		.4byte	.LVL13
+ 1549 023c 7E090000 		.4byte	0x97e
+ 1550 0240 4A020000 		.4byte	0x24a
+ 1551 0244 0E       		.uleb128 0xe
+ 1552 0245 01       		.uleb128 0x1
+ 1553 0246 51       		.byte	0x51
+ 1554 0247 01       		.uleb128 0x1
+ 1555 0248 30       		.byte	0x30
+ 1556 0249 00       		.byte	0
+ 1557 024a 0D       		.uleb128 0xd
+ 1558 024b 16000000 		.4byte	.LVL15
+ 1559 024f 89090000 		.4byte	0x989
+ 1560 0253 5E020000 		.4byte	0x25e
+ 1561 0257 0E       		.uleb128 0xe
+ 1562 0258 01       		.uleb128 0x1
+ 1563 0259 50       		.byte	0x50
+ 1564 025a 02       		.uleb128 0x2
+ 1565 025b 75       		.byte	0x75
+ 1566 025c 00       		.sleb128 0
+ 1567 025d 00       		.byte	0
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 37
+
+
+ 1568 025e 0D       		.uleb128 0xd
+ 1569 025f 20000000 		.4byte	.LVL17
+ 1570 0263 89090000 		.4byte	0x989
+ 1571 0267 72020000 		.4byte	0x272
+ 1572 026b 0E       		.uleb128 0xe
+ 1573 026c 01       		.uleb128 0x1
+ 1574 026d 50       		.byte	0x50
+ 1575 026e 02       		.uleb128 0x2
+ 1576 026f 76       		.byte	0x76
+ 1577 0270 00       		.sleb128 0
+ 1578 0271 00       		.byte	0
+ 1579 0272 0F       		.uleb128 0xf
+ 1580 0273 26000000 		.4byte	.LVL19
+ 1581 0277 AA090000 		.4byte	0x9aa
+ 1582 027b 00       		.byte	0
+ 1583 027c 08       		.uleb128 0x8
+ 1584 027d 72000000 		.4byte	.LASF32
+ 1585 0281 01       		.byte	0x1
+ 1586 0282 2D       		.byte	0x2d
+ 1587 0283 00000000 		.4byte	.LFB64
+ 1588 0287 B8000000 		.4byte	.LFE64-.LFB64
+ 1589 028b 01       		.uleb128 0x1
+ 1590 028c 9C       		.byte	0x9c
+ 1591 028d 6E040000 		.4byte	0x46e
+ 1592 0291 0B       		.uleb128 0xb
+ 1593 0292 FA010000 		.4byte	.LASF33
+ 1594 0296 01       		.byte	0x1
+ 1595 0297 2D       		.byte	0x2d
+ 1596 0298 8C000000 		.4byte	0x8c
+ 1597 029c 20010000 		.4byte	.LLST8
+ 1598 02a0 0B       		.uleb128 0xb
+ 1599 02a1 64020000 		.4byte	.LASF34
+ 1600 02a5 01       		.byte	0x1
+ 1601 02a6 2D       		.byte	0x2d
+ 1602 02a7 8C000000 		.4byte	0x8c
+ 1603 02ab 41010000 		.4byte	.LLST9
+ 1604 02af 0B       		.uleb128 0xb
+ 1605 02b0 2B000000 		.4byte	.LASF35
+ 1606 02b4 01       		.byte	0x1
+ 1607 02b5 2D       		.byte	0x2d
+ 1608 02b6 8C000000 		.4byte	0x8c
+ 1609 02ba 62010000 		.4byte	.LLST10
+ 1610 02be 0B       		.uleb128 0xb
+ 1611 02bf B6020000 		.4byte	.LASF36
+ 1612 02c3 01       		.byte	0x1
+ 1613 02c4 2D       		.byte	0x2d
+ 1614 02c5 8C000000 		.4byte	0x8c
+ 1615 02c9 83010000 		.4byte	.LLST11
+ 1616 02cd 0B       		.uleb128 0xb
+ 1617 02ce 44000000 		.4byte	.LASF37
+ 1618 02d2 01       		.byte	0x1
+ 1619 02d3 2E       		.byte	0x2e
+ 1620 02d4 8C000000 		.4byte	0x8c
+ 1621 02d8 A4010000 		.4byte	.LLST12
+ 1622 02dc 0B       		.uleb128 0xb
+ 1623 02dd BB000000 		.4byte	.LASF38
+ 1624 02e1 01       		.byte	0x1
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 38
+
+
+ 1625 02e2 2E       		.byte	0x2e
+ 1626 02e3 8C000000 		.4byte	0x8c
+ 1627 02e7 C4010000 		.4byte	.LLST13
+ 1628 02eb 0C       		.uleb128 0xc
+ 1629 02ec 35030000 		.4byte	.LASF30
+ 1630 02f0 01       		.byte	0x1
+ 1631 02f1 30       		.byte	0x30
+ 1632 02f2 F5000000 		.4byte	0xf5
+ 1633 02f6 E4010000 		.4byte	.LLST14
+ 1634 02fa 0D       		.uleb128 0xd
+ 1635 02fb 12000000 		.4byte	.LVL24
+ 1636 02ff E2010000 		.4byte	0x1e2
+ 1637 0303 13030000 		.4byte	0x313
+ 1638 0307 0E       		.uleb128 0xe
+ 1639 0308 01       		.uleb128 0x1
+ 1640 0309 50       		.byte	0x50
+ 1641 030a 02       		.uleb128 0x2
+ 1642 030b 08       		.byte	0x8
+ 1643 030c 68       		.byte	0x68
+ 1644 030d 0E       		.uleb128 0xe
+ 1645 030e 01       		.uleb128 0x1
+ 1646 030f 51       		.byte	0x51
+ 1647 0310 01       		.uleb128 0x1
+ 1648 0311 30       		.byte	0x30
+ 1649 0312 00       		.byte	0
+ 1650 0313 0D       		.uleb128 0xd
+ 1651 0314 1C000000 		.4byte	.LVL26
+ 1652 0318 B5090000 		.4byte	0x9b5
+ 1653 031c 2A030000 		.4byte	0x32a
+ 1654 0320 0E       		.uleb128 0xe
+ 1655 0321 01       		.uleb128 0x1
+ 1656 0322 50       		.byte	0x50
+ 1657 0323 05       		.uleb128 0x5
+ 1658 0324 03       		.byte	0x3
+ 1659 0325 00000000 		.4byte	.LC0
+ 1660 0329 00       		.byte	0
+ 1661 032a 0D       		.uleb128 0xd
+ 1662 032b 26000000 		.4byte	.LVL27
+ 1663 032f E2010000 		.4byte	0x1e2
+ 1664 0333 49030000 		.4byte	0x349
+ 1665 0337 0E       		.uleb128 0xe
+ 1666 0338 01       		.uleb128 0x1
+ 1667 0339 50       		.byte	0x50
+ 1668 033a 02       		.uleb128 0x2
+ 1669 033b 08       		.byte	0x8
+ 1670 033c 68       		.byte	0x68
+ 1671 033d 0E       		.uleb128 0xe
+ 1672 033e 01       		.uleb128 0x1
+ 1673 033f 51       		.byte	0x51
+ 1674 0340 01       		.uleb128 0x1
+ 1675 0341 31       		.byte	0x31
+ 1676 0342 0E       		.uleb128 0xe
+ 1677 0343 01       		.uleb128 0x1
+ 1678 0344 52       		.byte	0x52
+ 1679 0345 02       		.uleb128 0x2
+ 1680 0346 76       		.byte	0x76
+ 1681 0347 00       		.sleb128 0
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 39
+
+
+ 1682 0348 00       		.byte	0
+ 1683 0349 0D       		.uleb128 0xd
+ 1684 034a 30000000 		.4byte	.LVL29
+ 1685 034e B5090000 		.4byte	0x9b5
+ 1686 0352 60030000 		.4byte	0x360
+ 1687 0356 0E       		.uleb128 0xe
+ 1688 0357 01       		.uleb128 0x1
+ 1689 0358 50       		.byte	0x50
+ 1690 0359 05       		.uleb128 0x5
+ 1691 035a 03       		.byte	0x3
+ 1692 035b 24000000 		.4byte	.LC1
+ 1693 035f 00       		.byte	0
+ 1694 0360 0D       		.uleb128 0xd
+ 1695 0361 3A000000 		.4byte	.LVL30
+ 1696 0365 E2010000 		.4byte	0x1e2
+ 1697 0369 7F030000 		.4byte	0x37f
+ 1698 036d 0E       		.uleb128 0xe
+ 1699 036e 01       		.uleb128 0x1
+ 1700 036f 50       		.byte	0x50
+ 1701 0370 02       		.uleb128 0x2
+ 1702 0371 08       		.byte	0x8
+ 1703 0372 68       		.byte	0x68
+ 1704 0373 0E       		.uleb128 0xe
+ 1705 0374 01       		.uleb128 0x1
+ 1706 0375 51       		.byte	0x51
+ 1707 0376 01       		.uleb128 0x1
+ 1708 0377 32       		.byte	0x32
+ 1709 0378 0E       		.uleb128 0xe
+ 1710 0379 01       		.uleb128 0x1
+ 1711 037a 52       		.byte	0x52
+ 1712 037b 02       		.uleb128 0x2
+ 1713 037c 75       		.byte	0x75
+ 1714 037d 00       		.sleb128 0
+ 1715 037e 00       		.byte	0
+ 1716 037f 0D       		.uleb128 0xd
+ 1717 0380 44000000 		.4byte	.LVL32
+ 1718 0384 B5090000 		.4byte	0x9b5
+ 1719 0388 96030000 		.4byte	0x396
+ 1720 038c 0E       		.uleb128 0xe
+ 1721 038d 01       		.uleb128 0x1
+ 1722 038e 50       		.byte	0x50
+ 1723 038f 05       		.uleb128 0x5
+ 1724 0390 03       		.byte	0x3
+ 1725 0391 48000000 		.4byte	.LC2
+ 1726 0395 00       		.byte	0
+ 1727 0396 0D       		.uleb128 0xd
+ 1728 0397 4E000000 		.4byte	.LVL33
+ 1729 039b E2010000 		.4byte	0x1e2
+ 1730 039f B5030000 		.4byte	0x3b5
+ 1731 03a3 0E       		.uleb128 0xe
+ 1732 03a4 01       		.uleb128 0x1
+ 1733 03a5 50       		.byte	0x50
+ 1734 03a6 02       		.uleb128 0x2
+ 1735 03a7 08       		.byte	0x8
+ 1736 03a8 68       		.byte	0x68
+ 1737 03a9 0E       		.uleb128 0xe
+ 1738 03aa 01       		.uleb128 0x1
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 40
+
+
+ 1739 03ab 51       		.byte	0x51
+ 1740 03ac 01       		.uleb128 0x1
+ 1741 03ad 34       		.byte	0x34
+ 1742 03ae 0E       		.uleb128 0xe
+ 1743 03af 01       		.uleb128 0x1
+ 1744 03b0 52       		.byte	0x52
+ 1745 03b1 02       		.uleb128 0x2
+ 1746 03b2 74       		.byte	0x74
+ 1747 03b3 00       		.sleb128 0
+ 1748 03b4 00       		.byte	0
+ 1749 03b5 0D       		.uleb128 0xd
+ 1750 03b6 58000000 		.4byte	.LVL35
+ 1751 03ba B5090000 		.4byte	0x9b5
+ 1752 03be CC030000 		.4byte	0x3cc
+ 1753 03c2 0E       		.uleb128 0xe
+ 1754 03c3 01       		.uleb128 0x1
+ 1755 03c4 50       		.byte	0x50
+ 1756 03c5 05       		.uleb128 0x5
+ 1757 03c6 03       		.byte	0x3
+ 1758 03c7 68000000 		.4byte	.LC3
+ 1759 03cb 00       		.byte	0
+ 1760 03cc 0D       		.uleb128 0xd
+ 1761 03cd 64000000 		.4byte	.LVL36
+ 1762 03d1 E2010000 		.4byte	0x1e2
+ 1763 03d5 ED030000 		.4byte	0x3ed
+ 1764 03d9 0E       		.uleb128 0xe
+ 1765 03da 01       		.uleb128 0x1
+ 1766 03db 50       		.byte	0x50
+ 1767 03dc 02       		.uleb128 0x2
+ 1768 03dd 08       		.byte	0x8
+ 1769 03de 68       		.byte	0x68
+ 1770 03df 0E       		.uleb128 0xe
+ 1771 03e0 01       		.uleb128 0x1
+ 1772 03e1 51       		.byte	0x51
+ 1773 03e2 01       		.uleb128 0x1
+ 1774 03e3 35       		.byte	0x35
+ 1775 03e4 0E       		.uleb128 0xe
+ 1776 03e5 01       		.uleb128 0x1
+ 1777 03e6 52       		.byte	0x52
+ 1778 03e7 04       		.uleb128 0x4
+ 1779 03e8 91       		.byte	0x91
+ 1780 03e9 00       		.sleb128 0
+ 1781 03ea 94       		.byte	0x94
+ 1782 03eb 01       		.byte	0x1
+ 1783 03ec 00       		.byte	0
+ 1784 03ed 0D       		.uleb128 0xd
+ 1785 03ee 6E000000 		.4byte	.LVL38
+ 1786 03f2 B5090000 		.4byte	0x9b5
+ 1787 03f6 04040000 		.4byte	0x404
+ 1788 03fa 0E       		.uleb128 0xe
+ 1789 03fb 01       		.uleb128 0x1
+ 1790 03fc 50       		.byte	0x50
+ 1791 03fd 05       		.uleb128 0x5
+ 1792 03fe 03       		.byte	0x3
+ 1793 03ff 88000000 		.4byte	.LC4
+ 1794 0403 00       		.byte	0
+ 1795 0404 0D       		.uleb128 0xd
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 41
+
+
+ 1796 0405 7A000000 		.4byte	.LVL39
+ 1797 0409 E2010000 		.4byte	0x1e2
+ 1798 040d 25040000 		.4byte	0x425
+ 1799 0411 0E       		.uleb128 0xe
+ 1800 0412 01       		.uleb128 0x1
+ 1801 0413 50       		.byte	0x50
+ 1802 0414 02       		.uleb128 0x2
+ 1803 0415 08       		.byte	0x8
+ 1804 0416 68       		.byte	0x68
+ 1805 0417 0E       		.uleb128 0xe
+ 1806 0418 01       		.uleb128 0x1
+ 1807 0419 51       		.byte	0x51
+ 1808 041a 01       		.uleb128 0x1
+ 1809 041b 36       		.byte	0x36
+ 1810 041c 0E       		.uleb128 0xe
+ 1811 041d 01       		.uleb128 0x1
+ 1812 041e 52       		.byte	0x52
+ 1813 041f 04       		.uleb128 0x4
+ 1814 0420 91       		.byte	0x91
+ 1815 0421 04       		.sleb128 4
+ 1816 0422 94       		.byte	0x94
+ 1817 0423 01       		.byte	0x1
+ 1818 0424 00       		.byte	0
+ 1819 0425 0D       		.uleb128 0xd
+ 1820 0426 84000000 		.4byte	.LVL41
+ 1821 042a B5090000 		.4byte	0x9b5
+ 1822 042e 3C040000 		.4byte	0x43c
+ 1823 0432 0E       		.uleb128 0xe
+ 1824 0433 01       		.uleb128 0x1
+ 1825 0434 50       		.byte	0x50
+ 1826 0435 05       		.uleb128 0x5
+ 1827 0436 03       		.byte	0x3
+ 1828 0437 A8000000 		.4byte	.LC5
+ 1829 043b 00       		.byte	0
+ 1830 043c 0D       		.uleb128 0xd
+ 1831 043d 8E000000 		.4byte	.LVL42
+ 1832 0441 E2010000 		.4byte	0x1e2
+ 1833 0445 5A040000 		.4byte	0x45a
+ 1834 0449 0E       		.uleb128 0xe
+ 1835 044a 01       		.uleb128 0x1
+ 1836 044b 50       		.byte	0x50
+ 1837 044c 02       		.uleb128 0x2
+ 1838 044d 08       		.byte	0x8
+ 1839 044e 68       		.byte	0x68
+ 1840 044f 0E       		.uleb128 0xe
+ 1841 0450 01       		.uleb128 0x1
+ 1842 0451 51       		.byte	0x51
+ 1843 0452 01       		.uleb128 0x1
+ 1844 0453 3E       		.byte	0x3e
+ 1845 0454 0E       		.uleb128 0xe
+ 1846 0455 01       		.uleb128 0x1
+ 1847 0456 52       		.byte	0x52
+ 1848 0457 01       		.uleb128 0x1
+ 1849 0458 30       		.byte	0x30
+ 1850 0459 00       		.byte	0
+ 1851 045a 11       		.uleb128 0x11
+ 1852 045b 98000000 		.4byte	.LVL44
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 42
+
+
+ 1853 045f B5090000 		.4byte	0x9b5
+ 1854 0463 0E       		.uleb128 0xe
+ 1855 0464 01       		.uleb128 0x1
+ 1856 0465 50       		.byte	0x50
+ 1857 0466 05       		.uleb128 0x5
+ 1858 0467 03       		.byte	0x3
+ 1859 0468 C8000000 		.4byte	.LC6
+ 1860 046c 00       		.byte	0
+ 1861 046d 00       		.byte	0
+ 1862 046e 12       		.uleb128 0x12
+ 1863 046f 0E000000 		.4byte	.LASF39
+ 1864 0473 01       		.byte	0x1
+ 1865 0474 D4       		.byte	0xd4
+ 1866 0475 8C000000 		.4byte	0x8c
+ 1867 0479 00000000 		.4byte	.LFB69
+ 1868 047d 9C000000 		.4byte	.LFE69-.LFB69
+ 1869 0481 01       		.uleb128 0x1
+ 1870 0482 9C       		.byte	0x9c
+ 1871 0483 E6040000 		.4byte	0x4e6
+ 1872 0487 0B       		.uleb128 0xb
+ 1873 0488 8B020000 		.4byte	.LASF40
+ 1874 048c 01       		.byte	0x1
+ 1875 048d D4       		.byte	0xd4
+ 1876 048e 8C000000 		.4byte	0x8c
+ 1877 0492 39020000 		.4byte	.LLST15
+ 1878 0496 0C       		.uleb128 0xc
+ 1879 0497 E7010000 		.4byte	.LASF41
+ 1880 049b 01       		.byte	0x1
+ 1881 049c D6       		.byte	0xd6
+ 1882 049d 8C000000 		.4byte	0x8c
+ 1883 04a1 5A020000 		.4byte	.LLST16
+ 1884 04a5 13       		.uleb128 0x13
+ 1885 04a6 00000000 		.4byte	.Ldebug_ranges0+0
+ 1886 04aa C5040000 		.4byte	0x4c5
+ 1887 04ae 14       		.uleb128 0x14
+ 1888 04af 6900     		.ascii	"i\000"
+ 1889 04b1 01       		.byte	0x1
+ 1890 04b2 D9       		.byte	0xd9
+ 1891 04b3 7E000000 		.4byte	0x7e
+ 1892 04b7 79020000 		.4byte	.LLST17
+ 1893 04bb 0F       		.uleb128 0xf
+ 1894 04bc 2A000000 		.4byte	.LVL50
+ 1895 04c0 C0090000 		.4byte	0x9c0
+ 1896 04c4 00       		.byte	0
+ 1897 04c5 15       		.uleb128 0x15
+ 1898 04c6 4C000000 		.4byte	.LBB4
+ 1899 04ca 44000000 		.4byte	.LBE4-.LBB4
+ 1900 04ce 14       		.uleb128 0x14
+ 1901 04cf 6A00     		.ascii	"j\000"
+ 1902 04d1 01       		.byte	0x1
+ 1903 04d2 E0       		.byte	0xe0
+ 1904 04d3 7E000000 		.4byte	0x7e
+ 1905 04d7 98020000 		.4byte	.LLST18
+ 1906 04db 0F       		.uleb128 0xf
+ 1907 04dc 6A000000 		.4byte	.LVL59
+ 1908 04e0 C0090000 		.4byte	0x9c0
+ 1909 04e4 00       		.byte	0
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 43
+
+
+ 1910 04e5 00       		.byte	0
+ 1911 04e6 12       		.uleb128 0x12
+ 1912 04e7 A1000000 		.4byte	.LASF42
+ 1913 04eb 01       		.byte	0x1
+ 1914 04ec EF       		.byte	0xef
+ 1915 04ed 8C000000 		.4byte	0x8c
+ 1916 04f1 00000000 		.4byte	.LFB70
+ 1917 04f5 9C000000 		.4byte	.LFE70-.LFB70
+ 1918 04f9 01       		.uleb128 0x1
+ 1919 04fa 9C       		.byte	0x9c
+ 1920 04fb 5E050000 		.4byte	0x55e
+ 1921 04ff 0B       		.uleb128 0xb
+ 1922 0500 8B020000 		.4byte	.LASF40
+ 1923 0504 01       		.byte	0x1
+ 1924 0505 EF       		.byte	0xef
+ 1925 0506 8C000000 		.4byte	0x8c
+ 1926 050a AB020000 		.4byte	.LLST19
+ 1927 050e 0C       		.uleb128 0xc
+ 1928 050f 73010000 		.4byte	.LASF43
+ 1929 0513 01       		.byte	0x1
+ 1930 0514 F1       		.byte	0xf1
+ 1931 0515 8C000000 		.4byte	0x8c
+ 1932 0519 CC020000 		.4byte	.LLST20
+ 1933 051d 13       		.uleb128 0x13
+ 1934 051e 18000000 		.4byte	.Ldebug_ranges0+0x18
+ 1935 0522 3D050000 		.4byte	0x53d
+ 1936 0526 14       		.uleb128 0x14
+ 1937 0527 6900     		.ascii	"i\000"
+ 1938 0529 01       		.byte	0x1
+ 1939 052a F4       		.byte	0xf4
+ 1940 052b 7E000000 		.4byte	0x7e
+ 1941 052f EB020000 		.4byte	.LLST21
+ 1942 0533 0F       		.uleb128 0xf
+ 1943 0534 2A000000 		.4byte	.LVL71
+ 1944 0538 C0090000 		.4byte	0x9c0
+ 1945 053c 00       		.byte	0
+ 1946 053d 15       		.uleb128 0x15
+ 1947 053e 4C000000 		.4byte	.LBB7
+ 1948 0542 44000000 		.4byte	.LBE7-.LBB7
+ 1949 0546 14       		.uleb128 0x14
+ 1950 0547 6A00     		.ascii	"j\000"
+ 1951 0549 01       		.byte	0x1
+ 1952 054a FB       		.byte	0xfb
+ 1953 054b 7E000000 		.4byte	0x7e
+ 1954 054f 0A030000 		.4byte	.LLST22
+ 1955 0553 0F       		.uleb128 0xf
+ 1956 0554 6A000000 		.4byte	.LVL80
+ 1957 0558 C0090000 		.4byte	0x9c0
+ 1958 055c 00       		.byte	0
+ 1959 055d 00       		.byte	0
+ 1960 055e 16       		.uleb128 0x16
+ 1961 055f 74020000 		.4byte	.LASF44
+ 1962 0563 01       		.byte	0x1
+ 1963 0564 0A01     		.2byte	0x10a
+ 1964 0566 8C000000 		.4byte	0x8c
+ 1965 056a 00000000 		.4byte	.LFB71
+ 1966 056e 9C000000 		.4byte	.LFE71-.LFB71
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 44
+
+
+ 1967 0572 01       		.uleb128 0x1
+ 1968 0573 9C       		.byte	0x9c
+ 1969 0574 DB050000 		.4byte	0x5db
+ 1970 0578 17       		.uleb128 0x17
+ 1971 0579 8B020000 		.4byte	.LASF40
+ 1972 057d 01       		.byte	0x1
+ 1973 057e 0A01     		.2byte	0x10a
+ 1974 0580 8C000000 		.4byte	0x8c
+ 1975 0584 1D030000 		.4byte	.LLST23
+ 1976 0588 18       		.uleb128 0x18
+ 1977 0589 EF010000 		.4byte	.LASF45
+ 1978 058d 01       		.byte	0x1
+ 1979 058e 0C01     		.2byte	0x10c
+ 1980 0590 8C000000 		.4byte	0x8c
+ 1981 0594 3E030000 		.4byte	.LLST24
+ 1982 0598 13       		.uleb128 0x13
+ 1983 0599 30000000 		.4byte	.Ldebug_ranges0+0x30
+ 1984 059d B9050000 		.4byte	0x5b9
+ 1985 05a1 19       		.uleb128 0x19
+ 1986 05a2 6900     		.ascii	"i\000"
+ 1987 05a4 01       		.byte	0x1
+ 1988 05a5 0E01     		.2byte	0x10e
+ 1989 05a7 7E000000 		.4byte	0x7e
+ 1990 05ab 5D030000 		.4byte	.LLST25
+ 1991 05af 0F       		.uleb128 0xf
+ 1992 05b0 2A000000 		.4byte	.LVL92
+ 1993 05b4 C0090000 		.4byte	0x9c0
+ 1994 05b8 00       		.byte	0
+ 1995 05b9 15       		.uleb128 0x15
+ 1996 05ba 4C000000 		.4byte	.LBB10
+ 1997 05be 44000000 		.4byte	.LBE10-.LBB10
+ 1998 05c2 19       		.uleb128 0x19
+ 1999 05c3 6A00     		.ascii	"j\000"
+ 2000 05c5 01       		.byte	0x1
+ 2001 05c6 1401     		.2byte	0x114
+ 2002 05c8 7E000000 		.4byte	0x7e
+ 2003 05cc 7C030000 		.4byte	.LLST26
+ 2004 05d0 0F       		.uleb128 0xf
+ 2005 05d1 6A000000 		.4byte	.LVL101
+ 2006 05d5 C0090000 		.4byte	0x9c0
+ 2007 05d9 00       		.byte	0
+ 2008 05da 00       		.byte	0
+ 2009 05db 16       		.uleb128 0x16
+ 2010 05dc A3010000 		.4byte	.LASF46
+ 2011 05e0 01       		.byte	0x1
+ 2012 05e1 2401     		.2byte	0x124
+ 2013 05e3 8C000000 		.4byte	0x8c
+ 2014 05e7 00000000 		.4byte	.LFB72
+ 2015 05eb 9C000000 		.4byte	.LFE72-.LFB72
+ 2016 05ef 01       		.uleb128 0x1
+ 2017 05f0 9C       		.byte	0x9c
+ 2018 05f1 58060000 		.4byte	0x658
+ 2019 05f5 17       		.uleb128 0x17
+ 2020 05f6 8B020000 		.4byte	.LASF40
+ 2021 05fa 01       		.byte	0x1
+ 2022 05fb 2401     		.2byte	0x124
+ 2023 05fd 8C000000 		.4byte	0x8c
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 45
+
+
+ 2024 0601 8F030000 		.4byte	.LLST27
+ 2025 0605 18       		.uleb128 0x18
+ 2026 0606 63000000 		.4byte	.LASF47
+ 2027 060a 01       		.byte	0x1
+ 2028 060b 2601     		.2byte	0x126
+ 2029 060d 8C000000 		.4byte	0x8c
+ 2030 0611 B0030000 		.4byte	.LLST28
+ 2031 0615 13       		.uleb128 0x13
+ 2032 0616 48000000 		.4byte	.Ldebug_ranges0+0x48
+ 2033 061a 36060000 		.4byte	0x636
+ 2034 061e 19       		.uleb128 0x19
+ 2035 061f 6900     		.ascii	"i\000"
+ 2036 0621 01       		.byte	0x1
+ 2037 0622 2801     		.2byte	0x128
+ 2038 0624 7E000000 		.4byte	0x7e
+ 2039 0628 CF030000 		.4byte	.LLST29
+ 2040 062c 0F       		.uleb128 0xf
+ 2041 062d 2A000000 		.4byte	.LVL113
+ 2042 0631 C0090000 		.4byte	0x9c0
+ 2043 0635 00       		.byte	0
+ 2044 0636 15       		.uleb128 0x15
+ 2045 0637 4C000000 		.4byte	.LBB13
+ 2046 063b 44000000 		.4byte	.LBE13-.LBB13
+ 2047 063f 19       		.uleb128 0x19
+ 2048 0640 6A00     		.ascii	"j\000"
+ 2049 0642 01       		.byte	0x1
+ 2050 0643 2E01     		.2byte	0x12e
+ 2051 0645 7E000000 		.4byte	0x7e
+ 2052 0649 EE030000 		.4byte	.LLST30
+ 2053 064d 0F       		.uleb128 0xf
+ 2054 064e 6A000000 		.4byte	.LVL122
+ 2055 0652 C0090000 		.4byte	0x9c0
+ 2056 0656 00       		.byte	0
+ 2057 0657 00       		.byte	0
+ 2058 0658 16       		.uleb128 0x16
+ 2059 0659 A4020000 		.4byte	.LASF48
+ 2060 065d 01       		.byte	0x1
+ 2061 065e 3D01     		.2byte	0x13d
+ 2062 0660 8C000000 		.4byte	0x8c
+ 2063 0664 00000000 		.4byte	.LFB73
+ 2064 0668 5A000000 		.4byte	.LFE73-.LFB73
+ 2065 066c 01       		.uleb128 0x1
+ 2066 066d 9C       		.byte	0x9c
+ 2067 066e B0060000 		.4byte	0x6b0
+ 2068 0672 17       		.uleb128 0x17
+ 2069 0673 8B020000 		.4byte	.LASF40
+ 2070 0677 01       		.byte	0x1
+ 2071 0678 3D01     		.2byte	0x13d
+ 2072 067a 8C000000 		.4byte	0x8c
+ 2073 067e 01040000 		.4byte	.LLST31
+ 2074 0682 18       		.uleb128 0x18
+ 2075 0683 5E020000 		.4byte	.LASF49
+ 2076 0687 01       		.byte	0x1
+ 2077 0688 3F01     		.2byte	0x13f
+ 2078 068a 8C000000 		.4byte	0x8c
+ 2079 068e 22040000 		.4byte	.LLST32
+ 2080 0692 1A       		.uleb128 0x1a
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 46
+
+
+ 2081 0693 60000000 		.4byte	.Ldebug_ranges0+0x60
+ 2082 0697 19       		.uleb128 0x19
+ 2083 0698 6900     		.ascii	"i\000"
+ 2084 069a 01       		.byte	0x1
+ 2085 069b 4101     		.2byte	0x141
+ 2086 069d 7E000000 		.4byte	0x7e
+ 2087 06a1 4C040000 		.4byte	.LLST33
+ 2088 06a5 0F       		.uleb128 0xf
+ 2089 06a6 2A000000 		.4byte	.LVL134
+ 2090 06aa C0090000 		.4byte	0x9c0
+ 2091 06ae 00       		.byte	0
+ 2092 06af 00       		.byte	0
+ 2093 06b0 16       		.uleb128 0x16
+ 2094 06b1 4D020000 		.4byte	.LASF50
+ 2095 06b5 01       		.byte	0x1
+ 2096 06b6 5201     		.2byte	0x152
+ 2097 06b8 8C000000 		.4byte	0x8c
+ 2098 06bc 00000000 		.4byte	.LFB74
+ 2099 06c0 9C000000 		.4byte	.LFE74-.LFB74
+ 2100 06c4 01       		.uleb128 0x1
+ 2101 06c5 9C       		.byte	0x9c
+ 2102 06c6 2D070000 		.4byte	0x72d
+ 2103 06ca 17       		.uleb128 0x17
+ 2104 06cb 8B020000 		.4byte	.LASF40
+ 2105 06cf 01       		.byte	0x1
+ 2106 06d0 5201     		.2byte	0x152
+ 2107 06d2 8C000000 		.4byte	0x8c
+ 2108 06d6 6B040000 		.4byte	.LLST34
+ 2109 06da 18       		.uleb128 0x18
+ 2110 06db 00000000 		.4byte	.LASF51
+ 2111 06df 01       		.byte	0x1
+ 2112 06e0 5401     		.2byte	0x154
+ 2113 06e2 8C000000 		.4byte	0x8c
+ 2114 06e6 8C040000 		.4byte	.LLST35
+ 2115 06ea 13       		.uleb128 0x13
+ 2116 06eb 78000000 		.4byte	.Ldebug_ranges0+0x78
+ 2117 06ef 0B070000 		.4byte	0x70b
+ 2118 06f3 19       		.uleb128 0x19
+ 2119 06f4 6900     		.ascii	"i\000"
+ 2120 06f6 01       		.byte	0x1
+ 2121 06f7 5701     		.2byte	0x157
+ 2122 06f9 7E000000 		.4byte	0x7e
+ 2123 06fd AB040000 		.4byte	.LLST36
+ 2124 0701 0F       		.uleb128 0xf
+ 2125 0702 2A000000 		.4byte	.LVL145
+ 2126 0706 C0090000 		.4byte	0x9c0
+ 2127 070a 00       		.byte	0
+ 2128 070b 15       		.uleb128 0x15
+ 2129 070c 4C000000 		.4byte	.LBB18
+ 2130 0710 44000000 		.4byte	.LBE18-.LBB18
+ 2131 0714 19       		.uleb128 0x19
+ 2132 0715 6A00     		.ascii	"j\000"
+ 2133 0717 01       		.byte	0x1
+ 2134 0718 5E01     		.2byte	0x15e
+ 2135 071a 7E000000 		.4byte	0x7e
+ 2136 071e CA040000 		.4byte	.LLST37
+ 2137 0722 0F       		.uleb128 0xf
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 47
+
+
+ 2138 0723 6A000000 		.4byte	.LVL154
+ 2139 0727 C0090000 		.4byte	0x9c0
+ 2140 072b 00       		.byte	0
+ 2141 072c 00       		.byte	0
+ 2142 072d 08       		.uleb128 0x8
+ 2143 072e B4010000 		.4byte	.LASF52
+ 2144 0732 01       		.byte	0x1
+ 2145 0733 65       		.byte	0x65
+ 2146 0734 00000000 		.4byte	.LFB66
+ 2147 0738 0C010000 		.4byte	.LFE66-.LFB66
+ 2148 073c 01       		.uleb128 0x1
+ 2149 073d 9C       		.byte	0x9c
+ 2150 073e DB080000 		.4byte	0x8db
+ 2151 0742 0B       		.uleb128 0xb
+ 2152 0743 91010000 		.4byte	.LASF53
+ 2153 0747 01       		.byte	0x1
+ 2154 0748 65       		.byte	0x65
+ 2155 0749 8C000000 		.4byte	0x8c
+ 2156 074d DD040000 		.4byte	.LLST38
+ 2157 0751 0C       		.uleb128 0xc
+ 2158 0752 35030000 		.4byte	.LASF30
+ 2159 0756 01       		.byte	0x1
+ 2160 0757 67       		.byte	0x67
+ 2161 0758 F5000000 		.4byte	0xf5
+ 2162 075c 8C050000 		.4byte	.LLST39
+ 2163 0760 0D       		.uleb128 0xd
+ 2164 0761 12000000 		.4byte	.LVL164
+ 2165 0765 23010000 		.4byte	0x123
+ 2166 0769 7F070000 		.4byte	0x77f
+ 2167 076d 0E       		.uleb128 0xe
+ 2168 076e 01       		.uleb128 0x1
+ 2169 076f 50       		.byte	0x50
+ 2170 0770 02       		.uleb128 0x2
+ 2171 0771 08       		.byte	0x8
+ 2172 0772 68       		.byte	0x68
+ 2173 0773 0E       		.uleb128 0xe
+ 2174 0774 01       		.uleb128 0x1
+ 2175 0775 51       		.byte	0x51
+ 2176 0776 01       		.uleb128 0x1
+ 2177 0777 30       		.byte	0x30
+ 2178 0778 0E       		.uleb128 0xe
+ 2179 0779 01       		.uleb128 0x1
+ 2180 077a 52       		.byte	0x52
+ 2181 077b 02       		.uleb128 0x2
+ 2182 077c 91       		.byte	0x91
+ 2183 077d 77       		.sleb128 -9
+ 2184 077e 00       		.byte	0
+ 2185 077f 0D       		.uleb128 0xd
+ 2186 0780 1C000000 		.4byte	.LVL166
+ 2187 0784 B5090000 		.4byte	0x9b5
+ 2188 0788 96070000 		.4byte	0x796
+ 2189 078c 0E       		.uleb128 0xe
+ 2190 078d 01       		.uleb128 0x1
+ 2191 078e 50       		.byte	0x50
+ 2192 078f 05       		.uleb128 0x5
+ 2193 0790 03       		.byte	0x3
+ 2194 0791 F4000000 		.4byte	.LC7
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 48
+
+
+ 2195 0795 00       		.byte	0
+ 2196 0796 0F       		.uleb128 0xf
+ 2197 0797 26000000 		.4byte	.LVL169
+ 2198 079b 6E040000 		.4byte	0x46e
+ 2199 079f 0D       		.uleb128 0xd
+ 2200 07a0 34000000 		.4byte	.LVL170
+ 2201 07a4 23010000 		.4byte	0x123
+ 2202 07a8 BE070000 		.4byte	0x7be
+ 2203 07ac 0E       		.uleb128 0xe
+ 2204 07ad 01       		.uleb128 0x1
+ 2205 07ae 50       		.byte	0x50
+ 2206 07af 02       		.uleb128 0x2
+ 2207 07b0 08       		.byte	0x8
+ 2208 07b1 68       		.byte	0x68
+ 2209 07b2 0E       		.uleb128 0xe
+ 2210 07b3 01       		.uleb128 0x1
+ 2211 07b4 51       		.byte	0x51
+ 2212 07b5 01       		.uleb128 0x1
+ 2213 07b6 31       		.byte	0x31
+ 2214 07b7 0E       		.uleb128 0xe
+ 2215 07b8 01       		.uleb128 0x1
+ 2216 07b9 52       		.byte	0x52
+ 2217 07ba 02       		.uleb128 0x2
+ 2218 07bb 74       		.byte	0x74
+ 2219 07bc 00       		.sleb128 0
+ 2220 07bd 00       		.byte	0
+ 2221 07be 0D       		.uleb128 0xd
+ 2222 07bf 3E000000 		.4byte	.LVL172
+ 2223 07c3 B5090000 		.4byte	0x9b5
+ 2224 07c7 D5070000 		.4byte	0x7d5
+ 2225 07cb 0E       		.uleb128 0xe
+ 2226 07cc 01       		.uleb128 0x1
+ 2227 07cd 50       		.byte	0x50
+ 2228 07ce 05       		.uleb128 0x5
+ 2229 07cf 03       		.byte	0x3
+ 2230 07d0 18010000 		.4byte	.LC8
+ 2231 07d4 00       		.byte	0
+ 2232 07d5 0F       		.uleb128 0xf
+ 2233 07d6 48000000 		.4byte	.LVL175
+ 2234 07da E6040000 		.4byte	0x4e6
+ 2235 07de 0D       		.uleb128 0xd
+ 2236 07df 56000000 		.4byte	.LVL176
+ 2237 07e3 23010000 		.4byte	0x123
+ 2238 07e7 FD070000 		.4byte	0x7fd
+ 2239 07eb 0E       		.uleb128 0xe
+ 2240 07ec 01       		.uleb128 0x1
+ 2241 07ed 50       		.byte	0x50
+ 2242 07ee 02       		.uleb128 0x2
+ 2243 07ef 08       		.byte	0x8
+ 2244 07f0 68       		.byte	0x68
+ 2245 07f1 0E       		.uleb128 0xe
+ 2246 07f2 01       		.uleb128 0x1
+ 2247 07f3 51       		.byte	0x51
+ 2248 07f4 01       		.uleb128 0x1
+ 2249 07f5 32       		.byte	0x32
+ 2250 07f6 0E       		.uleb128 0xe
+ 2251 07f7 01       		.uleb128 0x1
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 49
+
+
+ 2252 07f8 52       		.byte	0x52
+ 2253 07f9 02       		.uleb128 0x2
+ 2254 07fa 74       		.byte	0x74
+ 2255 07fb 00       		.sleb128 0
+ 2256 07fc 00       		.byte	0
+ 2257 07fd 0D       		.uleb128 0xd
+ 2258 07fe 60000000 		.4byte	.LVL178
+ 2259 0802 B5090000 		.4byte	0x9b5
+ 2260 0806 14080000 		.4byte	0x814
+ 2261 080a 0E       		.uleb128 0xe
+ 2262 080b 01       		.uleb128 0x1
+ 2263 080c 50       		.byte	0x50
+ 2264 080d 05       		.uleb128 0x5
+ 2265 080e 03       		.byte	0x3
+ 2266 080f 3C010000 		.4byte	.LC9
+ 2267 0813 00       		.byte	0
+ 2268 0814 0F       		.uleb128 0xf
+ 2269 0815 6A000000 		.4byte	.LVL181
+ 2270 0819 5E050000 		.4byte	0x55e
+ 2271 081d 0D       		.uleb128 0xd
+ 2272 081e 78000000 		.4byte	.LVL182
+ 2273 0822 23010000 		.4byte	0x123
+ 2274 0826 3C080000 		.4byte	0x83c
+ 2275 082a 0E       		.uleb128 0xe
+ 2276 082b 01       		.uleb128 0x1
+ 2277 082c 50       		.byte	0x50
+ 2278 082d 02       		.uleb128 0x2
+ 2279 082e 08       		.byte	0x8
+ 2280 082f 68       		.byte	0x68
+ 2281 0830 0E       		.uleb128 0xe
+ 2282 0831 01       		.uleb128 0x1
+ 2283 0832 51       		.byte	0x51
+ 2284 0833 01       		.uleb128 0x1
+ 2285 0834 34       		.byte	0x34
+ 2286 0835 0E       		.uleb128 0xe
+ 2287 0836 01       		.uleb128 0x1
+ 2288 0837 52       		.byte	0x52
+ 2289 0838 02       		.uleb128 0x2
+ 2290 0839 74       		.byte	0x74
+ 2291 083a 00       		.sleb128 0
+ 2292 083b 00       		.byte	0
+ 2293 083c 0D       		.uleb128 0xd
+ 2294 083d 82000000 		.4byte	.LVL184
+ 2295 0841 B5090000 		.4byte	0x9b5
+ 2296 0845 53080000 		.4byte	0x853
+ 2297 0849 0E       		.uleb128 0xe
+ 2298 084a 01       		.uleb128 0x1
+ 2299 084b 50       		.byte	0x50
+ 2300 084c 05       		.uleb128 0x5
+ 2301 084d 03       		.byte	0x3
+ 2302 084e 5C010000 		.4byte	.LC10
+ 2303 0852 00       		.byte	0
+ 2304 0853 0F       		.uleb128 0xf
+ 2305 0854 8C000000 		.4byte	.LVL187
+ 2306 0858 DB050000 		.4byte	0x5db
+ 2307 085c 0D       		.uleb128 0xd
+ 2308 085d 9A000000 		.4byte	.LVL188
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 50
+
+
+ 2309 0861 23010000 		.4byte	0x123
+ 2310 0865 7B080000 		.4byte	0x87b
+ 2311 0869 0E       		.uleb128 0xe
+ 2312 086a 01       		.uleb128 0x1
+ 2313 086b 50       		.byte	0x50
+ 2314 086c 02       		.uleb128 0x2
+ 2315 086d 08       		.byte	0x8
+ 2316 086e 68       		.byte	0x68
+ 2317 086f 0E       		.uleb128 0xe
+ 2318 0870 01       		.uleb128 0x1
+ 2319 0871 51       		.byte	0x51
+ 2320 0872 01       		.uleb128 0x1
+ 2321 0873 35       		.byte	0x35
+ 2322 0874 0E       		.uleb128 0xe
+ 2323 0875 01       		.uleb128 0x1
+ 2324 0876 52       		.byte	0x52
+ 2325 0877 02       		.uleb128 0x2
+ 2326 0878 74       		.byte	0x74
+ 2327 0879 00       		.sleb128 0
+ 2328 087a 00       		.byte	0
+ 2329 087b 0D       		.uleb128 0xd
+ 2330 087c A4000000 		.4byte	.LVL190
+ 2331 0880 B5090000 		.4byte	0x9b5
+ 2332 0884 92080000 		.4byte	0x892
+ 2333 0888 0E       		.uleb128 0xe
+ 2334 0889 01       		.uleb128 0x1
+ 2335 088a 50       		.byte	0x50
+ 2336 088b 05       		.uleb128 0x5
+ 2337 088c 03       		.byte	0x3
+ 2338 088d 7C010000 		.4byte	.LC11
+ 2339 0891 00       		.byte	0
+ 2340 0892 0F       		.uleb128 0xf
+ 2341 0893 AE000000 		.4byte	.LVL193
+ 2342 0897 58060000 		.4byte	0x658
+ 2343 089b 0D       		.uleb128 0xd
+ 2344 089c BC000000 		.4byte	.LVL194
+ 2345 08a0 23010000 		.4byte	0x123
+ 2346 08a4 BA080000 		.4byte	0x8ba
+ 2347 08a8 0E       		.uleb128 0xe
+ 2348 08a9 01       		.uleb128 0x1
+ 2349 08aa 50       		.byte	0x50
+ 2350 08ab 02       		.uleb128 0x2
+ 2351 08ac 08       		.byte	0x8
+ 2352 08ad 68       		.byte	0x68
+ 2353 08ae 0E       		.uleb128 0xe
+ 2354 08af 01       		.uleb128 0x1
+ 2355 08b0 51       		.byte	0x51
+ 2356 08b1 01       		.uleb128 0x1
+ 2357 08b2 36       		.byte	0x36
+ 2358 08b3 0E       		.uleb128 0xe
+ 2359 08b4 01       		.uleb128 0x1
+ 2360 08b5 52       		.byte	0x52
+ 2361 08b6 02       		.uleb128 0x2
+ 2362 08b7 74       		.byte	0x74
+ 2363 08b8 00       		.sleb128 0
+ 2364 08b9 00       		.byte	0
+ 2365 08ba 0D       		.uleb128 0xd
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 51
+
+
+ 2366 08bb C6000000 		.4byte	.LVL196
+ 2367 08bf B5090000 		.4byte	0x9b5
+ 2368 08c3 D1080000 		.4byte	0x8d1
+ 2369 08c7 0E       		.uleb128 0xe
+ 2370 08c8 01       		.uleb128 0x1
+ 2371 08c9 50       		.byte	0x50
+ 2372 08ca 05       		.uleb128 0x5
+ 2373 08cb 03       		.byte	0x3
+ 2374 08cc 9C010000 		.4byte	.LC12
+ 2375 08d0 00       		.byte	0
+ 2376 08d1 0F       		.uleb128 0xf
+ 2377 08d2 CE000000 		.4byte	.LVL197
+ 2378 08d6 B0060000 		.4byte	0x6b0
+ 2379 08da 00       		.byte	0
+ 2380 08db 1B       		.uleb128 0x1b
+ 2381 08dc F4020000 		.4byte	.LASF65
+ 2382 08e0 01       		.byte	0x1
+ 2383 08e1 1D       		.byte	0x1d
+ 2384 08e2 8C000000 		.4byte	0x8c
+ 2385 08e6 1C       		.uleb128 0x1c
+ 2386 08e7 4A030000 		.4byte	.LASF54
+ 2387 08eb 06       		.byte	0x6
+ 2388 08ec 1207     		.2byte	0x712
+ 2389 08ee F2080000 		.4byte	0x8f2
+ 2390 08f2 1D       		.uleb128 0x1d
+ 2391 08f3 A2000000 		.4byte	0xa2
+ 2392 08f7 1E       		.uleb128 0x1e
+ 2393 08f8 AD000000 		.4byte	0xad
+ 2394 08fc 07090000 		.4byte	0x907
+ 2395 0900 1F       		.uleb128 0x1f
+ 2396 0901 D5000000 		.4byte	0xd5
+ 2397 0905 07       		.byte	0x7
+ 2398 0906 00       		.byte	0
+ 2399 0907 20       		.uleb128 0x20
+ 2400 0908 0C040000 		.4byte	.LASF55
+ 2401 090c 07       		.byte	0x7
+ 2402 090d 56       		.byte	0x56
+ 2403 090e F7080000 		.4byte	0x8f7
+ 2404 0912 05       		.uleb128 0x5
+ 2405 0913 03       		.byte	0x3
+ 2406 0914 00000000 		.4byte	Current_time
+ 2407 0918 20       		.uleb128 0x20
+ 2408 0919 FA010000 		.4byte	.LASF33
+ 2409 091d 08       		.byte	0x8
+ 2410 091e DC       		.byte	0xdc
+ 2411 091f 8C000000 		.4byte	0x8c
+ 2412 0923 05       		.uleb128 0x5
+ 2413 0924 03       		.byte	0x3
+ 2414 0925 00000000 		.4byte	current_seconds
+ 2415 0929 20       		.uleb128 0x20
+ 2416 092a 64020000 		.4byte	.LASF34
+ 2417 092e 08       		.byte	0x8
+ 2418 092f DD       		.byte	0xdd
+ 2419 0930 8C000000 		.4byte	0x8c
+ 2420 0934 05       		.uleb128 0x5
+ 2421 0935 03       		.byte	0x3
+ 2422 0936 00000000 		.4byte	current_minutes
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 52
+
+
+ 2423 093a 20       		.uleb128 0x20
+ 2424 093b 2B000000 		.4byte	.LASF35
+ 2425 093f 08       		.byte	0x8
+ 2426 0940 DE       		.byte	0xde
+ 2427 0941 8C000000 		.4byte	0x8c
+ 2428 0945 05       		.uleb128 0x5
+ 2429 0946 03       		.byte	0x3
+ 2430 0947 00000000 		.4byte	current_hours
+ 2431 094b 20       		.uleb128 0x20
+ 2432 094c B6020000 		.4byte	.LASF36
+ 2433 0950 08       		.byte	0x8
+ 2434 0951 DF       		.byte	0xdf
+ 2435 0952 8C000000 		.4byte	0x8c
+ 2436 0956 05       		.uleb128 0x5
+ 2437 0957 03       		.byte	0x3
+ 2438 0958 00000000 		.4byte	current_date
+ 2439 095c 20       		.uleb128 0x20
+ 2440 095d 44000000 		.4byte	.LASF37
+ 2441 0961 08       		.byte	0x8
+ 2442 0962 E0       		.byte	0xe0
+ 2443 0963 8C000000 		.4byte	0x8c
+ 2444 0967 05       		.uleb128 0x5
+ 2445 0968 03       		.byte	0x3
+ 2446 0969 00000000 		.4byte	current_month
+ 2447 096d 20       		.uleb128 0x20
+ 2448 096e BB000000 		.4byte	.LASF38
+ 2449 0972 08       		.byte	0x8
+ 2450 0973 E1       		.byte	0xe1
+ 2451 0974 97000000 		.4byte	0x97
+ 2452 0978 05       		.uleb128 0x5
+ 2453 0979 03       		.byte	0x3
+ 2454 097a 00000000 		.4byte	current_year
+ 2455 097e 21       		.uleb128 0x21
+ 2456 097f 2E010000 		.4byte	.LASF56
+ 2457 0983 2E010000 		.4byte	.LASF56
+ 2458 0987 09       		.byte	0x9
+ 2459 0988 B1       		.byte	0xb1
+ 2460 0989 21       		.uleb128 0x21
+ 2461 098a 1B030000 		.4byte	.LASF57
+ 2462 098e 1B030000 		.4byte	.LASF57
+ 2463 0992 09       		.byte	0x9
+ 2464 0993 B6       		.byte	0xb6
+ 2465 0994 21       		.uleb128 0x21
+ 2466 0995 DF000000 		.4byte	.LASF58
+ 2467 0999 DF000000 		.4byte	.LASF58
+ 2468 099d 09       		.byte	0x9
+ 2469 099e B3       		.byte	0xb3
+ 2470 099f 21       		.uleb128 0x21
+ 2471 09a0 DB020000 		.4byte	.LASF59
+ 2472 09a4 DB020000 		.4byte	.LASF59
+ 2473 09a8 09       		.byte	0x9
+ 2474 09a9 B7       		.byte	0xb7
+ 2475 09aa 21       		.uleb128 0x21
+ 2476 09ab 82000000 		.4byte	.LASF60
+ 2477 09af 82000000 		.4byte	.LASF60
+ 2478 09b3 09       		.byte	0x9
+ 2479 09b4 B5       		.byte	0xb5
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 53
+
+
+ 2480 09b5 21       		.uleb128 0x21
+ 2481 09b6 CA020000 		.4byte	.LASF61
+ 2482 09ba CA020000 		.4byte	.LASF61
+ 2483 09be 0A       		.byte	0xa
+ 2484 09bf 8B       		.byte	0x8b
+ 2485 09c0 22       		.uleb128 0x22
+ 2486 09c1 706F7700 		.ascii	"pow\000"
+ 2487 09c5 706F7700 		.ascii	"pow\000"
+ 2488 09c9 0B       		.byte	0xb
+ 2489 09ca 86       		.byte	0x86
+ 2490 09cb 00       		.byte	0
+ 2491              		.section	.debug_abbrev,"",%progbits
+ 2492              	.Ldebug_abbrev0:
+ 2493 0000 01       		.uleb128 0x1
+ 2494 0001 11       		.uleb128 0x11
+ 2495 0002 01       		.byte	0x1
+ 2496 0003 25       		.uleb128 0x25
+ 2497 0004 0E       		.uleb128 0xe
+ 2498 0005 13       		.uleb128 0x13
+ 2499 0006 0B       		.uleb128 0xb
+ 2500 0007 03       		.uleb128 0x3
+ 2501 0008 0E       		.uleb128 0xe
+ 2502 0009 1B       		.uleb128 0x1b
+ 2503 000a 0E       		.uleb128 0xe
+ 2504 000b 55       		.uleb128 0x55
+ 2505 000c 17       		.uleb128 0x17
+ 2506 000d 11       		.uleb128 0x11
+ 2507 000e 01       		.uleb128 0x1
+ 2508 000f 10       		.uleb128 0x10
+ 2509 0010 17       		.uleb128 0x17
+ 2510 0011 00       		.byte	0
+ 2511 0012 00       		.byte	0
+ 2512 0013 02       		.uleb128 0x2
+ 2513 0014 24       		.uleb128 0x24
+ 2514 0015 00       		.byte	0
+ 2515 0016 0B       		.uleb128 0xb
+ 2516 0017 0B       		.uleb128 0xb
+ 2517 0018 3E       		.uleb128 0x3e
+ 2518 0019 0B       		.uleb128 0xb
+ 2519 001a 03       		.uleb128 0x3
+ 2520 001b 0E       		.uleb128 0xe
+ 2521 001c 00       		.byte	0
+ 2522 001d 00       		.byte	0
+ 2523 001e 03       		.uleb128 0x3
+ 2524 001f 16       		.uleb128 0x16
+ 2525 0020 00       		.byte	0
+ 2526 0021 03       		.uleb128 0x3
+ 2527 0022 0E       		.uleb128 0xe
+ 2528 0023 3A       		.uleb128 0x3a
+ 2529 0024 0B       		.uleb128 0xb
+ 2530 0025 3B       		.uleb128 0x3b
+ 2531 0026 0B       		.uleb128 0xb
+ 2532 0027 49       		.uleb128 0x49
+ 2533 0028 13       		.uleb128 0x13
+ 2534 0029 00       		.byte	0
+ 2535 002a 00       		.byte	0
+ 2536 002b 04       		.uleb128 0x4
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 54
+
+
+ 2537 002c 24       		.uleb128 0x24
+ 2538 002d 00       		.byte	0
+ 2539 002e 0B       		.uleb128 0xb
+ 2540 002f 0B       		.uleb128 0xb
+ 2541 0030 3E       		.uleb128 0x3e
+ 2542 0031 0B       		.uleb128 0xb
+ 2543 0032 03       		.uleb128 0x3
+ 2544 0033 08       		.uleb128 0x8
+ 2545 0034 00       		.byte	0
+ 2546 0035 00       		.byte	0
+ 2547 0036 05       		.uleb128 0x5
+ 2548 0037 16       		.uleb128 0x16
+ 2549 0038 00       		.byte	0
+ 2550 0039 03       		.uleb128 0x3
+ 2551 003a 0E       		.uleb128 0xe
+ 2552 003b 3A       		.uleb128 0x3a
+ 2553 003c 0B       		.uleb128 0xb
+ 2554 003d 3B       		.uleb128 0x3b
+ 2555 003e 05       		.uleb128 0x5
+ 2556 003f 49       		.uleb128 0x49
+ 2557 0040 13       		.uleb128 0x13
+ 2558 0041 00       		.byte	0
+ 2559 0042 00       		.byte	0
+ 2560 0043 06       		.uleb128 0x6
+ 2561 0044 04       		.uleb128 0x4
+ 2562 0045 01       		.byte	0x1
+ 2563 0046 0B       		.uleb128 0xb
+ 2564 0047 0B       		.uleb128 0xb
+ 2565 0048 49       		.uleb128 0x49
+ 2566 0049 13       		.uleb128 0x13
+ 2567 004a 3A       		.uleb128 0x3a
+ 2568 004b 0B       		.uleb128 0xb
+ 2569 004c 3B       		.uleb128 0x3b
+ 2570 004d 0B       		.uleb128 0xb
+ 2571 004e 01       		.uleb128 0x1
+ 2572 004f 13       		.uleb128 0x13
+ 2573 0050 00       		.byte	0
+ 2574 0051 00       		.byte	0
+ 2575 0052 07       		.uleb128 0x7
+ 2576 0053 28       		.uleb128 0x28
+ 2577 0054 00       		.byte	0
+ 2578 0055 03       		.uleb128 0x3
+ 2579 0056 0E       		.uleb128 0xe
+ 2580 0057 1C       		.uleb128 0x1c
+ 2581 0058 0B       		.uleb128 0xb
+ 2582 0059 00       		.byte	0
+ 2583 005a 00       		.byte	0
+ 2584 005b 08       		.uleb128 0x8
+ 2585 005c 2E       		.uleb128 0x2e
+ 2586 005d 01       		.byte	0x1
+ 2587 005e 3F       		.uleb128 0x3f
+ 2588 005f 19       		.uleb128 0x19
+ 2589 0060 03       		.uleb128 0x3
+ 2590 0061 0E       		.uleb128 0xe
+ 2591 0062 3A       		.uleb128 0x3a
+ 2592 0063 0B       		.uleb128 0xb
+ 2593 0064 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 55
+
+
+ 2594 0065 0B       		.uleb128 0xb
+ 2595 0066 27       		.uleb128 0x27
+ 2596 0067 19       		.uleb128 0x19
+ 2597 0068 11       		.uleb128 0x11
+ 2598 0069 01       		.uleb128 0x1
+ 2599 006a 12       		.uleb128 0x12
+ 2600 006b 06       		.uleb128 0x6
+ 2601 006c 40       		.uleb128 0x40
+ 2602 006d 18       		.uleb128 0x18
+ 2603 006e 9742     		.uleb128 0x2117
+ 2604 0070 19       		.uleb128 0x19
+ 2605 0071 01       		.uleb128 0x1
+ 2606 0072 13       		.uleb128 0x13
+ 2607 0073 00       		.byte	0
+ 2608 0074 00       		.byte	0
+ 2609 0075 09       		.uleb128 0x9
+ 2610 0076 05       		.uleb128 0x5
+ 2611 0077 00       		.byte	0
+ 2612 0078 03       		.uleb128 0x3
+ 2613 0079 0E       		.uleb128 0xe
+ 2614 007a 3A       		.uleb128 0x3a
+ 2615 007b 0B       		.uleb128 0xb
+ 2616 007c 3B       		.uleb128 0x3b
+ 2617 007d 0B       		.uleb128 0xb
+ 2618 007e 49       		.uleb128 0x49
+ 2619 007f 13       		.uleb128 0x13
+ 2620 0080 02       		.uleb128 0x2
+ 2621 0081 18       		.uleb128 0x18
+ 2622 0082 00       		.byte	0
+ 2623 0083 00       		.byte	0
+ 2624 0084 0A       		.uleb128 0xa
+ 2625 0085 2E       		.uleb128 0x2e
+ 2626 0086 01       		.byte	0x1
+ 2627 0087 3F       		.uleb128 0x3f
+ 2628 0088 19       		.uleb128 0x19
+ 2629 0089 03       		.uleb128 0x3
+ 2630 008a 0E       		.uleb128 0xe
+ 2631 008b 3A       		.uleb128 0x3a
+ 2632 008c 0B       		.uleb128 0xb
+ 2633 008d 3B       		.uleb128 0x3b
+ 2634 008e 0B       		.uleb128 0xb
+ 2635 008f 27       		.uleb128 0x27
+ 2636 0090 19       		.uleb128 0x19
+ 2637 0091 49       		.uleb128 0x49
+ 2638 0092 13       		.uleb128 0x13
+ 2639 0093 11       		.uleb128 0x11
+ 2640 0094 01       		.uleb128 0x1
+ 2641 0095 12       		.uleb128 0x12
+ 2642 0096 06       		.uleb128 0x6
+ 2643 0097 40       		.uleb128 0x40
+ 2644 0098 18       		.uleb128 0x18
+ 2645 0099 9742     		.uleb128 0x2117
+ 2646 009b 19       		.uleb128 0x19
+ 2647 009c 01       		.uleb128 0x1
+ 2648 009d 13       		.uleb128 0x13
+ 2649 009e 00       		.byte	0
+ 2650 009f 00       		.byte	0
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 56
+
+
+ 2651 00a0 0B       		.uleb128 0xb
+ 2652 00a1 05       		.uleb128 0x5
+ 2653 00a2 00       		.byte	0
+ 2654 00a3 03       		.uleb128 0x3
+ 2655 00a4 0E       		.uleb128 0xe
+ 2656 00a5 3A       		.uleb128 0x3a
+ 2657 00a6 0B       		.uleb128 0xb
+ 2658 00a7 3B       		.uleb128 0x3b
+ 2659 00a8 0B       		.uleb128 0xb
+ 2660 00a9 49       		.uleb128 0x49
+ 2661 00aa 13       		.uleb128 0x13
+ 2662 00ab 02       		.uleb128 0x2
+ 2663 00ac 17       		.uleb128 0x17
+ 2664 00ad 00       		.byte	0
+ 2665 00ae 00       		.byte	0
+ 2666 00af 0C       		.uleb128 0xc
+ 2667 00b0 34       		.uleb128 0x34
+ 2668 00b1 00       		.byte	0
+ 2669 00b2 03       		.uleb128 0x3
+ 2670 00b3 0E       		.uleb128 0xe
+ 2671 00b4 3A       		.uleb128 0x3a
+ 2672 00b5 0B       		.uleb128 0xb
+ 2673 00b6 3B       		.uleb128 0x3b
+ 2674 00b7 0B       		.uleb128 0xb
+ 2675 00b8 49       		.uleb128 0x49
+ 2676 00b9 13       		.uleb128 0x13
+ 2677 00ba 02       		.uleb128 0x2
+ 2678 00bb 17       		.uleb128 0x17
+ 2679 00bc 00       		.byte	0
+ 2680 00bd 00       		.byte	0
+ 2681 00be 0D       		.uleb128 0xd
+ 2682 00bf 898201   		.uleb128 0x4109
+ 2683 00c2 01       		.byte	0x1
+ 2684 00c3 11       		.uleb128 0x11
+ 2685 00c4 01       		.uleb128 0x1
+ 2686 00c5 31       		.uleb128 0x31
+ 2687 00c6 13       		.uleb128 0x13
+ 2688 00c7 01       		.uleb128 0x1
+ 2689 00c8 13       		.uleb128 0x13
+ 2690 00c9 00       		.byte	0
+ 2691 00ca 00       		.byte	0
+ 2692 00cb 0E       		.uleb128 0xe
+ 2693 00cc 8A8201   		.uleb128 0x410a
+ 2694 00cf 00       		.byte	0
+ 2695 00d0 02       		.uleb128 0x2
+ 2696 00d1 18       		.uleb128 0x18
+ 2697 00d2 9142     		.uleb128 0x2111
+ 2698 00d4 18       		.uleb128 0x18
+ 2699 00d5 00       		.byte	0
+ 2700 00d6 00       		.byte	0
+ 2701 00d7 0F       		.uleb128 0xf
+ 2702 00d8 898201   		.uleb128 0x4109
+ 2703 00db 00       		.byte	0
+ 2704 00dc 11       		.uleb128 0x11
+ 2705 00dd 01       		.uleb128 0x1
+ 2706 00de 31       		.uleb128 0x31
+ 2707 00df 13       		.uleb128 0x13
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 57
+
+
+ 2708 00e0 00       		.byte	0
+ 2709 00e1 00       		.byte	0
+ 2710 00e2 10       		.uleb128 0x10
+ 2711 00e3 0F       		.uleb128 0xf
+ 2712 00e4 00       		.byte	0
+ 2713 00e5 0B       		.uleb128 0xb
+ 2714 00e6 0B       		.uleb128 0xb
+ 2715 00e7 49       		.uleb128 0x49
+ 2716 00e8 13       		.uleb128 0x13
+ 2717 00e9 00       		.byte	0
+ 2718 00ea 00       		.byte	0
+ 2719 00eb 11       		.uleb128 0x11
+ 2720 00ec 898201   		.uleb128 0x4109
+ 2721 00ef 01       		.byte	0x1
+ 2722 00f0 11       		.uleb128 0x11
+ 2723 00f1 01       		.uleb128 0x1
+ 2724 00f2 31       		.uleb128 0x31
+ 2725 00f3 13       		.uleb128 0x13
+ 2726 00f4 00       		.byte	0
+ 2727 00f5 00       		.byte	0
+ 2728 00f6 12       		.uleb128 0x12
+ 2729 00f7 2E       		.uleb128 0x2e
+ 2730 00f8 01       		.byte	0x1
+ 2731 00f9 3F       		.uleb128 0x3f
+ 2732 00fa 19       		.uleb128 0x19
+ 2733 00fb 03       		.uleb128 0x3
+ 2734 00fc 0E       		.uleb128 0xe
+ 2735 00fd 3A       		.uleb128 0x3a
+ 2736 00fe 0B       		.uleb128 0xb
+ 2737 00ff 3B       		.uleb128 0x3b
+ 2738 0100 0B       		.uleb128 0xb
+ 2739 0101 27       		.uleb128 0x27
+ 2740 0102 19       		.uleb128 0x19
+ 2741 0103 49       		.uleb128 0x49
+ 2742 0104 13       		.uleb128 0x13
+ 2743 0105 11       		.uleb128 0x11
+ 2744 0106 01       		.uleb128 0x1
+ 2745 0107 12       		.uleb128 0x12
+ 2746 0108 06       		.uleb128 0x6
+ 2747 0109 40       		.uleb128 0x40
+ 2748 010a 18       		.uleb128 0x18
+ 2749 010b 9642     		.uleb128 0x2116
+ 2750 010d 19       		.uleb128 0x19
+ 2751 010e 01       		.uleb128 0x1
+ 2752 010f 13       		.uleb128 0x13
+ 2753 0110 00       		.byte	0
+ 2754 0111 00       		.byte	0
+ 2755 0112 13       		.uleb128 0x13
+ 2756 0113 0B       		.uleb128 0xb
+ 2757 0114 01       		.byte	0x1
+ 2758 0115 55       		.uleb128 0x55
+ 2759 0116 17       		.uleb128 0x17
+ 2760 0117 01       		.uleb128 0x1
+ 2761 0118 13       		.uleb128 0x13
+ 2762 0119 00       		.byte	0
+ 2763 011a 00       		.byte	0
+ 2764 011b 14       		.uleb128 0x14
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 58
+
+
+ 2765 011c 34       		.uleb128 0x34
+ 2766 011d 00       		.byte	0
+ 2767 011e 03       		.uleb128 0x3
+ 2768 011f 08       		.uleb128 0x8
+ 2769 0120 3A       		.uleb128 0x3a
+ 2770 0121 0B       		.uleb128 0xb
+ 2771 0122 3B       		.uleb128 0x3b
+ 2772 0123 0B       		.uleb128 0xb
+ 2773 0124 49       		.uleb128 0x49
+ 2774 0125 13       		.uleb128 0x13
+ 2775 0126 02       		.uleb128 0x2
+ 2776 0127 17       		.uleb128 0x17
+ 2777 0128 00       		.byte	0
+ 2778 0129 00       		.byte	0
+ 2779 012a 15       		.uleb128 0x15
+ 2780 012b 0B       		.uleb128 0xb
+ 2781 012c 01       		.byte	0x1
+ 2782 012d 11       		.uleb128 0x11
+ 2783 012e 01       		.uleb128 0x1
+ 2784 012f 12       		.uleb128 0x12
+ 2785 0130 06       		.uleb128 0x6
+ 2786 0131 00       		.byte	0
+ 2787 0132 00       		.byte	0
+ 2788 0133 16       		.uleb128 0x16
+ 2789 0134 2E       		.uleb128 0x2e
+ 2790 0135 01       		.byte	0x1
+ 2791 0136 3F       		.uleb128 0x3f
+ 2792 0137 19       		.uleb128 0x19
+ 2793 0138 03       		.uleb128 0x3
+ 2794 0139 0E       		.uleb128 0xe
+ 2795 013a 3A       		.uleb128 0x3a
+ 2796 013b 0B       		.uleb128 0xb
+ 2797 013c 3B       		.uleb128 0x3b
+ 2798 013d 05       		.uleb128 0x5
+ 2799 013e 27       		.uleb128 0x27
+ 2800 013f 19       		.uleb128 0x19
+ 2801 0140 49       		.uleb128 0x49
+ 2802 0141 13       		.uleb128 0x13
+ 2803 0142 11       		.uleb128 0x11
+ 2804 0143 01       		.uleb128 0x1
+ 2805 0144 12       		.uleb128 0x12
+ 2806 0145 06       		.uleb128 0x6
+ 2807 0146 40       		.uleb128 0x40
+ 2808 0147 18       		.uleb128 0x18
+ 2809 0148 9642     		.uleb128 0x2116
+ 2810 014a 19       		.uleb128 0x19
+ 2811 014b 01       		.uleb128 0x1
+ 2812 014c 13       		.uleb128 0x13
+ 2813 014d 00       		.byte	0
+ 2814 014e 00       		.byte	0
+ 2815 014f 17       		.uleb128 0x17
+ 2816 0150 05       		.uleb128 0x5
+ 2817 0151 00       		.byte	0
+ 2818 0152 03       		.uleb128 0x3
+ 2819 0153 0E       		.uleb128 0xe
+ 2820 0154 3A       		.uleb128 0x3a
+ 2821 0155 0B       		.uleb128 0xb
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 59
+
+
+ 2822 0156 3B       		.uleb128 0x3b
+ 2823 0157 05       		.uleb128 0x5
+ 2824 0158 49       		.uleb128 0x49
+ 2825 0159 13       		.uleb128 0x13
+ 2826 015a 02       		.uleb128 0x2
+ 2827 015b 17       		.uleb128 0x17
+ 2828 015c 00       		.byte	0
+ 2829 015d 00       		.byte	0
+ 2830 015e 18       		.uleb128 0x18
+ 2831 015f 34       		.uleb128 0x34
+ 2832 0160 00       		.byte	0
+ 2833 0161 03       		.uleb128 0x3
+ 2834 0162 0E       		.uleb128 0xe
+ 2835 0163 3A       		.uleb128 0x3a
+ 2836 0164 0B       		.uleb128 0xb
+ 2837 0165 3B       		.uleb128 0x3b
+ 2838 0166 05       		.uleb128 0x5
+ 2839 0167 49       		.uleb128 0x49
+ 2840 0168 13       		.uleb128 0x13
+ 2841 0169 02       		.uleb128 0x2
+ 2842 016a 17       		.uleb128 0x17
+ 2843 016b 00       		.byte	0
+ 2844 016c 00       		.byte	0
+ 2845 016d 19       		.uleb128 0x19
+ 2846 016e 34       		.uleb128 0x34
+ 2847 016f 00       		.byte	0
+ 2848 0170 03       		.uleb128 0x3
+ 2849 0171 08       		.uleb128 0x8
+ 2850 0172 3A       		.uleb128 0x3a
+ 2851 0173 0B       		.uleb128 0xb
+ 2852 0174 3B       		.uleb128 0x3b
+ 2853 0175 05       		.uleb128 0x5
+ 2854 0176 49       		.uleb128 0x49
+ 2855 0177 13       		.uleb128 0x13
+ 2856 0178 02       		.uleb128 0x2
+ 2857 0179 17       		.uleb128 0x17
+ 2858 017a 00       		.byte	0
+ 2859 017b 00       		.byte	0
+ 2860 017c 1A       		.uleb128 0x1a
+ 2861 017d 0B       		.uleb128 0xb
+ 2862 017e 01       		.byte	0x1
+ 2863 017f 55       		.uleb128 0x55
+ 2864 0180 17       		.uleb128 0x17
+ 2865 0181 00       		.byte	0
+ 2866 0182 00       		.byte	0
+ 2867 0183 1B       		.uleb128 0x1b
+ 2868 0184 34       		.uleb128 0x34
+ 2869 0185 00       		.byte	0
+ 2870 0186 03       		.uleb128 0x3
+ 2871 0187 0E       		.uleb128 0xe
+ 2872 0188 3A       		.uleb128 0x3a
+ 2873 0189 0B       		.uleb128 0xb
+ 2874 018a 3B       		.uleb128 0x3b
+ 2875 018b 0B       		.uleb128 0xb
+ 2876 018c 49       		.uleb128 0x49
+ 2877 018d 13       		.uleb128 0x13
+ 2878 018e 00       		.byte	0
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 60
+
+
+ 2879 018f 00       		.byte	0
+ 2880 0190 1C       		.uleb128 0x1c
+ 2881 0191 34       		.uleb128 0x34
+ 2882 0192 00       		.byte	0
+ 2883 0193 03       		.uleb128 0x3
+ 2884 0194 0E       		.uleb128 0xe
+ 2885 0195 3A       		.uleb128 0x3a
+ 2886 0196 0B       		.uleb128 0xb
+ 2887 0197 3B       		.uleb128 0x3b
+ 2888 0198 05       		.uleb128 0x5
+ 2889 0199 49       		.uleb128 0x49
+ 2890 019a 13       		.uleb128 0x13
+ 2891 019b 3F       		.uleb128 0x3f
+ 2892 019c 19       		.uleb128 0x19
+ 2893 019d 3C       		.uleb128 0x3c
+ 2894 019e 19       		.uleb128 0x19
+ 2895 019f 00       		.byte	0
+ 2896 01a0 00       		.byte	0
+ 2897 01a1 1D       		.uleb128 0x1d
+ 2898 01a2 35       		.uleb128 0x35
+ 2899 01a3 00       		.byte	0
+ 2900 01a4 49       		.uleb128 0x49
+ 2901 01a5 13       		.uleb128 0x13
+ 2902 01a6 00       		.byte	0
+ 2903 01a7 00       		.byte	0
+ 2904 01a8 1E       		.uleb128 0x1e
+ 2905 01a9 01       		.uleb128 0x1
+ 2906 01aa 01       		.byte	0x1
+ 2907 01ab 49       		.uleb128 0x49
+ 2908 01ac 13       		.uleb128 0x13
+ 2909 01ad 01       		.uleb128 0x1
+ 2910 01ae 13       		.uleb128 0x13
+ 2911 01af 00       		.byte	0
+ 2912 01b0 00       		.byte	0
+ 2913 01b1 1F       		.uleb128 0x1f
+ 2914 01b2 21       		.uleb128 0x21
+ 2915 01b3 00       		.byte	0
+ 2916 01b4 49       		.uleb128 0x49
+ 2917 01b5 13       		.uleb128 0x13
+ 2918 01b6 2F       		.uleb128 0x2f
+ 2919 01b7 0B       		.uleb128 0xb
+ 2920 01b8 00       		.byte	0
+ 2921 01b9 00       		.byte	0
+ 2922 01ba 20       		.uleb128 0x20
+ 2923 01bb 34       		.uleb128 0x34
+ 2924 01bc 00       		.byte	0
+ 2925 01bd 03       		.uleb128 0x3
+ 2926 01be 0E       		.uleb128 0xe
+ 2927 01bf 3A       		.uleb128 0x3a
+ 2928 01c0 0B       		.uleb128 0xb
+ 2929 01c1 3B       		.uleb128 0x3b
+ 2930 01c2 0B       		.uleb128 0xb
+ 2931 01c3 49       		.uleb128 0x49
+ 2932 01c4 13       		.uleb128 0x13
+ 2933 01c5 3F       		.uleb128 0x3f
+ 2934 01c6 19       		.uleb128 0x19
+ 2935 01c7 02       		.uleb128 0x2
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 61
+
+
+ 2936 01c8 18       		.uleb128 0x18
+ 2937 01c9 00       		.byte	0
+ 2938 01ca 00       		.byte	0
+ 2939 01cb 21       		.uleb128 0x21
+ 2940 01cc 2E       		.uleb128 0x2e
+ 2941 01cd 00       		.byte	0
+ 2942 01ce 3F       		.uleb128 0x3f
+ 2943 01cf 19       		.uleb128 0x19
+ 2944 01d0 3C       		.uleb128 0x3c
+ 2945 01d1 19       		.uleb128 0x19
+ 2946 01d2 6E       		.uleb128 0x6e
+ 2947 01d3 0E       		.uleb128 0xe
+ 2948 01d4 03       		.uleb128 0x3
+ 2949 01d5 0E       		.uleb128 0xe
+ 2950 01d6 3A       		.uleb128 0x3a
+ 2951 01d7 0B       		.uleb128 0xb
+ 2952 01d8 3B       		.uleb128 0x3b
+ 2953 01d9 0B       		.uleb128 0xb
+ 2954 01da 00       		.byte	0
+ 2955 01db 00       		.byte	0
+ 2956 01dc 22       		.uleb128 0x22
+ 2957 01dd 2E       		.uleb128 0x2e
+ 2958 01de 00       		.byte	0
+ 2959 01df 3F       		.uleb128 0x3f
+ 2960 01e0 19       		.uleb128 0x19
+ 2961 01e1 3C       		.uleb128 0x3c
+ 2962 01e2 19       		.uleb128 0x19
+ 2963 01e3 6E       		.uleb128 0x6e
+ 2964 01e4 08       		.uleb128 0x8
+ 2965 01e5 03       		.uleb128 0x3
+ 2966 01e6 08       		.uleb128 0x8
+ 2967 01e7 3A       		.uleb128 0x3a
+ 2968 01e8 0B       		.uleb128 0xb
+ 2969 01e9 3B       		.uleb128 0x3b
+ 2970 01ea 0B       		.uleb128 0xb
+ 2971 01eb 00       		.byte	0
+ 2972 01ec 00       		.byte	0
+ 2973 01ed 00       		.byte	0
+ 2974              		.section	.debug_loc,"",%progbits
+ 2975              	.Ldebug_loc0:
+ 2976              	.LLST0:
+ 2977 0000 00000000 		.4byte	.LVL1
+ 2978 0004 0D000000 		.4byte	.LVL3-1
+ 2979 0008 0100     		.2byte	0x1
+ 2980 000a 50       		.byte	0x50
+ 2981 000b 0D000000 		.4byte	.LVL3-1
+ 2982 000f 3A000000 		.4byte	.LFE67
+ 2983 0013 0400     		.2byte	0x4
+ 2984 0015 F3       		.byte	0xf3
+ 2985 0016 01       		.uleb128 0x1
+ 2986 0017 50       		.byte	0x50
+ 2987 0018 9F       		.byte	0x9f
+ 2988 0019 00000000 		.4byte	0
+ 2989 001d 00000000 		.4byte	0
+ 2990              	.LLST1:
+ 2991 0021 00000000 		.4byte	.LVL1
+ 2992 0025 0A000000 		.4byte	.LVL2
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 62
+
+
+ 2993 0029 0100     		.2byte	0x1
+ 2994 002b 51       		.byte	0x51
+ 2995 002c 0A000000 		.4byte	.LVL2
+ 2996 0030 3A000000 		.4byte	.LFE67
+ 2997 0034 0400     		.2byte	0x4
+ 2998 0036 F3       		.byte	0xf3
+ 2999 0037 01       		.uleb128 0x1
+ 3000 0038 51       		.byte	0x51
+ 3001 0039 9F       		.byte	0x9f
+ 3002 003a 00000000 		.4byte	0
+ 3003 003e 00000000 		.4byte	0
+ 3004              	.LLST2:
+ 3005 0042 00000000 		.4byte	.LVL1
+ 3006 0046 0D000000 		.4byte	.LVL3-1
+ 3007 004a 0100     		.2byte	0x1
+ 3008 004c 52       		.byte	0x52
+ 3009 004d 0D000000 		.4byte	.LVL3-1
+ 3010 0051 3A000000 		.4byte	.LFE67
+ 3011 0055 0100     		.2byte	0x1
+ 3012 0057 57       		.byte	0x57
+ 3013 0058 00000000 		.4byte	0
+ 3014 005c 00000000 		.4byte	0
+ 3015              	.LLST3:
+ 3016 0060 0E000000 		.4byte	.LVL3
+ 3017 0064 14000000 		.4byte	.LVL4
+ 3018 0068 0100     		.2byte	0x1
+ 3019 006a 50       		.byte	0x50
+ 3020 006b 18000000 		.4byte	.LVL5
+ 3021 006f 20000000 		.4byte	.LVL6
+ 3022 0073 0100     		.2byte	0x1
+ 3023 0075 50       		.byte	0x50
+ 3024 0076 24000000 		.4byte	.LVL7
+ 3025 007a 2B000000 		.4byte	.LVL8-1
+ 3026 007e 0100     		.2byte	0x1
+ 3027 0080 50       		.byte	0x50
+ 3028 0081 2E000000 		.4byte	.LVL9
+ 3029 0085 3A000000 		.4byte	.LFE67
+ 3030 0089 0100     		.2byte	0x1
+ 3031 008b 54       		.byte	0x54
+ 3032 008c 00000000 		.4byte	0
+ 3033 0090 00000000 		.4byte	0
+ 3034              	.LLST4:
+ 3035 0094 00000000 		.4byte	.LVL11
+ 3036 0098 0B000000 		.4byte	.LVL13-1
+ 3037 009c 0100     		.2byte	0x1
+ 3038 009e 50       		.byte	0x50
+ 3039 009f 0B000000 		.4byte	.LVL13-1
+ 3040 00a3 2E000000 		.4byte	.LFE68
+ 3041 00a7 0400     		.2byte	0x4
+ 3042 00a9 F3       		.byte	0xf3
+ 3043 00aa 01       		.uleb128 0x1
+ 3044 00ab 50       		.byte	0x50
+ 3045 00ac 9F       		.byte	0x9f
+ 3046 00ad 00000000 		.4byte	0
+ 3047 00b1 00000000 		.4byte	0
+ 3048              	.LLST5:
+ 3049 00b5 00000000 		.4byte	.LVL11
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 63
+
+
+ 3050 00b9 08000000 		.4byte	.LVL12
+ 3051 00bd 0100     		.2byte	0x1
+ 3052 00bf 51       		.byte	0x51
+ 3053 00c0 08000000 		.4byte	.LVL12
+ 3054 00c4 2E000000 		.4byte	.LFE68
+ 3055 00c8 0400     		.2byte	0x4
+ 3056 00ca F3       		.byte	0xf3
+ 3057 00cb 01       		.uleb128 0x1
+ 3058 00cc 51       		.byte	0x51
+ 3059 00cd 9F       		.byte	0x9f
+ 3060 00ce 00000000 		.4byte	0
+ 3061 00d2 00000000 		.4byte	0
+ 3062              	.LLST6:
+ 3063 00d6 00000000 		.4byte	.LVL11
+ 3064 00da 0B000000 		.4byte	.LVL13-1
+ 3065 00de 0100     		.2byte	0x1
+ 3066 00e0 52       		.byte	0x52
+ 3067 00e1 0B000000 		.4byte	.LVL13-1
+ 3068 00e5 2E000000 		.4byte	.LFE68
+ 3069 00e9 0400     		.2byte	0x4
+ 3070 00eb F3       		.byte	0xf3
+ 3071 00ec 01       		.uleb128 0x1
+ 3072 00ed 52       		.byte	0x52
+ 3073 00ee 9F       		.byte	0x9f
+ 3074 00ef 00000000 		.4byte	0
+ 3075 00f3 00000000 		.4byte	0
+ 3076              	.LLST7:
+ 3077 00f7 0C000000 		.4byte	.LVL13
+ 3078 00fb 12000000 		.4byte	.LVL14
+ 3079 00ff 0100     		.2byte	0x1
+ 3080 0101 50       		.byte	0x50
+ 3081 0102 16000000 		.4byte	.LVL15
+ 3082 0106 1C000000 		.4byte	.LVL16
+ 3083 010a 0100     		.2byte	0x1
+ 3084 010c 50       		.byte	0x50
+ 3085 010d 22000000 		.4byte	.LVL18
+ 3086 0111 2E000000 		.4byte	.LFE68
+ 3087 0115 0100     		.2byte	0x1
+ 3088 0117 54       		.byte	0x54
+ 3089 0118 00000000 		.4byte	0
+ 3090 011c 00000000 		.4byte	0
+ 3091              	.LLST8:
+ 3092 0120 00000000 		.4byte	.LVL20
+ 3093 0124 0E000000 		.4byte	.LVL23
+ 3094 0128 0100     		.2byte	0x1
+ 3095 012a 50       		.byte	0x50
+ 3096 012b 0E000000 		.4byte	.LVL23
+ 3097 012f B8000000 		.4byte	.LFE64
+ 3098 0133 0400     		.2byte	0x4
+ 3099 0135 F3       		.byte	0xf3
+ 3100 0136 01       		.uleb128 0x1
+ 3101 0137 50       		.byte	0x50
+ 3102 0138 9F       		.byte	0x9f
+ 3103 0139 00000000 		.4byte	0
+ 3104 013d 00000000 		.4byte	0
+ 3105              	.LLST9:
+ 3106 0141 00000000 		.4byte	.LVL20
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 64
+
+
+ 3107 0145 0C000000 		.4byte	.LVL22
+ 3108 0149 0100     		.2byte	0x1
+ 3109 014b 51       		.byte	0x51
+ 3110 014c 0C000000 		.4byte	.LVL22
+ 3111 0150 B8000000 		.4byte	.LFE64
+ 3112 0154 0400     		.2byte	0x4
+ 3113 0156 F3       		.byte	0xf3
+ 3114 0157 01       		.uleb128 0x1
+ 3115 0158 51       		.byte	0x51
+ 3116 0159 9F       		.byte	0x9f
+ 3117 015a 00000000 		.4byte	0
+ 3118 015e 00000000 		.4byte	0
+ 3119              	.LLST10:
+ 3120 0162 00000000 		.4byte	.LVL20
+ 3121 0166 0A000000 		.4byte	.LVL21
+ 3122 016a 0100     		.2byte	0x1
+ 3123 016c 52       		.byte	0x52
+ 3124 016d 0A000000 		.4byte	.LVL21
+ 3125 0171 B8000000 		.4byte	.LFE64
+ 3126 0175 0400     		.2byte	0x4
+ 3127 0177 F3       		.byte	0xf3
+ 3128 0178 01       		.uleb128 0x1
+ 3129 0179 52       		.byte	0x52
+ 3130 017a 9F       		.byte	0x9f
+ 3131 017b 00000000 		.4byte	0
+ 3132 017f 00000000 		.4byte	0
+ 3133              	.LLST11:
+ 3134 0183 00000000 		.4byte	.LVL20
+ 3135 0187 11000000 		.4byte	.LVL24-1
+ 3136 018b 0100     		.2byte	0x1
+ 3137 018d 53       		.byte	0x53
+ 3138 018e 11000000 		.4byte	.LVL24-1
+ 3139 0192 B8000000 		.4byte	.LFE64
+ 3140 0196 0400     		.2byte	0x4
+ 3141 0198 F3       		.byte	0xf3
+ 3142 0199 01       		.uleb128 0x1
+ 3143 019a 53       		.byte	0x53
+ 3144 019b 9F       		.byte	0x9f
+ 3145 019c 00000000 		.4byte	0
+ 3146 01a0 00000000 		.4byte	0
+ 3147              	.LLST12:
+ 3148 01a4 00000000 		.4byte	.LVL20
+ 3149 01a8 9A000000 		.4byte	.LVL45
+ 3150 01ac 0200     		.2byte	0x2
+ 3151 01ae 91       		.byte	0x91
+ 3152 01af 00       		.sleb128 0
+ 3153 01b0 9A000000 		.4byte	.LVL45
+ 3154 01b4 B8000000 		.4byte	.LFE64
+ 3155 01b8 0200     		.2byte	0x2
+ 3156 01ba 7D       		.byte	0x7d
+ 3157 01bb 00       		.sleb128 0
+ 3158 01bc 00000000 		.4byte	0
+ 3159 01c0 00000000 		.4byte	0
+ 3160              	.LLST13:
+ 3161 01c4 00000000 		.4byte	.LVL20
+ 3162 01c8 9A000000 		.4byte	.LVL45
+ 3163 01cc 0200     		.2byte	0x2
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 65
+
+
+ 3164 01ce 91       		.byte	0x91
+ 3165 01cf 04       		.sleb128 4
+ 3166 01d0 9A000000 		.4byte	.LVL45
+ 3167 01d4 B8000000 		.4byte	.LFE64
+ 3168 01d8 0200     		.2byte	0x2
+ 3169 01da 7D       		.byte	0x7d
+ 3170 01db 04       		.sleb128 4
+ 3171 01dc 00000000 		.4byte	0
+ 3172 01e0 00000000 		.4byte	0
+ 3173              	.LLST14:
+ 3174 01e4 12000000 		.4byte	.LVL24
+ 3175 01e8 18000000 		.4byte	.LVL25
+ 3176 01ec 0100     		.2byte	0x1
+ 3177 01ee 50       		.byte	0x50
+ 3178 01ef 26000000 		.4byte	.LVL27
+ 3179 01f3 2C000000 		.4byte	.LVL28
+ 3180 01f7 0100     		.2byte	0x1
+ 3181 01f9 50       		.byte	0x50
+ 3182 01fa 3A000000 		.4byte	.LVL30
+ 3183 01fe 40000000 		.4byte	.LVL31
+ 3184 0202 0100     		.2byte	0x1
+ 3185 0204 50       		.byte	0x50
+ 3186 0205 4E000000 		.4byte	.LVL33
+ 3187 0209 54000000 		.4byte	.LVL34
+ 3188 020d 0100     		.2byte	0x1
+ 3189 020f 50       		.byte	0x50
+ 3190 0210 64000000 		.4byte	.LVL36
+ 3191 0214 6A000000 		.4byte	.LVL37
+ 3192 0218 0100     		.2byte	0x1
+ 3193 021a 50       		.byte	0x50
+ 3194 021b 7A000000 		.4byte	.LVL39
+ 3195 021f 80000000 		.4byte	.LVL40
+ 3196 0223 0100     		.2byte	0x1
+ 3197 0225 50       		.byte	0x50
+ 3198 0226 8E000000 		.4byte	.LVL42
+ 3199 022a 94000000 		.4byte	.LVL43
+ 3200 022e 0100     		.2byte	0x1
+ 3201 0230 50       		.byte	0x50
+ 3202 0231 00000000 		.4byte	0
+ 3203 0235 00000000 		.4byte	0
+ 3204              	.LLST15:
+ 3205 0239 00000000 		.4byte	.LVL46
+ 3206 023d 0C000000 		.4byte	.LVL48
+ 3207 0241 0100     		.2byte	0x1
+ 3208 0243 50       		.byte	0x50
+ 3209 0244 0C000000 		.4byte	.LVL48
+ 3210 0248 9C000000 		.4byte	.LFE69
+ 3211 024c 0400     		.2byte	0x4
+ 3212 024e F3       		.byte	0xf3
+ 3213 024f 01       		.uleb128 0x1
+ 3214 0250 50       		.byte	0x50
+ 3215 0251 9F       		.byte	0x9f
+ 3216 0252 00000000 		.4byte	0
+ 3217 0256 00000000 		.4byte	0
+ 3218              	.LLST16:
+ 3219 025a 06000000 		.4byte	.LVL47
+ 3220 025e 0C000000 		.4byte	.LVL48
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 66
+
+
+ 3221 0262 0200     		.2byte	0x2
+ 3222 0264 30       		.byte	0x30
+ 3223 0265 9F       		.byte	0x9f
+ 3224 0266 0C000000 		.4byte	.LVL48
+ 3225 026a 96000000 		.4byte	.LVL66
+ 3226 026e 0100     		.2byte	0x1
+ 3227 0270 56       		.byte	0x56
+ 3228 0271 00000000 		.4byte	0
+ 3229 0275 00000000 		.4byte	0
+ 3230              	.LLST17:
+ 3231 0279 06000000 		.4byte	.LVL47
+ 3232 027d 0C000000 		.4byte	.LVL48
+ 3233 0281 0200     		.2byte	0x2
+ 3234 0283 30       		.byte	0x30
+ 3235 0284 9F       		.byte	0x9f
+ 3236 0285 0C000000 		.4byte	.LVL48
+ 3237 0289 4A000000 		.4byte	.LVL56
+ 3238 028d 0100     		.2byte	0x1
+ 3239 028f 54       		.byte	0x54
+ 3240 0290 00000000 		.4byte	0
+ 3241 0294 00000000 		.4byte	0
+ 3242              	.LLST18:
+ 3243 0298 4C000000 		.4byte	.LVL57
+ 3244 029c 96000000 		.4byte	.LVL66
+ 3245 02a0 0100     		.2byte	0x1
+ 3246 02a2 54       		.byte	0x54
+ 3247 02a3 00000000 		.4byte	0
+ 3248 02a7 00000000 		.4byte	0
+ 3249              	.LLST19:
+ 3250 02ab 00000000 		.4byte	.LVL67
+ 3251 02af 0C000000 		.4byte	.LVL69
+ 3252 02b3 0100     		.2byte	0x1
+ 3253 02b5 50       		.byte	0x50
+ 3254 02b6 0C000000 		.4byte	.LVL69
+ 3255 02ba 9C000000 		.4byte	.LFE70
+ 3256 02be 0400     		.2byte	0x4
+ 3257 02c0 F3       		.byte	0xf3
+ 3258 02c1 01       		.uleb128 0x1
+ 3259 02c2 50       		.byte	0x50
+ 3260 02c3 9F       		.byte	0x9f
+ 3261 02c4 00000000 		.4byte	0
+ 3262 02c8 00000000 		.4byte	0
+ 3263              	.LLST20:
+ 3264 02cc 06000000 		.4byte	.LVL68
+ 3265 02d0 0C000000 		.4byte	.LVL69
+ 3266 02d4 0200     		.2byte	0x2
+ 3267 02d6 30       		.byte	0x30
+ 3268 02d7 9F       		.byte	0x9f
+ 3269 02d8 0C000000 		.4byte	.LVL69
+ 3270 02dc 96000000 		.4byte	.LVL87
+ 3271 02e0 0100     		.2byte	0x1
+ 3272 02e2 56       		.byte	0x56
+ 3273 02e3 00000000 		.4byte	0
+ 3274 02e7 00000000 		.4byte	0
+ 3275              	.LLST21:
+ 3276 02eb 06000000 		.4byte	.LVL68
+ 3277 02ef 0C000000 		.4byte	.LVL69
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 67
+
+
+ 3278 02f3 0200     		.2byte	0x2
+ 3279 02f5 30       		.byte	0x30
+ 3280 02f6 9F       		.byte	0x9f
+ 3281 02f7 0C000000 		.4byte	.LVL69
+ 3282 02fb 4A000000 		.4byte	.LVL77
+ 3283 02ff 0100     		.2byte	0x1
+ 3284 0301 54       		.byte	0x54
+ 3285 0302 00000000 		.4byte	0
+ 3286 0306 00000000 		.4byte	0
+ 3287              	.LLST22:
+ 3288 030a 4C000000 		.4byte	.LVL78
+ 3289 030e 96000000 		.4byte	.LVL87
+ 3290 0312 0100     		.2byte	0x1
+ 3291 0314 54       		.byte	0x54
+ 3292 0315 00000000 		.4byte	0
+ 3293 0319 00000000 		.4byte	0
+ 3294              	.LLST23:
+ 3295 031d 00000000 		.4byte	.LVL88
+ 3296 0321 0C000000 		.4byte	.LVL90
+ 3297 0325 0100     		.2byte	0x1
+ 3298 0327 50       		.byte	0x50
+ 3299 0328 0C000000 		.4byte	.LVL90
+ 3300 032c 9C000000 		.4byte	.LFE71
+ 3301 0330 0400     		.2byte	0x4
+ 3302 0332 F3       		.byte	0xf3
+ 3303 0333 01       		.uleb128 0x1
+ 3304 0334 50       		.byte	0x50
+ 3305 0335 9F       		.byte	0x9f
+ 3306 0336 00000000 		.4byte	0
+ 3307 033a 00000000 		.4byte	0
+ 3308              	.LLST24:
+ 3309 033e 06000000 		.4byte	.LVL89
+ 3310 0342 0C000000 		.4byte	.LVL90
+ 3311 0346 0200     		.2byte	0x2
+ 3312 0348 30       		.byte	0x30
+ 3313 0349 9F       		.byte	0x9f
+ 3314 034a 0C000000 		.4byte	.LVL90
+ 3315 034e 96000000 		.4byte	.LVL108
+ 3316 0352 0100     		.2byte	0x1
+ 3317 0354 56       		.byte	0x56
+ 3318 0355 00000000 		.4byte	0
+ 3319 0359 00000000 		.4byte	0
+ 3320              	.LLST25:
+ 3321 035d 06000000 		.4byte	.LVL89
+ 3322 0361 0C000000 		.4byte	.LVL90
+ 3323 0365 0200     		.2byte	0x2
+ 3324 0367 30       		.byte	0x30
+ 3325 0368 9F       		.byte	0x9f
+ 3326 0369 0C000000 		.4byte	.LVL90
+ 3327 036d 4A000000 		.4byte	.LVL98
+ 3328 0371 0100     		.2byte	0x1
+ 3329 0373 54       		.byte	0x54
+ 3330 0374 00000000 		.4byte	0
+ 3331 0378 00000000 		.4byte	0
+ 3332              	.LLST26:
+ 3333 037c 4C000000 		.4byte	.LVL99
+ 3334 0380 96000000 		.4byte	.LVL108
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 68
+
+
+ 3335 0384 0100     		.2byte	0x1
+ 3336 0386 54       		.byte	0x54
+ 3337 0387 00000000 		.4byte	0
+ 3338 038b 00000000 		.4byte	0
+ 3339              	.LLST27:
+ 3340 038f 00000000 		.4byte	.LVL109
+ 3341 0393 0C000000 		.4byte	.LVL111
+ 3342 0397 0100     		.2byte	0x1
+ 3343 0399 50       		.byte	0x50
+ 3344 039a 0C000000 		.4byte	.LVL111
+ 3345 039e 9C000000 		.4byte	.LFE72
+ 3346 03a2 0400     		.2byte	0x4
+ 3347 03a4 F3       		.byte	0xf3
+ 3348 03a5 01       		.uleb128 0x1
+ 3349 03a6 50       		.byte	0x50
+ 3350 03a7 9F       		.byte	0x9f
+ 3351 03a8 00000000 		.4byte	0
+ 3352 03ac 00000000 		.4byte	0
+ 3353              	.LLST28:
+ 3354 03b0 06000000 		.4byte	.LVL110
+ 3355 03b4 0C000000 		.4byte	.LVL111
+ 3356 03b8 0200     		.2byte	0x2
+ 3357 03ba 30       		.byte	0x30
+ 3358 03bb 9F       		.byte	0x9f
+ 3359 03bc 0C000000 		.4byte	.LVL111
+ 3360 03c0 96000000 		.4byte	.LVL129
+ 3361 03c4 0100     		.2byte	0x1
+ 3362 03c6 56       		.byte	0x56
+ 3363 03c7 00000000 		.4byte	0
+ 3364 03cb 00000000 		.4byte	0
+ 3365              	.LLST29:
+ 3366 03cf 06000000 		.4byte	.LVL110
+ 3367 03d3 0C000000 		.4byte	.LVL111
+ 3368 03d7 0200     		.2byte	0x2
+ 3369 03d9 30       		.byte	0x30
+ 3370 03da 9F       		.byte	0x9f
+ 3371 03db 0C000000 		.4byte	.LVL111
+ 3372 03df 4A000000 		.4byte	.LVL119
+ 3373 03e3 0100     		.2byte	0x1
+ 3374 03e5 54       		.byte	0x54
+ 3375 03e6 00000000 		.4byte	0
+ 3376 03ea 00000000 		.4byte	0
+ 3377              	.LLST30:
+ 3378 03ee 4C000000 		.4byte	.LVL120
+ 3379 03f2 96000000 		.4byte	.LVL129
+ 3380 03f6 0100     		.2byte	0x1
+ 3381 03f8 54       		.byte	0x54
+ 3382 03f9 00000000 		.4byte	0
+ 3383 03fd 00000000 		.4byte	0
+ 3384              	.LLST31:
+ 3385 0401 00000000 		.4byte	.LVL130
+ 3386 0405 0C000000 		.4byte	.LVL132
+ 3387 0409 0100     		.2byte	0x1
+ 3388 040b 50       		.byte	0x50
+ 3389 040c 0C000000 		.4byte	.LVL132
+ 3390 0410 5A000000 		.4byte	.LFE73
+ 3391 0414 0400     		.2byte	0x4
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 69
+
+
+ 3392 0416 F3       		.byte	0xf3
+ 3393 0417 01       		.uleb128 0x1
+ 3394 0418 50       		.byte	0x50
+ 3395 0419 9F       		.byte	0x9f
+ 3396 041a 00000000 		.4byte	0
+ 3397 041e 00000000 		.4byte	0
+ 3398              	.LLST32:
+ 3399 0422 06000000 		.4byte	.LVL131
+ 3400 0426 0C000000 		.4byte	.LVL132
+ 3401 042a 0200     		.2byte	0x2
+ 3402 042c 30       		.byte	0x30
+ 3403 042d 9F       		.byte	0x9f
+ 3404 042e 0C000000 		.4byte	.LVL132
+ 3405 0432 54000000 		.4byte	.LVL140
+ 3406 0436 0100     		.2byte	0x1
+ 3407 0438 56       		.byte	0x56
+ 3408 0439 54000000 		.4byte	.LVL140
+ 3409 043d 5A000000 		.4byte	.LFE73
+ 3410 0441 0100     		.2byte	0x1
+ 3411 0443 50       		.byte	0x50
+ 3412 0444 00000000 		.4byte	0
+ 3413 0448 00000000 		.4byte	0
+ 3414              	.LLST33:
+ 3415 044c 06000000 		.4byte	.LVL131
+ 3416 0450 0C000000 		.4byte	.LVL132
+ 3417 0454 0200     		.2byte	0x2
+ 3418 0456 30       		.byte	0x30
+ 3419 0457 9F       		.byte	0x9f
+ 3420 0458 0C000000 		.4byte	.LVL132
+ 3421 045c 5A000000 		.4byte	.LFE73
+ 3422 0460 0100     		.2byte	0x1
+ 3423 0462 54       		.byte	0x54
+ 3424 0463 00000000 		.4byte	0
+ 3425 0467 00000000 		.4byte	0
+ 3426              	.LLST34:
+ 3427 046b 00000000 		.4byte	.LVL141
+ 3428 046f 0C000000 		.4byte	.LVL143
+ 3429 0473 0100     		.2byte	0x1
+ 3430 0475 50       		.byte	0x50
+ 3431 0476 0C000000 		.4byte	.LVL143
+ 3432 047a 9C000000 		.4byte	.LFE74
+ 3433 047e 0400     		.2byte	0x4
+ 3434 0480 F3       		.byte	0xf3
+ 3435 0481 01       		.uleb128 0x1
+ 3436 0482 50       		.byte	0x50
+ 3437 0483 9F       		.byte	0x9f
+ 3438 0484 00000000 		.4byte	0
+ 3439 0488 00000000 		.4byte	0
+ 3440              	.LLST35:
+ 3441 048c 06000000 		.4byte	.LVL142
+ 3442 0490 0C000000 		.4byte	.LVL143
+ 3443 0494 0200     		.2byte	0x2
+ 3444 0496 30       		.byte	0x30
+ 3445 0497 9F       		.byte	0x9f
+ 3446 0498 0C000000 		.4byte	.LVL143
+ 3447 049c 96000000 		.4byte	.LVL161
+ 3448 04a0 0100     		.2byte	0x1
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 70
+
+
+ 3449 04a2 56       		.byte	0x56
+ 3450 04a3 00000000 		.4byte	0
+ 3451 04a7 00000000 		.4byte	0
+ 3452              	.LLST36:
+ 3453 04ab 06000000 		.4byte	.LVL142
+ 3454 04af 0C000000 		.4byte	.LVL143
+ 3455 04b3 0200     		.2byte	0x2
+ 3456 04b5 30       		.byte	0x30
+ 3457 04b6 9F       		.byte	0x9f
+ 3458 04b7 0C000000 		.4byte	.LVL143
+ 3459 04bb 4A000000 		.4byte	.LVL151
+ 3460 04bf 0100     		.2byte	0x1
+ 3461 04c1 54       		.byte	0x54
+ 3462 04c2 00000000 		.4byte	0
+ 3463 04c6 00000000 		.4byte	0
+ 3464              	.LLST37:
+ 3465 04ca 4C000000 		.4byte	.LVL152
+ 3466 04ce 96000000 		.4byte	.LVL161
+ 3467 04d2 0100     		.2byte	0x1
+ 3468 04d4 54       		.byte	0x54
+ 3469 04d5 00000000 		.4byte	0
+ 3470 04d9 00000000 		.4byte	0
+ 3471              	.LLST38:
+ 3472 04dd 00000000 		.4byte	.LVL162
+ 3473 04e1 0E000000 		.4byte	.LVL163
+ 3474 04e5 0100     		.2byte	0x1
+ 3475 04e7 50       		.byte	0x50
+ 3476 04e8 0E000000 		.4byte	.LVL163
+ 3477 04ec 11000000 		.4byte	.LVL164-1
+ 3478 04f0 0200     		.2byte	0x2
+ 3479 04f2 72       		.byte	0x72
+ 3480 04f3 00       		.sleb128 0
+ 3481 04f4 11000000 		.4byte	.LVL164-1
+ 3482 04f8 1E000000 		.4byte	.LVL167
+ 3483 04fc 0200     		.2byte	0x2
+ 3484 04fe 91       		.byte	0x91
+ 3485 04ff 77       		.sleb128 -9
+ 3486 0500 1E000000 		.4byte	.LVL167
+ 3487 0504 22000000 		.4byte	.LVL168
+ 3488 0508 0200     		.2byte	0x2
+ 3489 050a 74       		.byte	0x74
+ 3490 050b 7F       		.sleb128 -1
+ 3491 050c 22000000 		.4byte	.LVL168
+ 3492 0510 40000000 		.4byte	.LVL173
+ 3493 0514 0200     		.2byte	0x2
+ 3494 0516 74       		.byte	0x74
+ 3495 0517 00       		.sleb128 0
+ 3496 0518 40000000 		.4byte	.LVL173
+ 3497 051c 44000000 		.4byte	.LVL174
+ 3498 0520 0200     		.2byte	0x2
+ 3499 0522 74       		.byte	0x74
+ 3500 0523 7F       		.sleb128 -1
+ 3501 0524 44000000 		.4byte	.LVL174
+ 3502 0528 62000000 		.4byte	.LVL179
+ 3503 052c 0200     		.2byte	0x2
+ 3504 052e 74       		.byte	0x74
+ 3505 052f 00       		.sleb128 0
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 71
+
+
+ 3506 0530 62000000 		.4byte	.LVL179
+ 3507 0534 66000000 		.4byte	.LVL180
+ 3508 0538 0200     		.2byte	0x2
+ 3509 053a 74       		.byte	0x74
+ 3510 053b 7F       		.sleb128 -1
+ 3511 053c 66000000 		.4byte	.LVL180
+ 3512 0540 84000000 		.4byte	.LVL185
+ 3513 0544 0200     		.2byte	0x2
+ 3514 0546 74       		.byte	0x74
+ 3515 0547 00       		.sleb128 0
+ 3516 0548 84000000 		.4byte	.LVL185
+ 3517 054c 88000000 		.4byte	.LVL186
+ 3518 0550 0200     		.2byte	0x2
+ 3519 0552 74       		.byte	0x74
+ 3520 0553 7F       		.sleb128 -1
+ 3521 0554 88000000 		.4byte	.LVL186
+ 3522 0558 A6000000 		.4byte	.LVL191
+ 3523 055c 0200     		.2byte	0x2
+ 3524 055e 74       		.byte	0x74
+ 3525 055f 00       		.sleb128 0
+ 3526 0560 A6000000 		.4byte	.LVL191
+ 3527 0564 AA000000 		.4byte	.LVL192
+ 3528 0568 0200     		.2byte	0x2
+ 3529 056a 74       		.byte	0x74
+ 3530 056b 7F       		.sleb128 -1
+ 3531 056c AA000000 		.4byte	.LVL192
+ 3532 0570 DA000000 		.4byte	.LVL198
+ 3533 0574 0200     		.2byte	0x2
+ 3534 0576 74       		.byte	0x74
+ 3535 0577 00       		.sleb128 0
+ 3536 0578 DA000000 		.4byte	.LVL198
+ 3537 057c 0C010000 		.4byte	.LFE66
+ 3538 0580 0200     		.2byte	0x2
+ 3539 0582 7D       		.byte	0x7d
+ 3540 0583 77       		.sleb128 -9
+ 3541 0584 00000000 		.4byte	0
+ 3542 0588 00000000 		.4byte	0
+ 3543              	.LLST39:
+ 3544 058c 12000000 		.4byte	.LVL164
+ 3545 0590 18000000 		.4byte	.LVL165
+ 3546 0594 0100     		.2byte	0x1
+ 3547 0596 50       		.byte	0x50
+ 3548 0597 34000000 		.4byte	.LVL170
+ 3549 059b 3A000000 		.4byte	.LVL171
+ 3550 059f 0100     		.2byte	0x1
+ 3551 05a1 50       		.byte	0x50
+ 3552 05a2 56000000 		.4byte	.LVL176
+ 3553 05a6 5C000000 		.4byte	.LVL177
+ 3554 05aa 0100     		.2byte	0x1
+ 3555 05ac 50       		.byte	0x50
+ 3556 05ad 78000000 		.4byte	.LVL182
+ 3557 05b1 7E000000 		.4byte	.LVL183
+ 3558 05b5 0100     		.2byte	0x1
+ 3559 05b7 50       		.byte	0x50
+ 3560 05b8 9A000000 		.4byte	.LVL188
+ 3561 05bc A0000000 		.4byte	.LVL189
+ 3562 05c0 0100     		.2byte	0x1
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 72
+
+
+ 3563 05c2 50       		.byte	0x50
+ 3564 05c3 BC000000 		.4byte	.LVL194
+ 3565 05c7 C2000000 		.4byte	.LVL195
+ 3566 05cb 0100     		.2byte	0x1
+ 3567 05cd 50       		.byte	0x50
+ 3568 05ce 00000000 		.4byte	0
+ 3569 05d2 00000000 		.4byte	0
+ 3570              		.section	.debug_aranges,"",%progbits
+ 3571 0000 6C000000 		.4byte	0x6c
+ 3572 0004 0200     		.2byte	0x2
+ 3573 0006 00000000 		.4byte	.Ldebug_info0
+ 3574 000a 04       		.byte	0x4
+ 3575 000b 00       		.byte	0
+ 3576 000c 0000     		.2byte	0
+ 3577 000e 0000     		.2byte	0
+ 3578 0010 00000000 		.4byte	.LFB65
+ 3579 0014 02000000 		.4byte	.LFE65-.LFB65
+ 3580 0018 00000000 		.4byte	.LFB67
+ 3581 001c 3A000000 		.4byte	.LFE67-.LFB67
+ 3582 0020 00000000 		.4byte	.LFB68
+ 3583 0024 2E000000 		.4byte	.LFE68-.LFB68
+ 3584 0028 00000000 		.4byte	.LFB64
+ 3585 002c B8000000 		.4byte	.LFE64-.LFB64
+ 3586 0030 00000000 		.4byte	.LFB69
+ 3587 0034 9C000000 		.4byte	.LFE69-.LFB69
+ 3588 0038 00000000 		.4byte	.LFB70
+ 3589 003c 9C000000 		.4byte	.LFE70-.LFB70
+ 3590 0040 00000000 		.4byte	.LFB71
+ 3591 0044 9C000000 		.4byte	.LFE71-.LFB71
+ 3592 0048 00000000 		.4byte	.LFB72
+ 3593 004c 9C000000 		.4byte	.LFE72-.LFB72
+ 3594 0050 00000000 		.4byte	.LFB73
+ 3595 0054 5A000000 		.4byte	.LFE73-.LFB73
+ 3596 0058 00000000 		.4byte	.LFB74
+ 3597 005c 9C000000 		.4byte	.LFE74-.LFB74
+ 3598 0060 00000000 		.4byte	.LFB66
+ 3599 0064 0C010000 		.4byte	.LFE66-.LFB66
+ 3600 0068 00000000 		.4byte	0
+ 3601 006c 00000000 		.4byte	0
+ 3602              		.section	.debug_ranges,"",%progbits
+ 3603              	.Ldebug_ranges0:
+ 3604 0000 06000000 		.4byte	.LBB2
+ 3605 0004 08000000 		.4byte	.LBE2
+ 3606 0008 0A000000 		.4byte	.LBB3
+ 3607 000c 4C000000 		.4byte	.LBE3
+ 3608 0010 00000000 		.4byte	0
+ 3609 0014 00000000 		.4byte	0
+ 3610 0018 06000000 		.4byte	.LBB5
+ 3611 001c 08000000 		.4byte	.LBE5
+ 3612 0020 0A000000 		.4byte	.LBB6
+ 3613 0024 4C000000 		.4byte	.LBE6
+ 3614 0028 00000000 		.4byte	0
+ 3615 002c 00000000 		.4byte	0
+ 3616 0030 06000000 		.4byte	.LBB8
+ 3617 0034 08000000 		.4byte	.LBE8
+ 3618 0038 0A000000 		.4byte	.LBB9
+ 3619 003c 4C000000 		.4byte	.LBE9
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 73
+
+
+ 3620 0040 00000000 		.4byte	0
+ 3621 0044 00000000 		.4byte	0
+ 3622 0048 06000000 		.4byte	.LBB11
+ 3623 004c 08000000 		.4byte	.LBE11
+ 3624 0050 0A000000 		.4byte	.LBB12
+ 3625 0054 4C000000 		.4byte	.LBE12
+ 3626 0058 00000000 		.4byte	0
+ 3627 005c 00000000 		.4byte	0
+ 3628 0060 06000000 		.4byte	.LBB14
+ 3629 0064 08000000 		.4byte	.LBE14
+ 3630 0068 0A000000 		.4byte	.LBB15
+ 3631 006c 48000000 		.4byte	.LBE15
+ 3632 0070 00000000 		.4byte	0
+ 3633 0074 00000000 		.4byte	0
+ 3634 0078 06000000 		.4byte	.LBB16
+ 3635 007c 08000000 		.4byte	.LBE16
+ 3636 0080 0A000000 		.4byte	.LBB17
+ 3637 0084 4C000000 		.4byte	.LBE17
+ 3638 0088 00000000 		.4byte	0
+ 3639 008c 00000000 		.4byte	0
+ 3640 0090 00000000 		.4byte	.LFB65
+ 3641 0094 02000000 		.4byte	.LFE65
+ 3642 0098 00000000 		.4byte	.LFB67
+ 3643 009c 3A000000 		.4byte	.LFE67
+ 3644 00a0 00000000 		.4byte	.LFB68
+ 3645 00a4 2E000000 		.4byte	.LFE68
+ 3646 00a8 00000000 		.4byte	.LFB64
+ 3647 00ac B8000000 		.4byte	.LFE64
+ 3648 00b0 00000000 		.4byte	.LFB69
+ 3649 00b4 9C000000 		.4byte	.LFE69
+ 3650 00b8 00000000 		.4byte	.LFB70
+ 3651 00bc 9C000000 		.4byte	.LFE70
+ 3652 00c0 00000000 		.4byte	.LFB71
+ 3653 00c4 9C000000 		.4byte	.LFE71
+ 3654 00c8 00000000 		.4byte	.LFB72
+ 3655 00cc 9C000000 		.4byte	.LFE72
+ 3656 00d0 00000000 		.4byte	.LFB73
+ 3657 00d4 5A000000 		.4byte	.LFE73
+ 3658 00d8 00000000 		.4byte	.LFB74
+ 3659 00dc 9C000000 		.4byte	.LFE74
+ 3660 00e0 00000000 		.4byte	.LFB66
+ 3661 00e4 0C010000 		.4byte	.LFE66
+ 3662 00e8 00000000 		.4byte	0
+ 3663 00ec 00000000 		.4byte	0
+ 3664              		.section	.debug_line,"",%progbits
+ 3665              	.Ldebug_line0:
+ 3666 0000 C0030000 		.section	.debug_str,"MS",%progbits,1
+ 3666      02000E02 
+ 3666      00000201 
+ 3666      FB0E0D00 
+ 3666      01010101 
+ 3667              	.LASF51:
+ 3668 0000 79656172 		.ascii	"year\000"
+ 3668      00
+ 3669              	.LASF21:
+ 3670 0005 4E4F5F45 		.ascii	"NO_ERROR\000"
+ 3670      52524F52 
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 74
+
+
+ 3670      00
+ 3671              	.LASF39:
+ 3672 000e 5254435F 		.ascii	"RTC_convert_seconds\000"
+ 3672      636F6E76 
+ 3672      6572745F 
+ 3672      7365636F 
+ 3672      6E647300 
+ 3673              	.LASF20:
+ 3674 0022 73697A65 		.ascii	"sizetype\000"
+ 3674      74797065 
+ 3674      00
+ 3675              	.LASF35:
+ 3676 002b 63757272 		.ascii	"current_hours\000"
+ 3676      656E745F 
+ 3676      686F7572 
+ 3676      7300
+ 3677              	.LASF4:
+ 3678 0039 5F5F7569 		.ascii	"__uint16_t\000"
+ 3678      6E743136 
+ 3678      5F7400
+ 3679              	.LASF37:
+ 3680 0044 63757272 		.ascii	"current_month\000"
+ 3680      656E745F 
+ 3680      6D6F6E74 
+ 3680      6800
+ 3681              	.LASF26:
+ 3682 0052 72656769 		.ascii	"register_address\000"
+ 3682      73746572 
+ 3682      5F616464 
+ 3682      72657373 
+ 3682      00
+ 3683              	.LASF47:
+ 3684 0063 64617465 		.ascii	"date\000"
+ 3684      00
+ 3685              	.LASF2:
+ 3686 0068 73686F72 		.ascii	"short int\000"
+ 3686      7420696E 
+ 3686      7400
+ 3687              	.LASF32:
+ 3688 0072 7365745F 		.ascii	"set_RTC\000"
+ 3688      52544300 
+ 3689              	.LASF12:
+ 3690 007a 75696E74 		.ascii	"uint8_t\000"
+ 3690      385F7400 
+ 3691              	.LASF60:
+ 3692 0082 4932434D 		.ascii	"I2CMASTER_MasterSendStop\000"
+ 3692      41535445 
+ 3692      525F4D61 
+ 3692      73746572 
+ 3692      53656E64 
+ 3693              	.LASF15:
+ 3694 009b 75696E74 		.ascii	"uint8\000"
+ 3694      3800
+ 3695              	.LASF42:
+ 3696 00a1 5254435F 		.ascii	"RTC_convert_minutes\000"
+ 3696      636F6E76 
+ 3696      6572745F 
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 75
+
+
+ 3696      6D696E75 
+ 3696      74657300 
+ 3697              	.LASF16:
+ 3698 00b5 666C6F61 		.ascii	"float\000"
+ 3698      7400
+ 3699              	.LASF38:
+ 3700 00bb 63757272 		.ascii	"current_year\000"
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
  3700      656E745F 
  3700      6D6F6E74 
  3700      6800
@@ -4434,6 +7431,7 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  3703              	.LASF47:
  3704 0069 64617465 		.ascii	"date\000"
  3704      00
+<<<<<<< HEAD
  3705              	.LASF2:
  3706 006e 73686F72 		.ascii	"short int\000"
  3706      7420696E 
@@ -4745,3 +7743,255 @@ ARM GAS  C:\Users\lucac\AppData\Local\Temp\ccShdZ6T.s 			page 1
  3825      74696D65 
  3825      00
  3826              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
+=======
+ 3705              	.LASF58:
+ 3706 00df 4932434D 		.ascii	"I2CMASTER_MasterSendRestart\000"
+ 3706      41535445 
+ 3706      525F4D61 
+ 3706      73746572 
+ 3706      53656E64 
+ 3707              	.LASF31:
+ 3708 00fb 7274635F 		.ascii	"rtc_init\000"
+ 3708      696E6974 
+ 3708      00
+ 3709              	.LASF3:
+ 3710 0104 5F5F7569 		.ascii	"__uint8_t\000"
+ 3710      6E74385F 
+ 3710      7400
+ 3711              	.LASF22:
+ 3712 010e 4552524F 		.ascii	"ERROR\000"
+ 3712      5200
+ 3713              	.LASF19:
+ 3714 0114 6C6F6E67 		.ascii	"long double\000"
+ 3714      20646F75 
+ 3714      626C6500 
+ 3715              	.LASF1:
+ 3716 0120 756E7369 		.ascii	"unsigned char\000"
+ 3716      676E6564 
+ 3716      20636861 
+ 3716      7200
+ 3717              	.LASF56:
+ 3718 012e 4932434D 		.ascii	"I2CMASTER_MasterSendStart\000"
+ 3718      41535445 
+ 3718      525F4D61 
+ 3718      73746572 
+ 3718      53656E64 
+ 3719              	.LASF0:
+ 3720 0148 7369676E 		.ascii	"signed char\000"
+ 3720      65642063 
+ 3720      68617200 
+ 3721              	.LASF14:
+ 3722 0154 696E7433 		.ascii	"int32_t\000"
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 76
+
+
+ 3722      325F7400 
+ 3723              	.LASF10:
+ 3724 015c 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 3724      206C6F6E 
+ 3724      6720756E 
+ 3724      7369676E 
+ 3724      65642069 
+ 3725              	.LASF43:
+ 3726 0173 6D696E75 		.ascii	"minutes\000"
+ 3726      74657300 
+ 3727              	.LASF11:
+ 3728 017b 756E7369 		.ascii	"unsigned int\000"
+ 3728      676E6564 
+ 3728      20696E74 
+ 3728      00
+ 3729              	.LASF13:
+ 3730 0188 75696E74 		.ascii	"uint16_t\000"
+ 3730      31365F74 
+ 3730      00
+ 3731              	.LASF53:
+ 3732 0191 7274635F 		.ascii	"rtc_data_register\000"
+ 3732      64617461 
+ 3732      5F726567 
+ 3732      69737465 
+ 3732      7200
+ 3733              	.LASF46:
+ 3734 01a3 5254435F 		.ascii	"RTC_convert_date\000"
+ 3734      636F6E76 
+ 3734      6572745F 
+ 3734      64617465 
+ 3734      00
+ 3735              	.LASF52:
+ 3736 01b4 7274635F 		.ascii	"rtc_read_time\000"
+ 3736      72656164 
+ 3736      5F74696D 
+ 3736      6500
+ 3737              	.LASF5:
+ 3738 01c2 73686F72 		.ascii	"short unsigned int\000"
+ 3738      7420756E 
+ 3738      7369676E 
+ 3738      65642069 
+ 3738      6E7400
+ 3739              	.LASF29:
+ 3740 01d5 5254435F 		.ascii	"RTC_WriteRegister\000"
+ 3740      57726974 
+ 3740      65526567 
+ 3740      69737465 
+ 3740      7200
+ 3741              	.LASF41:
+ 3742 01e7 7365636F 		.ascii	"seconds\000"
+ 3742      6E647300 
+ 3743              	.LASF45:
+ 3744 01ef 686F7572 		.ascii	"hours\000"
+ 3744      7300
+ 3745              	.LASF18:
+ 3746 01f5 63686172 		.ascii	"char\000"
+ 3746      00
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 77
+
+
+ 3747              	.LASF33:
+ 3748 01fa 63757272 		.ascii	"current_seconds\000"
+ 3748      656E745F 
+ 3748      7365636F 
+ 3748      6E647300 
+ 3749              	.LASF64:
+ 3750 020a 433A5C55 		.ascii	"C:\\Users\\teo8d\\Desktop\\repo_test\\ETBL_Project\\"
+ 3750      73657273 
+ 3750      5C74656F 
+ 3750      38645C44 
+ 3750      65736B74 
+ 3751 0238 50726F6A 		.ascii	"Project_design.cydsn\000"
+ 3751      6563745F 
+ 3751      64657369 
+ 3751      676E2E63 
+ 3751      7964736E 
+ 3752              	.LASF50:
+ 3753 024d 5254435F 		.ascii	"RTC_convert_year\000"
+ 3753      636F6E76 
+ 3753      6572745F 
+ 3753      79656172 
+ 3753      00
+ 3754              	.LASF49:
+ 3755 025e 6D6F6E74 		.ascii	"month\000"
+ 3755      6800
+ 3756              	.LASF34:
+ 3757 0264 63757272 		.ascii	"current_minutes\000"
+ 3757      656E745F 
+ 3757      6D696E75 
+ 3757      74657300 
+ 3758              	.LASF44:
+ 3759 0274 5254435F 		.ascii	"RTC_convert_hours\000"
+ 3759      636F6E76 
+ 3759      6572745F 
+ 3759      686F7572 
+ 3759      7300
+ 3760              	.LASF27:
+ 3761 0286 64617461 		.ascii	"data\000"
+ 3761      00
+ 3762              	.LASF40:
+ 3763 028b 62756666 		.ascii	"buffer\000"
+ 3763      657200
+ 3764              	.LASF8:
+ 3765 0292 6C6F6E67 		.ascii	"long unsigned int\000"
+ 3765      20756E73 
+ 3765      69676E65 
+ 3765      6420696E 
+ 3765      7400
+ 3766              	.LASF48:
+ 3767 02a4 5254435F 		.ascii	"RTC_convert_month\000"
+ 3767      636F6E76 
+ 3767      6572745F 
+ 3767      6D6F6E74 
+ 3767      6800
+ 3768              	.LASF36:
+ 3769 02b6 63757272 		.ascii	"current_date\000"
+ 3769      656E745F 
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 78
+
+
+ 3769      64617465 
+ 3769      00
+ 3770              	.LASF17:
+ 3771 02c3 646F7562 		.ascii	"double\000"
+ 3771      6C6500
+ 3772              	.LASF61:
+ 3773 02ca 55415254 		.ascii	"UART_1_PutString\000"
+ 3773      5F315F50 
+ 3773      75745374 
+ 3773      72696E67 
+ 3773      00
+ 3774              	.LASF59:
+ 3775 02db 4932434D 		.ascii	"I2CMASTER_MasterReadByte\000"
+ 3775      41535445 
+ 3775      525F4D61 
+ 3775      73746572 
+ 3775      52656164 
+ 3776              	.LASF65:
+ 3777 02f4 7274635F 		.ascii	"rtc_i2c_address\000"
+ 3777      6932635F 
+ 3777      61646472 
+ 3777      65737300 
+ 3778              	.LASF6:
+ 3779 0304 5F5F696E 		.ascii	"__int32_t\000"
+ 3779      7433325F 
+ 3779      7400
+ 3780              	.LASF63:
+ 3781 030e 5254435F 		.ascii	"RTC_Driver.c\000"
+ 3781      44726976 
+ 3781      65722E63 
+ 3781      00
+ 3782              	.LASF57:
+ 3783 031b 4932434D 		.ascii	"I2CMASTER_MasterWriteByte\000"
+ 3783      41535445 
+ 3783      525F4D61 
+ 3783      73746572 
+ 3783      57726974 
+ 3784              	.LASF30:
+ 3785 0335 6572726F 		.ascii	"error\000"
+ 3785      7200
+ 3786              	.LASF25:
+ 3787 033b 64657669 		.ascii	"device_address\000"
+ 3787      63655F61 
+ 3787      64647265 
+ 3787      737300
+ 3788              	.LASF54:
+ 3789 034a 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 3789      52784275 
+ 3789      66666572 
+ 3789      00
+ 3790              	.LASF62:
+ 3791 0357 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 3791      43313120 
+ 3791      352E342E 
+ 3791      31203230 
+ 3791      31363036 
+ 3792 038a 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccQTRRha.s 			page 79
+
+
+ 3792      20726576 
+ 3792      6973696F 
+ 3792      6E203233 
+ 3792      37373135 
+ 3793 03bd 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 3793      66756E63 
+ 3793      74696F6E 
+ 3793      2D736563 
+ 3793      74696F6E 
+ 3794              	.LASF24:
+ 3795 03e5 7274635F 		.ascii	"rtc_address\000"
+ 3795      61646472 
+ 3795      65737300 
+ 3796              	.LASF23:
+ 3797 03f1 4572726F 		.ascii	"ErrorCode\000"
+ 3797      72436F64 
+ 3797      6500
+ 3798              	.LASF28:
+ 3799 03fb 5254435F 		.ascii	"RTC_ReadRegister\000"
+ 3799      52656164 
+ 3799      52656769 
+ 3799      73746572 
+ 3799      00
+ 3800              	.LASF55:
+ 3801 040c 43757272 		.ascii	"Current_time\000"
+ 3801      656E745F 
+ 3801      74696D65 
+ 3801      00
+ 3802              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
+>>>>>>> 55326bda49e20350460f3d75f788d6409ed485b7
