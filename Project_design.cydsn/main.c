@@ -34,6 +34,11 @@ uint8_t rtc_data_register;
 
 int main(void)
 {
+    CyDelay(1000);
+   /* Pin_Reset_Write(0x00);
+    CyDelay(10);
+    Pin_Reset_Write(0xFF);*/
+    
     state = 0;
     CyGlobalIntEnable;
         
@@ -50,7 +55,7 @@ int main(void)
       Seconds, Minutes, Hours, Date, Month, Year
       Then run the program, re-comment the line and re-run the program
     */
-    //set_RTC(0x10,0x59,0x09,0x12,MAY,Y_2022);
+    //set_RTC(0x40,0x06,0x12,0x12,MAY,Y_2022);
     
     uint8_t glucose_concentration = 100;
     uint8_t glucose_concentration_from_memory = 0;
@@ -131,6 +136,34 @@ int main(void)
                 }
 
                 
+                /*display_clear();
+                display_update();
+                rtx_setTextSize(1);
+                rtx_setTextColor(WHITE);
+                rtx_setCursor(0,0);
+                rtx_println(rtc_content);
+                display_update();
+                
+                CyDelay(2000);*/
+                
+                state = IDLE;
+            
+            break;
+            
+            case IDLE:
+                button_state = Pin_Button_Read();
+                //len = snprintf(message, sizeof(message), "%d\n", button_state);
+                //UART_1_PutString(message);
+                if(!button_state) {
+                    state = MEASUREMENT;
+                }   
+            
+            break;
+            
+            case MEASUREMENT:
+                rtc_read_time(RTC_ADDRESS);
+                len = snprintf(rtc_content, sizeof(rtc_content), "%d-%d-%d %02d:%02d:%02d\n", current_date, 
+                               current_month, current_year, current_hours, current_minutes, current_seconds);
                 display_clear();
                 display_update();
                 rtx_setTextSize(1);
@@ -139,17 +172,9 @@ int main(void)
                 rtx_println(rtc_content);
                 display_update();
                 
-                CyDelay(2000);
-                
-                //state = IDLE;
-            
-            break;
-            
-            case IDLE:
-            
-            break;
-            
-            case MEASUREMENT:
+                button_state = Pin_Button_Read();
+                len = snprintf(message, sizeof(message), "%d\n", button_state);
+                UART_1_PutString(message);
             
             break;
                 

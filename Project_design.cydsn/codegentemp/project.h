@@ -26,6 +26,8 @@
 #include "Scl_aliases.h"
 #include "Scl.h"
 #include "UART_1.h"
+#include "Pin_Button_aliases.h"
+#include "Pin_Button.h"
 #include "UART_1_IntClock.h"
 #include "core_cm3_psoc5.h"
 #include "CyDmac.h"

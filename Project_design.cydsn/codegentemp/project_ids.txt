@@ -1,8 +1,7 @@
-C:\Users\teo8d\Desktop\repo_test\ETBL_Project\Project_design.cydsn\Project_design.cyprj|c596f1b6-ead4-4fab-b71d-d08f7cc8bb2d
-C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|347cd162-bc71-4285-b743-0434f1ec1274
-C:\Users\teo8d\OneDrive - Politecnico di Milano\Documenti\PSoC Creator\4.4\Downloads ( 4.4).cylib\Downloads ( 4.4).cyprj|a91bffb3-c875-4898-be52-df18fc055576
-C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|e9aec01c-15b4-4fb1-ad41-2a1a71daa5c7
-C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|e9efa410-81e1-43ef-b376-05efad4abfbe
-C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|0d03f4c6-3c30-4b37-aef7-77fa1b62f25d
-C:\Users\teo8d\Desktop\progetto lab sensori\CODICI\PSOC\FinalProjects\Group2.cydsn\Group2.cyprj|e75bc8a9-b4db-47ce-ac2d-e3bcdfb1d19d
-C:\Users\teo8d\OneDrive - Politecnico di Milano\Documenti\PSoC Creator\AnnotationLibrary\AnnotationLibrary_lib\AnnotationLibrary_lib.cylib\AnnotationLibrary_lib.cyprj|59079f80-997b-413d-88ad-f7d482f2d78c
+C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\Project_design.cyprj|eed75264-892e-406f-8889-4846d8f89a67
+C:\Users\lucac\Desktop\AnnotationLibrary\AnnotationLibrary_lib\AnnotationLibrary_lib.cylib\AnnotationLibrary_lib.cyprj|9d89831e-20eb-4a79-b8ae-bac3a082f757
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|b7298bd9-8fed-45e3-a41f-d922db475b22
+C:\Users\lucac\Documents\PSoC Creator\4.4\Downloads ( 4.4).cylib\Downloads ( 4.4).cyprj|96a6b203-8a01-4792-9dd0-9808dda8ab51
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|73bf199c-ee82-4002-a2d1-045266c02e28
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|a0c30ab2-2d28-4a25-919e-14a85638513b
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|776c75b2-4854-47a3-9497-452dbdb2935e

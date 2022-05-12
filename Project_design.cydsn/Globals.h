@@ -23,6 +23,7 @@
     
 // MAIN GLOBALS
     char state;
+    uint8_t button_state;
 
 // RTC USER-CHANGING GLOBALS
     uint8_t current_seconds;
