@@ -22,6 +22,11 @@
 #include "ErrorCodes.h"
 #include "time.h"
 
+#define INITIALIZATION 0
+#define IDLE 1
+#define MEASUREMENT 2
+
+
 uint8_t seconds = 0;
 
 char rtc_content[64] = {};
@@ -29,6 +34,7 @@ uint8_t rtc_data_register;
 
 int main(void)
 {
+    state = 0;
     CyGlobalIntEnable;
         
     I2CMASTER_Start();
@@ -44,19 +50,15 @@ int main(void)
       Seconds, Minutes, Hours, Date, Month, Year
       Then run the program, re-comment the line and re-run the program
     */
-    //set_RTC(0x00,0x37,0x15,0x06,MAY,Y_2022);
+    //set_RTC(0x10,0x59,0x09,0x12,MAY,Y_2022);
     
     uint8_t glucose_concentration = 100;
     uint8_t glucose_concentration_from_memory = 0;
     char flag = 0;
     char unit[] = "mg/dl";
     
-    int i=0;
-    int j=0;
     int len = 0;
     
-    uint8 index=0;
-    char str2[9];
     uint32_t rval;
     char message[100] = {'\0'};
     
@@ -100,42 +102,58 @@ int main(void)
 
     for(;;)
     {
-        OLED_welcome_screen();
-        
-        rtc_read_time(RTC_ADDRESS);
-        len = snprintf(rtc_content, sizeof(rtc_content), "Secondi: %d\r\n", current_seconds);
-        UART_1_PutString(rtc_content);
-        len = snprintf(rtc_content, sizeof(rtc_content), "Minuti: %d\r\n", current_minutes);
-        UART_1_PutString(rtc_content);
-        len = snprintf(rtc_content, sizeof(rtc_content), "Ore: %d\r\n", current_hours);
-        UART_1_PutString(rtc_content);
-        len = snprintf(rtc_content, sizeof(rtc_content), "Giorno: %d\r\n", current_date);
-        UART_1_PutString(rtc_content);
-        len = snprintf(rtc_content, sizeof(rtc_content), "Mese: %d\r\n", current_month);
-        UART_1_PutString(rtc_content);
-        len = snprintf(rtc_content, sizeof(rtc_content), "Anno: %d\r\n\n", current_year);
-        UART_1_PutString(rtc_content);
-        
-        len = snprintf(rtc_content, sizeof(rtc_content), "%d-%d-%d %02d:%02d:%02d", current_date, 
-                       current_month, current_year, current_hours, current_minutes, current_seconds);
-        UART_1_PutString(rtc_content);
-        
-        if(flag == 0) {
-            flag = 1;
-            save_current_measurement(glucose_concentration);
-            glucose_concentration_from_memory = get_measurement_from_memory(eeprom_current_address - 7);
-        }
+        switch(state) {
+            case INITIALIZATION:
+                OLED_welcome_screen();
+                
+                rtc_read_time(RTC_ADDRESS);
+                len = snprintf(rtc_content, sizeof(rtc_content), "Secondi: %d\r\n", current_seconds);
+                UART_1_PutString(rtc_content);
+                len = snprintf(rtc_content, sizeof(rtc_content), "Minuti: %d\r\n", current_minutes);
+                UART_1_PutString(rtc_content);
+                len = snprintf(rtc_content, sizeof(rtc_content), "Ore: %d\r\n", current_hours);
+                UART_1_PutString(rtc_content);
+                len = snprintf(rtc_content, sizeof(rtc_content), "Giorno: %d\r\n", current_date);
+                UART_1_PutString(rtc_content);
+                len = snprintf(rtc_content, sizeof(rtc_content), "Mese: %d\r\n", current_month);
+                UART_1_PutString(rtc_content);
+                len = snprintf(rtc_content, sizeof(rtc_content), "Anno: %d\r\n\n", current_year);
+                UART_1_PutString(rtc_content);
+                
+                len = snprintf(rtc_content, sizeof(rtc_content), "%d-%d-%d %02d:%02d:%02d\n", current_date, 
+                               current_month, current_year, current_hours, current_minutes, current_seconds);
+                UART_1_PutString(rtc_content);
+                
+                if(flag == 0) {
+                    flag = 1;
+                    save_current_measurement(glucose_concentration);
+                    glucose_concentration_from_memory = get_measurement_from_memory(eeprom_current_address - 7);
+                }
 
-        
-        display_clear();
-        display_update();
-        rtx_setTextSize(1);
-        rtx_setTextColor(WHITE);
-        rtx_setCursor(0,0);
-        rtx_println(rtc_content);
-        display_update();
-        
-        CyDelay(2000);
+                
+                display_clear();
+                display_update();
+                rtx_setTextSize(1);
+                rtx_setTextColor(WHITE);
+                rtx_setCursor(0,0);
+                rtx_println(rtc_content);
+                display_update();
+                
+                CyDelay(2000);
+                
+                //state = IDLE;
+            
+            break;
+            
+            case IDLE:
+            
+            break;
+            
+            case MEASUREMENT:
+            
+            break;
+                
+        }
     }
 }
 

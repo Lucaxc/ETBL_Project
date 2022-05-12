@@ -11,7 +11,7 @@
 <CyGuid_f44455c5-3770-4452-b988-0a7a7ff46256 type_name="CyDesigner.Common.ProjMgmt.Model.CyConfigDependencies" version="1">
 <dependency_info name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM3" xml_contents_version="2">
 <CyGuid_1173175f-1b9b-4ad4-a065-754a48a27021 type_name="CyDesigner.Common.Base.CyFileDeps" version="1">
-<file name=".\CortexM3\ARM_GCC_541\Debug\OLED_Driver.o">
+<file name=".\CortexM3\ARM_GCC_541\Debug\EEPROM_Driver.o">
 <dep name=".\Generated_Source\PSoC5\CyDmac.h" />
 <dep name=".\Generated_Source\PSoC5\CyFlash.h" />
 <dep name=".\Generated_Source\PSoC5\CyLib.h" />
@@ -39,10 +39,10 @@
 <dep name=".\Generated_Source\PSoC5\cypins.h" />
 <dep name=".\Generated_Source\PSoC5\cytypes.h" />
 <dep name=".\Generated_Source\PSoC5\project.h" />
+<dep name=".\EEPROM_Driver.c" />
+<dep name=".\EEPROM_Driver.h" />
+<dep name=".\ErrorCodes.h" />
 <dep name=".\Globals.h" />
-<dep name=".\OLED_Driver.c" />
-<dep name=".\OLED_Driver.h" />
-<dep name=".\font.h" />
 </file>
 <file name=".\Generated_Source\PSoC5\CyDmac.h" />
 <file name=".\Generated_Source\PSoC5\CyFlash.h" />
@@ -71,10 +71,10 @@
 <file name=".\Generated_Source\PSoC5\cypins.h" />
 <file name=".\Generated_Source\PSoC5\cytypes.h" />
 <file name=".\Generated_Source\PSoC5\project.h" />
+<file name=".\EEPROM_Driver.c" />
+<file name=".\EEPROM_Driver.h" />
+<file name=".\ErrorCodes.h" />
 <file name=".\Globals.h" />
-<file name=".\OLED_Driver.c" />
-<file name=".\OLED_Driver.h" />
-<file name=".\font.h" />
 <file name=".\CortexM3\ARM_GCC_541\Debug\main.o">
 <dep name=".\Generated_Source\PSoC5\CyDmac.h" />
 <dep name=".\Generated_Source\PSoC5\CyFlash.h" />
@@ -110,11 +110,10 @@
 <dep name=".\RTC_Driver.h" />
 <dep name=".\main.c" />
 </file>
-<file name=".\EEPROM_Driver.h" />
-<file name=".\ErrorCodes.h" />
+<file name=".\OLED_Driver.h" />
 <file name=".\RTC_Driver.h" />
 <file name=".\main.c" />
-<file name=".\CortexM3\ARM_GCC_541\Debug\EEPROM_Driver.o">
+<file name=".\CortexM3\ARM_GCC_541\Debug\OLED_Driver.o">
 <dep name=".\Generated_Source\PSoC5\CyDmac.h" />
 <dep name=".\Generated_Source\PSoC5\CyFlash.h" />
 <dep name=".\Generated_Source\PSoC5\CyLib.h" />
@@ -142,12 +141,13 @@
 <dep name=".\Generated_Source\PSoC5\cypins.h" />
 <dep name=".\Generated_Source\PSoC5\cytypes.h" />
 <dep name=".\Generated_Source\PSoC5\project.h" />
-<dep name=".\EEPROM_Driver.c" />
-<dep name=".\EEPROM_Driver.h" />
-<dep name=".\ErrorCodes.h" />
 <dep name=".\Globals.h" />
+<dep name=".\OLED_Driver.c" />
+<dep name=".\OLED_Driver.h" />
+<dep name=".\font.h" />
 </file>
-<file name=".\EEPROM_Driver.c" />
+<file name=".\OLED_Driver.c" />
+<file name=".\font.h" />
 <file name=".\CortexM3\ARM_GCC_541\Debug\RTC_Driver.o">
 <dep name=".\Generated_Source\PSoC5\CyDmac.h" />
 <dep name=".\Generated_Source\PSoC5\CyFlash.h" />
@@ -935,7 +935,7 @@
 <dataGuid v="769d31ea-68b1-4f0c-b90a-7c10a43ee563">
 <CyGuid_769d31ea-68b1-4f0c-b90a-7c10a43ee563 type_name="CyDesigner.Common.ProjMgmt.Model.CyLinkCustomData" version="1">
 <link_deps_times>
-<name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM3" v="132964898080612342" />
+<name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM3" v="132968160757591758" />
 </link_deps_times>
 </CyGuid_769d31ea-68b1-4f0c-b90a-7c10a43ee563>
 </dataGuid>

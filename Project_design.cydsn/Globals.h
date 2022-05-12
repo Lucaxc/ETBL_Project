@@ -20,6 +20,9 @@
 // I2C TRANSFER RESULT STATUS
     #define TRANSFER_CMPLT                  0x00u
     #define TRANSFER_ERROR                  0xFFu
+    
+// MAIN GLOBALS
+    char state;
 
 // RTC USER-CHANGING GLOBALS
     uint8_t current_seconds;

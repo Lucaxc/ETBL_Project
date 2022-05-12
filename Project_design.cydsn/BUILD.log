@@ -1,6 +1,10 @@
---------------- Build Started: 05/08/2022 15:23:27 Project: Project_design, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
+--------------- Build Started: 05/12/2022 10:01:14 Project: Project_design, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
 The code generation step is up to date.
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/OLED_Driver.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c OLED_Driver.c -o .\CortexM3\ARM_GCC_541\Debug\OLED_Driver.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/EEPROM_Driver.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c EEPROM_Driver.c -o .\CortexM3\ARM_GCC_541\Debug\EEPROM_Driver.o
+EEPROM_Driver.c: In function 'get_measurement_from_memory':
+EEPROM_Driver.c:159:9: warning: variable 'len' set but not used [-Wunused-but-set-variable]
+     int len = 0;
+         ^
 arm-none-eabi-ar.exe -rs .\CortexM3\ARM_GCC_541\Debug\Project_design.a .\CortexM3\ARM_GCC_541\Debug\CyDmac.o .\CortexM3\ARM_GCC_541\Debug\CyFlash.o .\CortexM3\ARM_GCC_541\Debug\CyLib.o .\CortexM3\ARM_GCC_541\Debug\cyPm.o .\CortexM3\ARM_GCC_541\Debug\CySpc.o .\CortexM3\ARM_GCC_541\Debug\cyutils.o .\CortexM3\ARM_GCC_541\Debug\cy_em_eeprom.o .\CortexM3\ARM_GCC_541\Debug\Sda.o .\CortexM3\ARM_GCC_541\Debug\Scl.o .\CortexM3\ARM_GCC_541\Debug\UART_1.o .\CortexM3\ARM_GCC_541\Debug\UART_1_PM.o .\CortexM3\ARM_GCC_541\Debug\UART_1_INT.o .\CortexM3\ARM_GCC_541\Debug\UART_1_BOOT.o .\CortexM3\ARM_GCC_541\Debug\UART_1_IntClock.o .\CortexM3\ARM_GCC_541\Debug\I2CMASTER.o .\CortexM3\ARM_GCC_541\Debug\I2CMASTER_BOOT.o .\CortexM3\ARM_GCC_541\Debug\I2CMASTER_INT.o .\CortexM3\ARM_GCC_541\Debug\I2CMASTER_PM.o .\CortexM3\ARM_GCC_541\Debug\I2CMASTER_SLAVE.o .\CortexM3\ARM_GCC_541\Debug\I2CMASTER_MASTER.o .\CortexM3\ARM_GCC_541\Debug\CyBootAsmGnu.o
 arm-none-eabi-ar.exe: creating .\CortexM3\ARM_GCC_541\Debug\Project_design.a
 arm-none-eabi-gcc.exe -Wl,--start-group -o "C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\CortexM3\ARM_GCC_541\Debug\Project_design.elf" .\CortexM3\ARM_GCC_541\Debug\main.o .\CortexM3\ARM_GCC_541\Debug\OLED_Driver.o .\CortexM3\ARM_GCC_541\Debug\RTC_Driver.o .\CortexM3\ARM_GCC_541\Debug\EEPROM_Driver.o .\CortexM3\ARM_GCC_541\Debug\cyfitter_cfg.o .\CortexM3\ARM_GCC_541\Debug\cymetadata.o .\CortexM3\ARM_GCC_541\Debug\Cm3Start.o .\CortexM3\ARM_GCC_541\Debug\Project_design.a "C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CortexM3\ARM_GCC_541\Debug\CyComponentLibrary.a" -mcpu=cortex-m3 -mthumb -l m -L Generated_Source\PSoC5 -Wl,-Map,.\CortexM3\ARM_GCC_541\Debug/Project_design.map -T Generated_Source\PSoC5\cm3gcc.ld -specs=nano.specs -Wl,--gc-sections -g -ffunction-sections -Og -ffat-lto-objects -Wl,--end-group
@@ -9,6 +13,6 @@ No ELF section .cychecksum found, creating one
 Application checksum calculated and stored in ELF section .cychecksum
 Checksum calculated and stored in ELF section .cymeta
 cyelftool.exe -S "C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\CortexM3\ARM_GCC_541\Debug\Project_design.elf"
-Flash used: 21068 of 262144 bytes (8,0%).
-SRAM used: 3697 of 65536 bytes (5,6%). Stack: 2048 bytes. Heap: 128 bytes.
---------------- Build Succeeded: 05/08/2022 15:23:28 ---------------
+Flash used: 21140 of 262144 bytes (8,1%).
+SRAM used: 3705 of 65536 bytes (5,7%). Stack: 2048 bytes. Heap: 128 bytes.
+--------------- Build Succeeded: 05/12/2022 10:01:16 ---------------
