@@ -25,6 +25,8 @@ from PyQt5.QtWidgets import (
     QWidget,
 )
 
+
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 import serial
@@ -32,15 +34,27 @@ import serial.tools.list_ports
 
 # We import library dedicated to data plot
 import pyqtgraph as pg
-from pyqtgraph import PlotWidget
-
+from pyqtgraph import PlotWidget, plot
+import pyqtgraph as pg
+import os
+from random import randint
 
 # Globals
 CONN_STATUS = False
+UPDATE_SCAN_FLAG=False 
+UPDATE_TIME_FLAG=False 
 
 UPDATE_SCAN = "B"
 UPDATE_INITIAL = "C"
 UPDATE_FINAL= "D"
+UPDATE_TIME= "E"
+
+# Global variables
+final_value=int()
+initial_value=int()
+time_value=int()
+scan_rate=int()
+
 
 # Logging config
 logging.basicConfig(format="%(message)s", level=logging.INFO)
@@ -168,9 +182,12 @@ class Ui_ClinicianWindow(object):
         self.CHECK_TOGGLE= bool(True)
 
         # Some random data
-        self.hour = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-        self.temperature1 = [30, 32, 34, 32, 33, 31, 29, 32, 35, 45]
-        self.temperature2 = [16, 20, 17, 23, 30, 25, 28, 26, 22, 32]
+        self.x = list(range(100))  # 100 time points
+        self.y = [randint(0,100) for _ in range(100)]  # 100 data points
+
+        self.timer = QtCore.QTimer()
+        self.timer.setInterval(50)
+        self.timer.timeout.connect(self.update_plot_data)
 
 
         ClinicianWindow.setObjectName("ClinicianWindow")
@@ -286,6 +303,7 @@ class Ui_ClinicianWindow(object):
         self.Scan_CV_textEdit.setObjectName("Scan_CV_textEdit")
         self.horizontalLayout_6.addWidget(self.Scan_CV_textEdit)
         self.Scan_update_button = QtWidgets.QPushButton(self.tab_3)
+        self.Scan_update_button.setDisabled(True)
         font = QtGui.QFont()
         font.setFamily("Yu Gothic UI Semibold")
         font.setBold(True)
@@ -311,6 +329,7 @@ class Ui_ClinicianWindow(object):
         self.Initial_CV_textEdit.setObjectName("Initial_CV_textEdit")
         self.horizontalLayout_4.addWidget(self.Initial_CV_textEdit)
         self.Initial_update_button = QtWidgets.QPushButton(self.tab_3)
+        self.Initial_update_button.setDisabled(True)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -350,6 +369,7 @@ class Ui_ClinicianWindow(object):
         self.Final_CV_textEdit.setObjectName("Final_CV_textEdit")
         self.horizontalLayout_5.addWidget(self.Final_CV_textEdit)
         self.Final_update_button = QtWidgets.QPushButton(self.tab_3)
+        self.Final_update_button.setDisabled(True)
         font = QtGui.QFont()
         font.setFamily("Yu Gothic UI Semibold")
         font.setBold(True)
@@ -364,16 +384,17 @@ class Ui_ClinicianWindow(object):
         self.gridLayout_9.addItem(spacerItem3, 2, 0, 1, 1)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.Time_CV_textedit = QtWidgets.QTextEdit(self.tab_3)
+        self.Time_CV_textEdit = QtWidgets.QTextEdit(self.tab_3)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Time_CV_textedit.sizePolicy().hasHeightForWidth())
-        self.Time_CV_textedit.setSizePolicy(sizePolicy)
-        self.Time_CV_textedit.setMinimumSize(QtCore.QSize(93, 28))
-        self.Time_CV_textedit.setObjectName("Time_CV_textedit")
-        self.horizontalLayout.addWidget(self.Time_CV_textedit)
+        sizePolicy.setHeightForWidth(self.Time_CV_textEdit.sizePolicy().hasHeightForWidth())
+        self.Time_CV_textEdit.setSizePolicy(sizePolicy)
+        self.Time_CV_textEdit.setMinimumSize(QtCore.QSize(93, 28))
+        self.Time_CV_textEdit.setObjectName("Time_CV_textEdit")
+        self.horizontalLayout.addWidget(self.Time_CV_textEdit)
         self.Time_update_button = QtWidgets.QPushButton(self.tab_3)
+        self.Time_update_button.setDisabled(True)
         self.Time_update_button.setObjectName("Time_update_button")
         self.horizontalLayout.addWidget(self.Time_update_button)
         self.horizontalLayout.setStretch(0, 1)
@@ -411,6 +432,7 @@ class Ui_ClinicianWindow(object):
         self.horizontalLayout_7.setSpacing(180)
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
         self.Draw_CV_button = QtWidgets.QPushButton(self.tab_3, clicked= lambda: self.draw_CV())
+        self.Draw_CV_button.setDisabled(True)
         font = QtGui.QFont()
         font.setFamily("Yu Gothic UI Semibold")
         font.setBold(True)
@@ -592,6 +614,7 @@ class Ui_ClinicianWindow(object):
         self.Glucose_data_label.setText(_translate("ClinicianWindow", "GLUCOSE CONCENTRATION (mg/dL)"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5), _translate("ClinicianWindow", "Data Visualization"))
 
+
         # Plot settings
             # Add grid
         self.graphWidget_CV.showGrid(x=True, y=True)
@@ -600,27 +623,36 @@ class Ui_ClinicianWindow(object):
         self.graphWidget_CV.setBackground('w')
         self.graphWidget_AMP.setBackground('w')
             # Add title
-        self.graphWidget_CV.setTitle("Temperature measurement")
-        self.graphWidget_AMP.setTitle("Temperature measurement")
+        self.graphWidget_CV.setTitle("CV scan")
+        self.graphWidget_AMP.setTitle("Amperometry scan")
             # Add axis labels
         styles = {'color':'k', 'font-size':'15px'}
-        self.graphWidget_CV.setLabel('left', 'Temperature [°C]', **styles)
-        self.graphWidget_CV.setLabel('bottom', 'Time [h]', **styles)
+        self.graphWidget_CV.setLabel('left', 'Current [uA]', **styles)
+        self.graphWidget_CV.setLabel('bottom', 'Potential [V]', **styles)
 
-        self.graphWidget_AMP.setLabel('left', 'Temperature [°C]', **styles)
-        self.graphWidget_AMP.setLabel('bottom', 'Time [h]', **styles)
+        self.graphWidget_AMP.setLabel('left', 'Current [uA]', **styles)
+        self.graphWidget_AMP.setLabel('bottom', 'Time [s]', **styles)
             # Add legend
         self.graphWidget_CV.addLegend()
         self.graphWidget_AMP.addLegend()
 
-        # Plot data: x, y values
-        self.draw_CV() #data are plotted at the initialization 
-        self.draw_AMP() #data are plotted at the initialization
 
         # Connect update buttons
         self.Scan_update_button.clicked.connect(lambda state, x=UPDATE_SCAN: self.update_values_CV(state, x))
         self.Initial_update_button.clicked.connect(lambda state, x=UPDATE_INITIAL: self.update_values_CV(state, x))
         self.Final_update_button.clicked.connect(lambda state, x=UPDATE_FINAL: self.update_values_CV(state, x))
+        self.Time_update_button.clicked.connect(lambda state, x=UPDATE_TIME: self.update_values_CV(state, x))
+
+
+    def update_plot_data(self):
+
+        self.x = self.x[1:]  # Remove the first y element.
+        self.x.append(self.x[-1] + 1)  # Add a new value 1 higher than the last.
+
+        self.y = self.y[1:]  # Remove the first
+        self.y.append( randint(0,100))  # Add a new random value.
+
+        self.CV_line.setData(self.x, self.y)  # Update the data.
 
 
     ####################
@@ -659,7 +691,10 @@ class Ui_ClinicianWindow(object):
         """
         if checked:
             
-            logging.info("Test")
+            self.Initial_update_button.setDisabled(False)
+            self.Final_update_button.setDisabled(False)           
+            self.Scan_update_button.setDisabled(False)            
+            self.Time_update_button.setDisabled(False)
 
             # setup reading worker
             self.serial_worker = SerialWorker(self.port_text) # needs to be re defined
@@ -673,6 +708,8 @@ class Ui_ClinicianWindow(object):
 
         else:
             # kill thread
+            self.Connection_label.setStyleSheet("background-color:rgb(255,0,0);")
+            self.Connection_label.setText("NOT CONNECTED")
             self.serial_worker.is_killed = True
             self.serial_worker.killed()
             self.Connection_comboBox.setDisabled(False) # enable the possibility to change port
@@ -690,12 +727,82 @@ class Ui_ClinicianWindow(object):
         @param state is the state of the button
         @param char is the char to be sent on serial port
         """
+        global final_value
+        global initial_value
+        global time_value
+        global scan_rate
+
+        global UPDATE_SCAN
+        global UPDATE_INITIAL
+        global UPDATE_FINAL
+        global UPDATE_TIME
+        global UPDATE_TIME_FLAG
+        global UPDATE_SCAN_FLAG
+
+
         self.serial_worker.send(char)
         time.sleep(1)
+
+        if (char == UPDATE_SCAN):
+            logging.info("Received: {}".format(self.Scan_CV_textEdit.toPlainText()))
+            scan_rate = int(self.Scan_CV_textEdit.toPlainText())
+            self.serial_worker.port.write([scan_rate])
+            UPDATE_SCAN_FLAG=True
+
+        elif (char == UPDATE_INITIAL):
+            
+            logging.info("Received: {}".format(self.Initial_CV_textEdit.toPlainText()))
+            initial_value = int(self.Initial_CV_textEdit.toPlainText())
+
+            b=int(initial_value>>8)
+            c=int(initial_value & (0xFF))
+            self.serial_worker.port.write([b])
+            time.sleep(1)
+            self.serial_worker.port.write([c])
+            time.sleep(1)     
+
+        elif (char == UPDATE_FINAL):
+            logging.info("Received: {}".format(self.Final_CV_textEdit.toPlainText()))
+
+            final_value = int(self.Final_CV_textEdit.toPlainText())
+           
+            b=int(final_value>>8)
+            c=int(final_value & (0xFF))
+            self.serial_worker.port.write([b])
+            time.sleep(1)
+            self.serial_worker.port.write([c])
+            time.sleep(1)     
+
+        elif (char == UPDATE_TIME):
+            logging.info("Received: {}".format(self.Time_CV_textEdit.toPlainText()))
+
+            time_value = int(self.Time_CV_textEdit.toPlainText())
+            self.serial_worker.port.write([time_value])          
+            UPDATE_TIME_FLAG=True
+
         self.serial_worker.send('z')
         time.sleep(1)
         
         if (self.serial_worker.read() == "CV ready"):
+
+            if UPDATE_SCAN_FLAG:
+                
+                time_value = int((final_value - initial_value)/scan_rate)
+                time_str = str(time_value)
+
+                logging.info("Final_value: {}".format(final_value))
+                logging.info("Initial_value: {}".format(initial_value))
+                logging.info("Scan_rate: {}".format(scan_rate))
+
+                self.Time_CV_textEdit.setPlainText(time_str)
+
+            elif UPDATE_TIME_FLAG:
+                scan_rate = int((final_value - initial_value)/time_value)
+                scan_rate_str = str(scan_rate)
+                self.Scan_CV_textEdit.setPlainText(scan_rate_str)
+
+
+            self.Draw_CV_button.setDisabled(False)
             self.Ready_CV_label.setStyleSheet("background-color:rgb(0,255,0);")
             self.Ready_CV_label.setText("READY")    
             time.sleep(1)
@@ -744,16 +851,17 @@ class Ui_ClinicianWindow(object):
         """!
         @brief Draw the plots.
         """
-        self.temp1line = self.plot(self.graphWidget_CV, self.hour, self.temperature1, 'Temp 1', 'r')
-        self.temp2line = self.plot(self.graphWidget_CV, self.hour, self.temperature2, 'Temp 2', 'b')
+        self.timer.start()        
+        self.CV_line = self.plot(self.graphWidget_CV, self.x, self.y, 'CV','r')
+
 
     @pyqtSlot()
     def draw_AMP(self):
         """!
         @brief Draw the plots.
         """
-        self.temp1line = self.plot(self.graphWidget_AMP, self.hour, self.temperature1, 'Temp 1', 'r')
-        self.temp2line = self.plot(self.graphWidget_AMP, self.hour, self.temperature2, 'Temp 2', 'b')
+        self.AMP_line = self.plot(self.graphWidget_AMP, self.x, self.y, 'AMP','r')
+
 
     @pyqtSlot()
     def plot(self, graph, x, y, curve_name, color):  #method called by the draw method

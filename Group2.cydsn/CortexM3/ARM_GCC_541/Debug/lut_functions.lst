@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 1
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 1
 
 
    1              		.syntax unified
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 1
   28:lut_functions.c **** *  waveform_CV_lut: Array the look up table is stored in
   29:lut_functions.c **** *
   30:lut_functions.c **** *******************************************************************************/
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 2
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 2
 
 
   31:lut_functions.c **** 
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 1
   71:lut_functions.c ****             waveform_CV_lut[index] = value;
   42              		.loc 1 71 0 discriminator 3
   43 0008 0A48     		ldr	r0, .L7
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 3
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 3
 
 
   44 000a 20F81230 		strh	r3, [r0, r2, lsl #1]	@ movhi
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 1
   82:lut_functions.c **** }
   84              		.loc 1 82 0 is_stmt 1
   85 002e 1046     		mov	r0, r2
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 4
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 4
 
 
   86 0030 7047     		bx	lr
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 1
  134              		.loc 1 44 0
  135 0020 80B2     		uxth	r0, r0
  136 0022 38BD     		pop	{r3, r4, r5, pc}
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 5
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 5
 
 
  137              	.L12:
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 1
  167              		.loc 1 106 0
  168 000a 0133     		adds	r3, r3, #1
  169              	.LVL20:
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 6
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 6
 
 
  170              	.L14:
@@ -337,1305 +337,1335 @@ ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 1
  194              		.size	LUT_MakePulse, .-LUT_MakePulse
  195              		.comm	command_lenght,1,1
  196              		.comm	command,40,4
- 197              		.comm	potential_max_current,2,2
- 198              		.comm	end_dac_value,2,2
- 199              		.comm	start_dac_value,2,2
- 200              		.comm	uA_per_adc_count,4,4
- 201              		.comm	ADC_CV_array,10000,4
- 202              		.comm	lut_length,2,2
- 203              		.comm	lut_index,2,2
- 204              		.comm	waveform_amp_lut,4000,4
- 205              		.comm	waveform_CV_lut,10000,4
- 206              		.comm	lut_value,2,2
- 207              		.comm	dac_ground_value,2,2
- 208              		.comm	Update_endvalue_Flag,1,1
- 209              		.comm	Update_startvalue_Flag,1,1
- 210              		.comm	Update_scanrate_Flag,1,1
- 211              		.comm	Load_EEPROM_Flag,1,1
- 212              		.comm	AMP_ready_Flag,1,1
- 213              		.comm	CV_ready_Flag,1,1
- 214              		.comm	TIA_Calibration_ended_Flag,1,1
- 215              		.comm	Command_ready_Flag,1,1
- 216              		.comm	Input_Flag,1,1
- 217              		.text
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 7
+ 197              		.comm	selected_scan_rate,2,2
+ 198              		.comm	potential_max_current,2,2
+ 199              		.comm	end_dac_value,2,2
+ 200              		.comm	start_dac_value,2,2
+ 201              		.comm	uA_per_adc_count,4,4
+ 202              		.comm	ADC_CV_array,10000,4
+ 203              		.comm	lut_length,2,2
+ 204              		.comm	lut_index,2,2
+ 205              		.comm	waveform_amp_lut,4000,4
+ 206              		.comm	waveform_CV_lut,10000,4
+ 207              		.comm	lut_value,2,2
+ 208              		.comm	dac_ground_value,2,2
+ 209              		.comm	Update_timevalue_Flag,1,1
+ 210              		.comm	Update_endvalue_Flag,1,1
+ 211              		.comm	Update_startvalue_Flag,1,1
+ 212              		.comm	Update_scanrate_Flag,1,1
+ 213              		.comm	Load_EEPROM_Flag,1,1
+ 214              		.comm	AMP_ready_Flag,1,1
+ 215              		.comm	CV_ready_Flag,1,1
+ 216              		.comm	TIA_Calibration_ended_Flag,1,1
+ 217              		.comm	Command_ready_Flag,1,1
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 7
 
 
- 218              	.Letext0:
- 219              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
- 220              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
- 221              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
- 222              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
- 223              		.file 6 "Global_variables.h"
- 224              		.section	.debug_info,"",%progbits
- 225              	.Ldebug_info0:
- 226 0000 EC030000 		.4byte	0x3ec
- 227 0004 0400     		.2byte	0x4
- 228 0006 00000000 		.4byte	.Ldebug_abbrev0
- 229 000a 04       		.byte	0x4
- 230 000b 01       		.uleb128 0x1
- 231 000c 6D010000 		.4byte	.LASF57
- 232 0010 0C       		.byte	0xc
- 233 0011 16020000 		.4byte	.LASF58
- 234 0015 9E000000 		.4byte	.LASF59
- 235 0019 00000000 		.4byte	.Ldebug_ranges0+0
- 236 001d 00000000 		.4byte	0
- 237 0021 00000000 		.4byte	.Ldebug_line0
- 238 0025 02       		.uleb128 0x2
- 239 0026 01       		.byte	0x1
- 240 0027 06       		.byte	0x6
- 241 0028 97030000 		.4byte	.LASF0
- 242 002c 03       		.uleb128 0x3
- 243 002d 17000000 		.4byte	.LASF3
- 244 0031 02       		.byte	0x2
- 245 0032 1D       		.byte	0x1d
- 246 0033 37000000 		.4byte	0x37
- 247 0037 02       		.uleb128 0x2
- 248 0038 01       		.byte	0x1
- 249 0039 08       		.byte	0x8
- 250 003a 68020000 		.4byte	.LASF1
- 251 003e 02       		.uleb128 0x2
- 252 003f 02       		.byte	0x2
- 253 0040 05       		.byte	0x5
- 254 0041 4B030000 		.4byte	.LASF2
- 255 0045 03       		.uleb128 0x3
- 256 0046 76020000 		.4byte	.LASF4
- 257 004a 02       		.byte	0x2
- 258 004b 2B       		.byte	0x2b
- 259 004c 50000000 		.4byte	0x50
- 260 0050 02       		.uleb128 0x2
- 261 0051 02       		.byte	0x2
- 262 0052 07       		.byte	0x7
- 263 0053 26020000 		.4byte	.LASF5
- 264 0057 03       		.uleb128 0x3
- 265 0058 3C000000 		.4byte	.LASF6
- 266 005c 02       		.byte	0x2
- 267 005d 3F       		.byte	0x3f
- 268 005e 62000000 		.4byte	0x62
- 269 0062 02       		.uleb128 0x2
- 270 0063 04       		.byte	0x4
- 271 0064 05       		.byte	0x5
- 272 0065 46000000 		.4byte	.LASF7
- 273 0069 02       		.uleb128 0x2
- 274 006a 04       		.byte	0x4
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 8
+ 218              		.comm	Input_Flag,1,1
+ 219              		.text
+ 220              	.Letext0:
+ 221              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 222              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 223              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 224              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 225              		.file 6 "Global_variables.h"
+ 226              		.section	.debug_info,"",%progbits
+ 227              	.Ldebug_info0:
+ 228 0000 0E040000 		.4byte	0x40e
+ 229 0004 0400     		.2byte	0x4
+ 230 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 231 000a 04       		.byte	0x4
+ 232 000b 01       		.uleb128 0x1
+ 233 000c 43030000 		.4byte	.LASF59
+ 234 0010 0C       		.byte	0xc
+ 235 0011 46000000 		.4byte	.LASF60
+ 236 0015 6E010000 		.4byte	.LASF61
+ 237 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 238 001d 00000000 		.4byte	0
+ 239 0021 00000000 		.4byte	.Ldebug_line0
+ 240 0025 02       		.uleb128 0x2
+ 241 0026 01       		.byte	0x1
+ 242 0027 06       		.byte	0x6
+ 243 0028 1E020000 		.4byte	.LASF0
+ 244 002c 03       		.uleb128 0x3
+ 245 002d 2F010000 		.4byte	.LASF3
+ 246 0031 02       		.byte	0x2
+ 247 0032 1D       		.byte	0x1d
+ 248 0033 37000000 		.4byte	0x37
+ 249 0037 02       		.uleb128 0x2
+ 250 0038 01       		.byte	0x1
+ 251 0039 08       		.byte	0x8
+ 252 003a EB010000 		.4byte	.LASF1
+ 253 003e 02       		.uleb128 0x2
+ 254 003f 02       		.byte	0x2
+ 255 0040 05       		.byte	0x5
+ 256 0041 3C000000 		.4byte	.LASF2
+ 257 0045 03       		.uleb128 0x3
+ 258 0046 7D000000 		.4byte	.LASF4
+ 259 004a 02       		.byte	0x2
+ 260 004b 2B       		.byte	0x2b
+ 261 004c 50000000 		.4byte	0x50
+ 262 0050 02       		.uleb128 0x2
+ 263 0051 02       		.byte	0x2
+ 264 0052 07       		.byte	0x7
+ 265 0053 63020000 		.4byte	.LASF5
+ 266 0057 03       		.uleb128 0x3
+ 267 0058 E7020000 		.4byte	.LASF6
+ 268 005c 02       		.byte	0x2
+ 269 005d 3F       		.byte	0x3f
+ 270 005e 62000000 		.4byte	0x62
+ 271 0062 02       		.uleb128 0x2
+ 272 0063 04       		.byte	0x4
+ 273 0064 05       		.byte	0x5
+ 274 0065 26010000 		.4byte	.LASF7
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 8
 
 
- 275 006b 07       		.byte	0x7
- 276 006c 81020000 		.4byte	.LASF8
- 277 0070 02       		.uleb128 0x2
- 278 0071 08       		.byte	0x8
- 279 0072 05       		.byte	0x5
- 280 0073 1E030000 		.4byte	.LASF9
- 281 0077 02       		.uleb128 0x2
- 282 0078 08       		.byte	0x8
- 283 0079 07       		.byte	0x7
- 284 007a CD020000 		.4byte	.LASF10
- 285 007e 04       		.uleb128 0x4
- 286 007f 04       		.byte	0x4
- 287 0080 05       		.byte	0x5
- 288 0081 696E7400 		.ascii	"int\000"
- 289 0085 02       		.uleb128 0x2
- 290 0086 04       		.byte	0x4
- 291 0087 07       		.byte	0x7
- 292 0088 AB020000 		.4byte	.LASF11
- 293 008c 03       		.uleb128 0x3
- 294 008d E4020000 		.4byte	.LASF12
- 295 0091 03       		.byte	0x3
- 296 0092 18       		.byte	0x18
- 297 0093 2C000000 		.4byte	0x2c
- 298 0097 03       		.uleb128 0x3
- 299 0098 42030000 		.4byte	.LASF13
- 300 009c 03       		.byte	0x3
- 301 009d 24       		.byte	0x24
- 302 009e 45000000 		.4byte	0x45
- 303 00a2 03       		.uleb128 0x3
- 304 00a3 0D030000 		.4byte	.LASF14
- 305 00a7 03       		.byte	0x3
- 306 00a8 2C       		.byte	0x2c
- 307 00a9 57000000 		.4byte	0x57
- 308 00ad 05       		.uleb128 0x5
- 309 00ae FD020000 		.4byte	.LASF15
- 310 00b2 04       		.byte	0x4
- 311 00b3 E901     		.2byte	0x1e9
- 312 00b5 37000000 		.4byte	0x37
- 313 00b9 05       		.uleb128 0x5
- 314 00ba 93020000 		.4byte	.LASF16
- 315 00be 04       		.byte	0x4
- 316 00bf EA01     		.2byte	0x1ea
- 317 00c1 50000000 		.4byte	0x50
- 318 00c5 05       		.uleb128 0x5
- 319 00c6 0B020000 		.4byte	.LASF17
- 320 00ca 04       		.byte	0x4
- 321 00cb ED01     		.2byte	0x1ed
- 322 00cd 3E000000 		.4byte	0x3e
- 323 00d1 05       		.uleb128 0x5
- 324 00d2 07010000 		.4byte	.LASF18
- 325 00d6 04       		.byte	0x4
- 326 00d7 EF01     		.2byte	0x1ef
- 327 00d9 DD000000 		.4byte	0xdd
- 328 00dd 02       		.uleb128 0x2
- 329 00de 04       		.byte	0x4
- 330 00df 04       		.byte	0x4
- 331 00e0 3E010000 		.4byte	.LASF19
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 9
+ 275 0069 02       		.uleb128 0x2
+ 276 006a 04       		.byte	0x4
+ 277 006b 07       		.byte	0x7
+ 278 006c A6020000 		.4byte	.LASF8
+ 279 0070 02       		.uleb128 0x2
+ 280 0071 08       		.byte	0x8
+ 281 0072 05       		.byte	0x5
+ 282 0073 FD000000 		.4byte	.LASF9
+ 283 0077 02       		.uleb128 0x2
+ 284 0078 08       		.byte	0x8
+ 285 0079 07       		.byte	0x7
+ 286 007a 2A020000 		.4byte	.LASF10
+ 287 007e 04       		.uleb128 0x4
+ 288 007f 04       		.byte	0x4
+ 289 0080 05       		.byte	0x5
+ 290 0081 696E7400 		.ascii	"int\000"
+ 291 0085 02       		.uleb128 0x2
+ 292 0086 04       		.byte	0x4
+ 293 0087 07       		.byte	0x7
+ 294 0088 41020000 		.4byte	.LASF11
+ 295 008c 03       		.uleb128 0x3
+ 296 008d F1020000 		.4byte	.LASF12
+ 297 0091 03       		.byte	0x3
+ 298 0092 18       		.byte	0x18
+ 299 0093 2C000000 		.4byte	0x2c
+ 300 0097 03       		.uleb128 0x3
+ 301 0098 4E020000 		.4byte	.LASF13
+ 302 009c 03       		.byte	0x3
+ 303 009d 24       		.byte	0x24
+ 304 009e 45000000 		.4byte	0x45
+ 305 00a2 03       		.uleb128 0x3
+ 306 00a3 85020000 		.4byte	.LASF14
+ 307 00a7 03       		.byte	0x3
+ 308 00a8 2C       		.byte	0x2c
+ 309 00a9 57000000 		.4byte	0x57
+ 310 00ad 05       		.uleb128 0x5
+ 311 00ae CA000000 		.4byte	.LASF15
+ 312 00b2 04       		.byte	0x4
+ 313 00b3 E901     		.2byte	0x1e9
+ 314 00b5 37000000 		.4byte	0x37
+ 315 00b9 05       		.uleb128 0x5
+ 316 00ba 8E000000 		.4byte	.LASF16
+ 317 00be 04       		.byte	0x4
+ 318 00bf EA01     		.2byte	0x1ea
+ 319 00c1 50000000 		.4byte	0x50
+ 320 00c5 05       		.uleb128 0x5
+ 321 00c6 B6000000 		.4byte	.LASF17
+ 322 00ca 04       		.byte	0x4
+ 323 00cb ED01     		.2byte	0x1ed
+ 324 00cd 3E000000 		.4byte	0x3e
+ 325 00d1 05       		.uleb128 0x5
+ 326 00d2 11000000 		.4byte	.LASF18
+ 327 00d6 04       		.byte	0x4
+ 328 00d7 EF01     		.2byte	0x1ef
+ 329 00d9 DD000000 		.4byte	0xdd
+ 330 00dd 02       		.uleb128 0x2
+ 331 00de 04       		.byte	0x4
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 9
 
 
- 332 00e4 02       		.uleb128 0x2
- 333 00e5 08       		.byte	0x8
- 334 00e6 04       		.byte	0x4
- 335 00e7 54020000 		.4byte	.LASF20
- 336 00eb 02       		.uleb128 0x2
- 337 00ec 01       		.byte	0x1
- 338 00ed 08       		.byte	0x8
- 339 00ee 2C030000 		.4byte	.LASF21
- 340 00f2 02       		.uleb128 0x2
- 341 00f3 08       		.byte	0x8
- 342 00f4 04       		.byte	0x4
- 343 00f5 8B030000 		.4byte	.LASF22
- 344 00f9 02       		.uleb128 0x2
- 345 00fa 04       		.byte	0x4
- 346 00fb 07       		.byte	0x7
- 347 00fc 15030000 		.4byte	.LASF23
- 348 0100 06       		.uleb128 0x6
- 349 0101 0F010000 		.4byte	.LASF27
- 350 0105 01       		.byte	0x1
- 351 0106 44       		.byte	0x44
- 352 0107 B9000000 		.4byte	0xb9
- 353 010b 00000000 		.4byte	.LFB65
- 354 010f 38000000 		.4byte	.LFE65-.LFB65
- 355 0113 01       		.uleb128 0x1
- 356 0114 9C       		.byte	0x9c
- 357 0115 7B010000 		.4byte	0x17b
- 358 0119 07       		.uleb128 0x7
- 359 011a B8020000 		.4byte	.LASF24
- 360 011e 01       		.byte	0x1
- 361 011f 44       		.byte	0x44
- 362 0120 B9000000 		.4byte	0xb9
- 363 0124 00000000 		.4byte	.LLST0
- 364 0128 08       		.uleb128 0x8
- 365 0129 656E6400 		.ascii	"end\000"
- 366 012d 01       		.byte	0x1
- 367 012e 44       		.byte	0x44
- 368 012f B9000000 		.4byte	0xb9
- 369 0133 01       		.uleb128 0x1
- 370 0134 51       		.byte	0x51
- 371 0135 07       		.uleb128 0x7
- 372 0136 63030000 		.4byte	.LASF25
- 373 013a 01       		.byte	0x1
- 374 013b 44       		.byte	0x44
- 375 013c B9000000 		.4byte	0xb9
- 376 0140 21000000 		.4byte	.LLST1
- 377 0144 09       		.uleb128 0x9
- 378 0145 08000000 		.4byte	.LBB2
- 379 0149 14000000 		.4byte	.LBE2-.LBB2
- 380 014d 61010000 		.4byte	0x161
- 381 0151 0A       		.uleb128 0xa
- 382 0152 36000000 		.4byte	.LASF26
- 383 0156 01       		.byte	0x1
- 384 0157 46       		.byte	0x46
- 385 0158 B9000000 		.4byte	0xb9
- 386 015c 4A000000 		.4byte	.LLST2
- 387 0160 00       		.byte	0
- 388 0161 0B       		.uleb128 0xb
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 10
+ 332 00df 04       		.byte	0x4
+ 333 00e0 DF000000 		.4byte	.LASF19
+ 334 00e4 02       		.uleb128 0x2
+ 335 00e5 08       		.byte	0x8
+ 336 00e6 04       		.byte	0x4
+ 337 00e7 C9020000 		.4byte	.LASF20
+ 338 00eb 02       		.uleb128 0x2
+ 339 00ec 01       		.byte	0x1
+ 340 00ed 08       		.byte	0x8
+ 341 00ee 76020000 		.4byte	.LASF21
+ 342 00f2 02       		.uleb128 0x2
+ 343 00f3 08       		.byte	0x8
+ 344 00f4 04       		.byte	0x4
+ 345 00f5 D4010000 		.4byte	.LASF22
+ 346 00f9 02       		.uleb128 0x2
+ 347 00fa 04       		.byte	0x4
+ 348 00fb 07       		.byte	0x7
+ 349 00fc 22030000 		.4byte	.LASF23
+ 350 0100 06       		.uleb128 0x6
+ 351 0101 39010000 		.4byte	.LASF27
+ 352 0105 01       		.byte	0x1
+ 353 0106 44       		.byte	0x44
+ 354 0107 B9000000 		.4byte	0xb9
+ 355 010b 00000000 		.4byte	.LFB65
+ 356 010f 38000000 		.4byte	.LFE65-.LFB65
+ 357 0113 01       		.uleb128 0x1
+ 358 0114 9C       		.byte	0x9c
+ 359 0115 7B010000 		.4byte	0x17b
+ 360 0119 07       		.uleb128 0x7
+ 361 011a 5D020000 		.4byte	.LASF24
+ 362 011e 01       		.byte	0x1
+ 363 011f 44       		.byte	0x44
+ 364 0120 B9000000 		.4byte	0xb9
+ 365 0124 00000000 		.4byte	.LLST0
+ 366 0128 08       		.uleb128 0x8
+ 367 0129 656E6400 		.ascii	"end\000"
+ 368 012d 01       		.byte	0x1
+ 369 012e 44       		.byte	0x44
+ 370 012f B9000000 		.4byte	0xb9
+ 371 0133 01       		.uleb128 0x1
+ 372 0134 51       		.byte	0x51
+ 373 0135 07       		.uleb128 0x7
+ 374 0136 19000000 		.4byte	.LASF25
+ 375 013a 01       		.byte	0x1
+ 376 013b 44       		.byte	0x44
+ 377 013c B9000000 		.4byte	0xb9
+ 378 0140 21000000 		.4byte	.LLST1
+ 379 0144 09       		.uleb128 0x9
+ 380 0145 08000000 		.4byte	.LBB2
+ 381 0149 14000000 		.4byte	.LBE2-.LBB2
+ 382 014d 61010000 		.4byte	0x161
+ 383 0151 0A       		.uleb128 0xa
+ 384 0152 88000000 		.4byte	.LASF26
+ 385 0156 01       		.byte	0x1
+ 386 0157 46       		.byte	0x46
+ 387 0158 B9000000 		.4byte	0xb9
+ 388 015c 4A000000 		.4byte	.LLST2
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 10
 
 
- 389 0162 1C000000 		.4byte	.LBB3
- 390 0166 12000000 		.4byte	.LBE3-.LBB3
- 391 016a 0A       		.uleb128 0xa
- 392 016b 36000000 		.4byte	.LASF26
- 393 016f 01       		.byte	0x1
- 394 0170 4C       		.byte	0x4c
- 395 0171 B9000000 		.4byte	0xb9
- 396 0175 68000000 		.4byte	.LLST3
- 397 0179 00       		.byte	0
- 398 017a 00       		.byte	0
- 399 017b 06       		.uleb128 0x6
- 400 017c F1000000 		.4byte	.LASF28
- 401 0180 01       		.byte	0x1
- 402 0181 20       		.byte	0x20
- 403 0182 B9000000 		.4byte	0xb9
- 404 0186 00000000 		.4byte	.LFB64
- 405 018a 28000000 		.4byte	.LFE64-.LFB64
- 406 018e 01       		.uleb128 0x1
- 407 018f 9C       		.byte	0x9c
- 408 0190 F7010000 		.4byte	0x1f7
- 409 0194 07       		.uleb128 0x7
- 410 0195 61010000 		.4byte	.LASF29
- 411 0199 01       		.byte	0x1
- 412 019a 20       		.byte	0x20
- 413 019b B9000000 		.4byte	0xb9
- 414 019f 86000000 		.4byte	.LLST4
- 415 01a3 07       		.uleb128 0x7
- 416 01a4 5A000000 		.4byte	.LASF30
- 417 01a8 01       		.byte	0x1
- 418 01a9 20       		.byte	0x20
- 419 01aa B9000000 		.4byte	0xb9
- 420 01ae A7000000 		.4byte	.LLST5
- 421 01b2 0A       		.uleb128 0xa
- 422 01b3 33010000 		.4byte	.LASF31
- 423 01b7 01       		.byte	0x1
- 424 01b8 21       		.byte	0x21
- 425 01b9 B9000000 		.4byte	0xb9
- 426 01bd C8000000 		.4byte	.LLST6
- 427 01c1 0C       		.uleb128 0xc
- 428 01c2 0C000000 		.4byte	.LVL14
- 429 01c6 00010000 		.4byte	0x100
- 430 01ca E0010000 		.4byte	0x1e0
- 431 01ce 0D       		.uleb128 0xd
- 432 01cf 01       		.uleb128 0x1
- 433 01d0 50       		.byte	0x50
- 434 01d1 02       		.uleb128 0x2
- 435 01d2 74       		.byte	0x74
- 436 01d3 00       		.sleb128 0
- 437 01d4 0D       		.uleb128 0xd
- 438 01d5 01       		.uleb128 0x1
- 439 01d6 51       		.byte	0x51
- 440 01d7 02       		.uleb128 0x2
- 441 01d8 75       		.byte	0x75
- 442 01d9 00       		.sleb128 0
- 443 01da 0D       		.uleb128 0xd
- 444 01db 01       		.uleb128 0x1
- 445 01dc 52       		.byte	0x52
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 11
+ 389 0160 00       		.byte	0
+ 390 0161 0B       		.uleb128 0xb
+ 391 0162 1C000000 		.4byte	.LBB3
+ 392 0166 12000000 		.4byte	.LBE3-.LBB3
+ 393 016a 0A       		.uleb128 0xa
+ 394 016b 88000000 		.4byte	.LASF26
+ 395 016f 01       		.byte	0x1
+ 396 0170 4C       		.byte	0x4c
+ 397 0171 B9000000 		.4byte	0xb9
+ 398 0175 68000000 		.4byte	.LLST3
+ 399 0179 00       		.byte	0
+ 400 017a 00       		.byte	0
+ 401 017b 06       		.uleb128 0x6
+ 402 017c 67000000 		.4byte	.LASF28
+ 403 0180 01       		.byte	0x1
+ 404 0181 20       		.byte	0x20
+ 405 0182 B9000000 		.4byte	0xb9
+ 406 0186 00000000 		.4byte	.LFB64
+ 407 018a 28000000 		.4byte	.LFE64-.LFB64
+ 408 018e 01       		.uleb128 0x1
+ 409 018f 9C       		.byte	0x9c
+ 410 0190 F7010000 		.4byte	0x1f7
+ 411 0194 07       		.uleb128 0x7
+ 412 0195 AA000000 		.4byte	.LASF29
+ 413 0199 01       		.byte	0x1
+ 414 019a 20       		.byte	0x20
+ 415 019b B9000000 		.4byte	0xb9
+ 416 019f 86000000 		.4byte	.LLST4
+ 417 01a3 07       		.uleb128 0x7
+ 418 01a4 E5000000 		.4byte	.LASF30
+ 419 01a8 01       		.byte	0x1
+ 420 01a9 20       		.byte	0x20
+ 421 01aa B9000000 		.4byte	0xb9
+ 422 01ae A7000000 		.4byte	.LLST5
+ 423 01b2 0A       		.uleb128 0xa
+ 424 01b3 E0010000 		.4byte	.LASF31
+ 425 01b7 01       		.byte	0x1
+ 426 01b8 21       		.byte	0x21
+ 427 01b9 B9000000 		.4byte	0xb9
+ 428 01bd C8000000 		.4byte	.LLST6
+ 429 01c1 0C       		.uleb128 0xc
+ 430 01c2 0C000000 		.4byte	.LVL14
+ 431 01c6 00010000 		.4byte	0x100
+ 432 01ca E0010000 		.4byte	0x1e0
+ 433 01ce 0D       		.uleb128 0xd
+ 434 01cf 01       		.uleb128 0x1
+ 435 01d0 50       		.byte	0x50
+ 436 01d1 02       		.uleb128 0x2
+ 437 01d2 74       		.byte	0x74
+ 438 01d3 00       		.sleb128 0
+ 439 01d4 0D       		.uleb128 0xd
+ 440 01d5 01       		.uleb128 0x1
+ 441 01d6 51       		.byte	0x51
+ 442 01d7 02       		.uleb128 0x2
+ 443 01d8 75       		.byte	0x75
+ 444 01d9 00       		.sleb128 0
+ 445 01da 0D       		.uleb128 0xd
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 11
 
 
- 446 01dd 01       		.uleb128 0x1
- 447 01de 30       		.byte	0x30
- 448 01df 00       		.byte	0
- 449 01e0 0E       		.uleb128 0xe
- 450 01e1 18000000 		.4byte	.LVL16
- 451 01e5 00010000 		.4byte	0x100
- 452 01e9 0D       		.uleb128 0xd
- 453 01ea 01       		.uleb128 0x1
- 454 01eb 50       		.byte	0x50
- 455 01ec 02       		.uleb128 0x2
- 456 01ed 75       		.byte	0x75
- 457 01ee 00       		.sleb128 0
- 458 01ef 0D       		.uleb128 0xd
- 459 01f0 01       		.uleb128 0x1
- 460 01f1 51       		.byte	0x51
- 461 01f2 02       		.uleb128 0x2
- 462 01f3 74       		.byte	0x74
- 463 01f4 00       		.sleb128 0
- 464 01f5 00       		.byte	0
- 465 01f6 00       		.byte	0
- 466 01f7 0F       		.uleb128 0xf
- 467 01f8 55030000 		.4byte	.LASF60
- 468 01fc 01       		.byte	0x1
- 469 01fd 66       		.byte	0x66
- 470 01fe 00000000 		.4byte	.LFB66
- 471 0202 28000000 		.4byte	.LFE66-.LFB66
- 472 0206 01       		.uleb128 0x1
- 473 0207 9C       		.byte	0x9c
- 474 0208 36020000 		.4byte	0x236
- 475 020c 10       		.uleb128 0x10
- 476 020d 11020000 		.4byte	.LASF32
- 477 0211 01       		.byte	0x1
- 478 0212 66       		.byte	0x66
- 479 0213 B9000000 		.4byte	0xb9
- 480 0217 01       		.uleb128 0x1
- 481 0218 50       		.byte	0x50
- 482 0219 10       		.uleb128 0x10
- 483 021a B8030000 		.4byte	.LASF33
- 484 021e 01       		.byte	0x1
- 485 021f 66       		.byte	0x66
- 486 0220 B9000000 		.4byte	0xb9
- 487 0224 01       		.uleb128 0x1
- 488 0225 51       		.byte	0x51
- 489 0226 0A       		.uleb128 0xa
- 490 0227 33010000 		.4byte	.LASF31
- 491 022b 01       		.byte	0x1
- 492 022c 67       		.byte	0x67
- 493 022d 7E000000 		.4byte	0x7e
- 494 0231 F2000000 		.4byte	.LLST7
- 495 0235 00       		.byte	0
- 496 0236 11       		.uleb128 0x11
- 497 0237 5B020000 		.4byte	.LASF34
- 498 023b 05       		.byte	0x5
- 499 023c 1207     		.2byte	0x712
- 500 023e 42020000 		.4byte	0x242
- 501 0242 12       		.uleb128 0x12
- 502 0243 A2000000 		.4byte	0xa2
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 12
+ 446 01db 01       		.uleb128 0x1
+ 447 01dc 52       		.byte	0x52
+ 448 01dd 01       		.uleb128 0x1
+ 449 01de 30       		.byte	0x30
+ 450 01df 00       		.byte	0
+ 451 01e0 0E       		.uleb128 0xe
+ 452 01e1 18000000 		.4byte	.LVL16
+ 453 01e5 00010000 		.4byte	0x100
+ 454 01e9 0D       		.uleb128 0xd
+ 455 01ea 01       		.uleb128 0x1
+ 456 01eb 50       		.byte	0x50
+ 457 01ec 02       		.uleb128 0x2
+ 458 01ed 75       		.byte	0x75
+ 459 01ee 00       		.sleb128 0
+ 460 01ef 0D       		.uleb128 0xd
+ 461 01f0 01       		.uleb128 0x1
+ 462 01f1 51       		.byte	0x51
+ 463 01f2 02       		.uleb128 0x2
+ 464 01f3 74       		.byte	0x74
+ 465 01f4 00       		.sleb128 0
+ 466 01f5 00       		.byte	0
+ 467 01f6 00       		.byte	0
+ 468 01f7 0F       		.uleb128 0xf
+ 469 01f8 EF000000 		.4byte	.LASF62
+ 470 01fc 01       		.byte	0x1
+ 471 01fd 66       		.byte	0x66
+ 472 01fe 00000000 		.4byte	.LFB66
+ 473 0202 28000000 		.4byte	.LFE66-.LFB66
+ 474 0206 01       		.uleb128 0x1
+ 475 0207 9C       		.byte	0x9c
+ 476 0208 36020000 		.4byte	0x236
+ 477 020c 10       		.uleb128 0x10
+ 478 020d D1030000 		.4byte	.LASF32
+ 479 0211 01       		.byte	0x1
+ 480 0212 66       		.byte	0x66
+ 481 0213 B9000000 		.4byte	0xb9
+ 482 0217 01       		.uleb128 0x1
+ 483 0218 50       		.byte	0x50
+ 484 0219 10       		.uleb128 0x10
+ 485 021a 57020000 		.4byte	.LASF33
+ 486 021e 01       		.byte	0x1
+ 487 021f 66       		.byte	0x66
+ 488 0220 B9000000 		.4byte	0xb9
+ 489 0224 01       		.uleb128 0x1
+ 490 0225 51       		.byte	0x51
+ 491 0226 0A       		.uleb128 0xa
+ 492 0227 E0010000 		.4byte	.LASF31
+ 493 022b 01       		.byte	0x1
+ 494 022c 67       		.byte	0x67
+ 495 022d 7E000000 		.4byte	0x7e
+ 496 0231 F2000000 		.4byte	.LLST7
+ 497 0235 00       		.byte	0
+ 498 0236 11       		.uleb128 0x11
+ 499 0237 36030000 		.4byte	.LASF34
+ 500 023b 05       		.byte	0x5
+ 501 023c 1207     		.2byte	0x712
+ 502 023e 42020000 		.4byte	0x242
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 12
 
 
- 503 0247 13       		.uleb128 0x13
- 504 0248 B9000000 		.4byte	0xb9
- 505 024c 58020000 		.4byte	0x258
- 506 0250 14       		.uleb128 0x14
- 507 0251 F9000000 		.4byte	0xf9
- 508 0255 8713     		.2byte	0x1387
- 509 0257 00       		.byte	0
- 510 0258 15       		.uleb128 0x15
- 511 0259 FB010000 		.4byte	.LASF35
- 512 025d 06       		.byte	0x6
- 513 025e 46       		.byte	0x46
- 514 025f 47020000 		.4byte	0x247
- 515 0263 05       		.uleb128 0x5
- 516 0264 03       		.byte	0x3
- 517 0265 00000000 		.4byte	waveform_CV_lut
- 518 0269 13       		.uleb128 0x13
- 519 026a B9000000 		.4byte	0xb9
- 520 026e 7A020000 		.4byte	0x27a
- 521 0272 14       		.uleb128 0x14
- 522 0273 F9000000 		.4byte	0xf9
- 523 0277 CF07     		.2byte	0x7cf
- 524 0279 00       		.byte	0
- 525 027a 15       		.uleb128 0x15
- 526 027b EC020000 		.4byte	.LASF36
- 527 027f 06       		.byte	0x6
- 528 0280 47       		.byte	0x47
- 529 0281 69020000 		.4byte	0x269
- 530 0285 05       		.uleb128 0x5
- 531 0286 03       		.byte	0x3
- 532 0287 00000000 		.4byte	waveform_amp_lut
- 533 028b 15       		.uleb128 0x15
- 534 028c 4F000000 		.4byte	.LASF37
- 535 0290 06       		.byte	0x6
- 536 0291 1E       		.byte	0x1e
- 537 0292 AD000000 		.4byte	0xad
- 538 0296 05       		.uleb128 0x5
- 539 0297 03       		.byte	0x3
- 540 0298 00000000 		.4byte	Input_Flag
- 541 029c 15       		.uleb128 0x15
- 542 029d 8B000000 		.4byte	.LASF38
- 543 02a1 06       		.byte	0x6
- 544 02a2 1F       		.byte	0x1f
- 545 02a3 AD000000 		.4byte	0xad
- 546 02a7 05       		.uleb128 0x5
- 547 02a8 03       		.byte	0x3
- 548 02a9 00000000 		.4byte	Command_ready_Flag
- 549 02ad 15       		.uleb128 0x15
- 550 02ae 39020000 		.4byte	.LASF39
- 551 02b2 06       		.byte	0x6
- 552 02b3 20       		.byte	0x20
- 553 02b4 8C000000 		.4byte	0x8c
- 554 02b8 05       		.uleb128 0x5
- 555 02b9 03       		.byte	0x3
- 556 02ba 00000000 		.4byte	TIA_Calibration_ended_Flag
- 557 02be 15       		.uleb128 0x15
- 558 02bf 6C000000 		.4byte	.LASF40
- 559 02c3 06       		.byte	0x6
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 13
+ 503 0242 12       		.uleb128 0x12
+ 504 0243 A2000000 		.4byte	0xa2
+ 505 0247 13       		.uleb128 0x13
+ 506 0248 B9000000 		.4byte	0xb9
+ 507 024c 58020000 		.4byte	0x258
+ 508 0250 14       		.uleb128 0x14
+ 509 0251 F9000000 		.4byte	0xf9
+ 510 0255 8713     		.2byte	0x1387
+ 511 0257 00       		.byte	0
+ 512 0258 15       		.uleb128 0x15
+ 513 0259 F9010000 		.4byte	.LASF35
+ 514 025d 06       		.byte	0x6
+ 515 025e 48       		.byte	0x48
+ 516 025f 47020000 		.4byte	0x247
+ 517 0263 05       		.uleb128 0x5
+ 518 0264 03       		.byte	0x3
+ 519 0265 00000000 		.4byte	waveform_CV_lut
+ 520 0269 13       		.uleb128 0x13
+ 521 026a B9000000 		.4byte	0xb9
+ 522 026e 7A020000 		.4byte	0x27a
+ 523 0272 14       		.uleb128 0x14
+ 524 0273 F9000000 		.4byte	0xf9
+ 525 0277 CF07     		.2byte	0x7cf
+ 526 0279 00       		.byte	0
+ 527 027a 15       		.uleb128 0x15
+ 528 027b 47010000 		.4byte	.LASF36
+ 529 027f 06       		.byte	0x6
+ 530 0280 49       		.byte	0x49
+ 531 0281 69020000 		.4byte	0x269
+ 532 0285 05       		.uleb128 0x5
+ 533 0286 03       		.byte	0x3
+ 534 0287 00000000 		.4byte	waveform_amp_lut
+ 535 028b 15       		.uleb128 0x15
+ 536 028c D6030000 		.4byte	.LASF37
+ 537 0290 06       		.byte	0x6
+ 538 0291 1F       		.byte	0x1f
+ 539 0292 AD000000 		.4byte	0xad
+ 540 0296 05       		.uleb128 0x5
+ 541 0297 03       		.byte	0x3
+ 542 0298 00000000 		.4byte	Input_Flag
+ 543 029c 15       		.uleb128 0x15
+ 544 029d 0F030000 		.4byte	.LASF38
+ 545 02a1 06       		.byte	0x6
+ 546 02a2 20       		.byte	0x20
+ 547 02a3 AD000000 		.4byte	0xad
+ 548 02a7 05       		.uleb128 0x5
+ 549 02a8 03       		.byte	0x3
+ 550 02a9 00000000 		.4byte	Command_ready_Flag
+ 551 02ad 15       		.uleb128 0x15
+ 552 02ae 0B010000 		.4byte	.LASF39
+ 553 02b2 06       		.byte	0x6
+ 554 02b3 21       		.byte	0x21
+ 555 02b4 8C000000 		.4byte	0x8c
+ 556 02b8 05       		.uleb128 0x5
+ 557 02b9 03       		.byte	0x3
+ 558 02ba 00000000 		.4byte	TIA_Calibration_ended_Flag
+ 559 02be 15       		.uleb128 0x15
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 13
 
 
- 560 02c4 21       		.byte	0x21
- 561 02c5 8C000000 		.4byte	0x8c
- 562 02c9 05       		.uleb128 0x5
- 563 02ca 03       		.byte	0x3
- 564 02cb 00000000 		.4byte	CV_ready_Flag
- 565 02cf 15       		.uleb128 0x15
- 566 02d0 BE020000 		.4byte	.LASF41
- 567 02d4 06       		.byte	0x6
- 568 02d5 22       		.byte	0x22
- 569 02d6 8C000000 		.4byte	0x8c
- 570 02da 05       		.uleb128 0x5
- 571 02db 03       		.byte	0x3
- 572 02dc 00000000 		.4byte	AMP_ready_Flag
- 573 02e0 15       		.uleb128 0x15
- 574 02e1 9A020000 		.4byte	.LASF42
- 575 02e5 06       		.byte	0x6
- 576 02e6 23       		.byte	0x23
- 577 02e7 8C000000 		.4byte	0x8c
- 578 02eb 05       		.uleb128 0x5
- 579 02ec 03       		.byte	0x3
- 580 02ed 00000000 		.4byte	Load_EEPROM_Flag
- 581 02f1 15       		.uleb128 0x15
- 582 02f2 21000000 		.4byte	.LASF43
- 583 02f6 06       		.byte	0x6
- 584 02f7 24       		.byte	0x24
- 585 02f8 8C000000 		.4byte	0x8c
- 586 02fc 05       		.uleb128 0x5
- 587 02fd 03       		.byte	0x3
- 588 02fe 00000000 		.4byte	Update_scanrate_Flag
- 589 0302 15       		.uleb128 0x15
- 590 0303 74030000 		.4byte	.LASF44
- 591 0307 06       		.byte	0x6
- 592 0308 25       		.byte	0x25
- 593 0309 8C000000 		.4byte	0x8c
- 594 030d 05       		.uleb128 0x5
- 595 030e 03       		.byte	0x3
- 596 030f 00000000 		.4byte	Update_startvalue_Flag
- 597 0313 15       		.uleb128 0x15
- 598 0314 A3030000 		.4byte	.LASF45
- 599 0318 06       		.byte	0x6
- 600 0319 26       		.byte	0x26
- 601 031a 8C000000 		.4byte	0x8c
- 602 031e 05       		.uleb128 0x5
- 603 031f 03       		.byte	0x3
- 604 0320 00000000 		.4byte	Update_endvalue_Flag
- 605 0324 15       		.uleb128 0x15
- 606 0325 7A000000 		.4byte	.LASF46
- 607 0329 06       		.byte	0x6
- 608 032a 41       		.byte	0x41
- 609 032b B9000000 		.4byte	0xb9
- 610 032f 05       		.uleb128 0x5
- 611 0330 03       		.byte	0x3
- 612 0331 00000000 		.4byte	dac_ground_value
- 613 0335 15       		.uleb128 0x15
- 614 0336 00000000 		.4byte	.LASF47
- 615 033a 06       		.byte	0x6
- 616 033b 45       		.byte	0x45
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 14
+ 560 02bf BC000000 		.4byte	.LASF40
+ 561 02c3 06       		.byte	0x6
+ 562 02c4 22       		.byte	0x22
+ 563 02c5 8C000000 		.4byte	0x8c
+ 564 02c9 05       		.uleb128 0x5
+ 565 02ca 03       		.byte	0x3
+ 566 02cb 00000000 		.4byte	CV_ready_Flag
+ 567 02cf 15       		.uleb128 0x15
+ 568 02d0 97020000 		.4byte	.LASF41
+ 569 02d4 06       		.byte	0x6
+ 570 02d5 23       		.byte	0x23
+ 571 02d6 8C000000 		.4byte	0x8c
+ 572 02da 05       		.uleb128 0x5
+ 573 02db 03       		.byte	0x3
+ 574 02dc 00000000 		.4byte	AMP_ready_Flag
+ 575 02e0 15       		.uleb128 0x15
+ 576 02e1 B8020000 		.4byte	.LASF42
+ 577 02e5 06       		.byte	0x6
+ 578 02e6 24       		.byte	0x24
+ 579 02e7 8C000000 		.4byte	0x8c
+ 580 02eb 05       		.uleb128 0x5
+ 581 02ec 03       		.byte	0x3
+ 582 02ed 00000000 		.4byte	Load_EEPROM_Flag
+ 583 02f1 15       		.uleb128 0x15
+ 584 02f2 95000000 		.4byte	.LASF43
+ 585 02f6 06       		.byte	0x6
+ 586 02f7 25       		.byte	0x25
+ 587 02f8 8C000000 		.4byte	0x8c
+ 588 02fc 05       		.uleb128 0x5
+ 589 02fd 03       		.byte	0x3
+ 590 02fe 00000000 		.4byte	Update_scanrate_Flag
+ 591 0302 15       		.uleb128 0x15
+ 592 0303 D0020000 		.4byte	.LASF44
+ 593 0307 06       		.byte	0x6
+ 594 0308 26       		.byte	0x26
+ 595 0309 8C000000 		.4byte	0x8c
+ 596 030d 05       		.uleb128 0x5
+ 597 030e 03       		.byte	0x3
+ 598 030f 00000000 		.4byte	Update_startvalue_Flag
+ 599 0313 15       		.uleb128 0x15
+ 600 0314 09020000 		.4byte	.LASF45
+ 601 0318 06       		.byte	0x6
+ 602 0319 27       		.byte	0x27
+ 603 031a 8C000000 		.4byte	0x8c
+ 604 031e 05       		.uleb128 0x5
+ 605 031f 03       		.byte	0x3
+ 606 0320 00000000 		.4byte	Update_endvalue_Flag
+ 607 0324 15       		.uleb128 0x15
+ 608 0325 F9020000 		.4byte	.LASF46
+ 609 0329 06       		.byte	0x6
+ 610 032a 28       		.byte	0x28
+ 611 032b 8C000000 		.4byte	0x8c
+ 612 032f 05       		.uleb128 0x5
+ 613 0330 03       		.byte	0x3
+ 614 0331 00000000 		.4byte	Update_timevalue_Flag
+ 615 0335 15       		.uleb128 0x15
+ 616 0336 56000000 		.4byte	.LASF47
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 14
 
 
- 617 033c B9000000 		.4byte	0xb9
- 618 0340 05       		.uleb128 0x5
- 619 0341 03       		.byte	0x3
- 620 0342 00000000 		.4byte	lut_value
- 621 0346 15       		.uleb128 0x15
- 622 0347 03030000 		.4byte	.LASF48
- 623 034b 06       		.byte	0x6
- 624 034c 48       		.byte	0x48
- 625 034d B9000000 		.4byte	0xb9
- 626 0351 05       		.uleb128 0x5
- 627 0352 03       		.byte	0x3
- 628 0353 00000000 		.4byte	lut_index
- 629 0357 15       		.uleb128 0x15
- 630 0358 69030000 		.4byte	.LASF49
- 631 035c 06       		.byte	0x6
- 632 035d 49       		.byte	0x49
- 633 035e 97000000 		.4byte	0x97
- 634 0362 05       		.uleb128 0x5
- 635 0363 03       		.byte	0x3
- 636 0364 00000000 		.4byte	lut_length
- 637 0368 15       		.uleb128 0x15
- 638 0369 0A000000 		.4byte	.LASF50
- 639 036d 06       		.byte	0x6
- 640 036e 4A       		.byte	0x4a
- 641 036f 47020000 		.4byte	0x247
- 642 0373 05       		.uleb128 0x5
- 643 0374 03       		.byte	0x3
- 644 0375 00000000 		.4byte	ADC_CV_array
- 645 0379 15       		.uleb128 0x15
- 646 037a 31030000 		.4byte	.LASF51
- 647 037e 06       		.byte	0x6
- 648 037f 4B       		.byte	0x4b
- 649 0380 D1000000 		.4byte	0xd1
- 650 0384 05       		.uleb128 0x5
- 651 0385 03       		.byte	0x3
- 652 0386 00000000 		.4byte	uA_per_adc_count
- 653 038a 15       		.uleb128 0x15
- 654 038b BE030000 		.4byte	.LASF52
- 655 038f 06       		.byte	0x6
- 656 0390 4E       		.byte	0x4e
- 657 0391 B9000000 		.4byte	0xb9
- 658 0395 05       		.uleb128 0x5
- 659 0396 03       		.byte	0x3
- 660 0397 00000000 		.4byte	start_dac_value
- 661 039b 15       		.uleb128 0x15
- 662 039c 44010000 		.4byte	.LASF53
- 663 03a0 06       		.byte	0x6
- 664 03a1 4F       		.byte	0x4f
- 665 03a2 B9000000 		.4byte	0xb9
- 666 03a6 05       		.uleb128 0x5
- 667 03a7 03       		.byte	0x3
- 668 03a8 00000000 		.4byte	end_dac_value
- 669 03ac 15       		.uleb128 0x15
- 670 03ad 1D010000 		.4byte	.LASF54
- 671 03b1 06       		.byte	0x6
- 672 03b2 50       		.byte	0x50
- 673 03b3 C5000000 		.4byte	0xc5
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 15
+ 617 033a 06       		.byte	0x6
+ 618 033b 43       		.byte	0x43
+ 619 033c B9000000 		.4byte	0xb9
+ 620 0340 05       		.uleb128 0x5
+ 621 0341 03       		.byte	0x3
+ 622 0342 00000000 		.4byte	dac_ground_value
+ 623 0346 15       		.uleb128 0x15
+ 624 0347 7B020000 		.4byte	.LASF48
+ 625 034b 06       		.byte	0x6
+ 626 034c 47       		.byte	0x47
+ 627 034d B9000000 		.4byte	0xb9
+ 628 0351 05       		.uleb128 0x5
+ 629 0352 03       		.byte	0x3
+ 630 0353 00000000 		.4byte	lut_value
+ 631 0357 15       		.uleb128 0x15
+ 632 0358 8D020000 		.4byte	.LASF49
+ 633 035c 06       		.byte	0x6
+ 634 035d 4A       		.byte	0x4a
+ 635 035e B9000000 		.4byte	0xb9
+ 636 0362 05       		.uleb128 0x5
+ 637 0363 03       		.byte	0x3
+ 638 0364 00000000 		.4byte	lut_index
+ 639 0368 15       		.uleb128 0x15
+ 640 0369 2B030000 		.4byte	.LASF50
+ 641 036d 06       		.byte	0x6
+ 642 036e 4B       		.byte	0x4b
+ 643 036f 97000000 		.4byte	0x97
+ 644 0373 05       		.uleb128 0x5
+ 645 0374 03       		.byte	0x3
+ 646 0375 00000000 		.4byte	lut_length
+ 647 0379 15       		.uleb128 0x15
+ 648 037a 1F000000 		.4byte	.LASF51
+ 649 037e 06       		.byte	0x6
+ 650 037f 4C       		.byte	0x4c
+ 651 0380 47020000 		.4byte	0x247
+ 652 0384 05       		.uleb128 0x5
+ 653 0385 03       		.byte	0x3
+ 654 0386 00000000 		.4byte	ADC_CV_array
+ 655 038a 15       		.uleb128 0x15
+ 656 038b 00000000 		.4byte	.LASF52
+ 657 038f 06       		.byte	0x6
+ 658 0390 4D       		.byte	0x4d
+ 659 0391 D1000000 		.4byte	0xd1
+ 660 0395 05       		.uleb128 0x5
+ 661 0396 03       		.byte	0x3
+ 662 0397 00000000 		.4byte	uA_per_adc_count
+ 663 039b 15       		.uleb128 0x15
+ 664 039c 2C000000 		.4byte	.LASF53
+ 665 03a0 06       		.byte	0x6
+ 666 03a1 50       		.byte	0x50
+ 667 03a2 B9000000 		.4byte	0xb9
+ 668 03a6 05       		.uleb128 0x5
+ 669 03a7 03       		.byte	0x3
+ 670 03a8 00000000 		.4byte	start_dac_value
+ 671 03ac 15       		.uleb128 0x15
+ 672 03ad E9030000 		.4byte	.LASF54
+ 673 03b1 06       		.byte	0x6
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 15
 
 
- 674 03b7 05       		.uleb128 0x5
- 675 03b8 03       		.byte	0x3
- 676 03b9 00000000 		.4byte	potential_max_current
- 677 03bd 13       		.uleb128 0x13
- 678 03be 8C000000 		.4byte	0x8c
- 679 03c2 CD030000 		.4byte	0x3cd
- 680 03c6 16       		.uleb128 0x16
- 681 03c7 F9000000 		.4byte	0xf9
- 682 03cb 27       		.byte	0x27
- 683 03cc 00       		.byte	0
- 684 03cd 15       		.uleb128 0x15
- 685 03ce 64000000 		.4byte	.LASF55
- 686 03d2 06       		.byte	0x6
- 687 03d3 55       		.byte	0x55
- 688 03d4 BD030000 		.4byte	0x3bd
- 689 03d8 05       		.uleb128 0x5
- 690 03d9 03       		.byte	0x3
- 691 03da 00000000 		.4byte	command
- 692 03de 15       		.uleb128 0x15
- 693 03df 52010000 		.4byte	.LASF56
- 694 03e3 06       		.byte	0x6
- 695 03e4 56       		.byte	0x56
- 696 03e5 8C000000 		.4byte	0x8c
- 697 03e9 05       		.uleb128 0x5
- 698 03ea 03       		.byte	0x3
- 699 03eb 00000000 		.4byte	command_lenght
- 700 03ef 00       		.byte	0
- 701              		.section	.debug_abbrev,"",%progbits
- 702              	.Ldebug_abbrev0:
- 703 0000 01       		.uleb128 0x1
- 704 0001 11       		.uleb128 0x11
- 705 0002 01       		.byte	0x1
- 706 0003 25       		.uleb128 0x25
- 707 0004 0E       		.uleb128 0xe
- 708 0005 13       		.uleb128 0x13
- 709 0006 0B       		.uleb128 0xb
- 710 0007 03       		.uleb128 0x3
- 711 0008 0E       		.uleb128 0xe
- 712 0009 1B       		.uleb128 0x1b
- 713 000a 0E       		.uleb128 0xe
- 714 000b 55       		.uleb128 0x55
- 715 000c 17       		.uleb128 0x17
- 716 000d 11       		.uleb128 0x11
- 717 000e 01       		.uleb128 0x1
- 718 000f 10       		.uleb128 0x10
- 719 0010 17       		.uleb128 0x17
- 720 0011 00       		.byte	0
- 721 0012 00       		.byte	0
- 722 0013 02       		.uleb128 0x2
- 723 0014 24       		.uleb128 0x24
- 724 0015 00       		.byte	0
- 725 0016 0B       		.uleb128 0xb
- 726 0017 0B       		.uleb128 0xb
- 727 0018 3E       		.uleb128 0x3e
- 728 0019 0B       		.uleb128 0xb
- 729 001a 03       		.uleb128 0x3
- 730 001b 0E       		.uleb128 0xe
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 16
+ 674 03b2 51       		.byte	0x51
+ 675 03b3 B9000000 		.4byte	0xb9
+ 676 03b7 05       		.uleb128 0x5
+ 677 03b8 03       		.byte	0x3
+ 678 03b9 00000000 		.4byte	end_dac_value
+ 679 03bd 15       		.uleb128 0x15
+ 680 03be 58010000 		.4byte	.LASF55
+ 681 03c2 06       		.byte	0x6
+ 682 03c3 52       		.byte	0x52
+ 683 03c4 C5000000 		.4byte	0xc5
+ 684 03c8 05       		.uleb128 0x5
+ 685 03c9 03       		.byte	0x3
+ 686 03ca 00000000 		.4byte	potential_max_current
+ 687 03ce 15       		.uleb128 0x15
+ 688 03cf C1010000 		.4byte	.LASF56
+ 689 03d3 06       		.byte	0x6
+ 690 03d4 53       		.byte	0x53
+ 691 03d5 B9000000 		.4byte	0xb9
+ 692 03d9 05       		.uleb128 0x5
+ 693 03da 03       		.byte	0x3
+ 694 03db 00000000 		.4byte	selected_scan_rate
+ 695 03df 13       		.uleb128 0x13
+ 696 03e0 8C000000 		.4byte	0x8c
+ 697 03e4 EF030000 		.4byte	0x3ef
+ 698 03e8 16       		.uleb128 0x16
+ 699 03e9 F9000000 		.4byte	0xf9
+ 700 03ed 27       		.byte	0x27
+ 701 03ee 00       		.byte	0
+ 702 03ef 15       		.uleb128 0x15
+ 703 03f0 E1030000 		.4byte	.LASF57
+ 704 03f4 06       		.byte	0x6
+ 705 03f5 58       		.byte	0x58
+ 706 03f6 DF030000 		.4byte	0x3df
+ 707 03fa 05       		.uleb128 0x5
+ 708 03fb 03       		.byte	0x3
+ 709 03fc 00000000 		.4byte	command
+ 710 0400 15       		.uleb128 0x15
+ 711 0401 D0000000 		.4byte	.LASF58
+ 712 0405 06       		.byte	0x6
+ 713 0406 59       		.byte	0x59
+ 714 0407 8C000000 		.4byte	0x8c
+ 715 040b 05       		.uleb128 0x5
+ 716 040c 03       		.byte	0x3
+ 717 040d 00000000 		.4byte	command_lenght
+ 718 0411 00       		.byte	0
+ 719              		.section	.debug_abbrev,"",%progbits
+ 720              	.Ldebug_abbrev0:
+ 721 0000 01       		.uleb128 0x1
+ 722 0001 11       		.uleb128 0x11
+ 723 0002 01       		.byte	0x1
+ 724 0003 25       		.uleb128 0x25
+ 725 0004 0E       		.uleb128 0xe
+ 726 0005 13       		.uleb128 0x13
+ 727 0006 0B       		.uleb128 0xb
+ 728 0007 03       		.uleb128 0x3
+ 729 0008 0E       		.uleb128 0xe
+ 730 0009 1B       		.uleb128 0x1b
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 16
 
 
- 731 001c 00       		.byte	0
- 732 001d 00       		.byte	0
- 733 001e 03       		.uleb128 0x3
- 734 001f 16       		.uleb128 0x16
- 735 0020 00       		.byte	0
- 736 0021 03       		.uleb128 0x3
- 737 0022 0E       		.uleb128 0xe
- 738 0023 3A       		.uleb128 0x3a
- 739 0024 0B       		.uleb128 0xb
- 740 0025 3B       		.uleb128 0x3b
- 741 0026 0B       		.uleb128 0xb
- 742 0027 49       		.uleb128 0x49
- 743 0028 13       		.uleb128 0x13
- 744 0029 00       		.byte	0
- 745 002a 00       		.byte	0
- 746 002b 04       		.uleb128 0x4
- 747 002c 24       		.uleb128 0x24
- 748 002d 00       		.byte	0
- 749 002e 0B       		.uleb128 0xb
- 750 002f 0B       		.uleb128 0xb
- 751 0030 3E       		.uleb128 0x3e
- 752 0031 0B       		.uleb128 0xb
- 753 0032 03       		.uleb128 0x3
- 754 0033 08       		.uleb128 0x8
- 755 0034 00       		.byte	0
- 756 0035 00       		.byte	0
- 757 0036 05       		.uleb128 0x5
- 758 0037 16       		.uleb128 0x16
- 759 0038 00       		.byte	0
- 760 0039 03       		.uleb128 0x3
- 761 003a 0E       		.uleb128 0xe
- 762 003b 3A       		.uleb128 0x3a
- 763 003c 0B       		.uleb128 0xb
- 764 003d 3B       		.uleb128 0x3b
- 765 003e 05       		.uleb128 0x5
- 766 003f 49       		.uleb128 0x49
- 767 0040 13       		.uleb128 0x13
- 768 0041 00       		.byte	0
- 769 0042 00       		.byte	0
- 770 0043 06       		.uleb128 0x6
- 771 0044 2E       		.uleb128 0x2e
- 772 0045 01       		.byte	0x1
- 773 0046 3F       		.uleb128 0x3f
- 774 0047 19       		.uleb128 0x19
- 775 0048 03       		.uleb128 0x3
- 776 0049 0E       		.uleb128 0xe
- 777 004a 3A       		.uleb128 0x3a
- 778 004b 0B       		.uleb128 0xb
- 779 004c 3B       		.uleb128 0x3b
- 780 004d 0B       		.uleb128 0xb
- 781 004e 27       		.uleb128 0x27
- 782 004f 19       		.uleb128 0x19
- 783 0050 49       		.uleb128 0x49
- 784 0051 13       		.uleb128 0x13
- 785 0052 11       		.uleb128 0x11
- 786 0053 01       		.uleb128 0x1
- 787 0054 12       		.uleb128 0x12
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 17
+ 731 000a 0E       		.uleb128 0xe
+ 732 000b 55       		.uleb128 0x55
+ 733 000c 17       		.uleb128 0x17
+ 734 000d 11       		.uleb128 0x11
+ 735 000e 01       		.uleb128 0x1
+ 736 000f 10       		.uleb128 0x10
+ 737 0010 17       		.uleb128 0x17
+ 738 0011 00       		.byte	0
+ 739 0012 00       		.byte	0
+ 740 0013 02       		.uleb128 0x2
+ 741 0014 24       		.uleb128 0x24
+ 742 0015 00       		.byte	0
+ 743 0016 0B       		.uleb128 0xb
+ 744 0017 0B       		.uleb128 0xb
+ 745 0018 3E       		.uleb128 0x3e
+ 746 0019 0B       		.uleb128 0xb
+ 747 001a 03       		.uleb128 0x3
+ 748 001b 0E       		.uleb128 0xe
+ 749 001c 00       		.byte	0
+ 750 001d 00       		.byte	0
+ 751 001e 03       		.uleb128 0x3
+ 752 001f 16       		.uleb128 0x16
+ 753 0020 00       		.byte	0
+ 754 0021 03       		.uleb128 0x3
+ 755 0022 0E       		.uleb128 0xe
+ 756 0023 3A       		.uleb128 0x3a
+ 757 0024 0B       		.uleb128 0xb
+ 758 0025 3B       		.uleb128 0x3b
+ 759 0026 0B       		.uleb128 0xb
+ 760 0027 49       		.uleb128 0x49
+ 761 0028 13       		.uleb128 0x13
+ 762 0029 00       		.byte	0
+ 763 002a 00       		.byte	0
+ 764 002b 04       		.uleb128 0x4
+ 765 002c 24       		.uleb128 0x24
+ 766 002d 00       		.byte	0
+ 767 002e 0B       		.uleb128 0xb
+ 768 002f 0B       		.uleb128 0xb
+ 769 0030 3E       		.uleb128 0x3e
+ 770 0031 0B       		.uleb128 0xb
+ 771 0032 03       		.uleb128 0x3
+ 772 0033 08       		.uleb128 0x8
+ 773 0034 00       		.byte	0
+ 774 0035 00       		.byte	0
+ 775 0036 05       		.uleb128 0x5
+ 776 0037 16       		.uleb128 0x16
+ 777 0038 00       		.byte	0
+ 778 0039 03       		.uleb128 0x3
+ 779 003a 0E       		.uleb128 0xe
+ 780 003b 3A       		.uleb128 0x3a
+ 781 003c 0B       		.uleb128 0xb
+ 782 003d 3B       		.uleb128 0x3b
+ 783 003e 05       		.uleb128 0x5
+ 784 003f 49       		.uleb128 0x49
+ 785 0040 13       		.uleb128 0x13
+ 786 0041 00       		.byte	0
+ 787 0042 00       		.byte	0
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 17
 
 
- 788 0055 06       		.uleb128 0x6
- 789 0056 40       		.uleb128 0x40
- 790 0057 18       		.uleb128 0x18
- 791 0058 9742     		.uleb128 0x2117
- 792 005a 19       		.uleb128 0x19
- 793 005b 01       		.uleb128 0x1
- 794 005c 13       		.uleb128 0x13
- 795 005d 00       		.byte	0
- 796 005e 00       		.byte	0
- 797 005f 07       		.uleb128 0x7
- 798 0060 05       		.uleb128 0x5
- 799 0061 00       		.byte	0
- 800 0062 03       		.uleb128 0x3
- 801 0063 0E       		.uleb128 0xe
- 802 0064 3A       		.uleb128 0x3a
- 803 0065 0B       		.uleb128 0xb
- 804 0066 3B       		.uleb128 0x3b
- 805 0067 0B       		.uleb128 0xb
- 806 0068 49       		.uleb128 0x49
- 807 0069 13       		.uleb128 0x13
- 808 006a 02       		.uleb128 0x2
- 809 006b 17       		.uleb128 0x17
- 810 006c 00       		.byte	0
- 811 006d 00       		.byte	0
- 812 006e 08       		.uleb128 0x8
- 813 006f 05       		.uleb128 0x5
- 814 0070 00       		.byte	0
- 815 0071 03       		.uleb128 0x3
- 816 0072 08       		.uleb128 0x8
- 817 0073 3A       		.uleb128 0x3a
- 818 0074 0B       		.uleb128 0xb
- 819 0075 3B       		.uleb128 0x3b
- 820 0076 0B       		.uleb128 0xb
- 821 0077 49       		.uleb128 0x49
- 822 0078 13       		.uleb128 0x13
- 823 0079 02       		.uleb128 0x2
- 824 007a 18       		.uleb128 0x18
- 825 007b 00       		.byte	0
- 826 007c 00       		.byte	0
- 827 007d 09       		.uleb128 0x9
- 828 007e 0B       		.uleb128 0xb
- 829 007f 01       		.byte	0x1
- 830 0080 11       		.uleb128 0x11
- 831 0081 01       		.uleb128 0x1
- 832 0082 12       		.uleb128 0x12
- 833 0083 06       		.uleb128 0x6
- 834 0084 01       		.uleb128 0x1
- 835 0085 13       		.uleb128 0x13
- 836 0086 00       		.byte	0
- 837 0087 00       		.byte	0
- 838 0088 0A       		.uleb128 0xa
- 839 0089 34       		.uleb128 0x34
- 840 008a 00       		.byte	0
- 841 008b 03       		.uleb128 0x3
- 842 008c 0E       		.uleb128 0xe
- 843 008d 3A       		.uleb128 0x3a
- 844 008e 0B       		.uleb128 0xb
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 18
+ 788 0043 06       		.uleb128 0x6
+ 789 0044 2E       		.uleb128 0x2e
+ 790 0045 01       		.byte	0x1
+ 791 0046 3F       		.uleb128 0x3f
+ 792 0047 19       		.uleb128 0x19
+ 793 0048 03       		.uleb128 0x3
+ 794 0049 0E       		.uleb128 0xe
+ 795 004a 3A       		.uleb128 0x3a
+ 796 004b 0B       		.uleb128 0xb
+ 797 004c 3B       		.uleb128 0x3b
+ 798 004d 0B       		.uleb128 0xb
+ 799 004e 27       		.uleb128 0x27
+ 800 004f 19       		.uleb128 0x19
+ 801 0050 49       		.uleb128 0x49
+ 802 0051 13       		.uleb128 0x13
+ 803 0052 11       		.uleb128 0x11
+ 804 0053 01       		.uleb128 0x1
+ 805 0054 12       		.uleb128 0x12
+ 806 0055 06       		.uleb128 0x6
+ 807 0056 40       		.uleb128 0x40
+ 808 0057 18       		.uleb128 0x18
+ 809 0058 9742     		.uleb128 0x2117
+ 810 005a 19       		.uleb128 0x19
+ 811 005b 01       		.uleb128 0x1
+ 812 005c 13       		.uleb128 0x13
+ 813 005d 00       		.byte	0
+ 814 005e 00       		.byte	0
+ 815 005f 07       		.uleb128 0x7
+ 816 0060 05       		.uleb128 0x5
+ 817 0061 00       		.byte	0
+ 818 0062 03       		.uleb128 0x3
+ 819 0063 0E       		.uleb128 0xe
+ 820 0064 3A       		.uleb128 0x3a
+ 821 0065 0B       		.uleb128 0xb
+ 822 0066 3B       		.uleb128 0x3b
+ 823 0067 0B       		.uleb128 0xb
+ 824 0068 49       		.uleb128 0x49
+ 825 0069 13       		.uleb128 0x13
+ 826 006a 02       		.uleb128 0x2
+ 827 006b 17       		.uleb128 0x17
+ 828 006c 00       		.byte	0
+ 829 006d 00       		.byte	0
+ 830 006e 08       		.uleb128 0x8
+ 831 006f 05       		.uleb128 0x5
+ 832 0070 00       		.byte	0
+ 833 0071 03       		.uleb128 0x3
+ 834 0072 08       		.uleb128 0x8
+ 835 0073 3A       		.uleb128 0x3a
+ 836 0074 0B       		.uleb128 0xb
+ 837 0075 3B       		.uleb128 0x3b
+ 838 0076 0B       		.uleb128 0xb
+ 839 0077 49       		.uleb128 0x49
+ 840 0078 13       		.uleb128 0x13
+ 841 0079 02       		.uleb128 0x2
+ 842 007a 18       		.uleb128 0x18
+ 843 007b 00       		.byte	0
+ 844 007c 00       		.byte	0
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 18
 
 
- 845 008f 3B       		.uleb128 0x3b
- 846 0090 0B       		.uleb128 0xb
- 847 0091 49       		.uleb128 0x49
- 848 0092 13       		.uleb128 0x13
- 849 0093 02       		.uleb128 0x2
- 850 0094 17       		.uleb128 0x17
- 851 0095 00       		.byte	0
- 852 0096 00       		.byte	0
- 853 0097 0B       		.uleb128 0xb
- 854 0098 0B       		.uleb128 0xb
- 855 0099 01       		.byte	0x1
- 856 009a 11       		.uleb128 0x11
- 857 009b 01       		.uleb128 0x1
- 858 009c 12       		.uleb128 0x12
- 859 009d 06       		.uleb128 0x6
- 860 009e 00       		.byte	0
- 861 009f 00       		.byte	0
- 862 00a0 0C       		.uleb128 0xc
- 863 00a1 898201   		.uleb128 0x4109
- 864 00a4 01       		.byte	0x1
- 865 00a5 11       		.uleb128 0x11
- 866 00a6 01       		.uleb128 0x1
- 867 00a7 31       		.uleb128 0x31
- 868 00a8 13       		.uleb128 0x13
- 869 00a9 01       		.uleb128 0x1
- 870 00aa 13       		.uleb128 0x13
- 871 00ab 00       		.byte	0
- 872 00ac 00       		.byte	0
- 873 00ad 0D       		.uleb128 0xd
- 874 00ae 8A8201   		.uleb128 0x410a
- 875 00b1 00       		.byte	0
- 876 00b2 02       		.uleb128 0x2
- 877 00b3 18       		.uleb128 0x18
- 878 00b4 9142     		.uleb128 0x2111
- 879 00b6 18       		.uleb128 0x18
- 880 00b7 00       		.byte	0
- 881 00b8 00       		.byte	0
- 882 00b9 0E       		.uleb128 0xe
- 883 00ba 898201   		.uleb128 0x4109
- 884 00bd 01       		.byte	0x1
- 885 00be 11       		.uleb128 0x11
- 886 00bf 01       		.uleb128 0x1
- 887 00c0 31       		.uleb128 0x31
- 888 00c1 13       		.uleb128 0x13
- 889 00c2 00       		.byte	0
- 890 00c3 00       		.byte	0
- 891 00c4 0F       		.uleb128 0xf
- 892 00c5 2E       		.uleb128 0x2e
- 893 00c6 01       		.byte	0x1
- 894 00c7 3F       		.uleb128 0x3f
- 895 00c8 19       		.uleb128 0x19
- 896 00c9 03       		.uleb128 0x3
- 897 00ca 0E       		.uleb128 0xe
- 898 00cb 3A       		.uleb128 0x3a
- 899 00cc 0B       		.uleb128 0xb
- 900 00cd 3B       		.uleb128 0x3b
- 901 00ce 0B       		.uleb128 0xb
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 19
+ 845 007d 09       		.uleb128 0x9
+ 846 007e 0B       		.uleb128 0xb
+ 847 007f 01       		.byte	0x1
+ 848 0080 11       		.uleb128 0x11
+ 849 0081 01       		.uleb128 0x1
+ 850 0082 12       		.uleb128 0x12
+ 851 0083 06       		.uleb128 0x6
+ 852 0084 01       		.uleb128 0x1
+ 853 0085 13       		.uleb128 0x13
+ 854 0086 00       		.byte	0
+ 855 0087 00       		.byte	0
+ 856 0088 0A       		.uleb128 0xa
+ 857 0089 34       		.uleb128 0x34
+ 858 008a 00       		.byte	0
+ 859 008b 03       		.uleb128 0x3
+ 860 008c 0E       		.uleb128 0xe
+ 861 008d 3A       		.uleb128 0x3a
+ 862 008e 0B       		.uleb128 0xb
+ 863 008f 3B       		.uleb128 0x3b
+ 864 0090 0B       		.uleb128 0xb
+ 865 0091 49       		.uleb128 0x49
+ 866 0092 13       		.uleb128 0x13
+ 867 0093 02       		.uleb128 0x2
+ 868 0094 17       		.uleb128 0x17
+ 869 0095 00       		.byte	0
+ 870 0096 00       		.byte	0
+ 871 0097 0B       		.uleb128 0xb
+ 872 0098 0B       		.uleb128 0xb
+ 873 0099 01       		.byte	0x1
+ 874 009a 11       		.uleb128 0x11
+ 875 009b 01       		.uleb128 0x1
+ 876 009c 12       		.uleb128 0x12
+ 877 009d 06       		.uleb128 0x6
+ 878 009e 00       		.byte	0
+ 879 009f 00       		.byte	0
+ 880 00a0 0C       		.uleb128 0xc
+ 881 00a1 898201   		.uleb128 0x4109
+ 882 00a4 01       		.byte	0x1
+ 883 00a5 11       		.uleb128 0x11
+ 884 00a6 01       		.uleb128 0x1
+ 885 00a7 31       		.uleb128 0x31
+ 886 00a8 13       		.uleb128 0x13
+ 887 00a9 01       		.uleb128 0x1
+ 888 00aa 13       		.uleb128 0x13
+ 889 00ab 00       		.byte	0
+ 890 00ac 00       		.byte	0
+ 891 00ad 0D       		.uleb128 0xd
+ 892 00ae 8A8201   		.uleb128 0x410a
+ 893 00b1 00       		.byte	0
+ 894 00b2 02       		.uleb128 0x2
+ 895 00b3 18       		.uleb128 0x18
+ 896 00b4 9142     		.uleb128 0x2111
+ 897 00b6 18       		.uleb128 0x18
+ 898 00b7 00       		.byte	0
+ 899 00b8 00       		.byte	0
+ 900 00b9 0E       		.uleb128 0xe
+ 901 00ba 898201   		.uleb128 0x4109
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 19
 
 
- 902 00cf 27       		.uleb128 0x27
- 903 00d0 19       		.uleb128 0x19
- 904 00d1 11       		.uleb128 0x11
- 905 00d2 01       		.uleb128 0x1
- 906 00d3 12       		.uleb128 0x12
- 907 00d4 06       		.uleb128 0x6
- 908 00d5 40       		.uleb128 0x40
- 909 00d6 18       		.uleb128 0x18
- 910 00d7 9742     		.uleb128 0x2117
- 911 00d9 19       		.uleb128 0x19
- 912 00da 01       		.uleb128 0x1
- 913 00db 13       		.uleb128 0x13
- 914 00dc 00       		.byte	0
- 915 00dd 00       		.byte	0
- 916 00de 10       		.uleb128 0x10
- 917 00df 05       		.uleb128 0x5
- 918 00e0 00       		.byte	0
- 919 00e1 03       		.uleb128 0x3
- 920 00e2 0E       		.uleb128 0xe
- 921 00e3 3A       		.uleb128 0x3a
- 922 00e4 0B       		.uleb128 0xb
- 923 00e5 3B       		.uleb128 0x3b
- 924 00e6 0B       		.uleb128 0xb
- 925 00e7 49       		.uleb128 0x49
- 926 00e8 13       		.uleb128 0x13
- 927 00e9 02       		.uleb128 0x2
- 928 00ea 18       		.uleb128 0x18
- 929 00eb 00       		.byte	0
- 930 00ec 00       		.byte	0
- 931 00ed 11       		.uleb128 0x11
- 932 00ee 34       		.uleb128 0x34
- 933 00ef 00       		.byte	0
- 934 00f0 03       		.uleb128 0x3
- 935 00f1 0E       		.uleb128 0xe
- 936 00f2 3A       		.uleb128 0x3a
- 937 00f3 0B       		.uleb128 0xb
- 938 00f4 3B       		.uleb128 0x3b
- 939 00f5 05       		.uleb128 0x5
- 940 00f6 49       		.uleb128 0x49
- 941 00f7 13       		.uleb128 0x13
- 942 00f8 3F       		.uleb128 0x3f
- 943 00f9 19       		.uleb128 0x19
- 944 00fa 3C       		.uleb128 0x3c
- 945 00fb 19       		.uleb128 0x19
- 946 00fc 00       		.byte	0
- 947 00fd 00       		.byte	0
- 948 00fe 12       		.uleb128 0x12
- 949 00ff 35       		.uleb128 0x35
- 950 0100 00       		.byte	0
- 951 0101 49       		.uleb128 0x49
- 952 0102 13       		.uleb128 0x13
- 953 0103 00       		.byte	0
- 954 0104 00       		.byte	0
- 955 0105 13       		.uleb128 0x13
- 956 0106 01       		.uleb128 0x1
- 957 0107 01       		.byte	0x1
- 958 0108 49       		.uleb128 0x49
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 20
+ 902 00bd 01       		.byte	0x1
+ 903 00be 11       		.uleb128 0x11
+ 904 00bf 01       		.uleb128 0x1
+ 905 00c0 31       		.uleb128 0x31
+ 906 00c1 13       		.uleb128 0x13
+ 907 00c2 00       		.byte	0
+ 908 00c3 00       		.byte	0
+ 909 00c4 0F       		.uleb128 0xf
+ 910 00c5 2E       		.uleb128 0x2e
+ 911 00c6 01       		.byte	0x1
+ 912 00c7 3F       		.uleb128 0x3f
+ 913 00c8 19       		.uleb128 0x19
+ 914 00c9 03       		.uleb128 0x3
+ 915 00ca 0E       		.uleb128 0xe
+ 916 00cb 3A       		.uleb128 0x3a
+ 917 00cc 0B       		.uleb128 0xb
+ 918 00cd 3B       		.uleb128 0x3b
+ 919 00ce 0B       		.uleb128 0xb
+ 920 00cf 27       		.uleb128 0x27
+ 921 00d0 19       		.uleb128 0x19
+ 922 00d1 11       		.uleb128 0x11
+ 923 00d2 01       		.uleb128 0x1
+ 924 00d3 12       		.uleb128 0x12
+ 925 00d4 06       		.uleb128 0x6
+ 926 00d5 40       		.uleb128 0x40
+ 927 00d6 18       		.uleb128 0x18
+ 928 00d7 9742     		.uleb128 0x2117
+ 929 00d9 19       		.uleb128 0x19
+ 930 00da 01       		.uleb128 0x1
+ 931 00db 13       		.uleb128 0x13
+ 932 00dc 00       		.byte	0
+ 933 00dd 00       		.byte	0
+ 934 00de 10       		.uleb128 0x10
+ 935 00df 05       		.uleb128 0x5
+ 936 00e0 00       		.byte	0
+ 937 00e1 03       		.uleb128 0x3
+ 938 00e2 0E       		.uleb128 0xe
+ 939 00e3 3A       		.uleb128 0x3a
+ 940 00e4 0B       		.uleb128 0xb
+ 941 00e5 3B       		.uleb128 0x3b
+ 942 00e6 0B       		.uleb128 0xb
+ 943 00e7 49       		.uleb128 0x49
+ 944 00e8 13       		.uleb128 0x13
+ 945 00e9 02       		.uleb128 0x2
+ 946 00ea 18       		.uleb128 0x18
+ 947 00eb 00       		.byte	0
+ 948 00ec 00       		.byte	0
+ 949 00ed 11       		.uleb128 0x11
+ 950 00ee 34       		.uleb128 0x34
+ 951 00ef 00       		.byte	0
+ 952 00f0 03       		.uleb128 0x3
+ 953 00f1 0E       		.uleb128 0xe
+ 954 00f2 3A       		.uleb128 0x3a
+ 955 00f3 0B       		.uleb128 0xb
+ 956 00f4 3B       		.uleb128 0x3b
+ 957 00f5 05       		.uleb128 0x5
+ 958 00f6 49       		.uleb128 0x49
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 20
 
 
- 959 0109 13       		.uleb128 0x13
- 960 010a 01       		.uleb128 0x1
- 961 010b 13       		.uleb128 0x13
- 962 010c 00       		.byte	0
- 963 010d 00       		.byte	0
- 964 010e 14       		.uleb128 0x14
- 965 010f 21       		.uleb128 0x21
- 966 0110 00       		.byte	0
- 967 0111 49       		.uleb128 0x49
- 968 0112 13       		.uleb128 0x13
- 969 0113 2F       		.uleb128 0x2f
- 970 0114 05       		.uleb128 0x5
- 971 0115 00       		.byte	0
- 972 0116 00       		.byte	0
- 973 0117 15       		.uleb128 0x15
- 974 0118 34       		.uleb128 0x34
- 975 0119 00       		.byte	0
- 976 011a 03       		.uleb128 0x3
- 977 011b 0E       		.uleb128 0xe
- 978 011c 3A       		.uleb128 0x3a
- 979 011d 0B       		.uleb128 0xb
- 980 011e 3B       		.uleb128 0x3b
- 981 011f 0B       		.uleb128 0xb
- 982 0120 49       		.uleb128 0x49
- 983 0121 13       		.uleb128 0x13
- 984 0122 3F       		.uleb128 0x3f
- 985 0123 19       		.uleb128 0x19
- 986 0124 02       		.uleb128 0x2
- 987 0125 18       		.uleb128 0x18
- 988 0126 00       		.byte	0
- 989 0127 00       		.byte	0
- 990 0128 16       		.uleb128 0x16
- 991 0129 21       		.uleb128 0x21
- 992 012a 00       		.byte	0
- 993 012b 49       		.uleb128 0x49
- 994 012c 13       		.uleb128 0x13
- 995 012d 2F       		.uleb128 0x2f
- 996 012e 0B       		.uleb128 0xb
- 997 012f 00       		.byte	0
- 998 0130 00       		.byte	0
- 999 0131 00       		.byte	0
- 1000              		.section	.debug_loc,"",%progbits
- 1001              	.Ldebug_loc0:
- 1002              	.LLST0:
- 1003 0000 00000000 		.4byte	.LVL0
- 1004 0004 08000000 		.4byte	.LVL1
- 1005 0008 0100     		.2byte	0x1
- 1006 000a 50       		.byte	0x50
- 1007 000b 08000000 		.4byte	.LVL1
- 1008 000f 38000000 		.4byte	.LFE65
- 1009 0013 0400     		.2byte	0x4
- 1010 0015 F3       		.byte	0xf3
- 1011 0016 01       		.uleb128 0x1
- 1012 0017 50       		.byte	0x50
- 1013 0018 9F       		.byte	0x9f
- 1014 0019 00000000 		.4byte	0
- 1015 001d 00000000 		.4byte	0
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 21
+ 959 00f7 13       		.uleb128 0x13
+ 960 00f8 3F       		.uleb128 0x3f
+ 961 00f9 19       		.uleb128 0x19
+ 962 00fa 3C       		.uleb128 0x3c
+ 963 00fb 19       		.uleb128 0x19
+ 964 00fc 00       		.byte	0
+ 965 00fd 00       		.byte	0
+ 966 00fe 12       		.uleb128 0x12
+ 967 00ff 35       		.uleb128 0x35
+ 968 0100 00       		.byte	0
+ 969 0101 49       		.uleb128 0x49
+ 970 0102 13       		.uleb128 0x13
+ 971 0103 00       		.byte	0
+ 972 0104 00       		.byte	0
+ 973 0105 13       		.uleb128 0x13
+ 974 0106 01       		.uleb128 0x1
+ 975 0107 01       		.byte	0x1
+ 976 0108 49       		.uleb128 0x49
+ 977 0109 13       		.uleb128 0x13
+ 978 010a 01       		.uleb128 0x1
+ 979 010b 13       		.uleb128 0x13
+ 980 010c 00       		.byte	0
+ 981 010d 00       		.byte	0
+ 982 010e 14       		.uleb128 0x14
+ 983 010f 21       		.uleb128 0x21
+ 984 0110 00       		.byte	0
+ 985 0111 49       		.uleb128 0x49
+ 986 0112 13       		.uleb128 0x13
+ 987 0113 2F       		.uleb128 0x2f
+ 988 0114 05       		.uleb128 0x5
+ 989 0115 00       		.byte	0
+ 990 0116 00       		.byte	0
+ 991 0117 15       		.uleb128 0x15
+ 992 0118 34       		.uleb128 0x34
+ 993 0119 00       		.byte	0
+ 994 011a 03       		.uleb128 0x3
+ 995 011b 0E       		.uleb128 0xe
+ 996 011c 3A       		.uleb128 0x3a
+ 997 011d 0B       		.uleb128 0xb
+ 998 011e 3B       		.uleb128 0x3b
+ 999 011f 0B       		.uleb128 0xb
+ 1000 0120 49       		.uleb128 0x49
+ 1001 0121 13       		.uleb128 0x13
+ 1002 0122 3F       		.uleb128 0x3f
+ 1003 0123 19       		.uleb128 0x19
+ 1004 0124 02       		.uleb128 0x2
+ 1005 0125 18       		.uleb128 0x18
+ 1006 0126 00       		.byte	0
+ 1007 0127 00       		.byte	0
+ 1008 0128 16       		.uleb128 0x16
+ 1009 0129 21       		.uleb128 0x21
+ 1010 012a 00       		.byte	0
+ 1011 012b 49       		.uleb128 0x49
+ 1012 012c 13       		.uleb128 0x13
+ 1013 012d 2F       		.uleb128 0x2f
+ 1014 012e 0B       		.uleb128 0xb
+ 1015 012f 00       		.byte	0
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 21
 
 
- 1016              	.LLST1:
- 1017 0021 00000000 		.4byte	.LVL0
- 1018 0025 10000000 		.4byte	.LVL2
- 1019 0029 0100     		.2byte	0x1
- 1020 002b 52       		.byte	0x52
- 1021 002c 12000000 		.4byte	.LVL3
- 1022 0030 24000000 		.4byte	.LVL7
- 1023 0034 0100     		.2byte	0x1
- 1024 0036 52       		.byte	0x52
- 1025 0037 26000000 		.4byte	.LVL8
- 1026 003b 38000000 		.4byte	.LFE65
- 1027 003f 0100     		.2byte	0x1
- 1028 0041 52       		.byte	0x52
- 1029 0042 00000000 		.4byte	0
- 1030 0046 00000000 		.4byte	0
- 1031              	.LLST2:
- 1032 004a 08000000 		.4byte	.LVL1
- 1033 004e 14000000 		.4byte	.LVL4
- 1034 0052 0100     		.2byte	0x1
- 1035 0054 53       		.byte	0x53
- 1036 0055 16000000 		.4byte	.LVL5
- 1037 0059 1C000000 		.4byte	.LVL6
- 1038 005d 0100     		.2byte	0x1
- 1039 005f 53       		.byte	0x53
- 1040 0060 00000000 		.4byte	0
- 1041 0064 00000000 		.4byte	0
- 1042              	.LLST3:
- 1043 0068 1C000000 		.4byte	.LVL6
- 1044 006c 28000000 		.4byte	.LVL9
- 1045 0070 0100     		.2byte	0x1
- 1046 0072 53       		.byte	0x53
- 1047 0073 2A000000 		.4byte	.LVL10
- 1048 0077 2E000000 		.4byte	.LVL11
- 1049 007b 0100     		.2byte	0x1
- 1050 007d 53       		.byte	0x53
- 1051 007e 00000000 		.4byte	0
- 1052 0082 00000000 		.4byte	0
- 1053              	.LLST4:
- 1054 0086 00000000 		.4byte	.LVL12
- 1055 008a 0B000000 		.4byte	.LVL14-1
- 1056 008e 0100     		.2byte	0x1
- 1057 0090 50       		.byte	0x50
- 1058 0091 0B000000 		.4byte	.LVL14-1
- 1059 0095 28000000 		.4byte	.LFE64
- 1060 0099 0400     		.2byte	0x4
- 1061 009b F3       		.byte	0xf3
- 1062 009c 01       		.uleb128 0x1
- 1063 009d 50       		.byte	0x50
- 1064 009e 9F       		.byte	0x9f
- 1065 009f 00000000 		.4byte	0
- 1066 00a3 00000000 		.4byte	0
- 1067              	.LLST5:
- 1068 00a7 00000000 		.4byte	.LVL12
- 1069 00ab 0B000000 		.4byte	.LVL14-1
- 1070 00af 0100     		.2byte	0x1
- 1071 00b1 51       		.byte	0x51
- 1072 00b2 0B000000 		.4byte	.LVL14-1
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 22
+ 1016 0130 00       		.byte	0
+ 1017 0131 00       		.byte	0
+ 1018              		.section	.debug_loc,"",%progbits
+ 1019              	.Ldebug_loc0:
+ 1020              	.LLST0:
+ 1021 0000 00000000 		.4byte	.LVL0
+ 1022 0004 08000000 		.4byte	.LVL1
+ 1023 0008 0100     		.2byte	0x1
+ 1024 000a 50       		.byte	0x50
+ 1025 000b 08000000 		.4byte	.LVL1
+ 1026 000f 38000000 		.4byte	.LFE65
+ 1027 0013 0400     		.2byte	0x4
+ 1028 0015 F3       		.byte	0xf3
+ 1029 0016 01       		.uleb128 0x1
+ 1030 0017 50       		.byte	0x50
+ 1031 0018 9F       		.byte	0x9f
+ 1032 0019 00000000 		.4byte	0
+ 1033 001d 00000000 		.4byte	0
+ 1034              	.LLST1:
+ 1035 0021 00000000 		.4byte	.LVL0
+ 1036 0025 10000000 		.4byte	.LVL2
+ 1037 0029 0100     		.2byte	0x1
+ 1038 002b 52       		.byte	0x52
+ 1039 002c 12000000 		.4byte	.LVL3
+ 1040 0030 24000000 		.4byte	.LVL7
+ 1041 0034 0100     		.2byte	0x1
+ 1042 0036 52       		.byte	0x52
+ 1043 0037 26000000 		.4byte	.LVL8
+ 1044 003b 38000000 		.4byte	.LFE65
+ 1045 003f 0100     		.2byte	0x1
+ 1046 0041 52       		.byte	0x52
+ 1047 0042 00000000 		.4byte	0
+ 1048 0046 00000000 		.4byte	0
+ 1049              	.LLST2:
+ 1050 004a 08000000 		.4byte	.LVL1
+ 1051 004e 14000000 		.4byte	.LVL4
+ 1052 0052 0100     		.2byte	0x1
+ 1053 0054 53       		.byte	0x53
+ 1054 0055 16000000 		.4byte	.LVL5
+ 1055 0059 1C000000 		.4byte	.LVL6
+ 1056 005d 0100     		.2byte	0x1
+ 1057 005f 53       		.byte	0x53
+ 1058 0060 00000000 		.4byte	0
+ 1059 0064 00000000 		.4byte	0
+ 1060              	.LLST3:
+ 1061 0068 1C000000 		.4byte	.LVL6
+ 1062 006c 28000000 		.4byte	.LVL9
+ 1063 0070 0100     		.2byte	0x1
+ 1064 0072 53       		.byte	0x53
+ 1065 0073 2A000000 		.4byte	.LVL10
+ 1066 0077 2E000000 		.4byte	.LVL11
+ 1067 007b 0100     		.2byte	0x1
+ 1068 007d 53       		.byte	0x53
+ 1069 007e 00000000 		.4byte	0
+ 1070 0082 00000000 		.4byte	0
+ 1071              	.LLST4:
+ 1072 0086 00000000 		.4byte	.LVL12
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 22
 
 
- 1073 00b6 28000000 		.4byte	.LFE64
- 1074 00ba 0400     		.2byte	0x4
- 1075 00bc F3       		.byte	0xf3
- 1076 00bd 01       		.uleb128 0x1
- 1077 00be 51       		.byte	0x51
- 1078 00bf 9F       		.byte	0x9f
- 1079 00c0 00000000 		.4byte	0
- 1080 00c4 00000000 		.4byte	0
- 1081              	.LLST6:
- 1082 00c8 06000000 		.4byte	.LVL13
- 1083 00cc 0C000000 		.4byte	.LVL14
- 1084 00d0 0200     		.2byte	0x2
- 1085 00d2 30       		.byte	0x30
- 1086 00d3 9F       		.byte	0x9f
- 1087 00d4 0C000000 		.4byte	.LVL14
- 1088 00d8 14000000 		.4byte	.LVL15
- 1089 00dc 0100     		.2byte	0x1
- 1090 00de 50       		.byte	0x50
- 1091 00df 18000000 		.4byte	.LVL16
- 1092 00e3 28000000 		.4byte	.LFE64
- 1093 00e7 0100     		.2byte	0x1
- 1094 00e9 50       		.byte	0x50
- 1095 00ea 00000000 		.4byte	0
- 1096 00ee 00000000 		.4byte	0
- 1097              	.LLST7:
- 1098 00f2 00000000 		.4byte	.LVL18
- 1099 00f6 04000000 		.4byte	.LVL19
- 1100 00fa 0200     		.2byte	0x2
- 1101 00fc 30       		.byte	0x30
- 1102 00fd 9F       		.byte	0x9f
- 1103 00fe 04000000 		.4byte	.LVL19
- 1104 0102 28000000 		.4byte	.LFE66
- 1105 0106 0100     		.2byte	0x1
- 1106 0108 53       		.byte	0x53
- 1107 0109 00000000 		.4byte	0
- 1108 010d 00000000 		.4byte	0
- 1109              		.section	.debug_aranges,"",%progbits
- 1110 0000 2C000000 		.4byte	0x2c
- 1111 0004 0200     		.2byte	0x2
- 1112 0006 00000000 		.4byte	.Ldebug_info0
- 1113 000a 04       		.byte	0x4
- 1114 000b 00       		.byte	0
- 1115 000c 0000     		.2byte	0
- 1116 000e 0000     		.2byte	0
- 1117 0010 00000000 		.4byte	.LFB65
- 1118 0014 38000000 		.4byte	.LFE65-.LFB65
- 1119 0018 00000000 		.4byte	.LFB64
- 1120 001c 28000000 		.4byte	.LFE64-.LFB64
- 1121 0020 00000000 		.4byte	.LFB66
- 1122 0024 28000000 		.4byte	.LFE66-.LFB66
- 1123 0028 00000000 		.4byte	0
- 1124 002c 00000000 		.4byte	0
- 1125              		.section	.debug_ranges,"",%progbits
- 1126              	.Ldebug_ranges0:
- 1127 0000 00000000 		.4byte	.LFB65
- 1128 0004 38000000 		.4byte	.LFE65
- 1129 0008 00000000 		.4byte	.LFB64
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 23
+ 1073 008a 0B000000 		.4byte	.LVL14-1
+ 1074 008e 0100     		.2byte	0x1
+ 1075 0090 50       		.byte	0x50
+ 1076 0091 0B000000 		.4byte	.LVL14-1
+ 1077 0095 28000000 		.4byte	.LFE64
+ 1078 0099 0400     		.2byte	0x4
+ 1079 009b F3       		.byte	0xf3
+ 1080 009c 01       		.uleb128 0x1
+ 1081 009d 50       		.byte	0x50
+ 1082 009e 9F       		.byte	0x9f
+ 1083 009f 00000000 		.4byte	0
+ 1084 00a3 00000000 		.4byte	0
+ 1085              	.LLST5:
+ 1086 00a7 00000000 		.4byte	.LVL12
+ 1087 00ab 0B000000 		.4byte	.LVL14-1
+ 1088 00af 0100     		.2byte	0x1
+ 1089 00b1 51       		.byte	0x51
+ 1090 00b2 0B000000 		.4byte	.LVL14-1
+ 1091 00b6 28000000 		.4byte	.LFE64
+ 1092 00ba 0400     		.2byte	0x4
+ 1093 00bc F3       		.byte	0xf3
+ 1094 00bd 01       		.uleb128 0x1
+ 1095 00be 51       		.byte	0x51
+ 1096 00bf 9F       		.byte	0x9f
+ 1097 00c0 00000000 		.4byte	0
+ 1098 00c4 00000000 		.4byte	0
+ 1099              	.LLST6:
+ 1100 00c8 06000000 		.4byte	.LVL13
+ 1101 00cc 0C000000 		.4byte	.LVL14
+ 1102 00d0 0200     		.2byte	0x2
+ 1103 00d2 30       		.byte	0x30
+ 1104 00d3 9F       		.byte	0x9f
+ 1105 00d4 0C000000 		.4byte	.LVL14
+ 1106 00d8 14000000 		.4byte	.LVL15
+ 1107 00dc 0100     		.2byte	0x1
+ 1108 00de 50       		.byte	0x50
+ 1109 00df 18000000 		.4byte	.LVL16
+ 1110 00e3 28000000 		.4byte	.LFE64
+ 1111 00e7 0100     		.2byte	0x1
+ 1112 00e9 50       		.byte	0x50
+ 1113 00ea 00000000 		.4byte	0
+ 1114 00ee 00000000 		.4byte	0
+ 1115              	.LLST7:
+ 1116 00f2 00000000 		.4byte	.LVL18
+ 1117 00f6 04000000 		.4byte	.LVL19
+ 1118 00fa 0200     		.2byte	0x2
+ 1119 00fc 30       		.byte	0x30
+ 1120 00fd 9F       		.byte	0x9f
+ 1121 00fe 04000000 		.4byte	.LVL19
+ 1122 0102 28000000 		.4byte	.LFE66
+ 1123 0106 0100     		.2byte	0x1
+ 1124 0108 53       		.byte	0x53
+ 1125 0109 00000000 		.4byte	0
+ 1126 010d 00000000 		.4byte	0
+ 1127              		.section	.debug_aranges,"",%progbits
+ 1128 0000 2C000000 		.4byte	0x2c
+ 1129 0004 0200     		.2byte	0x2
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 23
 
 
- 1130 000c 28000000 		.4byte	.LFE64
- 1131 0010 00000000 		.4byte	.LFB66
- 1132 0014 28000000 		.4byte	.LFE66
- 1133 0018 00000000 		.4byte	0
- 1134 001c 00000000 		.4byte	0
- 1135              		.section	.debug_line,"",%progbits
- 1136              	.Ldebug_line0:
- 1137 0000 DC010000 		.section	.debug_str,"MS",%progbits,1
- 1137      02006B01 
- 1137      00000201 
- 1137      FB0E0D00 
- 1137      01010101 
- 1138              	.LASF47:
- 1139 0000 6C75745F 		.ascii	"lut_value\000"
- 1139      76616C75 
- 1139      6500
- 1140              	.LASF50:
- 1141 000a 4144435F 		.ascii	"ADC_CV_array\000"
- 1141      43565F61 
- 1141      72726179 
- 1141      00
- 1142              	.LASF3:
- 1143 0017 5F5F7569 		.ascii	"__uint8_t\000"
- 1143      6E74385F 
- 1143      7400
- 1144              	.LASF43:
- 1145 0021 55706461 		.ascii	"Update_scanrate_Flag\000"
- 1145      74655F73 
- 1145      63616E72 
- 1145      6174655F 
- 1145      466C6167 
- 1146              	.LASF26:
- 1147 0036 76616C75 		.ascii	"value\000"
- 1147      6500
- 1148              	.LASF6:
- 1149 003c 5F5F696E 		.ascii	"__int32_t\000"
- 1149      7433325F 
- 1149      7400
- 1150              	.LASF7:
- 1151 0046 6C6F6E67 		.ascii	"long int\000"
- 1151      20696E74 
- 1151      00
- 1152              	.LASF37:
- 1153 004f 496E7075 		.ascii	"Input_Flag\000"
- 1153      745F466C 
- 1153      616700
- 1154              	.LASF30:
- 1155 005a 656E645F 		.ascii	"end_value\000"
- 1155      76616C75 
- 1155      6500
- 1156              	.LASF55:
- 1157 0064 636F6D6D 		.ascii	"command\000"
- 1157      616E6400 
- 1158              	.LASF40:
- 1159 006c 43565F72 		.ascii	"CV_ready_Flag\000"
- 1159      65616479 
- 1159      5F466C61 
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 24
+ 1130 0006 00000000 		.4byte	.Ldebug_info0
+ 1131 000a 04       		.byte	0x4
+ 1132 000b 00       		.byte	0
+ 1133 000c 0000     		.2byte	0
+ 1134 000e 0000     		.2byte	0
+ 1135 0010 00000000 		.4byte	.LFB65
+ 1136 0014 38000000 		.4byte	.LFE65-.LFB65
+ 1137 0018 00000000 		.4byte	.LFB64
+ 1138 001c 28000000 		.4byte	.LFE64-.LFB64
+ 1139 0020 00000000 		.4byte	.LFB66
+ 1140 0024 28000000 		.4byte	.LFE66-.LFB66
+ 1141 0028 00000000 		.4byte	0
+ 1142 002c 00000000 		.4byte	0
+ 1143              		.section	.debug_ranges,"",%progbits
+ 1144              	.Ldebug_ranges0:
+ 1145 0000 00000000 		.4byte	.LFB65
+ 1146 0004 38000000 		.4byte	.LFE65
+ 1147 0008 00000000 		.4byte	.LFB64
+ 1148 000c 28000000 		.4byte	.LFE64
+ 1149 0010 00000000 		.4byte	.LFB66
+ 1150 0014 28000000 		.4byte	.LFE66
+ 1151 0018 00000000 		.4byte	0
+ 1152 001c 00000000 		.4byte	0
+ 1153              		.section	.debug_line,"",%progbits
+ 1154              	.Ldebug_line0:
+ 1155 0000 DC010000 		.section	.debug_str,"MS",%progbits,1
+ 1155      02006B01 
+ 1155      00000201 
+ 1155      FB0E0D00 
+ 1155      01010101 
+ 1156              	.LASF52:
+ 1157 0000 75415F70 		.ascii	"uA_per_adc_count\000"
+ 1157      65725F61 
+ 1157      64635F63 
+ 1157      6F756E74 
+ 1157      00
+ 1158              	.LASF18:
+ 1159 0011 666C6F61 		.ascii	"float32\000"
+ 1159      74333200 
+ 1160              	.LASF25:
+ 1161 0019 696E6465 		.ascii	"index\000"
+ 1161      7800
+ 1162              	.LASF51:
+ 1163 001f 4144435F 		.ascii	"ADC_CV_array\000"
+ 1163      43565F61 
+ 1163      72726179 
+ 1163      00
+ 1164              	.LASF53:
+ 1165 002c 73746172 		.ascii	"start_dac_value\000"
+ 1165      745F6461 
+ 1165      635F7661 
+ 1165      6C756500 
+ 1166              	.LASF2:
+ 1167 003c 73686F72 		.ascii	"short int\000"
+ 1167      7420696E 
+ 1167      7400
+ 1168              	.LASF60:
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 24
 
 
- 1159      6700
- 1160              	.LASF46:
- 1161 007a 6461635F 		.ascii	"dac_ground_value\000"
- 1161      67726F75 
- 1161      6E645F76 
- 1161      616C7565 
- 1161      00
- 1162              	.LASF38:
- 1163 008b 436F6D6D 		.ascii	"Command_ready_Flag\000"
- 1163      616E645F 
- 1163      72656164 
- 1163      795F466C 
- 1163      616700
- 1164              	.LASF59:
- 1165 009e 433A5C55 		.ascii	"C:\\Users\\teo8d\\Desktop\\progetto lab sensori\\CO"
- 1165      73657273 
- 1165      5C74656F 
- 1165      38645C44 
- 1165      65736B74 
- 1166 00cc 44494349 		.ascii	"DICI\\PSOC\\FinalProjects\\Group2.cydsn\000"
- 1166      5C50534F 
- 1166      435C4669 
- 1166      6E616C50 
- 1166      726F6A65 
- 1167              	.LASF28:
- 1168 00f1 4C55545F 		.ascii	"LUT_MakeTriangle_Wave\000"
- 1168      4D616B65 
- 1168      54726961 
- 1168      6E676C65 
- 1168      5F576176 
- 1169              	.LASF18:
- 1170 0107 666C6F61 		.ascii	"float32\000"
- 1170      74333200 
- 1171              	.LASF27:
- 1172 010f 4C55545F 		.ascii	"LUT_make_line\000"
- 1172      6D616B65 
- 1172      5F6C696E 
- 1172      6500
- 1173              	.LASF54:
- 1174 011d 706F7465 		.ascii	"potential_max_current\000"
- 1174      6E746961 
- 1174      6C5F6D61 
- 1174      785F6375 
- 1174      7272656E 
- 1175              	.LASF31:
- 1176 0133 5F6C7574 		.ascii	"_lut_index\000"
- 1176      5F696E64 
- 1176      657800
- 1177              	.LASF19:
- 1178 013e 666C6F61 		.ascii	"float\000"
- 1178      7400
- 1179              	.LASF53:
- 1180 0144 656E645F 		.ascii	"end_dac_value\000"
- 1180      6461635F 
- 1180      76616C75 
- 1180      6500
- 1181              	.LASF56:
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 25
+ 1169 0046 6C75745F 		.ascii	"lut_functions.c\000"
+ 1169      66756E63 
+ 1169      74696F6E 
+ 1169      732E6300 
+ 1170              	.LASF47:
+ 1171 0056 6461635F 		.ascii	"dac_ground_value\000"
+ 1171      67726F75 
+ 1171      6E645F76 
+ 1171      616C7565 
+ 1171      00
+ 1172              	.LASF28:
+ 1173 0067 4C55545F 		.ascii	"LUT_MakeTriangle_Wave\000"
+ 1173      4D616B65 
+ 1173      54726961 
+ 1173      6E676C65 
+ 1173      5F576176 
+ 1174              	.LASF4:
+ 1175 007d 5F5F7569 		.ascii	"__uint16_t\000"
+ 1175      6E743136 
+ 1175      5F7400
+ 1176              	.LASF26:
+ 1177 0088 76616C75 		.ascii	"value\000"
+ 1177      6500
+ 1178              	.LASF16:
+ 1179 008e 75696E74 		.ascii	"uint16\000"
+ 1179      313600
+ 1180              	.LASF43:
+ 1181 0095 55706461 		.ascii	"Update_scanrate_Flag\000"
+ 1181      74655F73 
+ 1181      63616E72 
+ 1181      6174655F 
+ 1181      466C6167 
+ 1182              	.LASF29:
+ 1183 00aa 73746172 		.ascii	"start_value\000"
+ 1183      745F7661 
+ 1183      6C756500 
+ 1184              	.LASF17:
+ 1185 00b6 696E7431 		.ascii	"int16\000"
+ 1185      3600
+ 1186              	.LASF40:
+ 1187 00bc 43565F72 		.ascii	"CV_ready_Flag\000"
+ 1187      65616479 
+ 1187      5F466C61 
+ 1187      6700
+ 1188              	.LASF15:
+ 1189 00ca 75696E74 		.ascii	"uint8\000"
+ 1189      3800
+ 1190              	.LASF58:
+ 1191 00d0 636F6D6D 		.ascii	"command_lenght\000"
+ 1191      616E645F 
+ 1191      6C656E67 
+ 1191      687400
+ 1192              	.LASF19:
+ 1193 00df 666C6F61 		.ascii	"float\000"
+ 1193      7400
+ 1194              	.LASF30:
+ 1195 00e5 656E645F 		.ascii	"end_value\000"
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 25
 
 
- 1182 0152 636F6D6D 		.ascii	"command_lenght\000"
- 1182      616E645F 
- 1182      6C656E67 
- 1182      687400
- 1183              	.LASF29:
- 1184 0161 73746172 		.ascii	"start_value\000"
- 1184      745F7661 
- 1184      6C756500 
- 1185              	.LASF57:
- 1186 016d 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
- 1186      43313120 
- 1186      352E342E 
- 1186      31203230 
- 1186      31363036 
- 1187 01a0 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
- 1187      20726576 
- 1187      6973696F 
- 1187      6E203233 
- 1187      37373135 
- 1188 01d3 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
- 1188      66756E63 
- 1188      74696F6E 
- 1188      2D736563 
- 1188      74696F6E 
- 1189              	.LASF35:
- 1190 01fb 77617665 		.ascii	"waveform_CV_lut\000"
- 1190      666F726D 
- 1190      5F43565F 
- 1190      6C757400 
- 1191              	.LASF17:
- 1192 020b 696E7431 		.ascii	"int16\000"
- 1192      3600
- 1193              	.LASF32:
- 1194 0211 62617365 		.ascii	"base\000"
- 1194      00
- 1195              	.LASF58:
- 1196 0216 6C75745F 		.ascii	"lut_functions.c\000"
- 1196      66756E63 
- 1196      74696F6E 
- 1196      732E6300 
- 1197              	.LASF5:
- 1198 0226 73686F72 		.ascii	"short unsigned int\000"
- 1198      7420756E 
- 1198      7369676E 
- 1198      65642069 
- 1198      6E7400
- 1199              	.LASF39:
- 1200 0239 5449415F 		.ascii	"TIA_Calibration_ended_Flag\000"
- 1200      43616C69 
- 1200      62726174 
- 1200      696F6E5F 
- 1200      656E6465 
- 1201              	.LASF20:
- 1202 0254 646F7562 		.ascii	"double\000"
- 1202      6C6500
- 1203              	.LASF34:
- 1204 025b 49544D5F 		.ascii	"ITM_RxBuffer\000"
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 26
+ 1195      76616C75 
+ 1195      6500
+ 1196              	.LASF62:
+ 1197 00ef 4C55545F 		.ascii	"LUT_MakePulse\000"
+ 1197      4D616B65 
+ 1197      50756C73 
+ 1197      6500
+ 1198              	.LASF9:
+ 1199 00fd 6C6F6E67 		.ascii	"long long int\000"
+ 1199      206C6F6E 
+ 1199      6720696E 
+ 1199      7400
+ 1200              	.LASF39:
+ 1201 010b 5449415F 		.ascii	"TIA_Calibration_ended_Flag\000"
+ 1201      43616C69 
+ 1201      62726174 
+ 1201      696F6E5F 
+ 1201      656E6465 
+ 1202              	.LASF7:
+ 1203 0126 6C6F6E67 		.ascii	"long int\000"
+ 1203      20696E74 
+ 1203      00
+ 1204              	.LASF3:
+ 1205 012f 5F5F7569 		.ascii	"__uint8_t\000"
+ 1205      6E74385F 
+ 1205      7400
+ 1206              	.LASF27:
+ 1207 0139 4C55545F 		.ascii	"LUT_make_line\000"
+ 1207      6D616B65 
+ 1207      5F6C696E 
+ 1207      6500
+ 1208              	.LASF36:
+ 1209 0147 77617665 		.ascii	"waveform_amp_lut\000"
+ 1209      666F726D 
+ 1209      5F616D70 
+ 1209      5F6C7574 
+ 1209      00
+ 1210              	.LASF55:
+ 1211 0158 706F7465 		.ascii	"potential_max_current\000"
+ 1211      6E746961 
+ 1211      6C5F6D61 
+ 1211      785F6375 
+ 1211      7272656E 
+ 1212              	.LASF61:
+ 1213 016e 433A5C55 		.ascii	"C:\\Users\\teo8d\\Desktop\\progetto lab sensori\\CO"
+ 1213      73657273 
+ 1213      5C74656F 
+ 1213      38645C44 
+ 1213      65736B74 
+ 1214 019c 44494349 		.ascii	"DICI\\PSOC\\FinalProjects\\Group2.cydsn\000"
+ 1214      5C50534F 
+ 1214      435C4669 
+ 1214      6E616C50 
+ 1214      726F6A65 
+ 1215              	.LASF56:
+ 1216 01c1 73656C65 		.ascii	"selected_scan_rate\000"
+ 1216      63746564 
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 26
 
 
- 1204      52784275 
- 1204      66666572 
- 1204      00
- 1205              	.LASF1:
- 1206 0268 756E7369 		.ascii	"unsigned char\000"
- 1206      676E6564 
- 1206      20636861 
- 1206      7200
- 1207              	.LASF4:
- 1208 0276 5F5F7569 		.ascii	"__uint16_t\000"
- 1208      6E743136 
- 1208      5F7400
- 1209              	.LASF8:
- 1210 0281 6C6F6E67 		.ascii	"long unsigned int\000"
- 1210      20756E73 
- 1210      69676E65 
- 1210      6420696E 
- 1210      7400
- 1211              	.LASF16:
- 1212 0293 75696E74 		.ascii	"uint16\000"
- 1212      313600
- 1213              	.LASF42:
- 1214 029a 4C6F6164 		.ascii	"Load_EEPROM_Flag\000"
- 1214      5F454550 
- 1214      524F4D5F 
- 1214      466C6167 
- 1214      00
- 1215              	.LASF11:
- 1216 02ab 756E7369 		.ascii	"unsigned int\000"
- 1216      676E6564 
- 1216      20696E74 
- 1216      00
- 1217              	.LASF24:
- 1218 02b8 73746172 		.ascii	"start\000"
- 1218      7400
- 1219              	.LASF41:
- 1220 02be 414D505F 		.ascii	"AMP_ready_Flag\000"
- 1220      72656164 
- 1220      795F466C 
- 1220      616700
- 1221              	.LASF10:
- 1222 02cd 6C6F6E67 		.ascii	"long long unsigned int\000"
- 1222      206C6F6E 
- 1222      6720756E 
- 1222      7369676E 
- 1222      65642069 
- 1223              	.LASF12:
- 1224 02e4 75696E74 		.ascii	"uint8_t\000"
- 1224      385F7400 
- 1225              	.LASF36:
- 1226 02ec 77617665 		.ascii	"waveform_amp_lut\000"
- 1226      666F726D 
- 1226      5F616D70 
- 1226      5F6C7574 
- 1226      00
- 1227              	.LASF15:
- 1228 02fd 75696E74 		.ascii	"uint8\000"
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 27
-
-
- 1228      3800
- 1229              	.LASF48:
- 1230 0303 6C75745F 		.ascii	"lut_index\000"
- 1230      696E6465 
- 1230      7800
- 1231              	.LASF14:
- 1232 030d 696E7433 		.ascii	"int32_t\000"
- 1232      325F7400 
- 1233              	.LASF23:
- 1234 0315 73697A65 		.ascii	"sizetype\000"
- 1234      74797065 
+ 1216      5F736361 
+ 1216      6E5F7261 
+ 1216      746500
+ 1217              	.LASF22:
+ 1218 01d4 6C6F6E67 		.ascii	"long double\000"
+ 1218      20646F75 
+ 1218      626C6500 
+ 1219              	.LASF31:
+ 1220 01e0 5F6C7574 		.ascii	"_lut_index\000"
+ 1220      5F696E64 
+ 1220      657800
+ 1221              	.LASF1:
+ 1222 01eb 756E7369 		.ascii	"unsigned char\000"
+ 1222      676E6564 
+ 1222      20636861 
+ 1222      7200
+ 1223              	.LASF35:
+ 1224 01f9 77617665 		.ascii	"waveform_CV_lut\000"
+ 1224      666F726D 
+ 1224      5F43565F 
+ 1224      6C757400 
+ 1225              	.LASF45:
+ 1226 0209 55706461 		.ascii	"Update_endvalue_Flag\000"
+ 1226      74655F65 
+ 1226      6E647661 
+ 1226      6C75655F 
+ 1226      466C6167 
+ 1227              	.LASF0:
+ 1228 021e 7369676E 		.ascii	"signed char\000"
+ 1228      65642063 
+ 1228      68617200 
+ 1229              	.LASF10:
+ 1230 022a 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1230      206C6F6E 
+ 1230      6720756E 
+ 1230      7369676E 
+ 1230      65642069 
+ 1231              	.LASF11:
+ 1232 0241 756E7369 		.ascii	"unsigned int\000"
+ 1232      676E6564 
+ 1232      20696E74 
+ 1232      00
+ 1233              	.LASF13:
+ 1234 024e 75696E74 		.ascii	"uint16_t\000"
+ 1234      31365F74 
  1234      00
- 1235              	.LASF9:
- 1236 031e 6C6F6E67 		.ascii	"long long int\000"
- 1236      206C6F6E 
- 1236      6720696E 
- 1236      7400
- 1237              	.LASF21:
- 1238 032c 63686172 		.ascii	"char\000"
- 1238      00
- 1239              	.LASF51:
- 1240 0331 75415F70 		.ascii	"uA_per_adc_count\000"
- 1240      65725F61 
- 1240      64635F63 
- 1240      6F756E74 
- 1240      00
- 1241              	.LASF13:
- 1242 0342 75696E74 		.ascii	"uint16_t\000"
- 1242      31365F74 
+ 1235              	.LASF33:
+ 1236 0257 70756C73 		.ascii	"pulse\000"
+ 1236      6500
+ 1237              	.LASF24:
+ 1238 025d 73746172 		.ascii	"start\000"
+ 1238      7400
+ 1239              	.LASF5:
+ 1240 0263 73686F72 		.ascii	"short unsigned int\000"
+ 1240      7420756E 
+ 1240      7369676E 
+ 1240      65642069 
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 27
+
+
+ 1240      6E7400
+ 1241              	.LASF21:
+ 1242 0276 63686172 		.ascii	"char\000"
  1242      00
- 1243              	.LASF2:
- 1244 034b 73686F72 		.ascii	"short int\000"
- 1244      7420696E 
- 1244      7400
- 1245              	.LASF60:
- 1246 0355 4C55545F 		.ascii	"LUT_MakePulse\000"
- 1246      4D616B65 
- 1246      50756C73 
- 1246      6500
- 1247              	.LASF25:
- 1248 0363 696E6465 		.ascii	"index\000"
+ 1243              	.LASF48:
+ 1244 027b 6C75745F 		.ascii	"lut_value\000"
+ 1244      76616C75 
+ 1244      6500
+ 1245              	.LASF14:
+ 1246 0285 696E7433 		.ascii	"int32_t\000"
+ 1246      325F7400 
+ 1247              	.LASF49:
+ 1248 028d 6C75745F 		.ascii	"lut_index\000"
+ 1248      696E6465 
  1248      7800
- 1249              	.LASF49:
- 1250 0369 6C75745F 		.ascii	"lut_length\000"
- 1250      6C656E67 
- 1250      746800
- 1251              	.LASF44:
- 1252 0374 55706461 		.ascii	"Update_startvalue_Flag\000"
- 1252      74655F73 
- 1252      74617274 
- 1252      76616C75 
- 1252      655F466C 
- 1253              	.LASF22:
- 1254 038b 6C6F6E67 		.ascii	"long double\000"
- 1254      20646F75 
- 1254      626C6500 
- 1255              	.LASF0:
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cc4yhMn0.s 			page 28
+ 1249              	.LASF41:
+ 1250 0297 414D505F 		.ascii	"AMP_ready_Flag\000"
+ 1250      72656164 
+ 1250      795F466C 
+ 1250      616700
+ 1251              	.LASF8:
+ 1252 02a6 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1252      20756E73 
+ 1252      69676E65 
+ 1252      6420696E 
+ 1252      7400
+ 1253              	.LASF42:
+ 1254 02b8 4C6F6164 		.ascii	"Load_EEPROM_Flag\000"
+ 1254      5F454550 
+ 1254      524F4D5F 
+ 1254      466C6167 
+ 1254      00
+ 1255              	.LASF20:
+ 1256 02c9 646F7562 		.ascii	"double\000"
+ 1256      6C6500
+ 1257              	.LASF44:
+ 1258 02d0 55706461 		.ascii	"Update_startvalue_Flag\000"
+ 1258      74655F73 
+ 1258      74617274 
+ 1258      76616C75 
+ 1258      655F466C 
+ 1259              	.LASF6:
+ 1260 02e7 5F5F696E 		.ascii	"__int32_t\000"
+ 1260      7433325F 
+ 1260      7400
+ 1261              	.LASF12:
+ 1262 02f1 75696E74 		.ascii	"uint8_t\000"
+ 1262      385F7400 
+ 1263              	.LASF46:
+ 1264 02f9 55706461 		.ascii	"Update_timevalue_Flag\000"
+ 1264      74655F74 
+ 1264      696D6576 
+ 1264      616C7565 
+ 1264      5F466C61 
+ 1265              	.LASF38:
+ 1266 030f 436F6D6D 		.ascii	"Command_ready_Flag\000"
+ 1266      616E645F 
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccyob2jq.s 			page 28
 
 
- 1256 0397 7369676E 		.ascii	"signed char\000"
- 1256      65642063 
- 1256      68617200 
- 1257              	.LASF45:
- 1258 03a3 55706461 		.ascii	"Update_endvalue_Flag\000"
- 1258      74655F65 
- 1258      6E647661 
- 1258      6C75655F 
- 1258      466C6167 
- 1259              	.LASF33:
- 1260 03b8 70756C73 		.ascii	"pulse\000"
- 1260      6500
- 1261              	.LASF52:
- 1262 03be 73746172 		.ascii	"start_dac_value\000"
- 1262      745F6461 
- 1262      635F7661 
- 1262      6C756500 
- 1263              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
+ 1266      72656164 
+ 1266      795F466C 
+ 1266      616700
+ 1267              	.LASF23:
+ 1268 0322 73697A65 		.ascii	"sizetype\000"
+ 1268      74797065 
+ 1268      00
+ 1269              	.LASF50:
+ 1270 032b 6C75745F 		.ascii	"lut_length\000"
+ 1270      6C656E67 
+ 1270      746800
+ 1271              	.LASF34:
+ 1272 0336 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1272      52784275 
+ 1272      66666572 
+ 1272      00
+ 1273              	.LASF59:
+ 1274 0343 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1274      43313120 
+ 1274      352E342E 
+ 1274      31203230 
+ 1274      31363036 
+ 1275 0376 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1275      20726576 
+ 1275      6973696F 
+ 1275      6E203233 
+ 1275      37373135 
+ 1276 03a9 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1276      66756E63 
+ 1276      74696F6E 
+ 1276      2D736563 
+ 1276      74696F6E 
+ 1277              	.LASF32:
+ 1278 03d1 62617365 		.ascii	"base\000"
+ 1278      00
+ 1279              	.LASF37:
+ 1280 03d6 496E7075 		.ascii	"Input_Flag\000"
+ 1280      745F466C 
+ 1280      616700
+ 1281              	.LASF57:
+ 1282 03e1 636F6D6D 		.ascii	"command\000"
+ 1282      616E6400 
+ 1283              	.LASF54:
+ 1284 03e9 656E645F 		.ascii	"end_dac_value\000"
+ 1284      6461635F 
+ 1284      76616C75 
+ 1284      6500
+ 1285              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

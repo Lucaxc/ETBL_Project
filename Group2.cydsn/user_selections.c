@@ -110,9 +110,9 @@ void user_reset_device(void) {
 *******************************************************************************/
 
 
-void user_set_isr_timer(uint8 command[]) {
+void user_set_isr_timer(uint16 scan_rate) {
+    
     PWM_isr_Wakeup();
-    uint16 scan_rate = (command[1]<<8) | (command[2]&(0xFF)); 
     uint16 new_period = 1000/scan_rate;
     PWM_isr_WritePeriod((new_period*PWM_PERIOD_10_ms)/10); //that's needed because a period value of 2399 for the PMW corresponds to 10 msec
     PWM_isr_WriteCompare(new_period/2+1); //keep a DC value of 50%

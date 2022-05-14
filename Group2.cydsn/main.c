@@ -23,6 +23,7 @@
 
 char DataBuffer[TRANMSIT_BUFFER_SIZE];
 uint8 ch_received;
+char str[64];
 
 int main(void)
 {
@@ -39,6 +40,7 @@ int main(void)
     Update_scanrate_Flag=false;
     Update_startvalue_Flag=false;
     Update_endvalue_Flag=false;
+    Update_timevalue_Flag=false;
     
     lut_length=5000; // how long the look up table is,initialize large so when starting isr the ending doesn't get triggered
     command_lenght = 0;
@@ -116,11 +118,13 @@ int main(void)
             
                 
             case SET_SCAN_RATE: ; // 'B' Set the scan rate (in mV per second) by properly setting the PWM period 
-               
-                user_set_isr_timer(command);
+                
+                selected_scan_rate = (command[1]<<8) | (command[2]&(0xFF));
+                user_set_isr_timer(selected_scan_rate);
                 Update_scanrate_Flag=true;
                 
                 if(Update_scanrate_Flag && Update_startvalue_Flag && Update_endvalue_Flag){
+                    
                     
                     CV_ready_Flag = true;
                     
@@ -134,11 +138,11 @@ int main(void)
             
 
             case SET_CV_START_VALUE: // 'C' Set the initial value for the CV scan (in mV)
-
-                start_dac_value=(command[1]<<8)|(command[2]&0xFF);  // This variable is used in the START_CYCLIC_VOLTAMMETRY CASE
+                
+                start_dac_value = (command[1]<<8) | (command[2]&(0xFF));
                 Update_startvalue_Flag=true;
                 
-                if(Update_scanrate_Flag && Update_startvalue_Flag && Update_endvalue_Flag){
+                if((Update_scanrate_Flag||Update_timevalue_Flag) && Update_startvalue_Flag && Update_endvalue_Flag){
                     
                     CV_ready_Flag = true;
                     
@@ -152,13 +156,13 @@ int main(void)
                 
             case SET_CV_END_VALUE: // 'D' Set the initial value for the CV scan (in mV)
                 
-                end_dac_value=(command[1]<<8)|(command[2]&0xFF);  // This variable is used in the START_CYCLIC_VOLTAMMETRY CASE
+                end_dac_value = (command[1]<<8) | (command[2]&(0xFF));
+                
                 Update_endvalue_Flag=true;                
 
-                if(Update_scanrate_Flag && Update_startvalue_Flag && Update_endvalue_Flag){
+                if((Update_scanrate_Flag||Update_timevalue_Flag) && Update_startvalue_Flag && Update_endvalue_Flag){
                     
                     CV_ready_Flag = true;
-                    
                     // Send a UART message so that the red "NOT READY LABEL", turns into a green "READY" label
                     sprintf(DataBuffer, "CV ready");
                     UART_PutString(DataBuffer);
@@ -166,9 +170,27 @@ int main(void)
                 }
                 
                 break;             
-                                       
+
+            case SET_CV_TIME: // 'E' Set the time duration for the CV scan (in seconds)
                 
-            case START_CYCLIC_VOLTAMMETRY: ;  // 'E' Start a cyclic voltammetry experiment
+                Update_timevalue_Flag=true;
+                uint8 selected_time = command[1];
+                
+                if(Update_startvalue_Flag && Update_endvalue_Flag && Update_timevalue_Flag){
+                    
+                    selected_scan_rate = (end_dac_value - start_dac_value)/selected_time;
+                    
+                    CV_ready_Flag = true;
+                    // Send a UART message so that the red "NOT READY LABEL", turns into a green "READY" label
+                    sprintf(DataBuffer, "CV ready");
+                    UART_PutString(DataBuffer);
+                
+                }
+                
+                break;    
+                
+                
+            case START_CYCLIC_VOLTAMMETRY: ;  // 'F' Start a cyclic voltammetry experiment
                 
                 if(CV_ready_Flag==true){
                 
@@ -183,7 +205,7 @@ int main(void)
                 break;
             
 
-            case RUN_AMPEROMETRY: ; // 'F' run an amperometric experiment --> set the dac to a certain value
+            case RUN_AMPEROMETRY: ; // 'G' run an amperometric experiment --> set the dac to a certain value
                 
                 if(AMP_ready_Flag || Load_EEPROM_Flag){
                     

@@ -20,8 +20,9 @@
 #define SET_SCAN_RATE                   'B'                      
 #define SET_CV_START_VALUE              'C'
 #define SET_CV_END_VALUE                'D' 
-#define START_CYCLIC_VOLTAMMETRY        'E'
-#define RUN_AMPEROMETRY                 'F'
+#define SET_CV_TIME                     'E' 
+#define START_CYCLIC_VOLTAMMETRY        'F'
+#define RUN_AMPEROMETRY                 'G'
 
 /**************************************
 *           FLAGS
@@ -36,6 +37,7 @@ uint8_t Load_EEPROM_Flag;
 uint8_t Update_scanrate_Flag;
 uint8_t Update_startvalue_Flag;
 uint8_t Update_endvalue_Flag;
+uint8_t Update_timevalue_Flag;
     
 /**************************************
 *           LUT Constants
@@ -78,6 +80,7 @@ float32 uA_per_adc_count;
 uint16 start_dac_value;
 uint16 end_dac_value;
 int16 potential_max_current; //value of potential at which the maximum current is found
+uint16 selected_scan_rate;
 
 /* Variables for the received commands via UART */
 #define MAX_COMMAND_LENGTH 40

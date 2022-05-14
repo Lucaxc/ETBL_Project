@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 1
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 1
 
 
    1              		.syntax unified
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 1
   28:InterruptRoutines.c **** uint8 adc_hold;  // value to hold what adc buffer was just filled  --> SERVE ???
   29:InterruptRoutines.c **** 
   30:InterruptRoutines.c **** 
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 2
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 2
 
 
   31:InterruptRoutines.c **** int16 uA_CV_scan[MAX_CV_LUT_SIZE];
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 1
   63 002a 0B4B     		ldr	r3, .L4+4
   64 002c 1A80     		strh	r2, [r3]	@ movhi
   50:InterruptRoutines.c ****         
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 3
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 3
 
 
   51:InterruptRoutines.c ****         potential_max_current= helper_search_max(uA_CV_scan, lut_length); //we look at what has bee
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 1
   60:InterruptRoutines.c **** // ISR used to verify the error between the potential of the working electrode and the VIRTUAL GROU
   61:InterruptRoutines.c **** CY_ISR(adcInterrupt){
  110              		.loc 1 61 0
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 4
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 4
 
 
  111              		.cfi_startproc
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 1
   67:InterruptRoutines.c ****     
   68:InterruptRoutines.c ****     //send out values with the UART for the CV graph --> TO BE ADDED
   69:InterruptRoutines.c **** }
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 5
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 5
 
 
   70:InterruptRoutines.c **** 
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 1
   83:InterruptRoutines.c **** 
   84:InterruptRoutines.c ****         helper_HardwareSleep();
  201              		.loc 1 84 0
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 6
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 6
 
 
  202 003a FFF7FEFF 		bl	helper_HardwareSleep
@@ -343,1297 +343,1327 @@ ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 1
  234              		.comm	selected_voltage_source,1,1
  235              		.comm	command_lenght,1,1
  236              		.comm	command,40,4
- 237              		.global	potential_max_current
- 238              		.comm	end_dac_value,2,2
- 239              		.comm	start_dac_value,2,2
- 240              		.comm	uA_per_adc_count,4,4
- 241              		.comm	ADC_CV_array,10000,4
- 242              		.comm	lut_length,2,2
- 243              		.comm	lut_index,2,2
- 244              		.comm	waveform_amp_lut,4000,4
- 245              		.comm	waveform_CV_lut,10000,4
- 246              		.comm	lut_value,2,2
- 247              		.comm	dac_ground_value,2,2
- 248              		.comm	Update_endvalue_Flag,1,1
- 249              		.comm	Update_startvalue_Flag,1,1
- 250              		.comm	Update_scanrate_Flag,1,1
- 251              		.comm	Load_EEPROM_Flag,1,1
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 7
+ 237              		.comm	selected_scan_rate,2,2
+ 238              		.global	potential_max_current
+ 239              		.comm	end_dac_value,2,2
+ 240              		.comm	start_dac_value,2,2
+ 241              		.comm	uA_per_adc_count,4,4
+ 242              		.comm	ADC_CV_array,10000,4
+ 243              		.comm	lut_length,2,2
+ 244              		.comm	lut_index,2,2
+ 245              		.comm	waveform_amp_lut,4000,4
+ 246              		.comm	waveform_CV_lut,10000,4
+ 247              		.comm	lut_value,2,2
+ 248              		.comm	dac_ground_value,2,2
+ 249              		.comm	Update_timevalue_Flag,1,1
+ 250              		.comm	Update_endvalue_Flag,1,1
+ 251              		.comm	Update_startvalue_Flag,1,1
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 7
 
 
- 252              		.comm	AMP_ready_Flag,1,1
- 253              		.comm	CV_ready_Flag,1,1
- 254              		.comm	TIA_Calibration_ended_Flag,1,1
- 255              		.comm	Command_ready_Flag,1,1
- 256              		.comm	Input_Flag,1,1
- 257              		.comm	ADC_buffer_index,1,1
- 258              		.comm	TIA_resistor_value_index,1,1
- 259              		.comm	CalibrationBuffer,20,4
- 260              		.bss
- 261              		.align	2
- 262              		.set	.LANCHOR0,. + 0
- 263              		.type	potential_max_current, %object
- 264              		.size	potential_max_current, 2
- 265              	potential_max_current:
- 266 0000 0000     		.space	2
- 267 0002 0000     		.space	2
- 268              		.type	R_analog_route, %object
- 269              		.size	R_analog_route, 4
- 270              	R_analog_route:
- 271 0004 00000000 		.space	4
- 272              		.type	adc_recording_channel, %object
- 273              		.size	adc_recording_channel, 1
- 274              	adc_recording_channel:
- 275 0008 00       		.space	1
- 276              		.type	AMux_channel_select, %object
- 277              		.size	AMux_channel_select, 1
- 278              	AMux_channel_select:
- 279 0009 00       		.space	1
- 280              		.text
- 281              	.Letext0:
- 282              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
- 283              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
- 284              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
- 285              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
- 286              		.file 6 "Calibration.h"
- 287              		.file 7 "Global_variables.h"
- 288              		.file 8 "DVDAC.h"
- 289              		.file 9 "Generated_Source\\PSoC5/isr_adc.h"
- 290              		.file 10 "Generated_Source\\PSoC5/isr_dac.h"
- 291              		.file 11 "Helper_functions.h"
- 292              		.file 12 "Generated_Source\\PSoC5/ADC_SigDel.h"
- 293              		.file 13 "Generated_Source\\PSoC5/isr_adcAmp.h"
- 294              		.section	.debug_info,"",%progbits
- 295              	.Ldebug_info0:
- 296 0000 A6040000 		.4byte	0x4a6
- 297 0004 0400     		.2byte	0x4
- 298 0006 00000000 		.4byte	.Ldebug_abbrev0
- 299 000a 04       		.byte	0x4
- 300 000b 01       		.uleb128 0x1
- 301 000c E4030000 		.4byte	.LASF68
- 302 0010 0C       		.byte	0xc
- 303 0011 39000000 		.4byte	.LASF69
- 304 0015 8B010000 		.4byte	.LASF70
- 305 0019 00000000 		.4byte	.Ldebug_ranges0+0
- 306 001d 00000000 		.4byte	0
- 307 0021 00000000 		.4byte	.Ldebug_line0
- 308 0025 02       		.uleb128 0x2
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 8
+ 252              		.comm	Update_scanrate_Flag,1,1
+ 253              		.comm	Load_EEPROM_Flag,1,1
+ 254              		.comm	AMP_ready_Flag,1,1
+ 255              		.comm	CV_ready_Flag,1,1
+ 256              		.comm	TIA_Calibration_ended_Flag,1,1
+ 257              		.comm	Command_ready_Flag,1,1
+ 258              		.comm	Input_Flag,1,1
+ 259              		.comm	ADC_buffer_index,1,1
+ 260              		.comm	TIA_resistor_value_index,1,1
+ 261              		.comm	CalibrationBuffer,20,4
+ 262              		.bss
+ 263              		.align	2
+ 264              		.set	.LANCHOR0,. + 0
+ 265              		.type	potential_max_current, %object
+ 266              		.size	potential_max_current, 2
+ 267              	potential_max_current:
+ 268 0000 0000     		.space	2
+ 269 0002 0000     		.space	2
+ 270              		.type	R_analog_route, %object
+ 271              		.size	R_analog_route, 4
+ 272              	R_analog_route:
+ 273 0004 00000000 		.space	4
+ 274              		.type	adc_recording_channel, %object
+ 275              		.size	adc_recording_channel, 1
+ 276              	adc_recording_channel:
+ 277 0008 00       		.space	1
+ 278              		.type	AMux_channel_select, %object
+ 279              		.size	AMux_channel_select, 1
+ 280              	AMux_channel_select:
+ 281 0009 00       		.space	1
+ 282              		.text
+ 283              	.Letext0:
+ 284              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 285              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 286              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 287              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 288              		.file 6 "Calibration.h"
+ 289              		.file 7 "Global_variables.h"
+ 290              		.file 8 "DVDAC.h"
+ 291              		.file 9 "Generated_Source\\PSoC5/isr_adc.h"
+ 292              		.file 10 "Generated_Source\\PSoC5/isr_dac.h"
+ 293              		.file 11 "Helper_functions.h"
+ 294              		.file 12 "Generated_Source\\PSoC5/ADC_SigDel.h"
+ 295              		.file 13 "Generated_Source\\PSoC5/isr_adcAmp.h"
+ 296              		.section	.debug_info,"",%progbits
+ 297              	.Ldebug_info0:
+ 298 0000 C8040000 		.4byte	0x4c8
+ 299 0004 0400     		.2byte	0x4
+ 300 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 301 000a 04       		.byte	0x4
+ 302 000b 01       		.uleb128 0x1
+ 303 000c 0D040000 		.4byte	.LASF70
+ 304 0010 0C       		.byte	0xc
+ 305 0011 39000000 		.4byte	.LASF71
+ 306 0015 8B010000 		.4byte	.LASF72
+ 307 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 308 001d 00000000 		.4byte	0
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 8
 
 
- 309 0026 01       		.byte	0x1
- 310 0027 06       		.byte	0x6
- 311 0028 33020000 		.4byte	.LASF0
- 312 002c 03       		.uleb128 0x3
- 313 002d 5A010000 		.4byte	.LASF3
- 314 0031 02       		.byte	0x2
- 315 0032 1D       		.byte	0x1d
- 316 0033 37000000 		.4byte	0x37
- 317 0037 02       		.uleb128 0x2
- 318 0038 01       		.byte	0x1
- 319 0039 08       		.byte	0x8
- 320 003a EA010000 		.4byte	.LASF1
- 321 003e 02       		.uleb128 0x2
- 322 003f 02       		.byte	0x2
- 323 0040 05       		.byte	0x5
- 324 0041 5D000000 		.4byte	.LASF2
- 325 0045 03       		.uleb128 0x3
- 326 0046 9A000000 		.4byte	.LASF4
- 327 004a 02       		.byte	0x2
- 328 004b 2B       		.byte	0x2b
- 329 004c 50000000 		.4byte	0x50
- 330 0050 02       		.uleb128 0x2
- 331 0051 02       		.byte	0x2
- 332 0052 07       		.byte	0x7
- 333 0053 DF020000 		.4byte	.LASF5
- 334 0057 03       		.uleb128 0x3
- 335 0058 9A030000 		.4byte	.LASF6
- 336 005c 02       		.byte	0x2
- 337 005d 3F       		.byte	0x3f
- 338 005e 62000000 		.4byte	0x62
- 339 0062 02       		.uleb128 0x2
- 340 0063 04       		.byte	0x4
- 341 0064 05       		.byte	0x5
- 342 0065 3F010000 		.4byte	.LASF7
- 343 0069 02       		.uleb128 0x2
- 344 006a 04       		.byte	0x4
- 345 006b 07       		.byte	0x7
- 346 006c 34030000 		.4byte	.LASF8
- 347 0070 02       		.uleb128 0x2
- 348 0071 08       		.byte	0x8
- 349 0072 05       		.byte	0x5
- 350 0073 16010000 		.4byte	.LASF9
- 351 0077 02       		.uleb128 0x2
- 352 0078 08       		.byte	0x8
- 353 0079 07       		.byte	0x7
- 354 007a 47020000 		.4byte	.LASF10
- 355 007e 04       		.uleb128 0x4
- 356 007f 04       		.byte	0x4
- 357 0080 05       		.byte	0x5
- 358 0081 696E7400 		.ascii	"int\000"
- 359 0085 02       		.uleb128 0x2
- 360 0086 04       		.byte	0x4
- 361 0087 07       		.byte	0x7
- 362 0088 70020000 		.4byte	.LASF11
- 363 008c 03       		.uleb128 0x3
- 364 008d A4030000 		.4byte	.LASF12
- 365 0091 03       		.byte	0x3
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 9
+ 309 0021 00000000 		.4byte	.Ldebug_line0
+ 310 0025 02       		.uleb128 0x2
+ 311 0026 01       		.byte	0x1
+ 312 0027 06       		.byte	0x6
+ 313 0028 46020000 		.4byte	.LASF0
+ 314 002c 03       		.uleb128 0x3
+ 315 002d 5A010000 		.4byte	.LASF3
+ 316 0031 02       		.byte	0x2
+ 317 0032 1D       		.byte	0x1d
+ 318 0033 37000000 		.4byte	0x37
+ 319 0037 02       		.uleb128 0x2
+ 320 0038 01       		.byte	0x1
+ 321 0039 08       		.byte	0x8
+ 322 003a FD010000 		.4byte	.LASF1
+ 323 003e 02       		.uleb128 0x2
+ 324 003f 02       		.byte	0x2
+ 325 0040 05       		.byte	0x5
+ 326 0041 5D000000 		.4byte	.LASF2
+ 327 0045 03       		.uleb128 0x3
+ 328 0046 9A000000 		.4byte	.LASF4
+ 329 004a 02       		.byte	0x2
+ 330 004b 2B       		.byte	0x2b
+ 331 004c 50000000 		.4byte	0x50
+ 332 0050 02       		.uleb128 0x2
+ 333 0051 02       		.byte	0x2
+ 334 0052 07       		.byte	0x7
+ 335 0053 F2020000 		.4byte	.LASF5
+ 336 0057 03       		.uleb128 0x3
+ 337 0058 AD030000 		.4byte	.LASF6
+ 338 005c 02       		.byte	0x2
+ 339 005d 3F       		.byte	0x3f
+ 340 005e 62000000 		.4byte	0x62
+ 341 0062 02       		.uleb128 0x2
+ 342 0063 04       		.byte	0x4
+ 343 0064 05       		.byte	0x5
+ 344 0065 3F010000 		.4byte	.LASF7
+ 345 0069 02       		.uleb128 0x2
+ 346 006a 04       		.byte	0x4
+ 347 006b 07       		.byte	0x7
+ 348 006c 47030000 		.4byte	.LASF8
+ 349 0070 02       		.uleb128 0x2
+ 350 0071 08       		.byte	0x8
+ 351 0072 05       		.byte	0x5
+ 352 0073 16010000 		.4byte	.LASF9
+ 353 0077 02       		.uleb128 0x2
+ 354 0078 08       		.byte	0x8
+ 355 0079 07       		.byte	0x7
+ 356 007a 5A020000 		.4byte	.LASF10
+ 357 007e 04       		.uleb128 0x4
+ 358 007f 04       		.byte	0x4
+ 359 0080 05       		.byte	0x5
+ 360 0081 696E7400 		.ascii	"int\000"
+ 361 0085 02       		.uleb128 0x2
+ 362 0086 04       		.byte	0x4
+ 363 0087 07       		.byte	0x7
+ 364 0088 83020000 		.4byte	.LASF11
+ 365 008c 03       		.uleb128 0x3
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 9
 
 
- 366 0092 18       		.byte	0x18
- 367 0093 2C000000 		.4byte	0x2c
- 368 0097 03       		.uleb128 0x3
- 369 0098 7D020000 		.4byte	.LASF13
- 370 009c 03       		.byte	0x3
- 371 009d 24       		.byte	0x24
- 372 009e 45000000 		.4byte	0x45
- 373 00a2 03       		.uleb128 0x3
- 374 00a3 3F020000 		.4byte	.LASF14
- 375 00a7 03       		.byte	0x3
- 376 00a8 2C       		.byte	0x2c
- 377 00a9 57000000 		.4byte	0x57
- 378 00ad 05       		.uleb128 0x5
- 379 00ae CA030000 		.4byte	.LASF15
- 380 00b2 04       		.byte	0x4
- 381 00b3 E901     		.2byte	0x1e9
- 382 00b5 37000000 		.4byte	0x37
- 383 00b9 05       		.uleb128 0x5
- 384 00ba A5000000 		.4byte	.LASF16
- 385 00be 04       		.byte	0x4
- 386 00bf EA01     		.2byte	0x1ea
- 387 00c1 50000000 		.4byte	0x50
- 388 00c5 05       		.uleb128 0x5
- 389 00c6 C1000000 		.4byte	.LASF17
- 390 00ca 04       		.byte	0x4
- 391 00cb ED01     		.2byte	0x1ed
- 392 00cd 3E000000 		.4byte	0x3e
- 393 00d1 05       		.uleb128 0x5
- 394 00d2 31000000 		.4byte	.LASF18
- 395 00d6 04       		.byte	0x4
- 396 00d7 EF01     		.2byte	0x1ef
- 397 00d9 DD000000 		.4byte	0xdd
- 398 00dd 02       		.uleb128 0x2
- 399 00de 04       		.byte	0x4
- 400 00df 04       		.byte	0x4
- 401 00e0 03010000 		.4byte	.LASF19
- 402 00e4 02       		.uleb128 0x2
- 403 00e5 08       		.byte	0x8
- 404 00e6 04       		.byte	0x4
- 405 00e7 D0030000 		.4byte	.LASF20
- 406 00eb 02       		.uleb128 0x2
- 407 00ec 01       		.byte	0x1
- 408 00ed 08       		.byte	0x8
- 409 00ee BF020000 		.4byte	.LASF21
- 410 00f2 02       		.uleb128 0x2
- 411 00f3 08       		.byte	0x8
- 412 00f4 04       		.byte	0x4
- 413 00f5 DE010000 		.4byte	.LASF22
- 414 00f9 02       		.uleb128 0x2
- 415 00fa 04       		.byte	0x4
- 416 00fb 07       		.byte	0x7
- 417 00fc 80000000 		.4byte	.LASF23
- 418 0100 06       		.uleb128 0x6
- 419 0101 9E020000 		.4byte	.LASF24
- 420 0105 01       		.byte	0x1
- 421 0106 27       		.byte	0x27
- 422 0107 00000000 		.4byte	.LFB64
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 10
+ 366 008d B7030000 		.4byte	.LASF12
+ 367 0091 03       		.byte	0x3
+ 368 0092 18       		.byte	0x18
+ 369 0093 2C000000 		.4byte	0x2c
+ 370 0097 03       		.uleb128 0x3
+ 371 0098 90020000 		.4byte	.LASF13
+ 372 009c 03       		.byte	0x3
+ 373 009d 24       		.byte	0x24
+ 374 009e 45000000 		.4byte	0x45
+ 375 00a2 03       		.uleb128 0x3
+ 376 00a3 52020000 		.4byte	.LASF14
+ 377 00a7 03       		.byte	0x3
+ 378 00a8 2C       		.byte	0x2c
+ 379 00a9 57000000 		.4byte	0x57
+ 380 00ad 05       		.uleb128 0x5
+ 381 00ae F3030000 		.4byte	.LASF15
+ 382 00b2 04       		.byte	0x4
+ 383 00b3 E901     		.2byte	0x1e9
+ 384 00b5 37000000 		.4byte	0x37
+ 385 00b9 05       		.uleb128 0x5
+ 386 00ba A5000000 		.4byte	.LASF16
+ 387 00be 04       		.byte	0x4
+ 388 00bf EA01     		.2byte	0x1ea
+ 389 00c1 50000000 		.4byte	0x50
+ 390 00c5 05       		.uleb128 0x5
+ 391 00c6 C1000000 		.4byte	.LASF17
+ 392 00ca 04       		.byte	0x4
+ 393 00cb ED01     		.2byte	0x1ed
+ 394 00cd 3E000000 		.4byte	0x3e
+ 395 00d1 05       		.uleb128 0x5
+ 396 00d2 31000000 		.4byte	.LASF18
+ 397 00d6 04       		.byte	0x4
+ 398 00d7 EF01     		.2byte	0x1ef
+ 399 00d9 DD000000 		.4byte	0xdd
+ 400 00dd 02       		.uleb128 0x2
+ 401 00de 04       		.byte	0x4
+ 402 00df 04       		.byte	0x4
+ 403 00e0 03010000 		.4byte	.LASF19
+ 404 00e4 02       		.uleb128 0x2
+ 405 00e5 08       		.byte	0x8
+ 406 00e6 04       		.byte	0x4
+ 407 00e7 F9030000 		.4byte	.LASF20
+ 408 00eb 02       		.uleb128 0x2
+ 409 00ec 01       		.byte	0x1
+ 410 00ed 08       		.byte	0x8
+ 411 00ee D2020000 		.4byte	.LASF21
+ 412 00f2 02       		.uleb128 0x2
+ 413 00f3 08       		.byte	0x8
+ 414 00f4 04       		.byte	0x4
+ 415 00f5 F1010000 		.4byte	.LASF22
+ 416 00f9 02       		.uleb128 0x2
+ 417 00fa 04       		.byte	0x4
+ 418 00fb 07       		.byte	0x7
+ 419 00fc 80000000 		.4byte	.LASF23
+ 420 0100 06       		.uleb128 0x6
+ 421 0101 B1020000 		.4byte	.LASF24
+ 422 0105 01       		.byte	0x1
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 10
 
 
- 423 010b 70000000 		.4byte	.LFE64-.LFB64
- 424 010f 01       		.uleb128 0x1
- 425 0110 9C       		.byte	0x9c
- 426 0111 4D010000 		.4byte	0x14d
- 427 0115 07       		.uleb128 0x7
- 428 0116 0A000000 		.4byte	.LVL0
- 429 011a 5C040000 		.4byte	0x45c
- 430 011e 07       		.uleb128 0x7
- 431 011f 20000000 		.4byte	.LVL1
- 432 0123 67040000 		.4byte	0x467
- 433 0127 07       		.uleb128 0x7
- 434 0128 24000000 		.4byte	.LVL2
- 435 012c 72040000 		.4byte	0x472
- 436 0130 07       		.uleb128 0x7
- 437 0131 28000000 		.4byte	.LVL3
- 438 0135 7D040000 		.4byte	0x47d
- 439 0139 08       		.uleb128 0x8
- 440 013a 38000000 		.4byte	.LVL4
- 441 013e 88040000 		.4byte	0x488
- 442 0142 09       		.uleb128 0x9
- 443 0143 01       		.uleb128 0x1
- 444 0144 50       		.byte	0x50
- 445 0145 05       		.uleb128 0x5
- 446 0146 03       		.byte	0x3
- 447 0147 00000000 		.4byte	uA_CV_scan
- 448 014b 00       		.byte	0
- 449 014c 00       		.byte	0
- 450 014d 0A       		.uleb128 0xa
- 451 014e F2020000 		.4byte	.LASF25
- 452 0152 01       		.byte	0x1
- 453 0153 3D       		.byte	0x3d
- 454 0154 00000000 		.4byte	.LFB65
- 455 0158 40000000 		.4byte	.LFE65-.LFB65
- 456 015c 01       		.uleb128 0x1
- 457 015d 9C       		.byte	0x9c
- 458 015e 6C010000 		.4byte	0x16c
- 459 0162 07       		.uleb128 0x7
- 460 0163 0A000000 		.4byte	.LVL5
- 461 0167 93040000 		.4byte	0x493
- 462 016b 00       		.byte	0
- 463 016c 0A       		.uleb128 0xa
- 464 016d 8A030000 		.4byte	.LASF26
- 465 0171 01       		.byte	0x1
- 466 0172 49       		.byte	0x49
- 467 0173 00000000 		.4byte	.LFB66
- 468 0177 68000000 		.4byte	.LFE66-.LFB66
- 469 017b 01       		.uleb128 0x1
- 470 017c 9C       		.byte	0x9c
- 471 017d A6010000 		.4byte	0x1a6
- 472 0181 07       		.uleb128 0x7
- 473 0182 0A000000 		.4byte	.LVL9
- 474 0186 5C040000 		.4byte	0x45c
- 475 018a 07       		.uleb128 0x7
- 476 018b 12000000 		.4byte	.LVL10
- 477 018f 93040000 		.4byte	0x493
- 478 0193 07       		.uleb128 0x7
- 479 0194 3A000000 		.4byte	.LVL14
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 11
+ 423 0106 27       		.byte	0x27
+ 424 0107 00000000 		.4byte	.LFB64
+ 425 010b 70000000 		.4byte	.LFE64-.LFB64
+ 426 010f 01       		.uleb128 0x1
+ 427 0110 9C       		.byte	0x9c
+ 428 0111 4D010000 		.4byte	0x14d
+ 429 0115 07       		.uleb128 0x7
+ 430 0116 0A000000 		.4byte	.LVL0
+ 431 011a 7E040000 		.4byte	0x47e
+ 432 011e 07       		.uleb128 0x7
+ 433 011f 20000000 		.4byte	.LVL1
+ 434 0123 89040000 		.4byte	0x489
+ 435 0127 07       		.uleb128 0x7
+ 436 0128 24000000 		.4byte	.LVL2
+ 437 012c 94040000 		.4byte	0x494
+ 438 0130 07       		.uleb128 0x7
+ 439 0131 28000000 		.4byte	.LVL3
+ 440 0135 9F040000 		.4byte	0x49f
+ 441 0139 08       		.uleb128 0x8
+ 442 013a 38000000 		.4byte	.LVL4
+ 443 013e AA040000 		.4byte	0x4aa
+ 444 0142 09       		.uleb128 0x9
+ 445 0143 01       		.uleb128 0x1
+ 446 0144 50       		.byte	0x50
+ 447 0145 05       		.uleb128 0x5
+ 448 0146 03       		.byte	0x3
+ 449 0147 00000000 		.4byte	uA_CV_scan
+ 450 014b 00       		.byte	0
+ 451 014c 00       		.byte	0
+ 452 014d 0A       		.uleb128 0xa
+ 453 014e 05030000 		.4byte	.LASF25
+ 454 0152 01       		.byte	0x1
+ 455 0153 3D       		.byte	0x3d
+ 456 0154 00000000 		.4byte	.LFB65
+ 457 0158 40000000 		.4byte	.LFE65-.LFB65
+ 458 015c 01       		.uleb128 0x1
+ 459 015d 9C       		.byte	0x9c
+ 460 015e 6C010000 		.4byte	0x16c
+ 461 0162 07       		.uleb128 0x7
+ 462 0163 0A000000 		.4byte	.LVL5
+ 463 0167 B5040000 		.4byte	0x4b5
+ 464 016b 00       		.byte	0
+ 465 016c 0A       		.uleb128 0xa
+ 466 016d 9D030000 		.4byte	.LASF26
+ 467 0171 01       		.byte	0x1
+ 468 0172 49       		.byte	0x49
+ 469 0173 00000000 		.4byte	.LFB66
+ 470 0177 68000000 		.4byte	.LFE66-.LFB66
+ 471 017b 01       		.uleb128 0x1
+ 472 017c 9C       		.byte	0x9c
+ 473 017d A6010000 		.4byte	0x1a6
+ 474 0181 07       		.uleb128 0x7
+ 475 0182 0A000000 		.4byte	.LVL9
+ 476 0186 7E040000 		.4byte	0x47e
+ 477 018a 07       		.uleb128 0x7
+ 478 018b 12000000 		.4byte	.LVL10
+ 479 018f B5040000 		.4byte	0x4b5
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 11
 
 
- 480 0198 9E040000 		.4byte	0x49e
- 481 019c 07       		.uleb128 0x7
- 482 019d 3E000000 		.4byte	.LVL15
- 483 01a1 7D040000 		.4byte	0x47d
- 484 01a5 00       		.byte	0
- 485 01a6 0B       		.uleb128 0xb
- 486 01a7 D7030000 		.4byte	.LASF27
- 487 01ab 05       		.byte	0x5
- 488 01ac 1207     		.2byte	0x712
- 489 01ae B2010000 		.4byte	0x1b2
- 490 01b2 0C       		.uleb128 0xc
- 491 01b3 A2000000 		.4byte	0xa2
- 492 01b7 0D       		.uleb128 0xd
- 493 01b8 B9000000 		.4byte	0xb9
- 494 01bc C7010000 		.4byte	0x1c7
- 495 01c0 0E       		.uleb128 0xe
- 496 01c1 F9000000 		.4byte	0xf9
- 497 01c5 09       		.byte	0x9
- 498 01c6 00       		.byte	0
- 499 01c7 0F       		.uleb128 0xf
- 500 01c8 5E020000 		.4byte	.LASF28
- 501 01cc 06       		.byte	0x6
- 502 01cd 1A       		.byte	0x1a
- 503 01ce B7010000 		.4byte	0x1b7
- 504 01d2 05       		.uleb128 0x5
- 505 01d3 03       		.byte	0x3
- 506 01d4 00000000 		.4byte	CalibrationBuffer
- 507 01d8 0F       		.uleb128 0xf
- 508 01d9 67000000 		.4byte	.LASF29
- 509 01dd 06       		.byte	0x6
- 510 01de 21       		.byte	0x21
- 511 01df AD000000 		.4byte	0xad
- 512 01e3 05       		.uleb128 0x5
- 513 01e4 03       		.byte	0x3
- 514 01e5 00000000 		.4byte	TIA_resistor_value_index
- 515 01e9 0F       		.uleb128 0xf
- 516 01ea CE020000 		.4byte	.LASF30
- 517 01ee 06       		.byte	0x6
- 518 01ef 22       		.byte	0x22
- 519 01f0 AD000000 		.4byte	0xad
- 520 01f4 05       		.uleb128 0x5
- 521 01f5 03       		.byte	0x3
- 522 01f6 00000000 		.4byte	ADC_buffer_index
- 523 01fa 0F       		.uleb128 0xf
- 524 01fb F8010000 		.4byte	.LASF31
- 525 01ff 01       		.byte	0x1
- 526 0200 21       		.byte	0x21
- 527 0201 D1000000 		.4byte	0xd1
- 528 0205 05       		.uleb128 0x5
- 529 0206 03       		.byte	0x3
- 530 0207 00000000 		.4byte	R_analog_route
- 531 020b 0F       		.uleb128 0xf
- 532 020c 72040000 		.4byte	.LASF32
- 533 0210 07       		.byte	0x7
- 534 0211 1E       		.byte	0x1e
- 535 0212 AD000000 		.4byte	0xad
- 536 0216 05       		.uleb128 0x5
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 12
+ 480 0193 07       		.uleb128 0x7
+ 481 0194 3A000000 		.4byte	.LVL14
+ 482 0198 C0040000 		.4byte	0x4c0
+ 483 019c 07       		.uleb128 0x7
+ 484 019d 3E000000 		.4byte	.LVL15
+ 485 01a1 9F040000 		.4byte	0x49f
+ 486 01a5 00       		.byte	0
+ 487 01a6 0B       		.uleb128 0xb
+ 488 01a7 00040000 		.4byte	.LASF27
+ 489 01ab 05       		.byte	0x5
+ 490 01ac 1207     		.2byte	0x712
+ 491 01ae B2010000 		.4byte	0x1b2
+ 492 01b2 0C       		.uleb128 0xc
+ 493 01b3 A2000000 		.4byte	0xa2
+ 494 01b7 0D       		.uleb128 0xd
+ 495 01b8 B9000000 		.4byte	0xb9
+ 496 01bc C7010000 		.4byte	0x1c7
+ 497 01c0 0E       		.uleb128 0xe
+ 498 01c1 F9000000 		.4byte	0xf9
+ 499 01c5 09       		.byte	0x9
+ 500 01c6 00       		.byte	0
+ 501 01c7 0F       		.uleb128 0xf
+ 502 01c8 71020000 		.4byte	.LASF28
+ 503 01cc 06       		.byte	0x6
+ 504 01cd 1A       		.byte	0x1a
+ 505 01ce B7010000 		.4byte	0x1b7
+ 506 01d2 05       		.uleb128 0x5
+ 507 01d3 03       		.byte	0x3
+ 508 01d4 00000000 		.4byte	CalibrationBuffer
+ 509 01d8 0F       		.uleb128 0xf
+ 510 01d9 67000000 		.4byte	.LASF29
+ 511 01dd 06       		.byte	0x6
+ 512 01de 21       		.byte	0x21
+ 513 01df AD000000 		.4byte	0xad
+ 514 01e3 05       		.uleb128 0x5
+ 515 01e4 03       		.byte	0x3
+ 516 01e5 00000000 		.4byte	TIA_resistor_value_index
+ 517 01e9 0F       		.uleb128 0xf
+ 518 01ea E1020000 		.4byte	.LASF30
+ 519 01ee 06       		.byte	0x6
+ 520 01ef 22       		.byte	0x22
+ 521 01f0 AD000000 		.4byte	0xad
+ 522 01f4 05       		.uleb128 0x5
+ 523 01f5 03       		.byte	0x3
+ 524 01f6 00000000 		.4byte	ADC_buffer_index
+ 525 01fa 0F       		.uleb128 0xf
+ 526 01fb 0B020000 		.4byte	.LASF31
+ 527 01ff 01       		.byte	0x1
+ 528 0200 21       		.byte	0x21
+ 529 0201 D1000000 		.4byte	0xd1
+ 530 0205 05       		.uleb128 0x5
+ 531 0206 03       		.byte	0x3
+ 532 0207 00000000 		.4byte	R_analog_route
+ 533 020b 0F       		.uleb128 0xf
+ 534 020c 9B040000 		.4byte	.LASF32
+ 535 0210 07       		.byte	0x7
+ 536 0211 1F       		.byte	0x1f
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 12
 
 
- 537 0217 03       		.byte	0x3
- 538 0218 00000000 		.4byte	Input_Flag
- 539 021c 0F       		.uleb128 0xf
- 540 021d AC030000 		.4byte	.LASF33
- 541 0221 07       		.byte	0x7
- 542 0222 1F       		.byte	0x1f
- 543 0223 AD000000 		.4byte	0xad
- 544 0227 05       		.uleb128 0x5
- 545 0228 03       		.byte	0x3
- 546 0229 00000000 		.4byte	Command_ready_Flag
- 547 022d 0F       		.uleb128 0xf
- 548 022e 24010000 		.4byte	.LASF34
- 549 0232 07       		.byte	0x7
- 550 0233 20       		.byte	0x20
- 551 0234 8C000000 		.4byte	0x8c
- 552 0238 05       		.uleb128 0x5
- 553 0239 03       		.byte	0x3
- 554 023a 00000000 		.4byte	TIA_Calibration_ended_Flag
- 555 023e 0F       		.uleb128 0xf
- 556 023f C7000000 		.4byte	.LASF35
- 557 0243 07       		.byte	0x7
- 558 0244 21       		.byte	0x21
- 559 0245 8C000000 		.4byte	0x8c
- 560 0249 05       		.uleb128 0x5
- 561 024a 03       		.byte	0x3
- 562 024b 00000000 		.4byte	CV_ready_Flag
- 563 024f 0F       		.uleb128 0xf
- 564 0250 09030000 		.4byte	.LASF36
- 565 0254 07       		.byte	0x7
- 566 0255 22       		.byte	0x22
- 567 0256 8C000000 		.4byte	0x8c
- 568 025a 05       		.uleb128 0x5
- 569 025b 03       		.byte	0x3
- 570 025c 00000000 		.4byte	AMP_ready_Flag
- 571 0260 0F       		.uleb128 0xf
- 572 0261 4D030000 		.4byte	.LASF37
- 573 0265 07       		.byte	0x7
- 574 0266 23       		.byte	0x23
- 575 0267 8C000000 		.4byte	0x8c
- 576 026b 05       		.uleb128 0x5
- 577 026c 03       		.byte	0x3
- 578 026d 00000000 		.4byte	Load_EEPROM_Flag
- 579 0271 0F       		.uleb128 0xf
- 580 0272 AC000000 		.4byte	.LASF38
- 581 0276 07       		.byte	0x7
- 582 0277 24       		.byte	0x24
- 583 0278 8C000000 		.4byte	0x8c
- 584 027c 05       		.uleb128 0x5
- 585 027d 03       		.byte	0x3
- 586 027e 00000000 		.4byte	Update_scanrate_Flag
- 587 0282 0F       		.uleb128 0xf
- 588 0283 73030000 		.4byte	.LASF39
- 589 0287 07       		.byte	0x7
- 590 0288 25       		.byte	0x25
- 591 0289 8C000000 		.4byte	0x8c
- 592 028d 05       		.uleb128 0x5
- 593 028e 03       		.byte	0x3
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 13
+ 537 0212 AD000000 		.4byte	0xad
+ 538 0216 05       		.uleb128 0x5
+ 539 0217 03       		.byte	0x3
+ 540 0218 00000000 		.4byte	Input_Flag
+ 541 021c 0F       		.uleb128 0xf
+ 542 021d D5030000 		.4byte	.LASF33
+ 543 0221 07       		.byte	0x7
+ 544 0222 20       		.byte	0x20
+ 545 0223 AD000000 		.4byte	0xad
+ 546 0227 05       		.uleb128 0x5
+ 547 0228 03       		.byte	0x3
+ 548 0229 00000000 		.4byte	Command_ready_Flag
+ 549 022d 0F       		.uleb128 0xf
+ 550 022e 24010000 		.4byte	.LASF34
+ 551 0232 07       		.byte	0x7
+ 552 0233 21       		.byte	0x21
+ 553 0234 8C000000 		.4byte	0x8c
+ 554 0238 05       		.uleb128 0x5
+ 555 0239 03       		.byte	0x3
+ 556 023a 00000000 		.4byte	TIA_Calibration_ended_Flag
+ 557 023e 0F       		.uleb128 0xf
+ 558 023f C7000000 		.4byte	.LASF35
+ 559 0243 07       		.byte	0x7
+ 560 0244 22       		.byte	0x22
+ 561 0245 8C000000 		.4byte	0x8c
+ 562 0249 05       		.uleb128 0x5
+ 563 024a 03       		.byte	0x3
+ 564 024b 00000000 		.4byte	CV_ready_Flag
+ 565 024f 0F       		.uleb128 0xf
+ 566 0250 1C030000 		.4byte	.LASF36
+ 567 0254 07       		.byte	0x7
+ 568 0255 23       		.byte	0x23
+ 569 0256 8C000000 		.4byte	0x8c
+ 570 025a 05       		.uleb128 0x5
+ 571 025b 03       		.byte	0x3
+ 572 025c 00000000 		.4byte	AMP_ready_Flag
+ 573 0260 0F       		.uleb128 0xf
+ 574 0261 60030000 		.4byte	.LASF37
+ 575 0265 07       		.byte	0x7
+ 576 0266 24       		.byte	0x24
+ 577 0267 8C000000 		.4byte	0x8c
+ 578 026b 05       		.uleb128 0x5
+ 579 026c 03       		.byte	0x3
+ 580 026d 00000000 		.4byte	Load_EEPROM_Flag
+ 581 0271 0F       		.uleb128 0xf
+ 582 0272 AC000000 		.4byte	.LASF38
+ 583 0276 07       		.byte	0x7
+ 584 0277 25       		.byte	0x25
+ 585 0278 8C000000 		.4byte	0x8c
+ 586 027c 05       		.uleb128 0x5
+ 587 027d 03       		.byte	0x3
+ 588 027e 00000000 		.4byte	Update_scanrate_Flag
+ 589 0282 0F       		.uleb128 0xf
+ 590 0283 86030000 		.4byte	.LASF39
+ 591 0287 07       		.byte	0x7
+ 592 0288 26       		.byte	0x26
+ 593 0289 8C000000 		.4byte	0x8c
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 13
 
 
- 594 028f 00000000 		.4byte	Update_startvalue_Flag
- 595 0293 0F       		.uleb128 0xf
- 596 0294 1E020000 		.4byte	.LASF40
- 597 0298 07       		.byte	0x7
- 598 0299 26       		.byte	0x26
- 599 029a 8C000000 		.4byte	0x8c
- 600 029e 05       		.uleb128 0x5
- 601 029f 03       		.byte	0x3
- 602 02a0 00000000 		.4byte	Update_endvalue_Flag
- 603 02a4 0F       		.uleb128 0xf
- 604 02a5 89000000 		.4byte	.LASF41
- 605 02a9 07       		.byte	0x7
- 606 02aa 41       		.byte	0x41
- 607 02ab B9000000 		.4byte	0xb9
- 608 02af 05       		.uleb128 0x5
- 609 02b0 03       		.byte	0x3
- 610 02b1 00000000 		.4byte	dac_ground_value
- 611 02b5 0F       		.uleb128 0xf
- 612 02b6 C4020000 		.4byte	.LASF42
- 613 02ba 07       		.byte	0x7
- 614 02bb 45       		.byte	0x45
- 615 02bc B9000000 		.4byte	0xb9
- 616 02c0 05       		.uleb128 0x5
- 617 02c1 03       		.byte	0x3
- 618 02c2 00000000 		.4byte	lut_value
- 619 02c6 0D       		.uleb128 0xd
- 620 02c7 B9000000 		.4byte	0xb9
- 621 02cb D7020000 		.4byte	0x2d7
- 622 02cf 10       		.uleb128 0x10
- 623 02d0 F9000000 		.4byte	0xf9
- 624 02d4 8713     		.2byte	0x1387
- 625 02d6 00       		.byte	0
- 626 02d7 0F       		.uleb128 0xf
- 627 02d8 7D040000 		.4byte	.LASF43
- 628 02dc 07       		.byte	0x7
- 629 02dd 46       		.byte	0x46
- 630 02de C6020000 		.4byte	0x2c6
- 631 02e2 05       		.uleb128 0x5
- 632 02e3 03       		.byte	0x3
- 633 02e4 00000000 		.4byte	waveform_CV_lut
- 634 02e8 0D       		.uleb128 0xd
- 635 02e9 B9000000 		.4byte	0xb9
- 636 02ed F9020000 		.4byte	0x2f9
- 637 02f1 10       		.uleb128 0x10
- 638 02f2 F9000000 		.4byte	0xf9
- 639 02f6 CF07     		.2byte	0x7cf
- 640 02f8 00       		.byte	0
- 641 02f9 0F       		.uleb128 0xf
- 642 02fa 64010000 		.4byte	.LASF44
- 643 02fe 07       		.byte	0x7
- 644 02ff 47       		.byte	0x47
- 645 0300 E8020000 		.4byte	0x2e8
- 646 0304 05       		.uleb128 0x5
- 647 0305 03       		.byte	0x3
- 648 0306 00000000 		.4byte	waveform_amp_lut
- 649 030a 0F       		.uleb128 0xf
- 650 030b FF020000 		.4byte	.LASF45
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 14
+ 594 028d 05       		.uleb128 0x5
+ 595 028e 03       		.byte	0x3
+ 596 028f 00000000 		.4byte	Update_startvalue_Flag
+ 597 0293 0F       		.uleb128 0xf
+ 598 0294 31020000 		.4byte	.LASF40
+ 599 0298 07       		.byte	0x7
+ 600 0299 27       		.byte	0x27
+ 601 029a 8C000000 		.4byte	0x8c
+ 602 029e 05       		.uleb128 0x5
+ 603 029f 03       		.byte	0x3
+ 604 02a0 00000000 		.4byte	Update_endvalue_Flag
+ 605 02a4 0F       		.uleb128 0xf
+ 606 02a5 BF030000 		.4byte	.LASF41
+ 607 02a9 07       		.byte	0x7
+ 608 02aa 28       		.byte	0x28
+ 609 02ab 8C000000 		.4byte	0x8c
+ 610 02af 05       		.uleb128 0x5
+ 611 02b0 03       		.byte	0x3
+ 612 02b1 00000000 		.4byte	Update_timevalue_Flag
+ 613 02b5 0F       		.uleb128 0xf
+ 614 02b6 89000000 		.4byte	.LASF42
+ 615 02ba 07       		.byte	0x7
+ 616 02bb 43       		.byte	0x43
+ 617 02bc B9000000 		.4byte	0xb9
+ 618 02c0 05       		.uleb128 0x5
+ 619 02c1 03       		.byte	0x3
+ 620 02c2 00000000 		.4byte	dac_ground_value
+ 621 02c6 0F       		.uleb128 0xf
+ 622 02c7 D7020000 		.4byte	.LASF43
+ 623 02cb 07       		.byte	0x7
+ 624 02cc 47       		.byte	0x47
+ 625 02cd B9000000 		.4byte	0xb9
+ 626 02d1 05       		.uleb128 0x5
+ 627 02d2 03       		.byte	0x3
+ 628 02d3 00000000 		.4byte	lut_value
+ 629 02d7 0D       		.uleb128 0xd
+ 630 02d8 B9000000 		.4byte	0xb9
+ 631 02dc E8020000 		.4byte	0x2e8
+ 632 02e0 10       		.uleb128 0x10
+ 633 02e1 F9000000 		.4byte	0xf9
+ 634 02e5 8713     		.2byte	0x1387
+ 635 02e7 00       		.byte	0
+ 636 02e8 0F       		.uleb128 0xf
+ 637 02e9 A6040000 		.4byte	.LASF44
+ 638 02ed 07       		.byte	0x7
+ 639 02ee 48       		.byte	0x48
+ 640 02ef D7020000 		.4byte	0x2d7
+ 641 02f3 05       		.uleb128 0x5
+ 642 02f4 03       		.byte	0x3
+ 643 02f5 00000000 		.4byte	waveform_CV_lut
+ 644 02f9 0D       		.uleb128 0xd
+ 645 02fa B9000000 		.4byte	0xb9
+ 646 02fe 0A030000 		.4byte	0x30a
+ 647 0302 10       		.uleb128 0x10
+ 648 0303 F9000000 		.4byte	0xf9
+ 649 0307 CF07     		.2byte	0x7cf
+ 650 0309 00       		.byte	0
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 14
 
 
- 651 030f 07       		.byte	0x7
- 652 0310 48       		.byte	0x48
- 653 0311 B9000000 		.4byte	0xb9
- 654 0315 05       		.uleb128 0x5
- 655 0316 03       		.byte	0x3
- 656 0317 00000000 		.4byte	lut_index
- 657 031b 0F       		.uleb128 0xf
- 658 031c BF030000 		.4byte	.LASF46
- 659 0320 07       		.byte	0x7
- 660 0321 49       		.byte	0x49
- 661 0322 97000000 		.4byte	0x97
- 662 0326 05       		.uleb128 0x5
- 663 0327 03       		.byte	0x3
- 664 0328 00000000 		.4byte	lut_length
- 665 032c 0F       		.uleb128 0xf
- 666 032d 09010000 		.4byte	.LASF47
- 667 0331 07       		.byte	0x7
- 668 0332 4A       		.byte	0x4a
- 669 0333 C6020000 		.4byte	0x2c6
- 670 0337 05       		.uleb128 0x5
- 671 0338 03       		.byte	0x3
- 672 0339 00000000 		.4byte	ADC_CV_array
- 673 033d 0F       		.uleb128 0xf
- 674 033e 20000000 		.4byte	.LASF48
- 675 0342 07       		.byte	0x7
- 676 0343 4B       		.byte	0x4b
- 677 0344 D1000000 		.4byte	0xd1
- 678 0348 05       		.uleb128 0x5
- 679 0349 03       		.byte	0x3
- 680 034a 00000000 		.4byte	uA_per_adc_count
- 681 034e 0F       		.uleb128 0xf
- 682 034f 4D000000 		.4byte	.LASF49
- 683 0353 07       		.byte	0x7
- 684 0354 4E       		.byte	0x4e
- 685 0355 B9000000 		.4byte	0xb9
- 686 0359 05       		.uleb128 0x5
- 687 035a 03       		.byte	0x3
- 688 035b 00000000 		.4byte	start_dac_value
- 689 035f 0F       		.uleb128 0xf
- 690 0360 AF040000 		.4byte	.LASF50
- 691 0364 07       		.byte	0x7
- 692 0365 4F       		.byte	0x4f
- 693 0366 B9000000 		.4byte	0xb9
- 694 036a 05       		.uleb128 0x5
- 695 036b 03       		.byte	0x3
- 696 036c 00000000 		.4byte	end_dac_value
- 697 0370 0F       		.uleb128 0xf
- 698 0371 75010000 		.4byte	.LASF51
- 699 0375 01       		.byte	0x1
- 700 0376 23       		.byte	0x23
- 701 0377 C5000000 		.4byte	0xc5
- 702 037b 05       		.uleb128 0x5
- 703 037c 03       		.byte	0x3
- 704 037d 00000000 		.4byte	potential_max_current
- 705 0381 0D       		.uleb128 0xd
- 706 0382 8C000000 		.4byte	0x8c
- 707 0386 91030000 		.4byte	0x391
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 15
+ 651 030a 0F       		.uleb128 0xf
+ 652 030b 64010000 		.4byte	.LASF45
+ 653 030f 07       		.byte	0x7
+ 654 0310 49       		.byte	0x49
+ 655 0311 F9020000 		.4byte	0x2f9
+ 656 0315 05       		.uleb128 0x5
+ 657 0316 03       		.byte	0x3
+ 658 0317 00000000 		.4byte	waveform_amp_lut
+ 659 031b 0F       		.uleb128 0xf
+ 660 031c 12030000 		.4byte	.LASF46
+ 661 0320 07       		.byte	0x7
+ 662 0321 4A       		.byte	0x4a
+ 663 0322 B9000000 		.4byte	0xb9
+ 664 0326 05       		.uleb128 0x5
+ 665 0327 03       		.byte	0x3
+ 666 0328 00000000 		.4byte	lut_index
+ 667 032c 0F       		.uleb128 0xf
+ 668 032d E8030000 		.4byte	.LASF47
+ 669 0331 07       		.byte	0x7
+ 670 0332 4B       		.byte	0x4b
+ 671 0333 97000000 		.4byte	0x97
+ 672 0337 05       		.uleb128 0x5
+ 673 0338 03       		.byte	0x3
+ 674 0339 00000000 		.4byte	lut_length
+ 675 033d 0F       		.uleb128 0xf
+ 676 033e 09010000 		.4byte	.LASF48
+ 677 0342 07       		.byte	0x7
+ 678 0343 4C       		.byte	0x4c
+ 679 0344 D7020000 		.4byte	0x2d7
+ 680 0348 05       		.uleb128 0x5
+ 681 0349 03       		.byte	0x3
+ 682 034a 00000000 		.4byte	ADC_CV_array
+ 683 034e 0F       		.uleb128 0xf
+ 684 034f 20000000 		.4byte	.LASF49
+ 685 0353 07       		.byte	0x7
+ 686 0354 4D       		.byte	0x4d
+ 687 0355 D1000000 		.4byte	0xd1
+ 688 0359 05       		.uleb128 0x5
+ 689 035a 03       		.byte	0x3
+ 690 035b 00000000 		.4byte	uA_per_adc_count
+ 691 035f 0F       		.uleb128 0xf
+ 692 0360 4D000000 		.4byte	.LASF50
+ 693 0364 07       		.byte	0x7
+ 694 0365 50       		.byte	0x50
+ 695 0366 B9000000 		.4byte	0xb9
+ 696 036a 05       		.uleb128 0x5
+ 697 036b 03       		.byte	0x3
+ 698 036c 00000000 		.4byte	start_dac_value
+ 699 0370 0F       		.uleb128 0xf
+ 700 0371 D8040000 		.4byte	.LASF51
+ 701 0375 07       		.byte	0x7
+ 702 0376 51       		.byte	0x51
+ 703 0377 B9000000 		.4byte	0xb9
+ 704 037b 05       		.uleb128 0x5
+ 705 037c 03       		.byte	0x3
+ 706 037d 00000000 		.4byte	end_dac_value
+ 707 0381 0F       		.uleb128 0xf
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 15
 
 
- 708 038a 0E       		.uleb128 0xe
- 709 038b F9000000 		.4byte	0xf9
- 710 038f 27       		.byte	0x27
- 711 0390 00       		.byte	0
- 712 0391 0F       		.uleb128 0xf
- 713 0392 98040000 		.4byte	.LASF52
- 714 0396 07       		.byte	0x7
- 715 0397 55       		.byte	0x55
- 716 0398 81030000 		.4byte	0x381
- 717 039c 05       		.uleb128 0x5
- 718 039d 03       		.byte	0x3
- 719 039e 00000000 		.4byte	command
- 720 03a2 0F       		.uleb128 0xf
- 721 03a3 F4000000 		.4byte	.LASF53
- 722 03a7 07       		.byte	0x7
- 723 03a8 56       		.byte	0x56
- 724 03a9 8C000000 		.4byte	0x8c
- 725 03ad 05       		.uleb128 0x5
- 726 03ae 03       		.byte	0x3
- 727 03af 00000000 		.4byte	command_lenght
- 728 03b3 0F       		.uleb128 0xf
- 729 03b4 86020000 		.4byte	.LASF54
- 730 03b8 08       		.byte	0x8
- 731 03b9 1E       		.byte	0x1e
- 732 03ba AD000000 		.4byte	0xad
- 733 03be 05       		.uleb128 0x5
- 734 03bf 03       		.byte	0x3
- 735 03c0 00000000 		.4byte	selected_voltage_source
- 736 03c4 0D       		.uleb128 0xd
- 737 03c5 EB000000 		.4byte	0xeb
- 738 03c9 D4030000 		.4byte	0x3d4
- 739 03cd 0E       		.uleb128 0xe
- 740 03ce F9000000 		.4byte	0xf9
- 741 03d2 3F       		.byte	0x3f
- 742 03d3 00       		.byte	0
- 743 03d4 0F       		.uleb128 0xf
- 744 03d5 EB000000 		.4byte	.LASF55
- 745 03d9 01       		.byte	0x1
- 746 03da 13       		.byte	0x13
- 747 03db C4030000 		.4byte	0x3c4
- 748 03df 05       		.uleb128 0x5
- 749 03e0 03       		.byte	0x3
- 750 03e1 00000000 		.4byte	UART_str
- 751 03e5 0F       		.uleb128 0xf
- 752 03e6 AB020000 		.4byte	.LASF56
- 753 03ea 01       		.byte	0x1
- 754 03eb 16       		.byte	0x16
- 755 03ec AD000000 		.4byte	0xad
- 756 03f0 05       		.uleb128 0x5
- 757 03f1 03       		.byte	0x3
- 758 03f2 00000000 		.4byte	AMux_channel_select
- 759 03f6 0F       		.uleb128 0xf
- 760 03f7 D5000000 		.4byte	.LASF57
- 761 03fb 01       		.byte	0x1
- 762 03fc 19       		.byte	0x19
- 763 03fd AD000000 		.4byte	0xad
- 764 0401 05       		.uleb128 0x5
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 16
+ 708 0382 75010000 		.4byte	.LASF52
+ 709 0386 01       		.byte	0x1
+ 710 0387 23       		.byte	0x23
+ 711 0388 C5000000 		.4byte	0xc5
+ 712 038c 05       		.uleb128 0x5
+ 713 038d 03       		.byte	0x3
+ 714 038e 00000000 		.4byte	potential_max_current
+ 715 0392 0F       		.uleb128 0xf
+ 716 0393 DE010000 		.4byte	.LASF53
+ 717 0397 07       		.byte	0x7
+ 718 0398 53       		.byte	0x53
+ 719 0399 B9000000 		.4byte	0xb9
+ 720 039d 05       		.uleb128 0x5
+ 721 039e 03       		.byte	0x3
+ 722 039f 00000000 		.4byte	selected_scan_rate
+ 723 03a3 0D       		.uleb128 0xd
+ 724 03a4 8C000000 		.4byte	0x8c
+ 725 03a8 B3030000 		.4byte	0x3b3
+ 726 03ac 0E       		.uleb128 0xe
+ 727 03ad F9000000 		.4byte	0xf9
+ 728 03b1 27       		.byte	0x27
+ 729 03b2 00       		.byte	0
+ 730 03b3 0F       		.uleb128 0xf
+ 731 03b4 C1040000 		.4byte	.LASF54
+ 732 03b8 07       		.byte	0x7
+ 733 03b9 58       		.byte	0x58
+ 734 03ba A3030000 		.4byte	0x3a3
+ 735 03be 05       		.uleb128 0x5
+ 736 03bf 03       		.byte	0x3
+ 737 03c0 00000000 		.4byte	command
+ 738 03c4 0F       		.uleb128 0xf
+ 739 03c5 F4000000 		.4byte	.LASF55
+ 740 03c9 07       		.byte	0x7
+ 741 03ca 59       		.byte	0x59
+ 742 03cb 8C000000 		.4byte	0x8c
+ 743 03cf 05       		.uleb128 0x5
+ 744 03d0 03       		.byte	0x3
+ 745 03d1 00000000 		.4byte	command_lenght
+ 746 03d5 0F       		.uleb128 0xf
+ 747 03d6 99020000 		.4byte	.LASF56
+ 748 03da 08       		.byte	0x8
+ 749 03db 1E       		.byte	0x1e
+ 750 03dc AD000000 		.4byte	0xad
+ 751 03e0 05       		.uleb128 0x5
+ 752 03e1 03       		.byte	0x3
+ 753 03e2 00000000 		.4byte	selected_voltage_source
+ 754 03e6 0D       		.uleb128 0xd
+ 755 03e7 EB000000 		.4byte	0xeb
+ 756 03eb F6030000 		.4byte	0x3f6
+ 757 03ef 0E       		.uleb128 0xe
+ 758 03f0 F9000000 		.4byte	0xf9
+ 759 03f4 3F       		.byte	0x3f
+ 760 03f5 00       		.byte	0
+ 761 03f6 0F       		.uleb128 0xf
+ 762 03f7 EB000000 		.4byte	.LASF57
+ 763 03fb 01       		.byte	0x1
+ 764 03fc 13       		.byte	0x13
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 16
 
 
- 765 0402 03       		.byte	0x3
- 766 0403 00000000 		.4byte	adc_recording_channel
- 767 0407 0F       		.uleb128 0xf
- 768 0408 2B030000 		.4byte	.LASF58
- 769 040c 01       		.byte	0x1
- 770 040d 1C       		.byte	0x1c
- 771 040e AD000000 		.4byte	0xad
- 772 0412 05       		.uleb128 0x5
- 773 0413 03       		.byte	0x3
- 774 0414 00000000 		.4byte	adc_hold
- 775 0418 0D       		.uleb128 0xd
- 776 0419 C5000000 		.4byte	0xc5
- 777 041d 29040000 		.4byte	0x429
- 778 0421 10       		.uleb128 0x10
- 779 0422 F9000000 		.4byte	0xf9
- 780 0426 8713     		.2byte	0x1387
- 781 0428 00       		.byte	0
- 782 0429 0F       		.uleb128 0xf
- 783 042a 8D040000 		.4byte	.LASF59
- 784 042e 01       		.byte	0x1
- 785 042f 1F       		.byte	0x1f
- 786 0430 18040000 		.4byte	0x418
- 787 0434 05       		.uleb128 0x5
- 788 0435 03       		.byte	0x3
- 789 0436 00000000 		.4byte	uA_CV_scan
- 790 043a 0D       		.uleb128 0xd
- 791 043b C5000000 		.4byte	0xc5
- 792 043f 4B040000 		.4byte	0x44b
- 793 0443 10       		.uleb128 0x10
- 794 0444 F9000000 		.4byte	0xf9
- 795 0448 CF07     		.2byte	0x7cf
- 796 044a 00       		.byte	0
- 797 044b 0F       		.uleb128 0xf
- 798 044c 46030000 		.4byte	.LASF60
- 799 0450 01       		.byte	0x1
- 800 0451 20       		.byte	0x20
- 801 0452 3A040000 		.4byte	0x43a
- 802 0456 05       		.uleb128 0x5
- 803 0457 03       		.byte	0x3
- 804 0458 00000000 		.4byte	uA_amp
- 805 045c 11       		.uleb128 0x11
- 806 045d A0040000 		.4byte	.LASF61
- 807 0461 A0040000 		.4byte	.LASF61
- 808 0465 08       		.byte	0x8
- 809 0466 28       		.byte	0x28
- 810 0467 11       		.uleb128 0x11
- 811 0468 00000000 		.4byte	.LASF62
- 812 046c 00000000 		.4byte	.LASF62
- 813 0470 09       		.byte	0x9
- 814 0471 25       		.byte	0x25
- 815 0472 11       		.uleb128 0x11
- 816 0473 10000000 		.4byte	.LASF63
- 817 0477 10000000 		.4byte	.LASF63
- 818 047b 0A       		.byte	0xa
- 819 047c 25       		.byte	0x25
- 820 047d 11       		.uleb128 0x11
- 821 047e 5E030000 		.4byte	.LASF64
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 17
+ 765 03fd E6030000 		.4byte	0x3e6
+ 766 0401 05       		.uleb128 0x5
+ 767 0402 03       		.byte	0x3
+ 768 0403 00000000 		.4byte	UART_str
+ 769 0407 0F       		.uleb128 0xf
+ 770 0408 BE020000 		.4byte	.LASF58
+ 771 040c 01       		.byte	0x1
+ 772 040d 16       		.byte	0x16
+ 773 040e AD000000 		.4byte	0xad
+ 774 0412 05       		.uleb128 0x5
+ 775 0413 03       		.byte	0x3
+ 776 0414 00000000 		.4byte	AMux_channel_select
+ 777 0418 0F       		.uleb128 0xf
+ 778 0419 D5000000 		.4byte	.LASF59
+ 779 041d 01       		.byte	0x1
+ 780 041e 19       		.byte	0x19
+ 781 041f AD000000 		.4byte	0xad
+ 782 0423 05       		.uleb128 0x5
+ 783 0424 03       		.byte	0x3
+ 784 0425 00000000 		.4byte	adc_recording_channel
+ 785 0429 0F       		.uleb128 0xf
+ 786 042a 3E030000 		.4byte	.LASF60
+ 787 042e 01       		.byte	0x1
+ 788 042f 1C       		.byte	0x1c
+ 789 0430 AD000000 		.4byte	0xad
+ 790 0434 05       		.uleb128 0x5
+ 791 0435 03       		.byte	0x3
+ 792 0436 00000000 		.4byte	adc_hold
+ 793 043a 0D       		.uleb128 0xd
+ 794 043b C5000000 		.4byte	0xc5
+ 795 043f 4B040000 		.4byte	0x44b
+ 796 0443 10       		.uleb128 0x10
+ 797 0444 F9000000 		.4byte	0xf9
+ 798 0448 8713     		.2byte	0x1387
+ 799 044a 00       		.byte	0
+ 800 044b 0F       		.uleb128 0xf
+ 801 044c B6040000 		.4byte	.LASF61
+ 802 0450 01       		.byte	0x1
+ 803 0451 1F       		.byte	0x1f
+ 804 0452 3A040000 		.4byte	0x43a
+ 805 0456 05       		.uleb128 0x5
+ 806 0457 03       		.byte	0x3
+ 807 0458 00000000 		.4byte	uA_CV_scan
+ 808 045c 0D       		.uleb128 0xd
+ 809 045d C5000000 		.4byte	0xc5
+ 810 0461 6D040000 		.4byte	0x46d
+ 811 0465 10       		.uleb128 0x10
+ 812 0466 F9000000 		.4byte	0xf9
+ 813 046a CF07     		.2byte	0x7cf
+ 814 046c 00       		.byte	0
+ 815 046d 0F       		.uleb128 0xf
+ 816 046e 59030000 		.4byte	.LASF62
+ 817 0472 01       		.byte	0x1
+ 818 0473 20       		.byte	0x20
+ 819 0474 5C040000 		.4byte	0x45c
+ 820 0478 05       		.uleb128 0x5
+ 821 0479 03       		.byte	0x3
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 17
 
 
- 822 0482 5E030000 		.4byte	.LASF64
- 823 0486 0B       		.byte	0xb
- 824 0487 23       		.byte	0x23
- 825 0488 11       		.uleb128 0x11
- 826 0489 48010000 		.4byte	.LASF65
- 827 048d 48010000 		.4byte	.LASF65
- 828 0491 0B       		.byte	0xb
- 829 0492 28       		.byte	0x28
- 830 0493 11       		.uleb128 0x11
- 831 0494 07020000 		.4byte	.LASF66
- 832 0498 07020000 		.4byte	.LASF66
- 833 049c 0C       		.byte	0xc
- 834 049d 41       		.byte	0x41
- 835 049e 11       		.uleb128 0x11
- 836 049f 18030000 		.4byte	.LASF67
- 837 04a3 18030000 		.4byte	.LASF67
- 838 04a7 0D       		.byte	0xd
- 839 04a8 25       		.byte	0x25
- 840 04a9 00       		.byte	0
- 841              		.section	.debug_abbrev,"",%progbits
- 842              	.Ldebug_abbrev0:
- 843 0000 01       		.uleb128 0x1
- 844 0001 11       		.uleb128 0x11
- 845 0002 01       		.byte	0x1
- 846 0003 25       		.uleb128 0x25
- 847 0004 0E       		.uleb128 0xe
- 848 0005 13       		.uleb128 0x13
- 849 0006 0B       		.uleb128 0xb
- 850 0007 03       		.uleb128 0x3
- 851 0008 0E       		.uleb128 0xe
- 852 0009 1B       		.uleb128 0x1b
- 853 000a 0E       		.uleb128 0xe
- 854 000b 55       		.uleb128 0x55
- 855 000c 17       		.uleb128 0x17
- 856 000d 11       		.uleb128 0x11
- 857 000e 01       		.uleb128 0x1
- 858 000f 10       		.uleb128 0x10
- 859 0010 17       		.uleb128 0x17
- 860 0011 00       		.byte	0
- 861 0012 00       		.byte	0
- 862 0013 02       		.uleb128 0x2
- 863 0014 24       		.uleb128 0x24
- 864 0015 00       		.byte	0
- 865 0016 0B       		.uleb128 0xb
- 866 0017 0B       		.uleb128 0xb
- 867 0018 3E       		.uleb128 0x3e
- 868 0019 0B       		.uleb128 0xb
- 869 001a 03       		.uleb128 0x3
- 870 001b 0E       		.uleb128 0xe
- 871 001c 00       		.byte	0
- 872 001d 00       		.byte	0
- 873 001e 03       		.uleb128 0x3
- 874 001f 16       		.uleb128 0x16
- 875 0020 00       		.byte	0
- 876 0021 03       		.uleb128 0x3
- 877 0022 0E       		.uleb128 0xe
- 878 0023 3A       		.uleb128 0x3a
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 18
+ 822 047a 00000000 		.4byte	uA_amp
+ 823 047e 11       		.uleb128 0x11
+ 824 047f C9040000 		.4byte	.LASF63
+ 825 0483 C9040000 		.4byte	.LASF63
+ 826 0487 08       		.byte	0x8
+ 827 0488 28       		.byte	0x28
+ 828 0489 11       		.uleb128 0x11
+ 829 048a 00000000 		.4byte	.LASF64
+ 830 048e 00000000 		.4byte	.LASF64
+ 831 0492 09       		.byte	0x9
+ 832 0493 25       		.byte	0x25
+ 833 0494 11       		.uleb128 0x11
+ 834 0495 10000000 		.4byte	.LASF65
+ 835 0499 10000000 		.4byte	.LASF65
+ 836 049d 0A       		.byte	0xa
+ 837 049e 25       		.byte	0x25
+ 838 049f 11       		.uleb128 0x11
+ 839 04a0 71030000 		.4byte	.LASF66
+ 840 04a4 71030000 		.4byte	.LASF66
+ 841 04a8 0B       		.byte	0xb
+ 842 04a9 23       		.byte	0x23
+ 843 04aa 11       		.uleb128 0x11
+ 844 04ab 48010000 		.4byte	.LASF67
+ 845 04af 48010000 		.4byte	.LASF67
+ 846 04b3 0B       		.byte	0xb
+ 847 04b4 28       		.byte	0x28
+ 848 04b5 11       		.uleb128 0x11
+ 849 04b6 1A020000 		.4byte	.LASF68
+ 850 04ba 1A020000 		.4byte	.LASF68
+ 851 04be 0C       		.byte	0xc
+ 852 04bf 41       		.byte	0x41
+ 853 04c0 11       		.uleb128 0x11
+ 854 04c1 2B030000 		.4byte	.LASF69
+ 855 04c5 2B030000 		.4byte	.LASF69
+ 856 04c9 0D       		.byte	0xd
+ 857 04ca 25       		.byte	0x25
+ 858 04cb 00       		.byte	0
+ 859              		.section	.debug_abbrev,"",%progbits
+ 860              	.Ldebug_abbrev0:
+ 861 0000 01       		.uleb128 0x1
+ 862 0001 11       		.uleb128 0x11
+ 863 0002 01       		.byte	0x1
+ 864 0003 25       		.uleb128 0x25
+ 865 0004 0E       		.uleb128 0xe
+ 866 0005 13       		.uleb128 0x13
+ 867 0006 0B       		.uleb128 0xb
+ 868 0007 03       		.uleb128 0x3
+ 869 0008 0E       		.uleb128 0xe
+ 870 0009 1B       		.uleb128 0x1b
+ 871 000a 0E       		.uleb128 0xe
+ 872 000b 55       		.uleb128 0x55
+ 873 000c 17       		.uleb128 0x17
+ 874 000d 11       		.uleb128 0x11
+ 875 000e 01       		.uleb128 0x1
+ 876 000f 10       		.uleb128 0x10
+ 877 0010 17       		.uleb128 0x17
+ 878 0011 00       		.byte	0
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 18
 
 
- 879 0024 0B       		.uleb128 0xb
- 880 0025 3B       		.uleb128 0x3b
- 881 0026 0B       		.uleb128 0xb
- 882 0027 49       		.uleb128 0x49
- 883 0028 13       		.uleb128 0x13
- 884 0029 00       		.byte	0
- 885 002a 00       		.byte	0
- 886 002b 04       		.uleb128 0x4
- 887 002c 24       		.uleb128 0x24
- 888 002d 00       		.byte	0
- 889 002e 0B       		.uleb128 0xb
- 890 002f 0B       		.uleb128 0xb
- 891 0030 3E       		.uleb128 0x3e
- 892 0031 0B       		.uleb128 0xb
- 893 0032 03       		.uleb128 0x3
- 894 0033 08       		.uleb128 0x8
- 895 0034 00       		.byte	0
- 896 0035 00       		.byte	0
- 897 0036 05       		.uleb128 0x5
- 898 0037 16       		.uleb128 0x16
- 899 0038 00       		.byte	0
- 900 0039 03       		.uleb128 0x3
- 901 003a 0E       		.uleb128 0xe
- 902 003b 3A       		.uleb128 0x3a
- 903 003c 0B       		.uleb128 0xb
- 904 003d 3B       		.uleb128 0x3b
- 905 003e 05       		.uleb128 0x5
- 906 003f 49       		.uleb128 0x49
- 907 0040 13       		.uleb128 0x13
- 908 0041 00       		.byte	0
- 909 0042 00       		.byte	0
- 910 0043 06       		.uleb128 0x6
- 911 0044 2E       		.uleb128 0x2e
- 912 0045 01       		.byte	0x1
- 913 0046 3F       		.uleb128 0x3f
- 914 0047 19       		.uleb128 0x19
- 915 0048 03       		.uleb128 0x3
- 916 0049 0E       		.uleb128 0xe
- 917 004a 3A       		.uleb128 0x3a
- 918 004b 0B       		.uleb128 0xb
- 919 004c 3B       		.uleb128 0x3b
- 920 004d 0B       		.uleb128 0xb
- 921 004e 27       		.uleb128 0x27
- 922 004f 19       		.uleb128 0x19
- 923 0050 11       		.uleb128 0x11
- 924 0051 01       		.uleb128 0x1
- 925 0052 12       		.uleb128 0x12
- 926 0053 06       		.uleb128 0x6
- 927 0054 40       		.uleb128 0x40
- 928 0055 18       		.uleb128 0x18
- 929 0056 9742     		.uleb128 0x2117
- 930 0058 19       		.uleb128 0x19
- 931 0059 01       		.uleb128 0x1
- 932 005a 13       		.uleb128 0x13
- 933 005b 00       		.byte	0
- 934 005c 00       		.byte	0
- 935 005d 07       		.uleb128 0x7
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 19
+ 879 0012 00       		.byte	0
+ 880 0013 02       		.uleb128 0x2
+ 881 0014 24       		.uleb128 0x24
+ 882 0015 00       		.byte	0
+ 883 0016 0B       		.uleb128 0xb
+ 884 0017 0B       		.uleb128 0xb
+ 885 0018 3E       		.uleb128 0x3e
+ 886 0019 0B       		.uleb128 0xb
+ 887 001a 03       		.uleb128 0x3
+ 888 001b 0E       		.uleb128 0xe
+ 889 001c 00       		.byte	0
+ 890 001d 00       		.byte	0
+ 891 001e 03       		.uleb128 0x3
+ 892 001f 16       		.uleb128 0x16
+ 893 0020 00       		.byte	0
+ 894 0021 03       		.uleb128 0x3
+ 895 0022 0E       		.uleb128 0xe
+ 896 0023 3A       		.uleb128 0x3a
+ 897 0024 0B       		.uleb128 0xb
+ 898 0025 3B       		.uleb128 0x3b
+ 899 0026 0B       		.uleb128 0xb
+ 900 0027 49       		.uleb128 0x49
+ 901 0028 13       		.uleb128 0x13
+ 902 0029 00       		.byte	0
+ 903 002a 00       		.byte	0
+ 904 002b 04       		.uleb128 0x4
+ 905 002c 24       		.uleb128 0x24
+ 906 002d 00       		.byte	0
+ 907 002e 0B       		.uleb128 0xb
+ 908 002f 0B       		.uleb128 0xb
+ 909 0030 3E       		.uleb128 0x3e
+ 910 0031 0B       		.uleb128 0xb
+ 911 0032 03       		.uleb128 0x3
+ 912 0033 08       		.uleb128 0x8
+ 913 0034 00       		.byte	0
+ 914 0035 00       		.byte	0
+ 915 0036 05       		.uleb128 0x5
+ 916 0037 16       		.uleb128 0x16
+ 917 0038 00       		.byte	0
+ 918 0039 03       		.uleb128 0x3
+ 919 003a 0E       		.uleb128 0xe
+ 920 003b 3A       		.uleb128 0x3a
+ 921 003c 0B       		.uleb128 0xb
+ 922 003d 3B       		.uleb128 0x3b
+ 923 003e 05       		.uleb128 0x5
+ 924 003f 49       		.uleb128 0x49
+ 925 0040 13       		.uleb128 0x13
+ 926 0041 00       		.byte	0
+ 927 0042 00       		.byte	0
+ 928 0043 06       		.uleb128 0x6
+ 929 0044 2E       		.uleb128 0x2e
+ 930 0045 01       		.byte	0x1
+ 931 0046 3F       		.uleb128 0x3f
+ 932 0047 19       		.uleb128 0x19
+ 933 0048 03       		.uleb128 0x3
+ 934 0049 0E       		.uleb128 0xe
+ 935 004a 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 19
 
 
- 936 005e 898201   		.uleb128 0x4109
- 937 0061 00       		.byte	0
- 938 0062 11       		.uleb128 0x11
- 939 0063 01       		.uleb128 0x1
- 940 0064 31       		.uleb128 0x31
- 941 0065 13       		.uleb128 0x13
- 942 0066 00       		.byte	0
- 943 0067 00       		.byte	0
- 944 0068 08       		.uleb128 0x8
- 945 0069 898201   		.uleb128 0x4109
- 946 006c 01       		.byte	0x1
- 947 006d 11       		.uleb128 0x11
- 948 006e 01       		.uleb128 0x1
- 949 006f 31       		.uleb128 0x31
- 950 0070 13       		.uleb128 0x13
- 951 0071 00       		.byte	0
- 952 0072 00       		.byte	0
- 953 0073 09       		.uleb128 0x9
- 954 0074 8A8201   		.uleb128 0x410a
- 955 0077 00       		.byte	0
- 956 0078 02       		.uleb128 0x2
- 957 0079 18       		.uleb128 0x18
- 958 007a 9142     		.uleb128 0x2111
- 959 007c 18       		.uleb128 0x18
- 960 007d 00       		.byte	0
- 961 007e 00       		.byte	0
- 962 007f 0A       		.uleb128 0xa
- 963 0080 2E       		.uleb128 0x2e
- 964 0081 01       		.byte	0x1
- 965 0082 3F       		.uleb128 0x3f
- 966 0083 19       		.uleb128 0x19
- 967 0084 03       		.uleb128 0x3
- 968 0085 0E       		.uleb128 0xe
- 969 0086 3A       		.uleb128 0x3a
- 970 0087 0B       		.uleb128 0xb
- 971 0088 3B       		.uleb128 0x3b
- 972 0089 0B       		.uleb128 0xb
- 973 008a 27       		.uleb128 0x27
- 974 008b 19       		.uleb128 0x19
- 975 008c 11       		.uleb128 0x11
- 976 008d 01       		.uleb128 0x1
- 977 008e 12       		.uleb128 0x12
- 978 008f 06       		.uleb128 0x6
- 979 0090 40       		.uleb128 0x40
- 980 0091 18       		.uleb128 0x18
- 981 0092 9642     		.uleb128 0x2116
- 982 0094 19       		.uleb128 0x19
- 983 0095 01       		.uleb128 0x1
- 984 0096 13       		.uleb128 0x13
- 985 0097 00       		.byte	0
- 986 0098 00       		.byte	0
- 987 0099 0B       		.uleb128 0xb
- 988 009a 34       		.uleb128 0x34
- 989 009b 00       		.byte	0
- 990 009c 03       		.uleb128 0x3
- 991 009d 0E       		.uleb128 0xe
- 992 009e 3A       		.uleb128 0x3a
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 20
+ 936 004b 0B       		.uleb128 0xb
+ 937 004c 3B       		.uleb128 0x3b
+ 938 004d 0B       		.uleb128 0xb
+ 939 004e 27       		.uleb128 0x27
+ 940 004f 19       		.uleb128 0x19
+ 941 0050 11       		.uleb128 0x11
+ 942 0051 01       		.uleb128 0x1
+ 943 0052 12       		.uleb128 0x12
+ 944 0053 06       		.uleb128 0x6
+ 945 0054 40       		.uleb128 0x40
+ 946 0055 18       		.uleb128 0x18
+ 947 0056 9742     		.uleb128 0x2117
+ 948 0058 19       		.uleb128 0x19
+ 949 0059 01       		.uleb128 0x1
+ 950 005a 13       		.uleb128 0x13
+ 951 005b 00       		.byte	0
+ 952 005c 00       		.byte	0
+ 953 005d 07       		.uleb128 0x7
+ 954 005e 898201   		.uleb128 0x4109
+ 955 0061 00       		.byte	0
+ 956 0062 11       		.uleb128 0x11
+ 957 0063 01       		.uleb128 0x1
+ 958 0064 31       		.uleb128 0x31
+ 959 0065 13       		.uleb128 0x13
+ 960 0066 00       		.byte	0
+ 961 0067 00       		.byte	0
+ 962 0068 08       		.uleb128 0x8
+ 963 0069 898201   		.uleb128 0x4109
+ 964 006c 01       		.byte	0x1
+ 965 006d 11       		.uleb128 0x11
+ 966 006e 01       		.uleb128 0x1
+ 967 006f 31       		.uleb128 0x31
+ 968 0070 13       		.uleb128 0x13
+ 969 0071 00       		.byte	0
+ 970 0072 00       		.byte	0
+ 971 0073 09       		.uleb128 0x9
+ 972 0074 8A8201   		.uleb128 0x410a
+ 973 0077 00       		.byte	0
+ 974 0078 02       		.uleb128 0x2
+ 975 0079 18       		.uleb128 0x18
+ 976 007a 9142     		.uleb128 0x2111
+ 977 007c 18       		.uleb128 0x18
+ 978 007d 00       		.byte	0
+ 979 007e 00       		.byte	0
+ 980 007f 0A       		.uleb128 0xa
+ 981 0080 2E       		.uleb128 0x2e
+ 982 0081 01       		.byte	0x1
+ 983 0082 3F       		.uleb128 0x3f
+ 984 0083 19       		.uleb128 0x19
+ 985 0084 03       		.uleb128 0x3
+ 986 0085 0E       		.uleb128 0xe
+ 987 0086 3A       		.uleb128 0x3a
+ 988 0087 0B       		.uleb128 0xb
+ 989 0088 3B       		.uleb128 0x3b
+ 990 0089 0B       		.uleb128 0xb
+ 991 008a 27       		.uleb128 0x27
+ 992 008b 19       		.uleb128 0x19
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 20
 
 
- 993 009f 0B       		.uleb128 0xb
- 994 00a0 3B       		.uleb128 0x3b
- 995 00a1 05       		.uleb128 0x5
- 996 00a2 49       		.uleb128 0x49
- 997 00a3 13       		.uleb128 0x13
- 998 00a4 3F       		.uleb128 0x3f
- 999 00a5 19       		.uleb128 0x19
- 1000 00a6 3C       		.uleb128 0x3c
- 1001 00a7 19       		.uleb128 0x19
- 1002 00a8 00       		.byte	0
- 1003 00a9 00       		.byte	0
- 1004 00aa 0C       		.uleb128 0xc
- 1005 00ab 35       		.uleb128 0x35
- 1006 00ac 00       		.byte	0
- 1007 00ad 49       		.uleb128 0x49
- 1008 00ae 13       		.uleb128 0x13
- 1009 00af 00       		.byte	0
- 1010 00b0 00       		.byte	0
- 1011 00b1 0D       		.uleb128 0xd
- 1012 00b2 01       		.uleb128 0x1
- 1013 00b3 01       		.byte	0x1
- 1014 00b4 49       		.uleb128 0x49
- 1015 00b5 13       		.uleb128 0x13
- 1016 00b6 01       		.uleb128 0x1
- 1017 00b7 13       		.uleb128 0x13
- 1018 00b8 00       		.byte	0
- 1019 00b9 00       		.byte	0
- 1020 00ba 0E       		.uleb128 0xe
- 1021 00bb 21       		.uleb128 0x21
- 1022 00bc 00       		.byte	0
- 1023 00bd 49       		.uleb128 0x49
- 1024 00be 13       		.uleb128 0x13
- 1025 00bf 2F       		.uleb128 0x2f
- 1026 00c0 0B       		.uleb128 0xb
- 1027 00c1 00       		.byte	0
- 1028 00c2 00       		.byte	0
- 1029 00c3 0F       		.uleb128 0xf
- 1030 00c4 34       		.uleb128 0x34
- 1031 00c5 00       		.byte	0
- 1032 00c6 03       		.uleb128 0x3
- 1033 00c7 0E       		.uleb128 0xe
- 1034 00c8 3A       		.uleb128 0x3a
- 1035 00c9 0B       		.uleb128 0xb
- 1036 00ca 3B       		.uleb128 0x3b
- 1037 00cb 0B       		.uleb128 0xb
- 1038 00cc 49       		.uleb128 0x49
- 1039 00cd 13       		.uleb128 0x13
- 1040 00ce 3F       		.uleb128 0x3f
- 1041 00cf 19       		.uleb128 0x19
- 1042 00d0 02       		.uleb128 0x2
- 1043 00d1 18       		.uleb128 0x18
- 1044 00d2 00       		.byte	0
- 1045 00d3 00       		.byte	0
- 1046 00d4 10       		.uleb128 0x10
- 1047 00d5 21       		.uleb128 0x21
- 1048 00d6 00       		.byte	0
- 1049 00d7 49       		.uleb128 0x49
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 21
+ 993 008c 11       		.uleb128 0x11
+ 994 008d 01       		.uleb128 0x1
+ 995 008e 12       		.uleb128 0x12
+ 996 008f 06       		.uleb128 0x6
+ 997 0090 40       		.uleb128 0x40
+ 998 0091 18       		.uleb128 0x18
+ 999 0092 9642     		.uleb128 0x2116
+ 1000 0094 19       		.uleb128 0x19
+ 1001 0095 01       		.uleb128 0x1
+ 1002 0096 13       		.uleb128 0x13
+ 1003 0097 00       		.byte	0
+ 1004 0098 00       		.byte	0
+ 1005 0099 0B       		.uleb128 0xb
+ 1006 009a 34       		.uleb128 0x34
+ 1007 009b 00       		.byte	0
+ 1008 009c 03       		.uleb128 0x3
+ 1009 009d 0E       		.uleb128 0xe
+ 1010 009e 3A       		.uleb128 0x3a
+ 1011 009f 0B       		.uleb128 0xb
+ 1012 00a0 3B       		.uleb128 0x3b
+ 1013 00a1 05       		.uleb128 0x5
+ 1014 00a2 49       		.uleb128 0x49
+ 1015 00a3 13       		.uleb128 0x13
+ 1016 00a4 3F       		.uleb128 0x3f
+ 1017 00a5 19       		.uleb128 0x19
+ 1018 00a6 3C       		.uleb128 0x3c
+ 1019 00a7 19       		.uleb128 0x19
+ 1020 00a8 00       		.byte	0
+ 1021 00a9 00       		.byte	0
+ 1022 00aa 0C       		.uleb128 0xc
+ 1023 00ab 35       		.uleb128 0x35
+ 1024 00ac 00       		.byte	0
+ 1025 00ad 49       		.uleb128 0x49
+ 1026 00ae 13       		.uleb128 0x13
+ 1027 00af 00       		.byte	0
+ 1028 00b0 00       		.byte	0
+ 1029 00b1 0D       		.uleb128 0xd
+ 1030 00b2 01       		.uleb128 0x1
+ 1031 00b3 01       		.byte	0x1
+ 1032 00b4 49       		.uleb128 0x49
+ 1033 00b5 13       		.uleb128 0x13
+ 1034 00b6 01       		.uleb128 0x1
+ 1035 00b7 13       		.uleb128 0x13
+ 1036 00b8 00       		.byte	0
+ 1037 00b9 00       		.byte	0
+ 1038 00ba 0E       		.uleb128 0xe
+ 1039 00bb 21       		.uleb128 0x21
+ 1040 00bc 00       		.byte	0
+ 1041 00bd 49       		.uleb128 0x49
+ 1042 00be 13       		.uleb128 0x13
+ 1043 00bf 2F       		.uleb128 0x2f
+ 1044 00c0 0B       		.uleb128 0xb
+ 1045 00c1 00       		.byte	0
+ 1046 00c2 00       		.byte	0
+ 1047 00c3 0F       		.uleb128 0xf
+ 1048 00c4 34       		.uleb128 0x34
+ 1049 00c5 00       		.byte	0
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 21
 
 
- 1050 00d8 13       		.uleb128 0x13
- 1051 00d9 2F       		.uleb128 0x2f
- 1052 00da 05       		.uleb128 0x5
- 1053 00db 00       		.byte	0
- 1054 00dc 00       		.byte	0
- 1055 00dd 11       		.uleb128 0x11
- 1056 00de 2E       		.uleb128 0x2e
- 1057 00df 00       		.byte	0
- 1058 00e0 3F       		.uleb128 0x3f
- 1059 00e1 19       		.uleb128 0x19
- 1060 00e2 3C       		.uleb128 0x3c
- 1061 00e3 19       		.uleb128 0x19
- 1062 00e4 6E       		.uleb128 0x6e
- 1063 00e5 0E       		.uleb128 0xe
- 1064 00e6 03       		.uleb128 0x3
- 1065 00e7 0E       		.uleb128 0xe
- 1066 00e8 3A       		.uleb128 0x3a
- 1067 00e9 0B       		.uleb128 0xb
- 1068 00ea 3B       		.uleb128 0x3b
- 1069 00eb 0B       		.uleb128 0xb
- 1070 00ec 00       		.byte	0
- 1071 00ed 00       		.byte	0
- 1072 00ee 00       		.byte	0
- 1073              		.section	.debug_aranges,"",%progbits
- 1074 0000 2C000000 		.4byte	0x2c
- 1075 0004 0200     		.2byte	0x2
- 1076 0006 00000000 		.4byte	.Ldebug_info0
- 1077 000a 04       		.byte	0x4
- 1078 000b 00       		.byte	0
- 1079 000c 0000     		.2byte	0
- 1080 000e 0000     		.2byte	0
- 1081 0010 00000000 		.4byte	.LFB64
- 1082 0014 70000000 		.4byte	.LFE64-.LFB64
- 1083 0018 00000000 		.4byte	.LFB65
- 1084 001c 40000000 		.4byte	.LFE65-.LFB65
- 1085 0020 00000000 		.4byte	.LFB66
- 1086 0024 68000000 		.4byte	.LFE66-.LFB66
- 1087 0028 00000000 		.4byte	0
- 1088 002c 00000000 		.4byte	0
- 1089              		.section	.debug_ranges,"",%progbits
- 1090              	.Ldebug_ranges0:
- 1091 0000 00000000 		.4byte	.LFB64
- 1092 0004 70000000 		.4byte	.LFE64
- 1093 0008 00000000 		.4byte	.LFB65
- 1094 000c 40000000 		.4byte	.LFE65
- 1095 0010 00000000 		.4byte	.LFB66
- 1096 0014 68000000 		.4byte	.LFE66
- 1097 0018 00000000 		.4byte	0
- 1098 001c 00000000 		.4byte	0
- 1099              		.section	.debug_line,"",%progbits
- 1100              	.Ldebug_line0:
- 1101 0000 23020000 		.section	.debug_str,"MS",%progbits,1
- 1101      0200DB01 
- 1101      00000201 
- 1101      FB0E0D00 
- 1101      01010101 
- 1102              	.LASF62:
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 22
+ 1050 00c6 03       		.uleb128 0x3
+ 1051 00c7 0E       		.uleb128 0xe
+ 1052 00c8 3A       		.uleb128 0x3a
+ 1053 00c9 0B       		.uleb128 0xb
+ 1054 00ca 3B       		.uleb128 0x3b
+ 1055 00cb 0B       		.uleb128 0xb
+ 1056 00cc 49       		.uleb128 0x49
+ 1057 00cd 13       		.uleb128 0x13
+ 1058 00ce 3F       		.uleb128 0x3f
+ 1059 00cf 19       		.uleb128 0x19
+ 1060 00d0 02       		.uleb128 0x2
+ 1061 00d1 18       		.uleb128 0x18
+ 1062 00d2 00       		.byte	0
+ 1063 00d3 00       		.byte	0
+ 1064 00d4 10       		.uleb128 0x10
+ 1065 00d5 21       		.uleb128 0x21
+ 1066 00d6 00       		.byte	0
+ 1067 00d7 49       		.uleb128 0x49
+ 1068 00d8 13       		.uleb128 0x13
+ 1069 00d9 2F       		.uleb128 0x2f
+ 1070 00da 05       		.uleb128 0x5
+ 1071 00db 00       		.byte	0
+ 1072 00dc 00       		.byte	0
+ 1073 00dd 11       		.uleb128 0x11
+ 1074 00de 2E       		.uleb128 0x2e
+ 1075 00df 00       		.byte	0
+ 1076 00e0 3F       		.uleb128 0x3f
+ 1077 00e1 19       		.uleb128 0x19
+ 1078 00e2 3C       		.uleb128 0x3c
+ 1079 00e3 19       		.uleb128 0x19
+ 1080 00e4 6E       		.uleb128 0x6e
+ 1081 00e5 0E       		.uleb128 0xe
+ 1082 00e6 03       		.uleb128 0x3
+ 1083 00e7 0E       		.uleb128 0xe
+ 1084 00e8 3A       		.uleb128 0x3a
+ 1085 00e9 0B       		.uleb128 0xb
+ 1086 00ea 3B       		.uleb128 0x3b
+ 1087 00eb 0B       		.uleb128 0xb
+ 1088 00ec 00       		.byte	0
+ 1089 00ed 00       		.byte	0
+ 1090 00ee 00       		.byte	0
+ 1091              		.section	.debug_aranges,"",%progbits
+ 1092 0000 2C000000 		.4byte	0x2c
+ 1093 0004 0200     		.2byte	0x2
+ 1094 0006 00000000 		.4byte	.Ldebug_info0
+ 1095 000a 04       		.byte	0x4
+ 1096 000b 00       		.byte	0
+ 1097 000c 0000     		.2byte	0
+ 1098 000e 0000     		.2byte	0
+ 1099 0010 00000000 		.4byte	.LFB64
+ 1100 0014 70000000 		.4byte	.LFE64-.LFB64
+ 1101 0018 00000000 		.4byte	.LFB65
+ 1102 001c 40000000 		.4byte	.LFE65-.LFB65
+ 1103 0020 00000000 		.4byte	.LFB66
+ 1104 0024 68000000 		.4byte	.LFE66-.LFB66
+ 1105 0028 00000000 		.4byte	0
+ 1106 002c 00000000 		.4byte	0
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 22
 
 
- 1103 0000 6973725F 		.ascii	"isr_adc_Disable\000"
- 1103      6164635F 
- 1103      44697361 
- 1103      626C6500 
- 1104              	.LASF63:
- 1105 0010 6973725F 		.ascii	"isr_dac_Disable\000"
- 1105      6461635F 
- 1105      44697361 
- 1105      626C6500 
- 1106              	.LASF48:
- 1107 0020 75415F70 		.ascii	"uA_per_adc_count\000"
- 1107      65725F61 
- 1107      64635F63 
- 1107      6F756E74 
- 1107      00
- 1108              	.LASF18:
- 1109 0031 666C6F61 		.ascii	"float32\000"
- 1109      74333200 
- 1110              	.LASF69:
- 1111 0039 496E7465 		.ascii	"InterruptRoutines.c\000"
- 1111      72727570 
- 1111      74526F75 
- 1111      74696E65 
- 1111      732E6300 
- 1112              	.LASF49:
- 1113 004d 73746172 		.ascii	"start_dac_value\000"
- 1113      745F6461 
- 1113      635F7661 
- 1113      6C756500 
- 1114              	.LASF2:
- 1115 005d 73686F72 		.ascii	"short int\000"
- 1115      7420696E 
- 1115      7400
- 1116              	.LASF29:
- 1117 0067 5449415F 		.ascii	"TIA_resistor_value_index\000"
- 1117      72657369 
- 1117      73746F72 
- 1117      5F76616C 
- 1117      75655F69 
- 1118              	.LASF23:
- 1119 0080 73697A65 		.ascii	"sizetype\000"
- 1119      74797065 
- 1119      00
- 1120              	.LASF41:
- 1121 0089 6461635F 		.ascii	"dac_ground_value\000"
- 1121      67726F75 
- 1121      6E645F76 
- 1121      616C7565 
- 1121      00
- 1122              	.LASF4:
- 1123 009a 5F5F7569 		.ascii	"__uint16_t\000"
- 1123      6E743136 
- 1123      5F7400
- 1124              	.LASF16:
- 1125 00a5 75696E74 		.ascii	"uint16\000"
- 1125      313600
- 1126              	.LASF38:
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 23
+ 1107              		.section	.debug_ranges,"",%progbits
+ 1108              	.Ldebug_ranges0:
+ 1109 0000 00000000 		.4byte	.LFB64
+ 1110 0004 70000000 		.4byte	.LFE64
+ 1111 0008 00000000 		.4byte	.LFB65
+ 1112 000c 40000000 		.4byte	.LFE65
+ 1113 0010 00000000 		.4byte	.LFB66
+ 1114 0014 68000000 		.4byte	.LFE66
+ 1115 0018 00000000 		.4byte	0
+ 1116 001c 00000000 		.4byte	0
+ 1117              		.section	.debug_line,"",%progbits
+ 1118              	.Ldebug_line0:
+ 1119 0000 23020000 		.section	.debug_str,"MS",%progbits,1
+ 1119      0200DB01 
+ 1119      00000201 
+ 1119      FB0E0D00 
+ 1119      01010101 
+ 1120              	.LASF64:
+ 1121 0000 6973725F 		.ascii	"isr_adc_Disable\000"
+ 1121      6164635F 
+ 1121      44697361 
+ 1121      626C6500 
+ 1122              	.LASF65:
+ 1123 0010 6973725F 		.ascii	"isr_dac_Disable\000"
+ 1123      6461635F 
+ 1123      44697361 
+ 1123      626C6500 
+ 1124              	.LASF49:
+ 1125 0020 75415F70 		.ascii	"uA_per_adc_count\000"
+ 1125      65725F61 
+ 1125      64635F63 
+ 1125      6F756E74 
+ 1125      00
+ 1126              	.LASF18:
+ 1127 0031 666C6F61 		.ascii	"float32\000"
+ 1127      74333200 
+ 1128              	.LASF71:
+ 1129 0039 496E7465 		.ascii	"InterruptRoutines.c\000"
+ 1129      72727570 
+ 1129      74526F75 
+ 1129      74696E65 
+ 1129      732E6300 
+ 1130              	.LASF50:
+ 1131 004d 73746172 		.ascii	"start_dac_value\000"
+ 1131      745F6461 
+ 1131      635F7661 
+ 1131      6C756500 
+ 1132              	.LASF2:
+ 1133 005d 73686F72 		.ascii	"short int\000"
+ 1133      7420696E 
+ 1133      7400
+ 1134              	.LASF29:
+ 1135 0067 5449415F 		.ascii	"TIA_resistor_value_index\000"
+ 1135      72657369 
+ 1135      73746F72 
+ 1135      5F76616C 
+ 1135      75655F69 
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 23
 
 
- 1127 00ac 55706461 		.ascii	"Update_scanrate_Flag\000"
- 1127      74655F73 
- 1127      63616E72 
- 1127      6174655F 
- 1127      466C6167 
- 1128              	.LASF17:
- 1129 00c1 696E7431 		.ascii	"int16\000"
- 1129      3600
- 1130              	.LASF35:
- 1131 00c7 43565F72 		.ascii	"CV_ready_Flag\000"
- 1131      65616479 
- 1131      5F466C61 
- 1131      6700
- 1132              	.LASF57:
- 1133 00d5 6164635F 		.ascii	"adc_recording_channel\000"
- 1133      7265636F 
- 1133      7264696E 
- 1133      675F6368 
- 1133      616E6E65 
- 1134              	.LASF55:
- 1135 00eb 55415254 		.ascii	"UART_str\000"
- 1135      5F737472 
- 1135      00
- 1136              	.LASF53:
- 1137 00f4 636F6D6D 		.ascii	"command_lenght\000"
- 1137      616E645F 
- 1137      6C656E67 
- 1137      687400
- 1138              	.LASF19:
- 1139 0103 666C6F61 		.ascii	"float\000"
- 1139      7400
- 1140              	.LASF47:
- 1141 0109 4144435F 		.ascii	"ADC_CV_array\000"
- 1141      43565F61 
- 1141      72726179 
- 1141      00
- 1142              	.LASF9:
- 1143 0116 6C6F6E67 		.ascii	"long long int\000"
- 1143      206C6F6E 
- 1143      6720696E 
- 1143      7400
- 1144              	.LASF34:
- 1145 0124 5449415F 		.ascii	"TIA_Calibration_ended_Flag\000"
- 1145      43616C69 
- 1145      62726174 
- 1145      696F6E5F 
- 1145      656E6465 
- 1146              	.LASF7:
- 1147 013f 6C6F6E67 		.ascii	"long int\000"
- 1147      20696E74 
- 1147      00
- 1148              	.LASF65:
- 1149 0148 68656C70 		.ascii	"helper_search_max\000"
- 1149      65725F73 
- 1149      65617263 
- 1149      685F6D61 
- 1149      7800
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 24
-
-
- 1150              	.LASF3:
- 1151 015a 5F5F7569 		.ascii	"__uint8_t\000"
- 1151      6E74385F 
- 1151      7400
- 1152              	.LASF44:
- 1153 0164 77617665 		.ascii	"waveform_amp_lut\000"
- 1153      666F726D 
- 1153      5F616D70 
- 1153      5F6C7574 
+ 1136              	.LASF23:
+ 1137 0080 73697A65 		.ascii	"sizetype\000"
+ 1137      74797065 
+ 1137      00
+ 1138              	.LASF42:
+ 1139 0089 6461635F 		.ascii	"dac_ground_value\000"
+ 1139      67726F75 
+ 1139      6E645F76 
+ 1139      616C7565 
+ 1139      00
+ 1140              	.LASF4:
+ 1141 009a 5F5F7569 		.ascii	"__uint16_t\000"
+ 1141      6E743136 
+ 1141      5F7400
+ 1142              	.LASF16:
+ 1143 00a5 75696E74 		.ascii	"uint16\000"
+ 1143      313600
+ 1144              	.LASF38:
+ 1145 00ac 55706461 		.ascii	"Update_scanrate_Flag\000"
+ 1145      74655F73 
+ 1145      63616E72 
+ 1145      6174655F 
+ 1145      466C6167 
+ 1146              	.LASF17:
+ 1147 00c1 696E7431 		.ascii	"int16\000"
+ 1147      3600
+ 1148              	.LASF35:
+ 1149 00c7 43565F72 		.ascii	"CV_ready_Flag\000"
+ 1149      65616479 
+ 1149      5F466C61 
+ 1149      6700
+ 1150              	.LASF59:
+ 1151 00d5 6164635F 		.ascii	"adc_recording_channel\000"
+ 1151      7265636F 
+ 1151      7264696E 
+ 1151      675F6368 
+ 1151      616E6E65 
+ 1152              	.LASF57:
+ 1153 00eb 55415254 		.ascii	"UART_str\000"
+ 1153      5F737472 
  1153      00
- 1154              	.LASF51:
- 1155 0175 706F7465 		.ascii	"potential_max_current\000"
- 1155      6E746961 
- 1155      6C5F6D61 
- 1155      785F6375 
- 1155      7272656E 
- 1156              	.LASF70:
- 1157 018b 433A5C55 		.ascii	"C:\\Users\\teo8d\\Desktop\\progetto lab sensori\\CO"
- 1157      73657273 
- 1157      5C74656F 
- 1157      38645C44 
- 1157      65736B74 
- 1158 01b9 44494349 		.ascii	"DICI\\PSOC\\FinalProjects\\Group2.cydsn\000"
- 1158      5C50534F 
- 1158      435C4669 
- 1158      6E616C50 
- 1158      726F6A65 
- 1159              	.LASF22:
- 1160 01de 6C6F6E67 		.ascii	"long double\000"
- 1160      20646F75 
- 1160      626C6500 
- 1161              	.LASF1:
- 1162 01ea 756E7369 		.ascii	"unsigned char\000"
- 1162      676E6564 
- 1162      20636861 
- 1162      7200
- 1163              	.LASF31:
- 1164 01f8 525F616E 		.ascii	"R_analog_route\000"
- 1164      616C6F67 
- 1164      5F726F75 
- 1164      746500
- 1165              	.LASF66:
- 1166 0207 4144435F 		.ascii	"ADC_SigDel_GetResult16\000"
- 1166      53696744 
- 1166      656C5F47 
- 1166      65745265 
- 1166      73756C74 
- 1167              	.LASF40:
- 1168 021e 55706461 		.ascii	"Update_endvalue_Flag\000"
- 1168      74655F65 
- 1168      6E647661 
- 1168      6C75655F 
- 1168      466C6167 
- 1169              	.LASF0:
- 1170 0233 7369676E 		.ascii	"signed char\000"
- 1170      65642063 
- 1170      68617200 
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 25
+ 1154              	.LASF55:
+ 1155 00f4 636F6D6D 		.ascii	"command_lenght\000"
+ 1155      616E645F 
+ 1155      6C656E67 
+ 1155      687400
+ 1156              	.LASF19:
+ 1157 0103 666C6F61 		.ascii	"float\000"
+ 1157      7400
+ 1158              	.LASF48:
+ 1159 0109 4144435F 		.ascii	"ADC_CV_array\000"
+ 1159      43565F61 
+ 1159      72726179 
+ 1159      00
+ 1160              	.LASF9:
+ 1161 0116 6C6F6E67 		.ascii	"long long int\000"
+ 1161      206C6F6E 
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 24
 
 
- 1171              	.LASF14:
- 1172 023f 696E7433 		.ascii	"int32_t\000"
- 1172      325F7400 
- 1173              	.LASF10:
- 1174 0247 6C6F6E67 		.ascii	"long long unsigned int\000"
- 1174      206C6F6E 
- 1174      6720756E 
- 1174      7369676E 
- 1174      65642069 
- 1175              	.LASF28:
- 1176 025e 43616C69 		.ascii	"CalibrationBuffer\000"
- 1176      62726174 
- 1176      696F6E42 
- 1176      75666665 
- 1176      7200
- 1177              	.LASF11:
- 1178 0270 756E7369 		.ascii	"unsigned int\000"
- 1178      676E6564 
- 1178      20696E74 
- 1178      00
- 1179              	.LASF13:
- 1180 027d 75696E74 		.ascii	"uint16_t\000"
- 1180      31365F74 
- 1180      00
- 1181              	.LASF54:
- 1182 0286 73656C65 		.ascii	"selected_voltage_source\000"
- 1182      63746564 
- 1182      5F766F6C 
- 1182      74616765 
- 1182      5F736F75 
- 1183              	.LASF24:
- 1184 029e 64616349 		.ascii	"dacInterrupt\000"
- 1184      6E746572 
- 1184      72757074 
- 1184      00
- 1185              	.LASF56:
- 1186 02ab 414D7578 		.ascii	"AMux_channel_select\000"
- 1186      5F636861 
- 1186      6E6E656C 
- 1186      5F73656C 
- 1186      65637400 
- 1187              	.LASF21:
- 1188 02bf 63686172 		.ascii	"char\000"
- 1188      00
- 1189              	.LASF42:
- 1190 02c4 6C75745F 		.ascii	"lut_value\000"
- 1190      76616C75 
- 1190      6500
- 1191              	.LASF30:
- 1192 02ce 4144435F 		.ascii	"ADC_buffer_index\000"
- 1192      62756666 
- 1192      65725F69 
- 1192      6E646578 
- 1192      00
- 1193              	.LASF5:
- 1194 02df 73686F72 		.ascii	"short unsigned int\000"
- 1194      7420756E 
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 26
+ 1161      6720696E 
+ 1161      7400
+ 1162              	.LASF34:
+ 1163 0124 5449415F 		.ascii	"TIA_Calibration_ended_Flag\000"
+ 1163      43616C69 
+ 1163      62726174 
+ 1163      696F6E5F 
+ 1163      656E6465 
+ 1164              	.LASF7:
+ 1165 013f 6C6F6E67 		.ascii	"long int\000"
+ 1165      20696E74 
+ 1165      00
+ 1166              	.LASF67:
+ 1167 0148 68656C70 		.ascii	"helper_search_max\000"
+ 1167      65725F73 
+ 1167      65617263 
+ 1167      685F6D61 
+ 1167      7800
+ 1168              	.LASF3:
+ 1169 015a 5F5F7569 		.ascii	"__uint8_t\000"
+ 1169      6E74385F 
+ 1169      7400
+ 1170              	.LASF45:
+ 1171 0164 77617665 		.ascii	"waveform_amp_lut\000"
+ 1171      666F726D 
+ 1171      5F616D70 
+ 1171      5F6C7574 
+ 1171      00
+ 1172              	.LASF52:
+ 1173 0175 706F7465 		.ascii	"potential_max_current\000"
+ 1173      6E746961 
+ 1173      6C5F6D61 
+ 1173      785F6375 
+ 1173      7272656E 
+ 1174              	.LASF72:
+ 1175 018b 433A5C55 		.ascii	"C:\\Users\\teo8d\\Desktop\\progetto lab sensori\\CO"
+ 1175      73657273 
+ 1175      5C74656F 
+ 1175      38645C44 
+ 1175      65736B74 
+ 1176 01b9 44494349 		.ascii	"DICI\\PSOC\\FinalProjects\\Group2.cydsn\000"
+ 1176      5C50534F 
+ 1176      435C4669 
+ 1176      6E616C50 
+ 1176      726F6A65 
+ 1177              	.LASF53:
+ 1178 01de 73656C65 		.ascii	"selected_scan_rate\000"
+ 1178      63746564 
+ 1178      5F736361 
+ 1178      6E5F7261 
+ 1178      746500
+ 1179              	.LASF22:
+ 1180 01f1 6C6F6E67 		.ascii	"long double\000"
+ 1180      20646F75 
+ 1180      626C6500 
+ 1181              	.LASF1:
+ 1182 01fd 756E7369 		.ascii	"unsigned char\000"
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 25
 
 
+ 1182      676E6564 
+ 1182      20636861 
+ 1182      7200
+ 1183              	.LASF31:
+ 1184 020b 525F616E 		.ascii	"R_analog_route\000"
+ 1184      616C6F67 
+ 1184      5F726F75 
+ 1184      746500
+ 1185              	.LASF68:
+ 1186 021a 4144435F 		.ascii	"ADC_SigDel_GetResult16\000"
+ 1186      53696744 
+ 1186      656C5F47 
+ 1186      65745265 
+ 1186      73756C74 
+ 1187              	.LASF40:
+ 1188 0231 55706461 		.ascii	"Update_endvalue_Flag\000"
+ 1188      74655F65 
+ 1188      6E647661 
+ 1188      6C75655F 
+ 1188      466C6167 
+ 1189              	.LASF0:
+ 1190 0246 7369676E 		.ascii	"signed char\000"
+ 1190      65642063 
+ 1190      68617200 
+ 1191              	.LASF14:
+ 1192 0252 696E7433 		.ascii	"int32_t\000"
+ 1192      325F7400 
+ 1193              	.LASF10:
+ 1194 025a 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1194      206C6F6E 
+ 1194      6720756E 
  1194      7369676E 
  1194      65642069 
- 1194      6E7400
- 1195              	.LASF25:
- 1196 02f2 61646349 		.ascii	"adcInterrupt\000"
- 1196      6E746572 
- 1196      72757074 
- 1196      00
- 1197              	.LASF45:
- 1198 02ff 6C75745F 		.ascii	"lut_index\000"
- 1198      696E6465 
- 1198      7800
- 1199              	.LASF36:
- 1200 0309 414D505F 		.ascii	"AMP_ready_Flag\000"
- 1200      72656164 
- 1200      795F466C 
- 1200      616700
- 1201              	.LASF67:
- 1202 0318 6973725F 		.ascii	"isr_adcAmp_Disable\000"
- 1202      61646341 
- 1202      6D705F44 
- 1202      69736162 
- 1202      6C6500
- 1203              	.LASF58:
- 1204 032b 6164635F 		.ascii	"adc_hold\000"
- 1204      686F6C64 
+ 1195              	.LASF28:
+ 1196 0271 43616C69 		.ascii	"CalibrationBuffer\000"
+ 1196      62726174 
+ 1196      696F6E42 
+ 1196      75666665 
+ 1196      7200
+ 1197              	.LASF11:
+ 1198 0283 756E7369 		.ascii	"unsigned int\000"
+ 1198      676E6564 
+ 1198      20696E74 
+ 1198      00
+ 1199              	.LASF13:
+ 1200 0290 75696E74 		.ascii	"uint16_t\000"
+ 1200      31365F74 
+ 1200      00
+ 1201              	.LASF56:
+ 1202 0299 73656C65 		.ascii	"selected_voltage_source\000"
+ 1202      63746564 
+ 1202      5F766F6C 
+ 1202      74616765 
+ 1202      5F736F75 
+ 1203              	.LASF24:
+ 1204 02b1 64616349 		.ascii	"dacInterrupt\000"
+ 1204      6E746572 
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 26
+
+
+ 1204      72757074 
  1204      00
- 1205              	.LASF8:
- 1206 0334 6C6F6E67 		.ascii	"long unsigned int\000"
- 1206      20756E73 
- 1206      69676E65 
- 1206      6420696E 
- 1206      7400
- 1207              	.LASF60:
- 1208 0346 75415F61 		.ascii	"uA_amp\000"
- 1208      6D7000
- 1209              	.LASF37:
- 1210 034d 4C6F6164 		.ascii	"Load_EEPROM_Flag\000"
- 1210      5F454550 
- 1210      524F4D5F 
- 1210      466C6167 
- 1210      00
- 1211              	.LASF64:
- 1212 035e 68656C70 		.ascii	"helper_HardwareSleep\000"
- 1212      65725F48 
- 1212      61726477 
- 1212      61726553 
- 1212      6C656570 
- 1213              	.LASF39:
- 1214 0373 55706461 		.ascii	"Update_startvalue_Flag\000"
- 1214      74655F73 
- 1214      74617274 
- 1214      76616C75 
- 1214      655F466C 
- 1215              	.LASF26:
- 1216 038a 61646341 		.ascii	"adcAmpInterrupt\000"
- 1216      6D70496E 
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 27
+ 1205              	.LASF58:
+ 1206 02be 414D7578 		.ascii	"AMux_channel_select\000"
+ 1206      5F636861 
+ 1206      6E6E656C 
+ 1206      5F73656C 
+ 1206      65637400 
+ 1207              	.LASF21:
+ 1208 02d2 63686172 		.ascii	"char\000"
+ 1208      00
+ 1209              	.LASF43:
+ 1210 02d7 6C75745F 		.ascii	"lut_value\000"
+ 1210      76616C75 
+ 1210      6500
+ 1211              	.LASF30:
+ 1212 02e1 4144435F 		.ascii	"ADC_buffer_index\000"
+ 1212      62756666 
+ 1212      65725F69 
+ 1212      6E646578 
+ 1212      00
+ 1213              	.LASF5:
+ 1214 02f2 73686F72 		.ascii	"short unsigned int\000"
+ 1214      7420756E 
+ 1214      7369676E 
+ 1214      65642069 
+ 1214      6E7400
+ 1215              	.LASF25:
+ 1216 0305 61646349 		.ascii	"adcInterrupt\000"
+ 1216      6E746572 
+ 1216      72757074 
+ 1216      00
+ 1217              	.LASF46:
+ 1218 0312 6C75745F 		.ascii	"lut_index\000"
+ 1218      696E6465 
+ 1218      7800
+ 1219              	.LASF36:
+ 1220 031c 414D505F 		.ascii	"AMP_ready_Flag\000"
+ 1220      72656164 
+ 1220      795F466C 
+ 1220      616700
+ 1221              	.LASF69:
+ 1222 032b 6973725F 		.ascii	"isr_adcAmp_Disable\000"
+ 1222      61646341 
+ 1222      6D705F44 
+ 1222      69736162 
+ 1222      6C6500
+ 1223              	.LASF60:
+ 1224 033e 6164635F 		.ascii	"adc_hold\000"
+ 1224      686F6C64 
+ 1224      00
+ 1225              	.LASF8:
+ 1226 0347 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1226      20756E73 
+ 1226      69676E65 
+ 1226      6420696E 
+ 1226      7400
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 27
 
 
- 1216      74657272 
- 1216      75707400 
- 1217              	.LASF6:
- 1218 039a 5F5F696E 		.ascii	"__int32_t\000"
- 1218      7433325F 
- 1218      7400
- 1219              	.LASF12:
- 1220 03a4 75696E74 		.ascii	"uint8_t\000"
- 1220      385F7400 
- 1221              	.LASF33:
- 1222 03ac 436F6D6D 		.ascii	"Command_ready_Flag\000"
- 1222      616E645F 
- 1222      72656164 
- 1222      795F466C 
- 1222      616700
- 1223              	.LASF46:
- 1224 03bf 6C75745F 		.ascii	"lut_length\000"
- 1224      6C656E67 
- 1224      746800
- 1225              	.LASF15:
- 1226 03ca 75696E74 		.ascii	"uint8\000"
- 1226      3800
- 1227              	.LASF20:
- 1228 03d0 646F7562 		.ascii	"double\000"
- 1228      6C6500
- 1229              	.LASF27:
- 1230 03d7 49544D5F 		.ascii	"ITM_RxBuffer\000"
- 1230      52784275 
- 1230      66666572 
+ 1227              	.LASF62:
+ 1228 0359 75415F61 		.ascii	"uA_amp\000"
+ 1228      6D7000
+ 1229              	.LASF37:
+ 1230 0360 4C6F6164 		.ascii	"Load_EEPROM_Flag\000"
+ 1230      5F454550 
+ 1230      524F4D5F 
+ 1230      466C6167 
  1230      00
- 1231              	.LASF68:
- 1232 03e4 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
- 1232      43313120 
- 1232      352E342E 
- 1232      31203230 
- 1232      31363036 
- 1233 0417 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
- 1233      20726576 
- 1233      6973696F 
- 1233      6E203233 
- 1233      37373135 
- 1234 044a 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
- 1234      66756E63 
- 1234      74696F6E 
- 1234      2D736563 
- 1234      74696F6E 
- 1235              	.LASF32:
- 1236 0472 496E7075 		.ascii	"Input_Flag\000"
- 1236      745F466C 
- 1236      616700
- 1237              	.LASF43:
- 1238 047d 77617665 		.ascii	"waveform_CV_lut\000"
- 1238      666F726D 
- 1238      5F43565F 
- 1238      6C757400 
- 1239              	.LASF59:
- 1240 048d 75415F43 		.ascii	"uA_CV_scan\000"
-ARM GAS  C:\Users\teo8d\AppData\Local\Temp\ccui5EQi.s 			page 28
+ 1231              	.LASF66:
+ 1232 0371 68656C70 		.ascii	"helper_HardwareSleep\000"
+ 1232      65725F48 
+ 1232      61726477 
+ 1232      61726553 
+ 1232      6C656570 
+ 1233              	.LASF39:
+ 1234 0386 55706461 		.ascii	"Update_startvalue_Flag\000"
+ 1234      74655F73 
+ 1234      74617274 
+ 1234      76616C75 
+ 1234      655F466C 
+ 1235              	.LASF26:
+ 1236 039d 61646341 		.ascii	"adcAmpInterrupt\000"
+ 1236      6D70496E 
+ 1236      74657272 
+ 1236      75707400 
+ 1237              	.LASF6:
+ 1238 03ad 5F5F696E 		.ascii	"__int32_t\000"
+ 1238      7433325F 
+ 1238      7400
+ 1239              	.LASF12:
+ 1240 03b7 75696E74 		.ascii	"uint8_t\000"
+ 1240      385F7400 
+ 1241              	.LASF41:
+ 1242 03bf 55706461 		.ascii	"Update_timevalue_Flag\000"
+ 1242      74655F74 
+ 1242      696D6576 
+ 1242      616C7565 
+ 1242      5F466C61 
+ 1243              	.LASF33:
+ 1244 03d5 436F6D6D 		.ascii	"Command_ready_Flag\000"
+ 1244      616E645F 
+ 1244      72656164 
+ 1244      795F466C 
+ 1244      616700
+ 1245              	.LASF47:
+ 1246 03e8 6C75745F 		.ascii	"lut_length\000"
+ 1246      6C656E67 
+ 1246      746800
+ 1247              	.LASF15:
+ 1248 03f3 75696E74 		.ascii	"uint8\000"
+ 1248      3800
+ 1249              	.LASF20:
+ 1250 03f9 646F7562 		.ascii	"double\000"
+ 1250      6C6500
+ 1251              	.LASF27:
+ 1252 0400 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ARM GAS  C:\Users\teo8d\AppData\Local\Temp\cczhw7zP.s 			page 28
 
 
- 1240      565F7363 
- 1240      616E00
- 1241              	.LASF52:
- 1242 0498 636F6D6D 		.ascii	"command\000"
- 1242      616E6400 
- 1243              	.LASF61:
- 1244 04a0 44564441 		.ascii	"DVDAC_SetValue\000"
- 1244      435F5365 
- 1244      7456616C 
- 1244      756500
- 1245              	.LASF50:
- 1246 04af 656E645F 		.ascii	"end_dac_value\000"
- 1246      6461635F 
- 1246      76616C75 
- 1246      6500
- 1247              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
+ 1252      52784275 
+ 1252      66666572 
+ 1252      00
+ 1253              	.LASF70:
+ 1254 040d 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1254      43313120 
+ 1254      352E342E 
+ 1254      31203230 
+ 1254      31363036 
+ 1255 0440 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1255      20726576 
+ 1255      6973696F 
+ 1255      6E203233 
+ 1255      37373135 
+ 1256 0473 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1256      66756E63 
+ 1256      74696F6E 
+ 1256      2D736563 
+ 1256      74696F6E 
+ 1257              	.LASF32:
+ 1258 049b 496E7075 		.ascii	"Input_Flag\000"
+ 1258      745F466C 
+ 1258      616700
+ 1259              	.LASF44:
+ 1260 04a6 77617665 		.ascii	"waveform_CV_lut\000"
+ 1260      666F726D 
+ 1260      5F43565F 
+ 1260      6C757400 
+ 1261              	.LASF61:
+ 1262 04b6 75415F43 		.ascii	"uA_CV_scan\000"
+ 1262      565F7363 
+ 1262      616E00
+ 1263              	.LASF54:
+ 1264 04c1 636F6D6D 		.ascii	"command\000"
+ 1264      616E6400 
+ 1265              	.LASF63:
+ 1266 04c9 44564441 		.ascii	"DVDAC_SetValue\000"
+ 1266      435F5365 
+ 1266      7456616C 
+ 1266      756500
+ 1267              	.LASF51:
+ 1268 04d8 656E645F 		.ascii	"end_dac_value\000"
+ 1268      6461635F 
+ 1268      76616C75 
+ 1268      6500
+ 1269              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
