@@ -46,11 +46,14 @@ void helper_HardwareSetup(void) {
 *******************************************************************************/
 
 void helper_HardwareStart(void){  // start all the components that have to be on for a reading
-    ADC_SigDel_Start();
-    TIA_Start();
-    VDAC_TIA_Start();
-    Opamp_Aux_Start();
+    ADC_SigDel_Start();  
+    TIA_Start(); 
+    VDAC_TIA_Start();  
+    Opamp_Aux_Start();  
     PWM_isr_Start();
+    
+    //DVDAC is already started
+    
 }
 
 /******************************************************************************

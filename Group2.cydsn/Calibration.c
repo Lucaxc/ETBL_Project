@@ -89,7 +89,9 @@ void calibrate_TIA(void) {
     
     float32 uAs = (float)(max_idac_value + min_idac_value) / 8.0; //sum of IDAC values (in bit) based on the calibrate step function 
     uA_per_adc_count = uAs / (max_adc_value - min_adc_value); // calculate the uA per ADC count value
-
+    
+    TIA_Calibration_ended_Flag = true;
+    
 }
 
 /******************************************************************************

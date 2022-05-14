@@ -35,12 +35,12 @@ float32 R_analog_route = 0;
 int16 potential_max_current=0;
 
 
-
+// ISR used to run a CV scan 
 CY_ISR(dacInterrupt)
 {
     
     DVDAC_SetValue(lut_value); // this function sets the DVDAC value 
-    lut_index++; //scan the look up table
+    lut_index++; //incremented in order to scan the look up table
     if (lut_index >= lut_length) { // all the data points have been given
         isr_adc_Disable();
         isr_dac_Disable();
@@ -50,12 +50,10 @@ CY_ISR(dacInterrupt)
         
         potential_max_current= helper_search_max(uA_CV_scan, lut_length); //we look at what has been saved in the uA_CV_scan and we search for the max current
         
-//        sprintf(UART_str, "Done");
-//        UART_PutString(UART_str);
-
+        AMP_ready_Flag=true; //CV has ended and we have calculated a potential value to be applied for chronoamperometry
     }
     
-    lut_value = waveform_CV_lut[lut_index]; // take value from the look up table (used to store waveform for variable potential experiments)
+    lut_value = waveform_CV_lut[lut_index]; // take value from the CV look up table 
 }
 
 
@@ -77,17 +75,20 @@ CY_ISR(adcAmpInterrupt){
     DVDAC_SetValue(lut_value); // this function sets the DVDAC value 
     uA_amp[lut_index] = ADC_SigDel_GetResult16() * uA_per_adc_count; //Read the current 
     
-    //SEND OUT DATA VIA UART (FOR THE PLOT IN THE GUI)
+    //send out values with the UART for the AMP graph --> TO BE ADDED
     
     lut_index++;  
-    if (lut_index >= MAX_amp_LUT_SIZE) {
+    if (lut_index >= MAX_amp_LUT_SIZE) { // all the data points have been given
         isr_adcAmp_Disable();
 
         helper_HardwareSleep();
         lut_index = 0;
+        
+        // Set a flag to indicate that the amperometry has ended
+        // Call a function to convert (based on a calibration curve) the current at a certain time instant into a glucose concentration
        
     }
-    lut_value = waveform_amp_lut[lut_index]; // take value from the look up table
+    lut_value = waveform_amp_lut[lut_index]; // take value from the AMP look up table
 }
 
 
