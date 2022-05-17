@@ -17,18 +17,30 @@
 **************************************/ 
 
 #define CONNECT_TO_COM_PORT             'A'
-                                        
-#define CALIBRATE_TIA                   'B'
-#define SET_SCAN_RATE                   'C'                      
-#define SET_CV_START_VALUE              'D'
-#define SET_CV_END_VALUE                'E' 
+#define SET_SCAN_RATE                   'B'                      
+#define SET_CV_START_VALUE              'C'
+#define SET_CV_END_VALUE                'D' 
+#define SET_CV_TIME                     'E' 
 #define START_CYCLIC_VOLTAMMETRY        'F'
 #define RUN_AMPEROMETRY                 'G'
 
-uint8 Input_Flag;
-uint8 Command_ready;
 /**************************************
-*           ADC Constants
+*           FLAGS
+**************************************/  
+    
+uint8 Input_Flag;
+uint8 Command_ready_Flag;
+uint8_t TIA_Calibration_ended_Flag;
+uint8_t CV_ready_Flag;
+uint8_t AMP_ready_Flag;
+uint8_t Load_EEPROM_Flag;
+uint8_t Update_scanrate_Flag;
+uint8_t Update_startvalue_Flag;
+uint8_t Update_endvalue_Flag;
+uint8_t Update_timevalue_Flag;
+    
+/**************************************
+*           LUT Constants
 **************************************/  
     
 // define how big to make the arrays for the lut     
@@ -45,14 +57,8 @@ uint8 Command_ready;
 #define VIRTUAL_GROUND              2048  
     
 #define PWM_PERIOD_10_ms            2399
-
-// Define the AMux channels
-#define two_electrode_config_ch     0
-#define three_electrode_config_ch   1 
-#define AMux_V_VDAC_source_ch       0
-#define AMux_V_DVDAC_source_ch      1
+    
 #define AMux_TIA_working_electrode_ch 1
-
         
 /**************************************
 *        Global Variables
@@ -74,6 +80,7 @@ float32 uA_per_adc_count;
 uint16 start_dac_value;
 uint16 end_dac_value;
 int16 potential_max_current; //value of potential at which the maximum current is found
+uint16 selected_scan_rate;
 
 /* Variables for the received commands via UART */
 #define MAX_COMMAND_LENGTH 40

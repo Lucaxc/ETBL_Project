@@ -31,7 +31,7 @@ void user_voltage_source_funcs(uint8 data_buffer[]);
 void user_start_cv_run(void);
 void user_reset_device(void);
 void user_identify(void);
-void user_set_isr_timer(uint8 data_buffer[]);
+void user_set_isr_timer(uint16 scan_rate);
 void user_chrono_lut_maker();
 uint16 user_lookup_table_maker(void);
 void user_run_amperometry(void);

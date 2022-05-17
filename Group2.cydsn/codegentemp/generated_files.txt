@@ -72,13 +72,6 @@
   <file name="C:\Users\teo8d\Desktop\progetto lab sensori\CODICI\PSOC\FinalProjects\Group2.cydsn\codegentemp\isr_adc.h" value="HEADER;;;;;isr_adc" />
   <file name="C:\Users\teo8d\Desktop\progetto lab sensori\CODICI\PSOC\FinalProjects\Group2.cydsn\codegentemp\isr_adcAmp.c" value="SOURCE_C;CortexM3;;;;isr_adcAmp" />
   <file name="C:\Users\teo8d\Desktop\progetto lab sensori\CODICI\PSOC\FinalProjects\Group2.cydsn\codegentemp\isr_adcAmp.h" value="HEADER;;;;;isr_adcAmp" />
-  <file name="C:\Users\teo8d\Desktop\progetto lab sensori\CODICI\PSOC\FinalProjects\Group2.cydsn\codegentemp\EEPROM.c" value="SOURCE_C;CortexM3;;;;EEPROM" />
-  <file name="C:\Users\teo8d\Desktop\progetto lab sensori\CODICI\PSOC\FinalProjects\Group2.cydsn\codegentemp\EEPROM.h" value="HEADER;;;;;EEPROM" />
-  <file name="C:\Users\teo8d\Desktop\progetto lab sensori\CODICI\PSOC\FinalProjects\Group2.cydsn\codegentemp\PWM_isr_1.c" value="SOURCE_C;CortexM3;;;;PWM_isr_1" />
-  <file name="C:\Users\teo8d\Desktop\progetto lab sensori\CODICI\PSOC\FinalProjects\Group2.cydsn\codegentemp\PWM_isr_1.h" value="HEADER;;;;;PWM_isr_1" />
-  <file name="C:\Users\teo8d\Desktop\progetto lab sensori\CODICI\PSOC\FinalProjects\Group2.cydsn\codegentemp\PWM_isr_1_PM.c" value="SOURCE_C;CortexM3;;;;PWM_isr_1" />
-  <file name="C:\Users\teo8d\Desktop\progetto lab sensori\CODICI\PSOC\FinalProjects\Group2.cydsn\codegentemp\Clock_PWM_1.c" value="SOURCE_C;CortexM3;;;;Clock_PWM_1" />
-  <file name="C:\Users\teo8d\Desktop\progetto lab sensori\CODICI\PSOC\FinalProjects\Group2.cydsn\codegentemp\Clock_PWM_1.h" value="HEADER;;;;;Clock_PWM_1" />
   <file name="C:\Users\teo8d\Desktop\progetto lab sensori\CODICI\PSOC\FinalProjects\Group2.cydsn\codegentemp\UART_IntClock.c" value="SOURCE_C;CortexM3;;;;UART_IntClock" />
   <file name="C:\Users\teo8d\Desktop\progetto lab sensori\CODICI\PSOC\FinalProjects\Group2.cydsn\codegentemp\UART_IntClock.h" value="HEADER;;;;;UART_IntClock" />
   <file name="C:\Users\teo8d\Desktop\progetto lab sensori\CODICI\PSOC\FinalProjects\Group2.cydsn\codegentemp\DVDAC_DMA_dma.c" value="SOURCE_C;CortexM3;;;;DVDAC_DMA" />

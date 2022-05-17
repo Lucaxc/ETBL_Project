@@ -13,9 +13,10 @@
 <v>Output</v>
 </TreeKeys>
 <TreeStates>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Project_ETBL\Group2\Source Files\DVDAC.c">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Project_ETBL\Group2">
 <ExpandedNodeIds>
 <v>Project_ETBL</v>
+<v>Project_ETBL\Group2</v>
 <v>Project_ETBL\Group2\TopDesign</v>
 <v>Project_ETBL\Group2\Group2.cydwr</v>
 <v>Project_ETBL\Group2\Group2.cydwr\Pins</v>
@@ -74,7 +75,40 @@
 <VisibleNodeIds>
 <v>Project_ETBL</v>
 <v>Project_ETBL\Group2</v>
-<v>Project_ETBL\Project_design</v>
+<v>Project_ETBL\Group2\TopDesign</v>
+<v>Project_ETBL\Group2\Group2.cydwr</v>
+<v>Project_ETBL\Group2\Group2.cydwr\Pins</v>
+<v>Project_ETBL\Group2\Group2.cydwr\Analog</v>
+<v>Project_ETBL\Group2\Group2.cydwr\Clocks</v>
+<v>Project_ETBL\Group2\Group2.cydwr\Interrupts</v>
+<v>Project_ETBL\Group2\Group2.cydwr\DMA</v>
+<v>Project_ETBL\Group2\Group2.cydwr\System</v>
+<v>Project_ETBL\Group2\Group2.cydwr\Directives</v>
+<v>Project_ETBL\Group2\Group2.cydwr\Flash Security</v>
+<v>Project_ETBL\Group2\Group2.cydwr\EEPROM</v>
+<v>Project_ETBL\Group2\Header Files</v>
+<v>Project_ETBL\Group2\Header Files\Calibration.h</v>
+<v>Project_ETBL\Group2\Header Files\cyapicallbacks.h</v>
+<v>Project_ETBL\Group2\Header Files\DVDAC.h</v>
+<v>Project_ETBL\Group2\Header Files\Global_variables.h</v>
+<v>Project_ETBL\Group2\Header Files\Helper_functions.h</v>
+<v>Project_ETBL\Group2\Header Files\InterruptRoutines.h</v>
+<v>Project_ETBL\Group2\Header Files\lut_functions.h</v>
+<v>Project_ETBL\Group2\Header Files\user_selections.h</v>
+<v>Project_ETBL\Group2\Source Files</v>
+<v>Project_ETBL\Group2\Source Files\Calibration.c</v>
+<v>Project_ETBL\Group2\Source Files\DVDAC.c</v>
+<v>Project_ETBL\Group2\Source Files\Helper_functions.c</v>
+<v>Project_ETBL\Group2\Source Files\InterruptRoutines.c</v>
+<v>Project_ETBL\Group2\Source Files\lut_functions.c</v>
+<v>Project_ETBL\Group2\Source Files\main.c</v>
+<v>Project_ETBL\Group2\Source Files\user_selections.c</v>
+<v>Project_ETBL\Group2\Generated_Source</v>
+<v>Project_ETBL\Group2\Generated_Source\PSoC5</v>
+<v>Project_ETBL\Group2\Generated_Source\PSoC5\ADC_SigDel</v>
+<v>Project_ETBL\Group2\Generated_Source\PSoC5\ADC_SigDel_Ext_CP_Clk</v>
+<v>Project_ETBL\Group2\Generated_Source\PSoC5\ADC_SigDel_IRQ</v>
+<v>Project_ETBL\Group2\Generated_Source\PSoC5\ADC_SigDel_theACLK</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
@@ -115,7 +149,6 @@
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\AMux_TIA_resistor_bypass.lst</v>
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\Calibration.lst</v>
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_PWM.lst</v>
-<v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_PWM_1.lst</v>
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\Counter_Electrode.lst</v>
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
@@ -134,7 +167,6 @@
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\DVDAC_PM.lst</v>
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\DVDAC_VDAC8.lst</v>
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\DVDAC_VDAC8_PM.lst</v>
-<v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\EEPROM.lst</v>
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\Helper_functions.lst</v>
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\IDAC_calibrate.lst</v>
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\IDAC_calibrate_PM.lst</v>
@@ -148,8 +180,6 @@
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\Opamp_Aux_PM.lst</v>
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_DVDAC_cap.lst</v>
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\PWM_isr.lst</v>
-<v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\PWM_isr_1.lst</v>
-<v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\PWM_isr_1_PM.lst</v>
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\PWM_isr_PM.lst</v>
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\TIA.lst</v>
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\TIA_end_pin.lst</v>
@@ -226,7 +256,6 @@
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\AMux_TIA_resistor_bypass.lst</v>
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\Calibration.lst</v>
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_PWM.lst</v>
-<v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_PWM_1.lst</v>
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\Counter_Electrode.lst</v>
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
@@ -245,6 +274,7 @@
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\DVDAC_PM.lst</v>
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\DVDAC_VDAC8.lst</v>
 <v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\DVDAC_VDAC8_PM.lst</v>
+<v>Project_ETBL\Group2\CortexM3\ARM_GCC_541\Debug\Listing Files\Helper_functions.lst</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStates>
@@ -264,22 +294,18 @@
 <v>Project_ETBL\Group2\AMux_v1_80</v>
 <v>Project_ETBL\Group2\AMux_v1_80\AMux_v1_80.pdf</v>
 <v>Project_ETBL\Group2\Capacitor_v1_0.pdf</v>
-<v>Project_ETBL\Group2\cy_clock_v2_20</v>
-<v>Project_ETBL\Group2\cy_clock_v2_20\cy_clock_v2_20.pdf</v>
-<v>Project_ETBL\Group2\cy_constant_v1_0</v>
-<v>Project_ETBL\Group2\cy_constant_v1_0\cy_constant_v1_0.pdf</v>
+<v>Project_ETBL\Group2\cy_clock_v2_20.pdf</v>
+<v>Project_ETBL\Group2\cy_constant_v1_0.pdf</v>
 <v>Project_ETBL\Group2\cy_isr_v1_70</v>
 <v>Project_ETBL\Group2\cy_isr_v1_70\cy_isr_v1_70.pdf</v>
 <v>Project_ETBL\Group2\cy_pins_v2_20</v>
 <v>Project_ETBL\Group2\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
 <v>Project_ETBL\Group2\DVDAC_v2_10.pdf</v>
-<v>Project_ETBL\Group2\EEPROM_v3_0.pdf</v>
 <v>Project_ETBL\Group2\Gnd_v1_0.pdf</v>
 <v>Project_ETBL\Group2\IDAC8_v2_0.pdf</v>
 <v>Project_ETBL\Group2\not_v1_0.pdf</v>
 <v>Project_ETBL\Group2\OpAmp_v1_90.pdf</v>
-<v>Project_ETBL\Group2\PWM_v3_30</v>
-<v>Project_ETBL\Group2\PWM_v3_30\PWM_v3_30.pdf</v>
+<v>Project_ETBL\Group2\PWM_v3_30.pdf</v>
 <v>Project_ETBL\Group2\TIA_v2_0.pdf</v>
 <v>Project_ETBL\Group2\UART_v2_50.pdf</v>
 <v>Project_ETBL\Group2\VDAC8_v1_90.pdf</v>
@@ -291,6 +317,7 @@
 <v>Project_ETBL\Project_design\cy_pins_v2_20</v>
 <v>Project_ETBL\Project_design\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
 <v>Project_ETBL\Project_design\I2C_v3_50.pdf</v>
+<v>Project_ETBL\Project_design\SwitchSPST_v1_0.pdf</v>
 <v>Project_ETBL\Project_design\UART_v2_50.pdf</v>
 </ExpandedNodeIds>
 <VisibleNodeIds>
@@ -304,22 +331,18 @@
 <v>Project_ETBL\Group2\AMux_v1_80</v>
 <v>Project_ETBL\Group2\AMux_v1_80\AMux_v1_80.pdf</v>
 <v>Project_ETBL\Group2\Capacitor_v1_0.pdf</v>
-<v>Project_ETBL\Group2\cy_clock_v2_20</v>
-<v>Project_ETBL\Group2\cy_clock_v2_20\cy_clock_v2_20.pdf</v>
-<v>Project_ETBL\Group2\cy_constant_v1_0</v>
-<v>Project_ETBL\Group2\cy_constant_v1_0\cy_constant_v1_0.pdf</v>
+<v>Project_ETBL\Group2\cy_clock_v2_20.pdf</v>
+<v>Project_ETBL\Group2\cy_constant_v1_0.pdf</v>
 <v>Project_ETBL\Group2\cy_isr_v1_70</v>
 <v>Project_ETBL\Group2\cy_isr_v1_70\cy_isr_v1_70.pdf</v>
 <v>Project_ETBL\Group2\cy_pins_v2_20</v>
 <v>Project_ETBL\Group2\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
 <v>Project_ETBL\Group2\DVDAC_v2_10.pdf</v>
-<v>Project_ETBL\Group2\EEPROM_v3_0.pdf</v>
 <v>Project_ETBL\Group2\Gnd_v1_0.pdf</v>
 <v>Project_ETBL\Group2\IDAC8_v2_0.pdf</v>
 <v>Project_ETBL\Group2\not_v1_0.pdf</v>
 <v>Project_ETBL\Group2\OpAmp_v1_90.pdf</v>
-<v>Project_ETBL\Group2\PWM_v3_30</v>
-<v>Project_ETBL\Group2\PWM_v3_30\PWM_v3_30.pdf</v>
+<v>Project_ETBL\Group2\PWM_v3_30.pdf</v>
 <v>Project_ETBL\Group2\TIA_v2_0.pdf</v>
 <v>Project_ETBL\Group2\UART_v2_50.pdf</v>
 <v>Project_ETBL\Group2\VDAC8_v1_90.pdf</v>
@@ -330,6 +353,9 @@
 <v>Project_ETBL\Project_design\System Reference Guides\cy_boot_v6_10</v>
 <v>Project_ETBL\Project_design\cy_pins_v2_20</v>
 <v>Project_ETBL\Project_design\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
+<v>Project_ETBL\Project_design\I2C_v3_50.pdf</v>
+<v>Project_ETBL\Project_design\SwitchSPST_v1_0.pdf</v>
+<v>Project_ETBL\Project_design\UART_v2_50.pdf</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStatesV2>
@@ -352,7 +378,7 @@
   Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
   http://www.actiprosoftware.com
 
---><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1166, 479" SelectedTabbedMdiWindow="2c18b052-b4fc-4e4d-a88f-2c8f53c8ba83"><DocumentWindow Key="C:\Users\teo8d\Desktop\progetto lab sensori\CODICI\PSOC\FinalProjects\Group2.cydsn\DVDAC.c" Guid="2c18b052-b4fc-4e4d-a88f-2c8f53c8ba83" /><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="0a499573-265d-426d-adba-edbfcab18e21" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1019, 488" SelectedTabbedMdiWindow="2c18b052-b4fc-4e4d-a88f-2c8f53c8ba83"><DocumentWindow Key="C:\Users\teo8d\Desktop\progetto lab sensori\CODICI\PSOC\FinalProjects\Group2.cydsn\DVDAC.c" Guid="2c18b052-b4fc-4e4d-a88f-2c8f53c8ba83" /><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="0a499573-265d-426d-adba-edbfcab18e21" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
 <config v="" />
 <AutoUpdate v="true" />
 </CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>
