@@ -25,6 +25,10 @@
     char state;
     uint8_t button_state;
 
+// OLED GLOBALS
+    uint8_t power_on;
+    uint8_t battery_level;
+
 // RTC USER-CHANGING GLOBALS
     uint8_t current_seconds;
     uint8_t current_minutes;

@@ -1,5 +1,5 @@
 -- Project:   C:\Users\lucac\Desktop\Luca\PoliMi\Magistrale\II anno\Electronic technologies and biosensors laboratory\Projects\Project_ETBL\Project_design.cydsn\Project_design.cyprj
--- Generated: 05/12/2022 15:18:25
+-- Generated: 05/17/2022 14:22:52
 -- PSoC Creator  4.4
 
 ENTITY Project_design IS
@@ -129,7 +129,7 @@ ARCHITECTURE __DEFAULT__ OF Project_design IS
     ATTRIBUTE lib_model OF Tx_1(0) : LABEL IS "iocell4";
     ATTRIBUTE Location OF Tx_1(0) : LABEL IS "P12[7]";
     ATTRIBUTE lib_model OF Pin_Button(0) : LABEL IS "iocell5";
-    ATTRIBUTE Location OF Pin_Button(0) : LABEL IS "P2[4]";
+    ATTRIBUTE Location OF Pin_Button(0) : LABEL IS "P3[7]";
     ATTRIBUTE lib_model OF Net_20 : LABEL IS "macrocell1";
     ATTRIBUTE Location OF Net_20 : LABEL IS "U(0,1)";
     ATTRIBUTE lib_model OF \UART_1:BUART:counter_load_not\ : LABEL IS "macrocell2";

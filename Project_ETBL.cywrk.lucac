@@ -18,7 +18,7 @@
 <v>Output</v>
 </TreeKeys>
 <TreeStates>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Project_ETBL\Project_design\TopDesign">
 <ExpandedNodeIds>
 <v>Project_ETBL</v>
 <v>Project_ETBL\Project_design</v>
@@ -46,7 +46,6 @@
 <v>Project_ETBL\Project_design\Source Files\main.c</v>
 <v>Project_ETBL\Project_design\Source Files\OLED_Driver.c</v>
 <v>Project_ETBL\Project_design\Source Files\RTC_Driver.c</v>
-<v>Project_ETBL\Project_design\Generated_Source</v>
 <v>Project_ETBL\Project_design\Generated_Source\PSoC5</v>
 <v>Project_ETBL\Project_design\Generated_Source\PSoC5\Pin_Button</v>
 </ExpandedNodeIds>
@@ -79,19 +78,6 @@
 <v>Project_ETBL\Project_design\Source Files\OLED_Driver.c</v>
 <v>Project_ETBL\Project_design\Source Files\RTC_Driver.c</v>
 <v>Project_ETBL\Project_design\Generated_Source</v>
-<v>Project_ETBL\Project_design\Generated_Source\PSoC5</v>
-<v>Project_ETBL\Project_design\Generated_Source\PSoC5\cy_boot</v>
-<v>Project_ETBL\Project_design\Generated_Source\PSoC5\Em_EEPROM_Dynamic</v>
-<v>Project_ETBL\Project_design\Generated_Source\PSoC5\I2CMASTER</v>
-<v>Project_ETBL\Project_design\Generated_Source\PSoC5\Pin_Button</v>
-<v>Project_ETBL\Project_design\Generated_Source\PSoC5\Pin_Button\Pin_Button.c</v>
-<v>Project_ETBL\Project_design\Generated_Source\PSoC5\Pin_Button\Pin_Button.h</v>
-<v>Project_ETBL\Project_design\Generated_Source\PSoC5\Pin_Button\Pin_Button_aliases.h</v>
-<v>Project_ETBL\Project_design\Generated_Source\PSoC5\Scl</v>
-<v>Project_ETBL\Project_design\Generated_Source\PSoC5\Sda</v>
-<v>Project_ETBL\Project_design\Generated_Source\PSoC5\UART_1</v>
-<v>Project_ETBL\Project_design\Generated_Source\PSoC5\UART_1_IntClock</v>
-<v>Project_ETBL\Project_design\Generated_Source\PSoC5\cycodeshareexport.ld</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">

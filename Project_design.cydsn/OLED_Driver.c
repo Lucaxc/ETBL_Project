@@ -751,7 +751,7 @@ void OLED_welcome_screen() {
     rtx_setCursor(5,24);
     rtx_println("GLUCOMETER");
     display_update();
-    CyDelay(1000);
+    CyDelay(2000);
     
     display_clear();
     display_update();
@@ -764,7 +764,79 @@ void OLED_welcome_screen() {
     rtx_setCursor(18,42);
     rtx_println("the measurement");
     display_update();
-    CyDelay(3000);
+    CyDelay(1000);
+}
+
+void display_battery_level(uint8_t battery_level){
+    int i = 0;
+    
+    display_clear();
+    if(battery_level >= 75)
+    {
+        rtx_drawLine(0, 0, 18, 0, WHITE);
+        rtx_drawLine(0, 7, 18, 7, WHITE);
+        rtx_drawLine(0, 0, 0, 7, WHITE);
+        rtx_drawLine(18, 0, 18, 2, WHITE);
+        rtx_drawLine(18, 5, 18, 7, WHITE);
+        rtx_drawLine(18, 5, 20, 5, WHITE);
+        rtx_drawLine(18, 2, 20, 2, WHITE);
+        rtx_drawLine(20, 2, 20, 5, WHITE);
+        
+        rtx_fillRect(2,2,3,4, WHITE);
+        rtx_fillRect(6,2,3,4, WHITE);
+        rtx_fillRect(10,2,3,4, WHITE);
+        rtx_fillRect(14,2,3,4, WHITE);
+        display_update();
+    }
+    
+    if(battery_level>=50 && battery_level<75)
+    {
+        rtx_drawLine(0, 0, 18, 0, WHITE);
+        rtx_drawLine(0, 7, 18, 7, WHITE);
+        rtx_drawLine(0, 0, 0, 7, WHITE);
+        rtx_drawLine(18, 0, 18, 2, WHITE);
+        rtx_drawLine(18, 5, 18, 7, WHITE);
+        rtx_drawLine(18, 5, 20, 5, WHITE);
+        rtx_drawLine(18, 2, 20, 2, WHITE);
+        rtx_drawLine(20, 2, 20, 5, WHITE);
+        
+        rtx_fillRect(2,2,3,4, WHITE);
+        rtx_fillRect(6,2,3,4, WHITE);
+        rtx_fillRect(10,2,3,4, WHITE);
+        display_update();
+    }
+    
+    if(battery_level>=25 && battery_level<50)
+    {
+        rtx_drawLine(0, 0, 18, 0, WHITE);
+        rtx_drawLine(0, 7, 18, 7, WHITE);
+        rtx_drawLine(0, 0, 0, 7, WHITE);
+        rtx_drawLine(18, 0, 18, 2, WHITE);
+        rtx_drawLine(18, 5, 18, 7, WHITE);
+        rtx_drawLine(18, 5, 20, 5, WHITE);
+        rtx_drawLine(18, 2, 20, 2, WHITE);
+        rtx_drawLine(20, 2, 20, 5, WHITE);
+        
+        rtx_fillRect(2,2,3,4, WHITE);
+        rtx_fillRect(6,2,3,4, WHITE);
+        display_update();
+    }
+    
+    if(battery_level>0 && battery_level<25)
+    {
+        rtx_drawLine(0, 0, 18, 0, WHITE);
+        rtx_drawLine(0, 7, 18, 7, WHITE);
+        rtx_drawLine(0, 0, 0, 7, WHITE);
+        rtx_drawLine(18, 0, 18, 2, WHITE);
+        rtx_drawLine(18, 5, 18, 7, WHITE);
+        rtx_drawLine(18, 5, 20, 5, WHITE);
+        rtx_drawLine(18, 2, 20, 2, WHITE);
+        rtx_drawLine(20, 2, 20, 5, WHITE);
+        
+        rtx_fillRect(2,2,3,4, WHITE);
+        display_update();
+    }
+
 }
 
 

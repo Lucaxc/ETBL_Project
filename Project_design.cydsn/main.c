@@ -40,6 +40,8 @@ int main(void)
     Pin_Reset_Write(0xFF);*/
     
     state = 0;
+    power_on = 1;
+    battery_level = 55;
     CyGlobalIntEnable;
         
     I2CMASTER_Start();
@@ -109,7 +111,7 @@ int main(void)
     {
         switch(state) {
             case INITIALIZATION:
-                OLED_welcome_screen();
+                /*OLED_welcome_screen();
                 
                 rtc_read_time(RTC_ADDRESS);
                 len = snprintf(rtc_content, sizeof(rtc_content), "Secondi: %d\r\n", current_seconds);
@@ -134,19 +136,21 @@ int main(void)
                     save_current_measurement(glucose_concentration);
                     glucose_concentration_from_memory = get_measurement_from_memory(eeprom_current_address - 7);
                 }
-
                 
-                /*display_clear();
-                display_update();
+                state = IDLE;*/
+                if(power_on){
+                    power_on = 0;
+                    display_battery_level(battery_level);
+                }
+                
+                rtc_read_time(RTC_ADDRESS);
+                len = snprintf(rtc_content, sizeof(rtc_content), "%d-%d-%d %02d:%02d\n", current_date, 
+                               current_month, current_year, current_hours, current_minutes);
                 rtx_setTextSize(1);
                 rtx_setTextColor(WHITE);
-                rtx_setCursor(0,0);
+                rtx_setCursor(40,0);
                 rtx_println(rtc_content);
                 display_update();
-                
-                CyDelay(2000);*/
-                
-                state = IDLE;
             
             break;
             
